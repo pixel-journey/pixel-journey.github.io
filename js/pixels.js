@@ -45,7 +45,7 @@ $(function() {
     });
 
     // countdown date
-    var end = new Date("05/31/2024 23:59 PM"); // FORMAT: month/day/year time
+    var end = new Date("05/31/2024 11:59 PM"); // FORMAT: month/day/year time
     var _second = 1000;
     var _minute = _second * 60;
     var _hour = _minute * 60;
