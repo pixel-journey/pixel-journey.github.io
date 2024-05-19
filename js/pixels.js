@@ -45,7 +45,7 @@ $(function() {
     });
 
     // countdown date
-    var end = new Date("02/11/2024 06:00 PM"); // FORMAT: month/day/year time
+    var end = new Date("05/31/2024 23:59 PM"); // FORMAT: month/day/year time
     var _second = 1000;
     var _minute = _second * 60;
     var _hour = _minute * 60;
@@ -58,7 +58,7 @@ $(function() {
         var distance = end - now;
         if (distance < 0) {
             clearInterval(timer);
-            document.getElementById("countdown").innerHTML = "DROP LIVE";
+            document.getElementById("countdown").innerHTML = "SNAPSHOT TBA";
             return;
         }
         var days = Math.floor(distance / _day);
@@ -68,7 +68,7 @@ $(function() {
         document.getElementById("countdown").innerHTML = days + "d, ";
         document.getElementById("countdown").innerHTML += hours + "h, ";
         document.getElementById("countdown").innerHTML += minutes + "m &amp; ";
-        document.getElementById("countdown").innerHTML += seconds + "s till Pixal PFPs drop";
+        document.getElementById("countdown").innerHTML += seconds + "s till next Pixal Holder snapshot";
     }
     timer = setInterval(showRemaining, 1000);
 
