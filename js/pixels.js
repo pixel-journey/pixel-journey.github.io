@@ -203,116 +203,116 @@ $(".knowledgebank-accordion ul li span").on("click", function() {
 
 window.addEvent("domready", function() {
     var imagewall = [
-        ["the-pixels/1.jpg", [
-            ["the-pixels/1.jpg"]
+        ["img/toppixals/1.webp", [
+            ["img/toppixals/1.webp"]
         ]],
-        ["the-pixels/2.jpg", [
-            ["the-pixels/2.jpg"]
+        ["img/toppixals/2.webp", [
+            ["img/toppixals/2.webp"]
         ]],
-        ["the-pixels/3.jpg", [
-            ["the-pixels/3.jpg"]
+        ["img/toppixals/3.webp", [
+            ["img/toppixals/3.webp"]
         ]],
-        ["the-pixels/4.jpg", [
-            ["the-pixels/4.jpg"]
+        ["img/toppixals/4.webp", [
+            ["img/toppixals/4.webp"]
         ]],
-        ["the-pixels/5.jpg", [
-            ["the-pixels/5.jpg"]
+        ["img/toppixals/5.webp", [
+            ["img/toppixals/5.webp"]
         ]],
-        ["the-pixels/6.jpg", [
-            ["the-pixels/6.jpg"]
+        ["img/toppixals/6.webp", [
+            ["img/toppixals/6.webp"]
         ]],
-        ["the-pixels/7.jpg", [
-            ["the-pixels/7.jpg"]
+        ["img/toppixals/7.webp", [
+            ["img/toppixals/7.webp"]
         ]],
-        ["the-pixels/8.jpg", [
-            ["the-pixels/8.jpg"]
+        ["img/toppixals/8.webp", [
+            ["img/toppixals/8.webp"]
         ]],
-        ["the-pixels/9.jpg", [
-            ["the-pixels/9.jpg"]
+        ["img/toppixals/9.webp", [
+            ["img/toppixals/9.webp"]
         ]],
-        ["the-pixels/10.jpg", [
-            ["the-pixels/10.jpg"]
+        ["img/toppixals/10.webp", [
+            ["img/toppixals/10.webp"]
         ]],
-        ["the-pixels/11.jpg", [
-            ["the-pixels/11.jpg"]
+        ["img/toppixals/11.webp", [
+            ["img/toppixals/11.webp"]
         ]],
-        ["the-pixels/12.jpg", [
-            ["the-pixels/12.jpg"]
+        ["img/toppixals/12.webp", [
+            ["img/toppixals/12.webp"]
         ]],
-		["the-pixels/13.jpg", [
-            ["the-pixels/13.jpg"]
+		["img/toppixals/13.webp", [
+            ["img/toppixals/13.webp"]
         ]],
-        ["the-pixels/14.jpg", [
-            ["the-pixels/14.jpg"]
+        ["img/toppixals/14.webp", [
+            ["img/toppixals/14.webp"]
         ]],
-        ["the-pixels/15.jpg", [
-            ["the-pixels/15.jpg"]
+        ["img/toppixals/15.webp", [
+            ["img/toppixals/15.webp"]
         ]],
-        ["the-pixels/16.jpg", [
-            ["the-pixels/16.jpg"]
+        ["img/toppixals/16.webp", [
+            ["img/toppixals/16.webp"]
         ]],
-        ["the-pixels/17.jpg", [
-            ["the-pixels/17.jpg"]
+        ["img/toppixals/17.webp", [
+            ["img/toppixals/17.webp"]
         ]],
-        ["the-pixels/18.jpg", [
-            ["the-pixels/18.jpg"]
+        ["img/toppixals/18.webp", [
+            ["img/toppixals/18.webp"]
         ]],
-        ["the-pixels/19.jpg", [
-            ["the-pixels/19.jpg"]
+        ["img/toppixals/19.webp", [
+            ["img/toppixals/19.webp"]
         ]],
-        ["the-pixels/20.jpg", [
-            ["the-pixels/20.jpg"]
+        ["img/toppixals/20.webp", [
+            ["img/toppixals/20.webp"]
         ]],
-        ["the-pixels/21.jpg", [
-            ["the-pixels/21.jpg"]
+        ["img/toppixals/21.webp", [
+            ["img/toppixals/21.webp"]
         ]],
-        ["the-pixels/22.jpg", [
-            ["the-pixels/22.jpg"]
+        ["img/toppixals/22.webp", [
+            ["img/toppixals/22.webp"]
         ]],
-        ["the-pixels/23.jpg", [
-            ["the-pixels/23.jpg"]
+        ["img/toppixals/23.webp", [
+            ["img/toppixals/23.webp"]
         ]],
-        ["the-pixels/24.jpg", [
-            ["the-pixels/24.jpg"]
+        ["img/toppixals/24.webp", [
+            ["img/toppixals/24.webp"]
         ]],
-        ["the-pixels/25.jpg", [
-            ["the-pixels/25.jpg"]
+        ["img/toppixals/25.webp", [
+            ["img/toppixals/25.webp"]
         ]],
-        ["the-pixels/26.jpg", [
-            ["the-pixels/26.jpg"]
+        ["img/toppixals/26.webp", [
+            ["img/toppixals/26.webp"]
         ]],
-        ["the-pixels/27.jpg", [
-            ["the-pixels/27.jpg"]
+        ["img/toppixals/27.webp", [
+            ["img/toppixals/27.webp"]
         ]],
-        ["the-pixels/28.jpg", [
-            ["the-pixels/28.jpg"]
+        ["img/toppixals/28.webp", [
+            ["img/toppixals/28.webp"]
         ]],
-        ["the-pixels/29.jpg", [
-            ["the-pixels/29.jpg"]
+        ["img/toppixals/29.webp", [
+            ["img/toppixals/29.webp"]
         ]],
-        ["the-pixels/30.jpg", [
-            ["the-pixels/30.jpg"]
+        ["img/toppixals/30.webp", [
+            ["img/toppixals/30.webp"]
         ]],
-        ["the-pixels/31.jpg", [
-            ["the-pixels/31.jpg"]
+        ["img/toppixals/31.webp", [
+            ["img/toppixals/31.webp"]
         ]],
-        ["the-pixels/32.jpg", [
-            ["the-pixels/32.jpg"]
+        ["img/toppixals/32.webp", [
+            ["img/toppixals/32.webp"]
         ]],
-        ["the-pixels/33.jpg", [
-            ["the-pixels/33.jpg"]
+        ["img/toppixals/33.webp", [
+            ["img/toppixals/33.webp"]
         ]],
-        ["the-pixels/34.jpg", [
-            ["the-pixels/34.jpg"]
+        ["img/toppixals/34.webp", [
+            ["img/toppixals/34.webp"]
         ]],
-        ["the-pixels/35.jpg", [
-            ["the-pixels/35.jpg"]
+        ["img/toppixals/35.webp", [
+            ["img/toppixals/35.webp"]
         ]],
-        ["the-pixels/36.jpg", [
-            ["the-pixels/36.jpg"]
+        ["img/toppixals/36.webp", [
+            ["img/toppixals/36.webp"]
         ]],
-        ["the-pixels/plus-1.jpg", [
-            ["the-pixels/plus-1.jpg"] // an extra image to compensate for the gap
+        ["img/toppixals/plus-1.webp", [
+            ["img/toppixals/plus-1.webp"] // an extra image to compensate for the gap
         ]]
     ];
     var maxLength = 14;
