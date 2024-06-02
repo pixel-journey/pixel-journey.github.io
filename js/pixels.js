@@ -160,8 +160,6 @@ $(".knowledgebank-accordion ul li span").on("click", function() {
   }
 });
 
-    // 15. hero slider
-    // 15-1. owlCarousel HERO slider SLIDE
     $(".hero-slider-slide").owlCarousel({
         autoPlay: true,
         navigation: true,
@@ -172,7 +170,6 @@ $(".knowledgebank-accordion ul li span").on("click", function() {
         autoHeight: true,
         stopOnHover: false
     });
-    // 15-2. owlCarousel HERO slider ZOOM
     $(".hero-slider-zoom").owlCarousel({
         autoPlay: true,
         navigation: false,
@@ -183,7 +180,6 @@ $(".knowledgebank-accordion ul li span").on("click", function() {
         autoHeight: true,
         stopOnHover: false
     });
-    // 15-3. owlCarousel HERO slider SPLIT
     $(".hero-slider-split").owlCarousel({
         autoPlay: true,
         navigation: false,
@@ -315,7 +311,7 @@ window.addEvent("domready", function() {
             ["img/toppixals/37.webp"]
         ]]
     ];
-    var maxLength = 14;
+    var maxLength = 32;
     var wallFluid = new Wall("wall", {
         "draggable": true,
 		"slideshow": true, // options: true, false
