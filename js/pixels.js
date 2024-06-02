@@ -311,8 +311,8 @@ window.addEvent("domready", function() {
         ["img/toppixals/36.webp", [
             ["img/toppixals/36.webp"]
         ]],
-        ["img/toppixals/plus-1.webp", [
-            ["img/toppixals/plus-1.webp"] // an extra image to compensate for the gap
+        ["img/toppixals/37.webp", [
+            ["img/toppixals/37.webp"]
         ]]
     ];
     var maxLength = 14;
