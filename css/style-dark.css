@@ -177,6 +177,13 @@ body.light {
   background: #111;
 }
 
+#connect-button {
+  position:fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 1000;
+}
+
 nav#navigation.light li {
   border: 1px solid #111;
   background: rgba(255, 255, 255, .55);
