@@ -3,9 +3,9 @@
 ////////////////////////////////////////////////////////////
 
 /*!
- * 
+ *
  * GAME SETTING CUSTOMIZATION START
- * 
+ *
  */
 
 //card design
@@ -851,8 +851,8 @@ var textDisplay = {
 
 //Social share, [SCORE] will replace with game score
 var shareEnable = true; //toggle share
-var shareTitle = 'Highscore on Card Attack is [SCORE]';//social share score title
-var shareMessage = '[SCORE] is mine new highscore on Card Attack game! Try it now!'; //social share score message
+var shareTitle = 'Highscore on Pixel Journey Attack is [SCORE]';//social share score title
+var shareMessage = '[SCORE] is my new highscore on Pixel Journey Attack game! Try it now!'; //social share score message
 
 /*!
  *
@@ -868,9 +868,9 @@ var timeData = {enable:false, startDate:null, nowDate:null, timer:0, oldTimer:0}
 var gestureData = {pX:'', pY:'', pX2:'', pY2:'', lastDirection:-1, curDirection:-1, directionArr:[]};
 
 /*!
- * 
+ *
  * GAME BUTTONS - This is the function that runs to setup button event
- * 
+ *
  */
 function buildGameButton(){
 	$(window).focus(function() {
@@ -884,7 +884,7 @@ function buildGameButton(){
 			}
 		}
 	});
-	
+
 	$(window).blur(function() {
 		if(!buttonSoundOn.visible){
 			toggleSoundInMute(true);
@@ -905,7 +905,7 @@ function buildGameButton(){
 		if(isInIframe){
 			this.document.onkeydown = keydown;
 			this.document.onkeyup = keyup;
-		
+
 			$(window).blur(function() {
 				appendFocusFrame();
 			});
@@ -1007,7 +1007,7 @@ function buildGameButton(){
 
 	itemExit.addEventListener("click", function(evt) {
 	});
-	
+
 	buttonContinue.cursor = "pointer";
 	buttonContinue.addEventListener("click", function(evt) {
 		playSound('soundButton');
@@ -1020,12 +1020,12 @@ function buildGameButton(){
 			goPage('main');
 		}
 	});
-	
+
 	buttonFacebook.cursor = "pointer";
 	buttonFacebook.addEventListener("click", function(evt) {
 		share('facebook');
 	});
-	
+
 	buttonTwitter.cursor = "pointer";
 	buttonTwitter.addEventListener("click", function(evt) {
 		share('twitter');
@@ -1034,12 +1034,12 @@ function buildGameButton(){
 	buttonWhatsapp.addEventListener("click", function(evt) {
 		share('whatsapp');
 	});
-	
+
 	buttonSoundOff.cursor = "pointer";
 	buttonSoundOff.addEventListener("click", function(evt) {
 		toggleSoundMute(true);
 	});
-	
+
 	buttonSoundOn.cursor = "pointer";
 	buttonSoundOn.addEventListener("click", function(evt) {
 		toggleSoundMute(false);
@@ -1051,40 +1051,40 @@ function buildGameButton(){
 			toggleMusicMute(true);
 		});
 	}
-	
+
 	if (typeof buttonMusicOn != "undefined") {
 		buttonMusicOn.cursor = "pointer";
 		buttonMusicOn.addEventListener("click", function(evt) {
 			toggleMusicMute(false);
 		});
 	}
-	
+
 	buttonFullscreen.cursor = "pointer";
 	buttonFullscreen.addEventListener("click", function(evt) {
 		toggleFullScreen();
 	});
-	
+
 	buttonExit.cursor = "pointer";
 	buttonExit.addEventListener("click", function(evt) {
 		togglePop(true);
 		toggleOption();
 	});
-	
+
 	buttonSettings.cursor = "pointer";
 	buttonSettings.addEventListener("click", function(evt) {
 		toggleOption();
 	});
-	
+
 	buttonConfirm.cursor = "pointer";
 	buttonConfirm.addEventListener("click", function(evt) {
 		playSound('soundButton');
 		togglePop(false);
-		
+
 		stopAudio();
 		stopGame();
 		goPage('main');
 	});
-	
+
 	buttonCancel.cursor = "pointer";
 	buttonCancel.addEventListener("click", function(evt) {
 		playSound('soundButton');
@@ -1108,7 +1108,7 @@ function appendFocusFrame(){
 	$('#mainHolder').prepend('<div id="focus" style="position:absolute; width:100%; height:100%; z-index:1000;"></div');
 	$('#focus').click(function(){
 		$('#focus').remove();
-	});	
+	});
 }
 
 function toggleSize(con){
@@ -1151,9 +1151,9 @@ function displayPlaySize(){
 }
 
 /*!
- * 
+ *
  * TOGGLE GAME TYPE - This is the function that runs to toggle game type
- * 
+ *
  */
 function toggleMainButton(con){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable) {
@@ -1207,9 +1207,9 @@ function resizeSocketLog(){
 }
 
 /*!
- * 
+ *
  * KEYBOARD EVENTS - This is the function that runs for keyboard events
- * 
+ *
  */
 function keydown(event) {
 	if(curPage == "game"){
@@ -1251,13 +1251,13 @@ function keydown(event) {
 }
 
 function keyup(event) {
-	
+
 }
 
 /*!
- * 
+ *
  * GAME GESTURE EVENTS - This is the function that runs to build game gesture events
- * 
+ *
  */
 function buildGameGesture(){
 	stage.addEventListener("stagemousedown", handleMouseDown);
@@ -1266,19 +1266,19 @@ function buildGameGesture(){
 
 function handleMouseDown(event) {
 	if (!event.primary) { return; }
-	
+
 	gestureData.curDirection=-1;
 	gestureData.lastDirection=-1;
 	gestureData.pX=gestureData.pX2=stage.mouseX;
 	gestureData.pY=gestureData.pY2=stage.mouseY;
 	gestureData.directionArr = [];
-	
+
 	stage.addEventListener("stagemousemove", handleMouseMove);
 }
 
 function handleMouseMove(event) {
 	if (!event.primary) { return; }
-	
+
 	var dX=gestureData.pX-stage.mouseX;
 	var dY=gestureData.pY-stage.mouseY;
 	var distance=dX*dX+dY*dY;
@@ -1350,9 +1350,9 @@ function handleMouseUp(event) {
 
 
 /*!
- * 
+ *
  * TOGGLE POP - This is the function that runs to toggle popup overlay
- * 
+ *
  */
 function togglePop(con){
 	confirmContainer.visible = con;
@@ -1360,14 +1360,14 @@ function togglePop(con){
 
 
 /*!
- * 
+ *
  * DISPLAY PAGES - This is the function that runs to display pages
- * 
+ *
  */
 var curPage=''
 function goPage(page){
 	curPage=page;
-	
+
 	$('#roomWrapper').hide();
 	$('#roomWrapper .innerContent').hide();
 	gameLogsTxt.visible = false;
@@ -1377,7 +1377,7 @@ function goPage(page){
 	sizeContainer.visible = false;
 	gameContainer.visible = false;
 	resultContainer.visible = false;
-	
+
 	var targetContainer = null;
 	switch(page){
 		case 'main':
@@ -1395,7 +1395,7 @@ function goPage(page){
 			$('#enterName').show();
 			bgRoom.visible = true;
 		break;
-			
+
 		case 'room':
 			targetContainer = roomContainer;
 			$('#roomWrapper').show();
@@ -1422,14 +1422,14 @@ function goPage(page){
 			gameData.layoutIndex = 0;
 			displayPlaySize();
 		break;
-		
+
 		case 'game':
 			targetContainer = gameContainer;
 			stopMusicLoop("musicMain");
 			playMusicLoop("musicGame");
 			startGame();
 		break;
-		
+
 		case 'result':
 			targetContainer = resultContainer;
 			togglePop(false);
@@ -1456,20 +1456,20 @@ function goPage(page){
 			saveGame(playerData.score);
 		break;
 	}
-	
+
 	if(targetContainer != null){
 		targetContainer.visible = true;
 		targetContainer.alpha = 0;
 		TweenMax.to(targetContainer, .5, {alpha:1, overwrite:true});
 	}
-	
+
 	resizeCanvas();
 }
 
 /*!
- * 
+ *
  * START GAME - This is the function that runs to start game
- * 
+ *
  */
 function startGame(){
 	gameStatusContainer.alpha = 0;
@@ -1498,9 +1498,9 @@ function startGame(){
 }
 
  /*!
- * 
+ *
  * STOP GAME - This is the function that runs to stop play game
- * 
+ *
  */
 function stopGame(){
 	destoryProton();
@@ -1509,7 +1509,7 @@ function stopGame(){
 }
 
 function saveGame(score){
-	if ( typeof toggleScoreboardSave == 'function' ) { 
+	if ( typeof toggleScoreboardSave == 'function' ) {
 		$.scoreData.score = score;
 		if(typeof type != 'undefined'){
 			$.scoreData.type = type;
@@ -1528,9 +1528,9 @@ function saveGame(score){
 }
 
 /*!
- * 
+ *
  * RESIZE GAME LAYOUT - This is the function that runs for resize game layout
- * 
+ *
  */
 function resizeGameLayout(){
 	if(viewport.isLandscape){
@@ -1567,9 +1567,9 @@ function resizeGameLayout(){
 }
 
 /*!
- * 
+ *
  * PREPARE STAGE - This is the function that runs for prepage stage
- * 
+ *
  */
 function displayPlayerIcon(){
 	$.status["iconHilight"+0].alpha = 0;
@@ -1671,16 +1671,16 @@ function prepareStage(){
 }
 
 /*!
- * 
+ *
  * CREATE CARDS - This is the function that runs for create cards
- * 
+ *
  */
 function createCards(){
 	cardsContainer.removeAllChildren();
 	particlesContainer.removeAllChildren();
 	bombContainer.removeAllChildren();
 	numbersContainer.removeAllChildren();
-	
+
 	var pos = {startX:0, startY:0, x:0, y:0, width:0, height:0};
 	pos.width = ((gameData.layout.column-1) * cardDesign[gameData.cardIndex].width);
 	pos.width += ((gameData.layout.column-1) * cardDesign[gameData.cardIndex].margin);
@@ -1704,7 +1704,7 @@ function createCards(){
 			$.card[r+'_'+c].target = newCard;
 			newCard.x = pos.x;
 			newCard.y = pos.y;
-			
+
 			pos.x += cardDesign[gameData.cardIndex].width + cardDesign[gameData.cardIndex].margin;
 		}
 
@@ -1764,7 +1764,7 @@ function createSingleCard(r,c){
 	newIconA.y = newIconB.y = cardDesign[gameData.cardIndex].icon.y;
 	newIcon.addChild(newIconB, newIconA, newWeapon, newShield, newKey);
 	newInner.addChild(newType1, newType2, newType3, newType4, newHit, newFocus, newBadges, newIcon, newStroke, newSwoosh, newText, newNumbers);
-	
+
 	newCard.row = r;
 	newCard.column = c;
 	newCard.cover = newCover;
@@ -1800,7 +1800,7 @@ function createSingleCard(r,c){
 				return;
 			}
 		}
-		
+
 		var direction = '';
 		if($.card["player"+gameData.player].x > evt.currentTarget.x){
 			direction = "left";
@@ -1881,7 +1881,7 @@ function shuffleCards(){
 				var cardType = getCardContent("play",r,c);
 				setCardContent(cardType.type, cardType.index, r, c, cardType.side);
 			}
-			
+
 			animateMoveCard($.card[r+'_'+c].target, delayMoveNum, 0, true);
 			delayMoveNum -= .2;
 			cardTypeIndex++;
@@ -1892,9 +1892,9 @@ function shuffleCards(){
 }
 
 /*!
- * 
+ *
  * CARD ANIMATEION - This is the function that runs for card animation
- * 
+ *
  */
 function animateMoveCard(thisCard, delay){
 	gameData.totalFlip++;
@@ -1945,7 +1945,7 @@ function animateIconHit(thisCard){
 		TweenMax.to(thisCard.hit, gameSettings.hitFlashSpeed, {alpha:0, overwrite:true, onComplete:function(){
 			TweenMax.to(thisCard.hit, gameSettings.hitFlashSpeed, {alpha:gameSettings.hitFlashAlpha, overwrite:true, onComplete:function(){
 				TweenMax.to(thisCard.hit, gameSettings.hitFlashSpeed, {alpha:0, overwrite:true, onComplete:function(){
-					
+
 				}});
 			}});
 		}});
@@ -1954,7 +1954,7 @@ function animateIconHit(thisCard){
 
 function animateTweenMovement(){
 	TweenMax.to(gameData.tween.movement, gameSettings.playerIdleSpeed, {value:gameSettings.playeridleDistant, ease:Sine.easeOut, overwrite:true, onComplete:function(){
-		TweenMax.to(gameData.tween.movement, gameSettings.playerIdleSpeed, {value:0, overwrite:true, ease:Sine.easeIn, onComplete:animateTweenMovement});		
+		TweenMax.to(gameData.tween.movement, gameSettings.playerIdleSpeed, {value:0, overwrite:true, ease:Sine.easeIn, onComplete:animateTweenMovement});
 	}});
 }
 
@@ -1971,7 +1971,7 @@ function animateSwoosh(thisCard){
 	newSwoosh.y = -(cardH/6);
 	newSwoosh.alpha = 1;
 	TweenMax.to(newSwoosh, gameSettings.swooshSpeed, {alpha:1, x:-(cardW/6), y:cardH/6, overwrite:true, onComplete:function(){
-		TweenMax.to(newSwoosh, gameSettings.swooshSpeed, {delay:.2, alpha:0, overwrite:true});		
+		TweenMax.to(newSwoosh, gameSettings.swooshSpeed, {delay:.2, alpha:0, overwrite:true});
 	}});
 }
 
@@ -2022,15 +2022,15 @@ function animateNumbers(thisCard, type, side, delay, number){
 	var moveY = cardY + (-(cardH/2) + randomIntFromInterval(0, 10));
 	TweenMax.to(newText, gameSettings.numberSpeed, {delay:delay, alpha:1, y:moveY, ease:Sine.easeeIn, overwrite:true, onComplete:function(){
 		TweenMax.to(newText, gameSettings.numberSpeed/2, {delay:.2, alpha:0, ease:Sine.easeeOut, overwrite:true, onComplete:function(){
-			numbersContainer.removeChild(newText);	
+			numbersContainer.removeChild(newText);
 		}});
 	}});
 }
 
 /*!
- * 
+ *
  * CARD CONTENT - This is the function that runs for card content
- * 
+ *
  */
 function prepareCardContent(dealCard){
 	var totalPrepareCards = gameData.layout.row * gameData.layout.column;
@@ -2171,7 +2171,7 @@ function prepareCardContent(dealCard){
 		}
 	}
 
-	//insert chest 
+	//insert chest
 	for(var n=playIndex; n<gameData.playArr.length; n++){
 		var showKeyChest = false;
 		if(gameData.chestCount >= gameData.stage.showChest && gameData.stage.showChest != -1){
@@ -2211,12 +2211,12 @@ function prepareCardContent(dealCard){
 		if(socketData.host){
 			postSocketUpdate('updatecard', {
 				playArr:gameData.playArr,
-				enemyRevealArr:gameData.enemyRevealArr, 
-				chestRevealArr:gameData.chestRevealArr, 
-				barrelRevealArr:gameData.barrelRevealArr, 
-				castleRevealArr:gameData.castleRevealArr, 
-				chestArr:gameData.chestArr, 
-				keyArr:gameData.keyArr, 
+				enemyRevealArr:gameData.enemyRevealArr,
+				chestRevealArr:gameData.chestRevealArr,
+				barrelRevealArr:gameData.barrelRevealArr,
+				castleRevealArr:gameData.castleRevealArr,
+				chestArr:gameData.chestArr,
+				keyArr:gameData.keyArr,
 				chestCountArr:gameData.chestCountArr,
 				dealCard:dealCard,
 				player:gameData.player,
@@ -2228,7 +2228,7 @@ function prepareCardContent(dealCard){
 		if(dealCard){
 			createCards();
 			shuffleCards();
-		}	
+		}
 	}
 }
 
@@ -2292,7 +2292,7 @@ function setCardContent(type, index, r, c, side){
 	thisCard.iconB.spritesheet = null;
 	thisCard.cardType = type;
 	thisCard.cardIndex = index;
-	
+
 	if(type == "player"){
 		var newPlayerBody = getSpritesheet("player", index, 'cardChaBody_'+index);
 		thisCard.iconA.spritesheet = newPlayerBody;
@@ -2305,7 +2305,7 @@ function setCardContent(type, index, r, c, side){
 		thisCard.badgesArr.push({type:"health", value:10, max:cardPlaySettings.maxHealth});
 		//thisCard.badgesArr.push({type:"shield", value:3, max:-1});
 		//thisCard.badgesArr.push({type:"damage", value:3, max:-1});
-		
+
 		if ( typeof initSocket == 'function' && multiplayerSettings.enable && socketData.online) {
 			thisCard.name.text = $.status["playerNameTxt"+index].player;
 		}else{
@@ -2330,17 +2330,17 @@ function setCardContent(type, index, r, c, side){
 		if(cardTypes[index].iconSecond != ""){
 			var newIconSecond = getSpritesheet("card", index, 'cardTypesIconSecond_'+index);
 			thisCard.iconB.spritesheet = newIconSecond;
-			thisCard.iconB.addChild(newIconSecond);	
+			thisCard.iconB.addChild(newIconSecond);
 		}
 
 		if(cardTypes[index].iconWeapon != ""){
 			var newIconWeapon = getSpritesheet("card", index, 'cardTypesIconWeapon_'+index);
-			thisCard.weapon.addChild(newIconWeapon);	
+			thisCard.weapon.addChild(newIconWeapon);
 		}
 
 		if(cardTypes[index].iconShield != ""){
 			var newIconShield = getSpritesheet("card", index, 'cardTypesIconShield_'+index);
-			thisCard.shield.addChild(newIconShield);	
+			thisCard.shield.addChild(newIconShield);
 		}
 
 		var checkHealth = false;
@@ -2462,7 +2462,7 @@ function updateNumbersDisplay(thisCard){
 			}
 		}
 	}
-	
+
 	thisCard.badges.lastBadgesArr = [];
 	for(var n=0; n<thisCard.badgesArr.length; n++){
 		thisCard.badges.lastBadgesArr.push({type:thisCard.badgesArr[n].type, value:thisCard.badgesArr[n].value});
@@ -2486,7 +2486,7 @@ function createBadge(thisCard){
 		thisCard.badgesArr[0] = thisCard.badgesArr[1];
 		thisCard.badgesArr[1] = tempBadge;
 	}
-	
+
 	for(var n=0; n<thisCard.badgesArr.length; n++){
 		var badgeAsset = "";
 		var badgeValue = "";
@@ -2554,7 +2554,7 @@ function toggleCardBg(thisCard){
 function createPlayerItem(thisCard, type, index){
 	var newItem = new createjs.Bitmap(loader.getResult('cardTypesIconPlayer_'+index));
 	centerReg(newItem);
-	
+
 	if(type == "weapon"){
 		thisCard.weapon.removeAllChildren();
 		thisCard.weapon.addChild(newItem);
@@ -2563,11 +2563,11 @@ function createPlayerItem(thisCard, type, index){
 		thisCard.shield.addChild(newItem);
 	}else if(type == "key"){
 		thisCard.key.removeAllChildren();
-		thisCard.key.addChild(newItem);	
+		thisCard.key.addChild(newItem);
 	}
 }
 
-function removePlayerItem(thisCard, type){	
+function removePlayerItem(thisCard, type){
 	if(type == "weapon"){
 		thisCard.weapon.removeAllChildren();
 	}else if(type == "shield"){
@@ -2578,9 +2578,9 @@ function removePlayerItem(thisCard, type){
 }
 
 /*!
- * 
+ *
  * GET SPRITESHEET - This is the function that runs to get spritesheet
- * 
+ *
  */
 function getSpritesheet(type, index, assetID){
 	var _speed = 1;
@@ -2591,7 +2591,7 @@ function getSpritesheet(type, index, assetID){
 	var _count = 0;
 	var _animations;
 	var _default;
-	
+
 	if(type == "player"){
 		if(cardCharacter[index].spritesheet == undefined){
 			newSpritesheet = new createjs.Bitmap(loader.getResult(assetID));
@@ -2621,7 +2621,7 @@ function getSpritesheet(type, index, assetID){
 
 			_default = "offIdle";
 
-			var _frame = {"regX": _regX, "regY": _regY, "height": _frameH, "width": _frameW, "count": _count};					
+			var _frame = {"regX": _regX, "regY": _regY, "height": _frameH, "width": _frameW, "count": _count};
 			spritesheetData = new createjs.SpriteSheet({
 				"images": [loader.getResult(assetID).src],
 				"frames": _frame,
@@ -2661,7 +2661,7 @@ function getSpritesheet(type, index, assetID){
 
 			_default = "offIdle";
 
-			var _frame = {"regX": _regX, "regY": _regY, "height": _frameH, "width": _frameW, "count": _count};					
+			var _frame = {"regX": _regX, "regY": _regY, "height": _frameH, "width": _frameW, "count": _count};
 			spritesheetData = new createjs.SpriteSheet({
 				"images": [loader.getResult(assetID).src],
 				"frames": _frame,
@@ -2678,9 +2678,9 @@ function getSpritesheet(type, index, assetID){
 }
 
 /*!
- * 
+ *
  * MOVE CARD - This is the function that runs for move card
- * 
+ *
  */
 function moveCard(player, direction){
 	if(gameData.tutorialMode){
@@ -2789,14 +2789,14 @@ function moveCards(playerCard, direction){
 				if(moveR > gameData.layout.row-1){
 					gameData.lastR = gameData.layout.row-1;
 				}else{
-					proceedMove = true;	
+					proceedMove = true;
 				}
 			}else if(direction == "down"){
 				moveR--;
 				if(moveR < 0){
 					gameData.lastR = 0;
 				}else{
-					proceedMove = true;	
+					proceedMove = true;
 				}
 			}
 
@@ -2827,14 +2827,14 @@ function moveCards(playerCard, direction){
 				if(moveC > gameData.layout.column-1){
 					gameData.lastC = gameData.layout.column-1;
 				}else{
-					proceedMove = true;	
+					proceedMove = true;
 				}
 			}else if(direction == "right"){
 				moveC--;
 				if(moveC < 0){
 					gameData.lastC = 0;
 				}else{
-					proceedMove = true;	
+					proceedMove = true;
 				}
 			}
 
@@ -2906,7 +2906,7 @@ function bounceCardComplete(playerCard, nextCard){
 	}
 
 	if(dealNewCard){
-		revealCardReward(playerCard, nextCard, true);	
+		revealCardReward(playerCard, nextCard, true);
 	}else{
 		//check
 		checkGameTurn();
@@ -2935,7 +2935,7 @@ function revealCardReward(playerCard, nextCard){
 			}else if(gameData.lastDirection == "left"){
 				newCard.icon.scaleX = 1;
 			}
-			
+
 			//remove
 			cardsContainer.removeChild(nextCard);
 
@@ -2957,9 +2957,9 @@ function revealCardReward(playerCard, nextCard){
 }
 
 /*!
- * 
+ *
  * BOMB ANIMATION - This is the function that runs for bomb animation
- * 
+ *
  */
 function startBombAnimation(){
 	gameData.moveCard = false;
@@ -3001,7 +3001,7 @@ function startBombAnimation(){
 			}
 		}
 	}
-	
+
 	gameData.totalBomb = 0;
 	protonData.objects = [];
 	protonData.emitter = [];
@@ -3030,7 +3030,7 @@ function startBombAnimation(){
 
 function bombAnimationComplete(playerCard, nextCard){
 	bombContainer.removeAllChildren();
-		
+
 	var healthValue = findBadgeValue(nextCard, "health");
 	var shieldValue = findBadgeValue(nextCard, "shield");
 	var overallValue = cardTypes[gameData.cannonIndex].damage;
@@ -3069,7 +3069,7 @@ function bombAnimationComplete(playerCard, nextCard){
 			updateBadgeValue(nextCard, "health", healthValue);
 		}
 	}
-	
+
 	gameData.totalBomb--;
 	if(gameData.totalBomb <= 0){
 		var revealCard = false;
@@ -3090,9 +3090,9 @@ function bombAnimationComplete(playerCard, nextCard){
 }
 
 /*!
- * 
+ *
  * CREATE PROTON - This is the function that runs to create proton particles
- * 
+ *
  */
 function createProton(playerCard) {
 	if(protonData.proton == null){
@@ -3101,23 +3101,23 @@ function createProton(playerCard) {
 		var renderer = new Proton.EaselRenderer(particlesContainer);
 		protonData.proton.addRenderer(renderer);
 	}
-	
+
 	for(var n=0; n < protonData.objects.length;n++){
 		protonData.emitter[n] = new Proton.Emitter();
 		protonData.emitter[n].rate = new Proton.Rate(new Proton.Span(5, 10), new Proton.Span(.01, .015));
-		
+
 		var textures = [];
 		textures.push(itemParticle1);
 		textures.push(itemParticle2);
 		textures.push(itemParticle3);
-	
+
 		protonData.emitter[n].addInitialize(new Proton.Mass(1));
 		protonData.emitter[n].addInitialize(new Proton.Life(0, .5));
 		protonData.emitter[n].addInitialize(new Proton.Body(textures));
-		
+
 		protonData.emitter[n].addBehaviour(new Proton.Alpha(1, 0));
 		protonData.emitter[n].addBehaviour(new Proton.Scale(1.2, 1));
-	
+
 		protonData.emitter[n].p.x = playerCard.x;
 		protonData.emitter[n].p.y = playerCard.y;
 
@@ -3129,7 +3129,7 @@ function createProton(playerCard) {
 function loopProton(){
 	if (protonData.proton) {
 		protonData.proton.update();
-		
+
 		for(var n=0; n < protonData.emitter.length;n++){
 			var targetBall = protonData.objects[n];
 			protonData.emitter[n].p.x = targetBall.x;
@@ -3146,9 +3146,9 @@ function destoryProton(){
 }
 
 /*!
- * 
+ *
  * CARD CHECK END - This is the function that runs for card end
- * 
+ *
  */
 function tryNextMove(){
 	if(!gameData.over){
@@ -3236,9 +3236,9 @@ function endPlayerTurn(){
 }
 
 /*!
- * 
+ *
  * FOCUS PLAYER - This is the function that runs for focus player
- * 
+ *
  */
 function focusPlayerCard(){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable && socketData.online) {
@@ -3269,9 +3269,9 @@ function animateFocusBlink(obj){
 }
 
 /*!
- * 
+ *
  * UPDATE CARD VALUE - This is the function that runs for card value update
- * 
+ *
  */
 function updateCardBadge(playerCard, nextCard){
 	var playerHealth = findBadgeValue(playerCard, "health");
@@ -3340,7 +3340,7 @@ function updateCardBadge(playerCard, nextCard){
 		var damageValue = findBadgeValue(nextCard, "damage");
 		var shieldValue = findBadgeValue(nextCard, "shield");
 		var overallValue = healthValue + damageValue + shieldValue;
-		
+
 		if(playerShield > 0){
 			playSoundHit();
 			playerShield -= overallValue;
@@ -3443,7 +3443,7 @@ function updateCardBounce(playerCard, nextCard){
 			{type:"shield", item:"shield", value:playerShield, sound:"soundShield"},
 			{type:"damage", item:"weapon", value:playerDamage, sound:"soundSword"},
 		];
-		
+
 		for(var n=0; n<loopValue.length; n++){
 			var repeatLoop = false;
 			var healthValue = findBadgeValue(nextCard, "health");
@@ -3648,7 +3648,7 @@ function updateBadgeValue(card, type, value){
 
 	var thisCard = $.card[card.row+'_'+card.column].target;
 	thisCard.badges.removeAllChildren();
-	
+
 	updateBadgeDisplay(card);
 }
 
@@ -3667,9 +3667,9 @@ function updateBadgeDisplay(card){
 }
 
 /*!
- * 
+ *
  * CHECK NEXT STAGE - This is the function that runs for check next stage
- * 
+ *
  */
 function checkNextStage(){
 	gameData.moveCount++;
@@ -3704,9 +3704,9 @@ function checkNextStage(){
 }
 
 /*!
- * 
+ *
  * UPDATE GAME - This is the function that runs to loop game update
- * 
+ *
  */
 function updateGame(event){
 	if(!gameData.paused){
@@ -3732,9 +3732,9 @@ function loopPlayerMovement(){
 }
 
 /*!
- * 
+ *
  * GAME MISC LOOP - This is the function that runs for game loop
- * 
+ *
  */
 function focusPlayerCamera(){
 	if(gameData.dealCard){
@@ -3766,7 +3766,7 @@ function focusPlayerCamera(){
 		var endX = -startX;
 		var startY = (gameData.mapH - gameData.maskH)/2;
 		var endY = -startY;
-		
+
 		if(gameData.mapW > gameData.maskW){
 			newX = newX > startX ? startX : newX;
 			newX = newX < endX ? endX : newX;
@@ -3787,9 +3787,9 @@ function focusPlayerCamera(){
 }
 
 /*!
- * 
+ *
  * UPDATE GAME DISPLAY - This is the function that runs for game display
- * 
+ *
  */
 function updateGameDisplay(){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable && socketData.online) {
@@ -3807,9 +3807,9 @@ function updateGameDisplay(){
 }
 
 /*!
- * 
+ *
  * GAME STATUS - This is the function that runs for game status
- * 
+ *
  */
 function showGameStatus(status, delay, player){
 	var textStatus = "";
@@ -3850,9 +3850,9 @@ function showTutorialText(){
 }
 
 /*!
- * 
+ *
  * END GAME - This is the function that runs for game end
- * 
+ *
  */
 function endGame(){
 	gameData.over = true;
@@ -3866,30 +3866,30 @@ function endGame(){
 }
 
 /*!
- * 
+ *
  * MILLISECONDS CONVERT - This is the function that runs to convert milliseconds to time
- * 
+ *
  */
 function millisecondsToTimeGame(milli) {
 	var milliseconds = milli % 1000;
 	var seconds = Math.floor((milli / 1000) % 60);
 	var minutes = Math.floor((milli / (60 * 1000)) % 60);
-	
+
 	if(seconds<10){
-		seconds = '0'+seconds;  
+		seconds = '0'+seconds;
 	}
-	
+
 	if(minutes<10){
-		minutes = '0'+minutes;  
+		minutes = '0'+minutes;
 	}
-	
+
 	return seconds;
 }
 
 /*!
- * 
+ *
  * OPTIONS - This is the function that runs to toggle options
- * 
+ *
  */
 
 function toggleOption(){
@@ -3902,9 +3902,9 @@ function toggleOption(){
 
 
 /*!
- * 
+ *
  * OPTIONS - This is the function that runs to mute and fullscreen
- * 
+ *
  */
 function toggleSoundMute(con){
 	buttonSoundOff.visible = false;
@@ -3913,7 +3913,7 @@ function toggleSoundMute(con){
 	if(con){
 		buttonSoundOn.visible = true;
 	}else{
-		buttonSoundOff.visible = true;	
+		buttonSoundOff.visible = true;
 	}
 }
 
@@ -3924,7 +3924,7 @@ function toggleMusicMute(con){
 	if(con){
 		buttonMusicOn.visible = true;
 	}else{
-		buttonMusicOff.visible = true;	
+		buttonMusicOff.visible = true;
 	}
 }
 
@@ -3954,24 +3954,24 @@ function toggleFullScreen() {
 }
 
 /*!
- * 
+ *
  * SHARE - This is the function that runs to open share url
- * 
+ *
  */
 function share(action){
 	gtag('event','click',{'event_category':'share','event_label':action});
-	
+
 	var loc = location.href
 	loc = loc.substring(0, loc.lastIndexOf("/") + 1);
-	
+
 	var title = '';
 	var text = '';
-	
+
 	title = shareTitle.replace("[SCORE]", addCommas(playerData.score));
 	text = shareMessage.replace("[SCORE]", addCommas(playerData.score));
-	
+
 	var shareurl = '';
-	
+
 	if( action == 'twitter' ) {
 		shareurl = 'https://twitter.com/intent/tweet?url='+loc+'&text='+text;
 	}else if( action == 'facebook' ){
@@ -3981,6 +3981,6 @@ function share(action){
 	}else if( action == 'whatsapp' ){
 		shareurl = "whatsapp://send?text=" + encodeURIComponent(text) + " - " + encodeURIComponent(loc);
 	}
-	
+
 	window.open(shareurl);
 }
