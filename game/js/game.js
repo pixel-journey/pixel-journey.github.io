@@ -462,7 +462,7 @@ var cardTypes = [
 		shield: 0,
 		health: 1,
 		type: 'enemy',
-		name: 'WOLF'
+		name: 'ICE ELEMENTAL'
 	},
 	{
 		icon: 'assets/card_icon_animal_body_1.png',
@@ -475,7 +475,7 @@ var cardTypes = [
 		shield: 0,
 		health: 2,
 		type: 'enemy',
-		name: 'WOLF'
+		name: 'ICE ELEMENTAL'
 	},
 	{
 		icon: 'assets/card_icon_animal_body_2.png',
@@ -488,7 +488,7 @@ var cardTypes = [
 		shield: 0,
 		health: 1,
 		type: 'enemy',
-		name: 'BOAR'
+		name: 'FIRE ELEMENTAL'
 	},
 	{
 		icon: 'assets/card_icon_animal_body_2.png',
@@ -501,7 +501,7 @@ var cardTypes = [
 		shield: 0,
 		health: 2,
 		type: 'enemy',
-		name: 'BOAR'
+		name: 'FIRE ELEMENTAL'
 	},
 	{
 		icon: 'assets/card_icon_enemy_body_1.png',
