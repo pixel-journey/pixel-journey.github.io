@@ -1,14 +1,3 @@
-////////////////////////////////////////////////////////////
-// GAME v1.4
-////////////////////////////////////////////////////////////
-
-/*!
- *
- * GAME SETTING CUSTOMIZATION START
- *
- */
-
-//card design
 var cardDesign = [
 	{
 		width:120,
@@ -807,7 +796,6 @@ var gameSettings = {
 	}
 }
 
-//game text display
 var textDisplay = {
 					tutorialTitle:"HOW TO PLAY?",
 					tutorial:{
@@ -849,16 +837,10 @@ var textDisplay = {
 					resultDesc:'COIN: [NUMBER]'
 				}
 
-//Social share, [SCORE] will replace with game score
 var shareEnable = true; //toggle share
 var shareTitle = 'Highscore on Pixel Journey Attack is [SCORE]';//social share score title
-var shareMessage = '[SCORE] is my new highscore on Pixel Journey Attack game! Try it now!'; //social share score message
+var shareMessage = '[SCORE] is my new highscore on Pixel Journey Dungeons game! With [NUMBER] kills. What was yours? Try it now!'; //social share score message
 
-/*!
- *
- * GAME SETTING CUSTOMIZATION END
- *
- */
 $.editor = {enable:false};
 var playerData = {score:0, kill:0};
 var gameData = {paused:true, player:0, layoutIndex:0, cardIndex:0, stageIndex:0, side:false, moveCard:false, playCard:false, over:false, tutorialMode:false, tutorialIndex:0, tutorialCardIndex:0 };
@@ -867,11 +849,7 @@ var tweenData = {score:0, tweenScore:0};
 var timeData = {enable:false, startDate:null, nowDate:null, timer:0, oldTimer:0};
 var gestureData = {pX:'', pY:'', pX2:'', pY2:'', lastDirection:-1, curDirection:-1, directionArr:[]};
 
-/*!
- *
- * GAME BUTTONS - This is the function that runs to setup button event
- *
- */
+
 function buildGameButton(){
 	$(window).focus(function() {
 		if(!buttonSoundOn.visible){
@@ -961,20 +939,6 @@ function buildGameButton(){
 			column:3,
 			player:[{r:0,c:1,side:1}]
 		}
-
-		//grass 0,1
-		//health 2,3,4
-		//coin 5,6,7,8,9,10
-		//trap 11,12
-		//barrel 13
-		//castle 14
-		//chest 15
-		//key 16
-		//weapon 17,18,19,20,21,22
-		//shield 23,24,25,26
-		//animal 27,28,29,30
-		//knight 31,32,33,34,35,36,37,38
-		//canno 39
 
 		gameData.tutorialIndex = 0;
 		gameData.tutorialCardIndex = 0;
@@ -1151,9 +1115,7 @@ function displayPlaySize(){
 }
 
 /*!
- *
- * TOGGLE GAME TYPE - This is the function that runs to toggle game type
- *
+ * the function that runs to toggle game type
  */
 function toggleMainButton(con){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable) {
@@ -1207,9 +1169,7 @@ function resizeSocketLog(){
 }
 
 /*!
- *
- * KEYBOARD EVENTS - This is the function that runs for keyboard events
- *
+ * the function that runs for keyboard events
  */
 function keydown(event) {
 	if(curPage == "game"){
@@ -1255,9 +1215,7 @@ function keyup(event) {
 }
 
 /*!
- *
- * GAME GESTURE EVENTS - This is the function that runs to build game gesture events
- *
+ * the function that runs to build game gesture events
  */
 function buildGameGesture(){
 	stage.addEventListener("stagemousedown", handleMouseDown);
@@ -1350,9 +1308,7 @@ function handleMouseUp(event) {
 
 
 /*!
- *
- * TOGGLE POP - This is the function that runs to toggle popup overlay
- *
+ * the function that runs to toggle popup overlay
  */
 function togglePop(con){
 	confirmContainer.visible = con;
@@ -1360,9 +1316,7 @@ function togglePop(con){
 
 
 /*!
- *
- * DISPLAY PAGES - This is the function that runs to display pages
- *
+ * the function that runs to display pages
  */
 var curPage=''
 function goPage(page){
@@ -1467,9 +1421,7 @@ function goPage(page){
 }
 
 /*!
- *
- * START GAME - This is the function that runs to start game
- *
+ * the function that runs to start game
  */
 function startGame(){
 	gameStatusContainer.alpha = 0;
@@ -1528,9 +1480,7 @@ function saveGame(score){
 }
 
 /*!
- *
- * RESIZE GAME LAYOUT - This is the function that runs for resize game layout
- *
+ * the function that runs for resize game layout
  */
 function resizeGameLayout(){
 	if(viewport.isLandscape){
@@ -1567,9 +1517,7 @@ function resizeGameLayout(){
 }
 
 /*!
- *
- * PREPARE STAGE - This is the function that runs for prepage stage
- *
+ * the function that runs for prepage stage
  */
 function displayPlayerIcon(){
 	$.status["iconHilight"+0].alpha = 0;
@@ -1671,9 +1619,7 @@ function prepareStage(){
 }
 
 /*!
- *
- * CREATE CARDS - This is the function that runs for create cards
- *
+ * the function that runs for create cards
  */
 function createCards(){
 	cardsContainer.removeAllChildren();
@@ -1830,18 +1776,6 @@ function createSingleCard(r,c){
 }
 
 function shuffleCards(){
-	//grass 0,1
-	//health 2,3,4
-	//coin 5,6,7,8,9,10
-	//trap 11,12
-	//barrel 13
-	//castle 14
-	//chest 15
-	//key 16
-	//weapon 17,18,19,20,21,22
-	//shield 23,24,25,26
-	//animal 27,28,29,30
-	//knight 31,32,33,34,35,36,37,38
 
 	var presetCard = false;
 	var cardTypeIndex = 0;
@@ -1892,9 +1826,7 @@ function shuffleCards(){
 }
 
 /*!
- *
- * CARD ANIMATEION - This is the function that runs for card animation
- *
+ * the function that runs for card animation
  */
 function animateMoveCard(thisCard, delay){
 	gameData.totalFlip++;
@@ -2028,9 +1960,7 @@ function animateNumbers(thisCard, type, side, delay, number){
 }
 
 /*!
- *
- * CARD CONTENT - This is the function that runs for card content
- *
+ * the function that runs for card content
  */
 function prepareCardContent(dealCard){
 	var totalPrepareCards = gameData.layout.row * gameData.layout.column;
@@ -2578,9 +2508,7 @@ function removePlayerItem(thisCard, type){
 }
 
 /*!
- *
- * GET SPRITESHEET - This is the function that runs to get spritesheet
- *
+ * the function that runs to get spritesheet
  */
 function getSpritesheet(type, index, assetID){
 	var _speed = 1;
@@ -2678,9 +2606,7 @@ function getSpritesheet(type, index, assetID){
 }
 
 /*!
- *
- * MOVE CARD - This is the function that runs for move card
- *
+ * the function that runs for move card
  */
 function moveCard(player, direction){
 	if(gameData.tutorialMode){
@@ -3090,9 +3016,7 @@ function bombAnimationComplete(playerCard, nextCard){
 }
 
 /*!
- *
- * CREATE PROTON - This is the function that runs to create proton particles
- *
+ * the function that runs to create proton particles
  */
 function createProton(playerCard) {
 	if(protonData.proton == null){
@@ -3146,9 +3070,7 @@ function destoryProton(){
 }
 
 /*!
- *
- * CARD CHECK END - This is the function that runs for card end
- *
+ * the function that runs for card end
  */
 function tryNextMove(){
 	if(!gameData.over){
@@ -3236,9 +3158,7 @@ function endPlayerTurn(){
 }
 
 /*!
- *
- * FOCUS PLAYER - This is the function that runs for focus player
- *
+ *the function that runs for focus player
  */
 function focusPlayerCard(){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable && socketData.online) {
@@ -3269,9 +3189,7 @@ function animateFocusBlink(obj){
 }
 
 /*!
- *
- * UPDATE CARD VALUE - This is the function that runs for card value update
- *
+ * the function that runs for card value update
  */
 function updateCardBadge(playerCard, nextCard){
 	var playerHealth = findBadgeValue(playerCard, "health");
@@ -3667,9 +3585,7 @@ function updateBadgeDisplay(card){
 }
 
 /*!
- *
- * CHECK NEXT STAGE - This is the function that runs for check next stage
- *
+ * the function that runs for check next stage
  */
 function checkNextStage(){
 	gameData.moveCount++;
@@ -3704,9 +3620,7 @@ function checkNextStage(){
 }
 
 /*!
- *
- * UPDATE GAME - This is the function that runs to loop game update
- *
+ * the function that runs to loop game update
  */
 function updateGame(event){
 	if(!gameData.paused){
@@ -3732,9 +3646,7 @@ function loopPlayerMovement(){
 }
 
 /*!
- *
- * GAME MISC LOOP - This is the function that runs for game loop
- *
+ * the function that runs for game loop
  */
 function focusPlayerCamera(){
 	if(gameData.dealCard){
@@ -3787,9 +3699,7 @@ function focusPlayerCamera(){
 }
 
 /*!
- *
- * UPDATE GAME DISPLAY - This is the function that runs for game display
- *
+ * the function that runs for game stat display
  */
 function updateGameDisplay(){
 	if ( typeof initSocket == 'function' && multiplayerSettings.enable && socketData.online) {
@@ -3807,9 +3717,7 @@ function updateGameDisplay(){
 }
 
 /*!
- *
- * GAME STATUS - This is the function that runs for game status
- *
+ * the function that runs for game status
  */
 function showGameStatus(status, delay, player){
 	var textStatus = "";
@@ -3850,9 +3758,7 @@ function showTutorialText(){
 }
 
 /*!
- *
- * END GAME - This is the function that runs for game end
- *
+ * the function that runs for game end
  */
 function endGame(){
 	gameData.over = true;
@@ -3866,9 +3772,7 @@ function endGame(){
 }
 
 /*!
- *
- * MILLISECONDS CONVERT - This is the function that runs to convert milliseconds to time
- *
+ * the function that runs to convert milliseconds to time
  */
 function millisecondsToTimeGame(milli) {
 	var milliseconds = milli % 1000;
@@ -3887,9 +3791,7 @@ function millisecondsToTimeGame(milli) {
 }
 
 /*!
- *
- * OPTIONS - This is the function that runs to toggle options
- *
+ * the function that runs to toggle options
  */
 
 function toggleOption(){
@@ -3902,9 +3804,7 @@ function toggleOption(){
 
 
 /*!
- *
- * OPTIONS - This is the function that runs to mute and fullscreen
- *
+ * the functions that runs to mute and fullscreen
  */
 function toggleSoundMute(con){
 	buttonSoundOff.visible = false;
@@ -3954,9 +3854,7 @@ function toggleFullScreen() {
 }
 
 /*!
- *
- * SHARE - This is the function that runs to open share url
- *
+ * the function that runs to open share url
  */
 function share(action){
 	gtag('event','click',{'event_category':'share','event_label':action});

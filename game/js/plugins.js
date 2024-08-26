@@ -20,7 +20,7 @@
     }
 }());
 
-// Place any jQuery/helper plugins in here.
+// Place any helper plugins in here.
 function checkContentHeight(target){
 	var stageHeight=$( window ).height();
 	var newHeight = (stageHeight/2)-(target.height()/2);
@@ -36,7 +36,7 @@ function checkContentWidth(target){
 function getDeviceVer() {
 	var ua = navigator.userAgent;
 	var uaindex;
-	
+
 	// determine OS
 	if ( ua.match(/(iPad|iPhone|iPod touch)/) ){
 		userOS = 'iOS';
@@ -47,7 +47,7 @@ function getDeviceVer() {
 	}else{
 		userOS = 'unknown';
 	}
-	
+
 	// determine version
 	if ( userOS === 'iOS' && uaindex > -1 ){
 		userOSver = ua.substr( uaindex + 3, 3 ).replace( '_', '.' );
@@ -64,19 +64,19 @@ function shuffle(array) {
 	, temporaryValue
 	, randomIndex
 	;
-	
+
 	// While there remain elements to shuffle...
 	while (0 !== currentIndex) {
 		// Pick a remaining element...
 		randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex -= 1;
-		
+
 		// And swap it with the current element.
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
 	}
-	
+
 	return array;
 }
 
@@ -124,7 +124,7 @@ function addCommas(nStr) {
 
 function swapArray(input, index_A, index_B) {
     var temp = input[index_A];
- 
+
     input[index_A] = input[index_B];
     input[index_B] = temp;
 }

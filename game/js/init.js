@@ -1,14 +1,8 @@
-////////////////////////////////////////////////////////////
-// INIT
-////////////////////////////////////////////////////////////
+
  var stageWidth,stageHeight=0;
  var isLoaded=false;
 
- /*!
- *
- * DOCUMENT READY
- *
- */
+
  $(function() {
 	  var resumeAudioContext = function() {
 		// handler for fixing suspended audio context in Chrome
@@ -31,7 +25,7 @@
 		alert("Game run error");
 	}
 
-	 
+
 	 $(window).resize(function(){
 		resizeLoaderFunc();
 	 });
@@ -39,11 +33,7 @@
 	 checkBrowser();
 });
 
-/*!
- *
- * LOADER RESIZE - This is the function that runs to centeralised loader when resize
- *
- */
+
  function resizeLoaderFunc(){
 	stageWidth=$(window).width();
 	stageHeight=$(window).height();
@@ -52,11 +42,7 @@
 	$('#mainLoader').css('top', checkContentHeight($('#mainLoader')));
  }
 
-/*!
- *
- * BROWSER DETECT - This is the function that runs for browser and feature detection
- *
- */
+
 var browserSupport=false;
 var isTablet;
 function checkBrowser(){

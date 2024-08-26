@@ -1,28 +1,23 @@
-////////////////////////////////////////////////////////////
-// CANVAS
-////////////////////////////////////////////////////////////
 var stage
 var canvasW=0;
 var canvasH=0;
 
 /*!
- * 
- * START GAME CANVAS - This is the function that runs to setup game canvas
- * 
+ *  the function that runs to setup game canvas
  */
 function initGameCanvas(w,h){
 	var gameCanvas = document.getElementById("gameCanvas");
 	gameCanvas.width = w;
 	gameCanvas.height = h;
-	
+
 	canvasW=w;
 	canvasH=h;
 	stage = new createjs.Stage("gameCanvas");
-	
+
 	createjs.Touch.enable(stage);
 	stage.enableMouseOver(20);
 	stage.mouseMoveOutside = true;
-	
+
 	createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
 	createjs.Ticker.framerate = 50;
 	createjs.Ticker.addEventListener("tick", tick);
@@ -36,9 +31,7 @@ $.card = {};
 $.status = {};
 
 /*!
- * 
- * BUILD GAME CANVAS ASSERTS - This is the function that runs to build game canvas asserts
- * 
+ *  the function that runs to build game canvas asserts
  */
 function buildGameCanvas(){
 	canvasContainer = new createjs.Container();
@@ -57,12 +50,12 @@ function buildGameCanvas(){
 
 	resultContainer = new createjs.Container();
 	confirmContainer = new createjs.Container();
-	
+
 	bg = new createjs.Bitmap(loader.getResult('bg'));
 	bgP = new createjs.Bitmap(loader.getResult('bgP'));
 	logo = new createjs.Bitmap(loader.getResult('logo'));
 	logoP = new createjs.Bitmap(loader.getResult('logoP'));
-	
+
 	buttonPlay = new createjs.Bitmap(loader.getResult('buttonPlay'));
 	centerReg(buttonPlay);
 
@@ -147,7 +140,7 @@ function buildGameCanvas(){
 		$.status["playerNameTxt"+n].textBaseline='alphabetic';
 		$.status["playerNameTxt"+n].text = "PLAYER1";
 
-		$.status["iconHilight"+n] = new createjs.Shape();	
+		$.status["iconHilight"+n] = new createjs.Shape();
 		$.status["iconHilight"+n].graphics.beginFill('#FF9700').drawCircle(0, 0, 33);
 
 		$.status["statsName"+n] = new createjs.Bitmap(loader.getResult('itemStatsName'));
@@ -221,14 +214,14 @@ function buildGameCanvas(){
 	tutorialDescTxt.textAlign = "center";
 	tutorialDescTxt.textBaseline='alphabetic';
 	tutorialDescTxt.text = textDisplay.share;
-	
+
 	//result
 	itemResult = new createjs.Bitmap(loader.getResult('itemPop'));
 	itemResultP = new createjs.Bitmap(loader.getResult('itemPopP'));
-	
+
 	buttonContinue = new createjs.Bitmap(loader.getResult('buttonContinue'));
 	centerReg(buttonContinue);
-	
+
 	resultShareTxt = new createjs.Text();
 	resultShareTxt.font = "30px australiatitle";
 	resultShareTxt.color = '#fff';
@@ -242,7 +235,7 @@ function buildGameCanvas(){
 	resultKillTxt.textAlign = "center";
 	resultKillTxt.textBaseline='alphabetic';
 	resultKillTxt.text = textDisplay.share;
-	
+
 	resultDescTxt = new createjs.Text();
 	resultDescTxt.font = "75px australiatitle";
 	resultDescTxt.color = '#e48524';
@@ -256,7 +249,7 @@ function buildGameCanvas(){
 	resultTitleTxt.textAlign = "center";
 	resultTitleTxt.textBaseline='alphabetic';
 	resultTitleTxt.text = textDisplay.resultTitle;
-	
+
 	buttonFacebook = new createjs.Bitmap(loader.getResult('buttonFacebook'));
 	buttonTwitter = new createjs.Bitmap(loader.getResult('buttonTwitter'));
 	buttonWhatsapp = new createjs.Bitmap(loader.getResult('buttonWhatsapp'));
@@ -266,7 +259,7 @@ function buildGameCanvas(){
 	createHitarea(buttonTwitter);
 	centerReg(buttonWhatsapp);
 	createHitarea(buttonWhatsapp);
-	
+
 	buttonFullscreen = new createjs.Bitmap(loader.getResult('buttonFullscreen'));
 	centerReg(buttonFullscreen);
 	buttonSoundOn = new createjs.Bitmap(loader.getResult('buttonSoundOn'));
@@ -279,12 +272,12 @@ function buildGameCanvas(){
 	buttonMusicOff = new createjs.Bitmap(loader.getResult('buttonMusicOff'));
 	centerReg(buttonMusicOff);
 	buttonMusicOn.visible = false;
-	
+
 	buttonExit = new createjs.Bitmap(loader.getResult('buttonExit'));
 	centerReg(buttonExit);
 	buttonSettings = new createjs.Bitmap(loader.getResult('buttonSettings'));
 	centerReg(buttonSettings);
-	
+
 	createHitarea(buttonFullscreen);
 	createHitarea(buttonSoundOn);
 	createHitarea(buttonSoundOff);
@@ -295,17 +288,17 @@ function buildGameCanvas(){
 	optionsContainer = new createjs.Container();
 	optionsContainer.addChild(buttonFullscreen, buttonSoundOn, buttonSoundOff, buttonMusicOn, buttonMusicOff, buttonExit);
 	optionsContainer.visible = false;
-	
+
 	//exit
 	itemExit = new createjs.Bitmap(loader.getResult('itemPop'));
 	itemExitP = new createjs.Bitmap(loader.getResult('itemPopP'));
-	
+
 	buttonConfirm = new createjs.Bitmap(loader.getResult('buttonConfirm'));
 	centerReg(buttonConfirm);
-	
+
 	buttonCancel = new createjs.Bitmap(loader.getResult('buttonCancel'));
 	centerReg(buttonCancel);
-	
+
 	popDescTxt = new createjs.Text();
 	popDescTxt.font = "35px australiatitle";
 	popDescTxt.lineHeight = 40;
@@ -320,7 +313,7 @@ function buildGameCanvas(){
 	exitTitleTxt.textAlign = "center";
 	exitTitleTxt.textBaseline='alphabetic';
 	exitTitleTxt.text = textDisplay.exitTitle;
-	
+
 	confirmContainer.addChild(itemExit, itemExitP, popDescTxt, exitTitleTxt, buttonConfirm, buttonCancel);
 	confirmContainer.visible = false;
 
@@ -337,12 +330,12 @@ function buildGameCanvas(){
 	gameLogsTxt.textAlign = "center";
 	gameLogsTxt.textBaseline='alphabetic';
 	gameLogsTxt.text = '';
-	
+
 	if(guide){
-		guideline = new createjs.Shape();	
+		guideline = new createjs.Shape();
 		guideline.graphics.setStrokeStyle(2).beginStroke('red').drawRect((stageW-contentW)/2, (stageH-contentH)/2, contentW, contentH);
 	}
-	
+
 	buttonLocalContainer.addChild(buttonLocal, buttonOnline);
 	mainContainer.addChild(logo, logoP, buttonPlay, buttonTutorial, buttonLocalContainer);
 	cardsMoveContainer.addChild(cardsContainer, particlesContainer, bombContainer, numbersContainer);
@@ -350,14 +343,14 @@ function buildGameCanvas(){
 	gameContainer.addChild(cardsWrapContainer, playerStatusContainer, gameStatusContainer, tutorialDescTxt, tutorialTitleTxt);
 
 	resultContainer.addChild(itemResult, itemResultP, buttonContinue, resultDescTxt, resultTitleTxt, resultKillTxt);
-	
+
 	if(shareEnable){
 		resultContainer.addChild(resultShareTxt, buttonFacebook, buttonTwitter, buttonWhatsapp);
 	}
-	
+
 	canvasContainer.addChild(bg, bgP, mainContainer, sizeContainer, gameContainer, gameLogsTxt, resultContainer, confirmContainer, optionsContainer, buttonSettings, guideline);
 	stage.addChild(canvasContainer);
-	
+
 	changeViewport(viewport.isLandscape);
 	resizeGameFunc();
 }
@@ -376,13 +369,13 @@ function changeViewport(isLandscape){
 		contentW = portraitSize.cW;
 		contentH = portraitSize.cH;
 	}
-	
+
 	gameCanvas.width = stageW;
 	gameCanvas.height = stageH;
-	
+
 	canvasW=stageW;
 	canvasH=stageH;
-	
+
 	changeCanvasViewport();
 }
 
@@ -413,24 +406,24 @@ function changeCanvasViewport(){
 			//game
 			sizeContainer.x = canvasW/2;
 			sizeContainer.y = canvasH/2;
-			
+
 			//result
 			itemResult.visible = true;
 			itemResultP.visible = false;
-			
+
 			buttonFacebook.x = canvasW/100*43;
 			buttonFacebook.y = canvasH/100*60;
 			buttonTwitter.x = canvasW/2;
 			buttonTwitter.y = canvasH/100*60;
 			buttonWhatsapp.x = canvasW/100*57;
 			buttonWhatsapp.y = canvasH/100*60;
-			
+
 			buttonContinue.x = canvasW/2;
 			buttonContinue.y = canvasH/100 * 71;
-	
+
 			resultShareTxt.x = canvasW/2;
 			resultShareTxt.y = canvasH/100 * 54;
-	
+
 			resultDescTxt.x = canvasW/2;
 			resultDescTxt.y = canvasH/100 * 48;
 
@@ -439,17 +432,17 @@ function changeCanvasViewport(){
 
 			resultTitleTxt.x = canvasW/2;
 			resultTitleTxt.y = canvasH/100 * 33;
-			
+
 			//exit
 			itemExit.visible = true;
 			itemExitP.visible = false;
 
 			buttonConfirm.x = (canvasW/2);
 			buttonConfirm.y = (canvasH/100 * 63);
-			
+
 			buttonCancel.x = (canvasW/2);
 			buttonCancel.y = (canvasH/100 * 73);
-			
+
 			popDescTxt.x = canvasW/2;
 			popDescTxt.y = canvasH/100 * 41;
 
@@ -484,24 +477,24 @@ function changeCanvasViewport(){
 			//game
 			sizeContainer.x = canvasW/2;
 			sizeContainer.y = canvasH/2;
-			
+
 			//result
 			itemResult.visible = false;
 			itemResultP.visible = true;
-			
+
 			buttonFacebook.x = canvasW/100*39;
 			buttonFacebook.y = canvasH/100*58;
 			buttonTwitter.x = canvasW/2;
 			buttonTwitter.y = canvasH/100*58;
 			buttonWhatsapp.x = canvasW/100*61;
 			buttonWhatsapp.y = canvasH/100*58;
-			
+
 			buttonContinue.x = canvasW/2;
 			buttonContinue.y = canvasH/100 * 67;
-	
+
 			resultShareTxt.x = canvasW/2;
 			resultShareTxt.y = canvasH/100 * 53;
-	
+
 			resultDescTxt.x = canvasW/2;
 			resultDescTxt.y = canvasH/100 * 49;
 
@@ -510,17 +503,17 @@ function changeCanvasViewport(){
 
 			resultTitleTxt.x = canvasW/2;
 			resultTitleTxt.y = canvasH/100 * 38;
-			
+
 			//exit
 			itemExit.visible = false;
 			itemExitP.visible = true;
 
 			buttonConfirm.x = (canvasW/2);
 			buttonConfirm.y = (canvasH/100 * 60);
-			
+
 			buttonCancel.x = (canvasW/2);
 			buttonCancel.y = (canvasH/100 * 67);
-			
+
 			popDescTxt.x = canvasW/2;
 			popDescTxt.y = canvasH/100 * 45;
 
@@ -540,16 +533,14 @@ function changeCanvasViewport(){
 
 
 /*!
- * 
- * RESIZE GAME CANVAS - This is the function that runs to resize game canvas
- * 
+ *  the function that runs to resize game canvas
  */
 function resizeCanvas(){
  	if(canvasContainer!=undefined){
-		
+
 		buttonSettings.x = (canvasW - offset.x) - 50;
 		buttonSettings.y = offset.y + 45;
-		
+
 		var distanceNum = 65;
 		var nextCount = 0;
 		if(curPage != 'game'){
@@ -568,7 +559,7 @@ function resizeCanvas(){
 			}else{
 				nextCount = 1;
 			}
-			
+
 			buttonFullscreen.x = buttonSettings.x;
 			buttonFullscreen.y = buttonSettings.y+(distanceNum*(nextCount+1));
 		}else{
@@ -587,10 +578,10 @@ function resizeCanvas(){
 			}else{
 				nextCount = 1;
 			}
-			
+
 			buttonFullscreen.x = buttonSettings.x;
 			buttonFullscreen.y = buttonSettings.y+(distanceNum*(nextCount+1));
-			
+
 			buttonExit.x = buttonSettings.x;
 			buttonExit.y = buttonSettings.y+(distanceNum*(nextCount+2));
 		}
@@ -601,9 +592,7 @@ function resizeCanvas(){
 }
 
 /*!
- * 
- * REMOVE GAME CANVAS - This is the function that runs to remove game canvas
- * 
+ *  the function that runs to remove game canvas
  */
  function removeGameCanvas(){
 	 stage.autoClear = true;
@@ -614,25 +603,19 @@ function resizeCanvas(){
  }
 
 /*!
- * 
- * CANVAS LOOP - This is the function that runs for canvas loop
- * 
- */ 
+ * the function that runs for canvas loop
+ */
 function tick(event) {
 	updateGame(event);
 	stage.update(event);
 }
 
-/*!
- * 
- * CANVAS MISC FUNCTIONS
- * 
- */
+
 function centerReg(obj){
 	obj.regX=obj.image.naturalWidth/2;
 	obj.regY=obj.image.naturalHeight/2;
 }
 
 function createHitarea(obj){
-	obj.hitArea = new createjs.Shape(new createjs.Graphics().beginFill("#000").drawRect(0, 0, obj.image.naturalWidth, obj.image.naturalHeight));	
+	obj.hitArea = new createjs.Shape(new createjs.Graphics().beginFill("#000").drawRect(0, 0, obj.image.naturalWidth, obj.image.naturalHeight));
 }

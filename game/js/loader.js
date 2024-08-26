@@ -1,23 +1,18 @@
-////////////////////////////////////////////////////////////
-// CANVAS LOADER
-////////////////////////////////////////////////////////////
 
  /*!
- * 
- * START CANVAS PRELOADER - This is the function that runs to preload canvas asserts
- * 
+ * the function that runs to preload canvas asserts
  */
  function initPreload(){
 	toggleLoader(true);
-	
+
 	checkMobileEvent();
-	
+
 	$(window).resize(function(){
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(checkMobileOrientation, 1000);
 	});
 	resizeGameFunc();
-	
+
 	loader = new createjs.LoadQueue(false);
 	manifest=[
 			{src:'assets/background.png', id:'bg'},
@@ -42,7 +37,7 @@
 			{src:'assets/item_particle1_3.png', id:'itemParticle3'},
 			{src:'assets/item_game_status.png', id:'itemGameStatus'},
 			{src:'assets/item_swoosh.png', id:'itemSwoosh'},
-		
+
 			{src:'assets/button_facebook.png', id:'buttonFacebook'},
 			{src:'assets/button_twitter.png', id:'buttonTwitter'},
 			{src:'assets/button_whatsapp.png', id:'buttonWhatsapp'},
@@ -96,11 +91,11 @@
 			manifest.push({src:cardTypes[n].iconPlayer, id:'cardTypesIconPlayer_'+n});
 		}
 	}
-	
-	if ( typeof addScoreboardAssets == 'function' ) { 
+
+	if ( typeof addScoreboardAssets == 'function' ) {
 		addScoreboardAssets();
 	}
-	
+
 	soundOn = true;
 	if($.browser.mobile || isTablet){
 		if(!enableMobileSound){
@@ -111,7 +106,7 @@
 			soundOn=false;
 		}
 	}
-	
+
 	if(soundOn){
 		manifest.push({src:'assets/sounds/sound_click.ogg', id:'soundButton'});
 		manifest.push({src:'assets/sounds/sound_card_deal.ogg', id:'soundCardDeal'});
@@ -139,11 +134,11 @@
 		manifest.push({src:'assets/sounds/sound_cannon.ogg', id:'soundCannon'});
 		manifest.push({src:'assets/sounds/music_main.ogg', id:'musicMain'});
 		manifest.push({src:'assets/sounds/music_game.ogg', id:'musicGame'});
-		
+
 		createjs.Sound.alternateExtensions = ["mp3"];
 		loader.installPlugin(createjs.Sound);
 	}
-	
+
 	loader.addEventListener("complete", handleComplete);
 	loader.addEventListener("fileload", fileComplete);
 	loader.addEventListener("error",handleFileError);
@@ -152,9 +147,7 @@
 }
 
 /*!
- * 
- * CANVAS FILE COMPLETE EVENT - This is the function that runs to update when file loaded complete
- * 
+ * the function that runs to update when file loaded complete
  */
 function fileComplete(evt) {
 	var item = evt.item;
@@ -162,27 +155,21 @@ function fileComplete(evt) {
 }
 
 /*!
- * 
- * CANVAS FILE HANDLE EVENT - This is the function that runs to handle file error
- * 
+ * the function that runs to handle file error
  */
 function handleFileError(evt) {
 	console.log("error ", evt);
 }
 
 /*!
- * 
- * CANVAS PRELOADER UPDATE - This is the function that runs to update preloder progress
- * 
+ * the function that runs to update preloder progress
  */
 function handleProgress() {
 	$('#mainLoader span').html(Math.round(loader.progress/1*100)+'%');
 }
 
 /*!
- * 
- * CANVAS PRELOADER COMPLETE - This is the function that runs when preloader is complete
- * 
+ *  the function that runs when preloader is complete
  */
 function handleComplete() {
 	toggleLoader(false);
@@ -190,9 +177,7 @@ function handleComplete() {
 };
 
 /*!
- * 
- * TOGGLE LOADER - This is the function that runs to display/hide loader
- * 
+ * the function that runs to display/hide loader
  */
 function toggleLoader(con){
 	if(con){
