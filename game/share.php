@@ -7,9 +7,9 @@
 			$thumb = isset($_GET['thumb']) ? $_GET['thumb'] : '';
 			$width = isset($_GET['width']) ? $_GET['width'] : '590';
 			$height = isset($_GET['height']) ? $_GET['height'] : '300';
-			$url = isset($_GET['url']) ? $_GET['url'] : 'https://codecanyon.net/user/demonisblack';
+			$url = isset($_GET['url']) ? $_GET['url'] : 'https://pixeljourney.xyz';
 		?>
-    
+
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $title;?></title>
         <meta property="og:title" content="<?php echo $title;?>" />
