@@ -3867,6 +3867,7 @@ function share(action){
 
 	title = shareTitle.replace("[SCORE]", addCommas(playerData.score));
 	text = shareMessage.replace("[SCORE]", addCommas(playerData.score));
+	text = shareMessage.replace("[NUMBER]", addCommas(playerData.kill));
 
 	var shareurl = '';
 
