@@ -3857,7 +3857,7 @@ function toggleFullScreen() {
  * the function that runs to open share url
  */
 function share(action){
-	gtag('event','click',{'event_category':'share','event_label':action});
+	//gtag('event','click',{'event_category':'share','event_label':action});
 
 	var loc = location.href
 	loc = loc.substring(0, loc.lastIndexOf("/") + 1);
@@ -3866,8 +3866,9 @@ function share(action){
 	var text = '';
 
 	title = shareTitle.replace("[SCORE]", addCommas(playerData.score));
-	text = shareMessage.replace("[SCORE]", addCommas(playerData.score));
-	text = shareMessage.replace("[NUMBER]", addCommas(playerData.kill));
+	text = shareMessage
+	    .replace("[SCORE]", addCommas(playerData.score))
+	    .replace("[NUMBER]", addCommas(playerData.kill));
 
 	var shareurl = '';
 
