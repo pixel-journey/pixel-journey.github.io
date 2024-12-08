@@ -126,12 +126,12 @@
             <table class="table table-striped table-bordered mt-4" id="leaderboard">
               <thead class="thead-dark">
     <tr>
-        <th>Rank</th>
+        <th>Ranking</th>
         <th>User</th>
-        <th>Templates Owned</th>
+        <th>Journey Assets Owned</th>
         <th>PXJ (<span id="timePeriodLabel">Per Hour</span>)</th>
         <th>WUF (<span id="timePeriodLabelWUF">Per Hour</span>)</th>
-        <th>PXJ Upgrades</th>
+        <th>PXJ (in Secondary-Tertiary) Upgrades</th>
         <th id="totalColumnHeader" class="highlight">Farm Yield</th>
     </tr>
 </thead>
@@ -168,7 +168,7 @@
     <script>
     const templates = [
         { id: 781515, pxj: 1.0, wuf: 20.0, pxjUpgrade: 0 },
-        { id: 820134, pxj: 5.0, wuf: 20.0, pxjUpgrade: 8000 },
+        { id: 820134, pxj: 5.0, wuf: 20.0, pxjUpgrade: 0 },
         { id: 858568, pxj: 5.0, wuf: 20.0, pxjUpgrade: 0 },
         { id: 858569, pxj: 0.45, wuf: 2.0, pxjUpgrade: 0 },
         { id: 858570, pxj: 0.45, wuf: 2.0, pxjUpgrade: 0 },
@@ -432,7 +432,7 @@
         // Initialize leaderboard on page load
         window.onload = initLeaderboard;
 
-        
+
     </script>
 </body>
 </html>
