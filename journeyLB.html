@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Journey WaxDAO Farm Collection Power Leaderboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .dropdown-menu {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .loading {
+        text-align: center;
+        font-size: 1.2em;
+        color: #555;
+    }
+    .tooltip-inner {
+        max-width: 200px;
+        white-space: pre-wrap;
+    }
+    .highlight {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+    .stats-bar {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #212529;
+        color: #fff;
+        font-size: 0.9rem;
+    }
+    .stats-bar img {
+        height: 40px;
+        margin-right: 10px;
+    }
+    .stats-bar a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .stat {
+        margin-right: 15px;
+    }
+    .modal-body {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    </style>
+</head>
+<body>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+      <a href="https://pixeljourney.xyz/" target="_blank">
+          <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey">
+      </a>
+      <div class="stat" id="waxPrice">WAX: $0.00</div>
+      <div class="stat" id="wufPrice">WUF: $0.00</div>
+      <div class="stat" id="pxjPrice">PXJ: $0.00</div>
+  </div>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Pixel Journey WaxDAO Farm Collection Power Leaderboard</h1>
+
+                <!-- Settings Section -->
+                <div class="row mb-3">
+
+        <!-- Blacklist Settings -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="exclude-wallets-container">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" id="excludeWalletsInput" placeholder="Blacklist wallets (Comma-separated)">
+                            <button class="btn btn-outline-secondary" id="updateExclusions">Update</button>
+                        </div>
+                        <button class="btn btn-outline-info w-100" data-bs-toggle="modal" data-bs-target="#blacklistModal">
+                            View/Edit Blacklisted Accounts
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <!-- Filter Settings -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="templateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                              Filter Templates
+                          </button>
+                          <ul class="dropdown-menu p-3" aria-labelledby="templateDropdown">
+                              <li><button class="btn btn-sm btn-primary w-100 mb-2" id="selectAllTemplates">Select All</button></li>
+                              <li><button class="btn btn-sm btn-danger w-100 mb-2" id="deselectAllTemplates">Deselect All</button></li>
+                              <div id="templateFilters"></div>
+                          </ul>
+                      </div>
+                        <select id="timePeriod" class="form-select mb-2">
+                            <option value="second">Per Second</option>
+                            <option value="minute">Per Minute</option>
+                            <option value="hour" selected="">Per Hour</option>
+                            <option value="day">Per Day</option>
+                            <option value="week">Per Week</option>
+                            <option value="month">Per Month</option>
+                            <option value="year">Per Year</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button id="toggleView" class="btn btn-outline-primary w-100">
+                Switch to USD View
+            </button>
+        </div>
+
+
+
+        <div id="loading" class="loading mt-3">Loading data, please wait...</div>
+        <div class="table-responsive" id="leaderboard-container" style="display:none;">
+            <table class="table table-striped table-bordered mt-4" id="leaderboard">
+              <thead class="thead-dark">
+    <tr>
+        <th>Rank</th>
+        <th>User</th>
+        <th>Templates Owned</th>
+        <th>PXJ (<span id="timePeriodLabel">Per Hour</span>)</th>
+        <th>WUF (<span id="timePeriodLabelWUF">Per Hour</span>)</th>
+        <th>PXJ Upgrades</th>
+        <th id="totalColumnHeader" class="highlight">Farm Yield</th>
+    </tr>
+</thead>
+
+                <tbody>
+                    <!-- Rows will be dynamically generated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+        <!-- Blacklist Modal -->
+        <div class="modal fade" id="blacklistModal" tabindex="-1" aria-labelledby="blacklistModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blacklistModalLabel">Blacklisted Accounts</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="blacklistAccounts" class="list-group">
+                            <!-- Blacklist items dynamically generated -->
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const templates = [
+        { id: 781515, pxj: 1.0, wuf: 20.0, pxjUpgrade: 0 },
+        { id: 820134, pxj: 5.0, wuf: 20.0, pxjUpgrade: 8000 },
+        { id: 858568, pxj: 5.0, wuf: 20.0, pxjUpgrade: 0 },
+        { id: 858569, pxj: 0.45, wuf: 2.0, pxjUpgrade: 0 },
+        { id: 858570, pxj: 0.45, wuf: 2.0, pxjUpgrade: 0 },
+        { id: 858571, pxj: 0.45, wuf: 2.0, pxjUpgrade: 0 },
+        { id: 858572, pxj: 2.05, wuf: 9.0, pxjUpgrade: 25000 },
+        { id: 858573, pxj: 2.05, wuf: 9.0, pxjUpgrade: 25000 },
+        { id: 858574, pxj: 2.05, wuf: 9.0, pxjUpgrade: 25000 },
+        { id: 858575, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 },
+        { id: 858576, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 },
+        { id: 858577, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 },
+        { id: 858578, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 },
+        { id: 858580, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 },
+        { id: 859273, pxj: 12.0, wuf: 42.0, pxjUpgrade: 125000 }
+    ];
+
+
+        const timeMultipliers = {
+            second: 1 / 3600,
+            minute: 1 / 60,
+            hour: 1,
+            day: 24,
+            week: 24 * 7,
+            month: 24 * 30,
+            year: 24 * 365
+        };
+
+        let currentTimePeriod = "hour";
+        let currentView = "WAXP"; // Default view
+        const excludedWallets = new Set(["swap.taco", "bridge.wax", "dao.pxj", "pixals.pxj", "pixeljourney", "wombatmaster", "dev.pxj", "team.pxj", "pepperstake"]);
+
+        let pxjPriceUSD = 0;
+        let wufPriceUSD = 0;
+
+        async function fetchPrices() {
+            const apiUrlPXJ = "https://alcor.exchange/api/v2/tokens/pxj-pixeljourney";
+            const apiUrlWUF = "https://alcor.exchange/api/v2/tokens/wuf-wuffi";
+            const apiUrlWAX = "https://alcor.exchange/api/v2/tokens/wax-eosio.token";
+
+            try {
+                const pxjResponse = await fetch(apiUrlPXJ);
+                const wufResponse = await fetch(apiUrlWUF);
+                const waxResponse = await fetch(apiUrlWAX);
+
+                if (!pxjResponse.ok || !wufResponse.ok || !waxResponse.ok) throw new Error("Failed to fetch token prices.");
+
+                const pxjData = await pxjResponse.json();
+                const wufData = await wufResponse.json();
+                const waxData = await waxResponse.json();
+
+                pxjPriceUSD = pxjData.usd_price;
+                wufPriceUSD = wufData.usd_price;
+                waxPriceUSD = waxData.usd_price;
+
+
+                                document.getElementById("waxPrice").textContent = `WAX: $${waxPriceUSD.toFixed(8)}`;
+                                document.getElementById("pxjPrice").textContent = `PXJ: $${pxjPriceUSD.toFixed(8)}`;
+                                document.getElementById("wufPrice").textContent = `WUF: $${wufPriceUSD.toFixed(8)}`;
+            } catch (error) {
+                console.error("Error fetching token prices:", error);
+                throw new Error("Could not fetch token prices.");
+            }
+        }
+
+        async function fetchTemplateHolders(template) {
+            const apiUrl = `https://wax.api.atomicassets.io/atomicassets/v1/accounts?template_id=${template.id}&burned=false&page=1&limit=1000&order=desc`;
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                const result = await response.json();
+                return result.data.map(holder => ({
+                    username: holder.account,
+                    assets: parseInt(holder.assets, 10),
+                    pxj: parseInt(holder.assets, 10) * template.pxj,
+                    wuf: parseInt(holder.assets, 10) * template.wuf
+                }));
+            } catch (error) {
+                console.error(`Failed to fetch holders for template ${template.id}:`, error);
+                return [];
+            }
+        }
+
+        async function fetchAllData(selectedTemplates) {
+            const leaderboardData = {};
+
+            for (const template of selectedTemplates) {
+                const holders = await fetchTemplateHolders(template);
+
+                holders.forEach(holder => {
+                    if (excludedWallets.has(holder.username)) return;
+
+                    if (!leaderboardData[holder.username]) {
+                        leaderboardData[holder.username] = { templatesOwned: 0, pxj: 0, wuf: 0, pxjUpgrades: 0 };
+                    }
+
+                    leaderboardData[holder.username].templatesOwned += holder.assets;
+                    leaderboardData[holder.username].pxj += holder.pxj;
+                    leaderboardData[holder.username].wuf += holder.wuf;
+
+                    if (template.pxjUpgrade > 0) {
+                        leaderboardData[holder.username].pxjUpgrades += holder.assets * template.pxjUpgrade;
+                    }
+                });
+            }
+
+            return Object.entries(leaderboardData).map(([username, data]) => ({
+                username,
+                ...data
+            }));
+        }
+
+
+        function populateLeaderboard(data) {
+            const loadingDiv = document.getElementById('loading');
+            const leaderboardContainer = document.getElementById('leaderboard-container');
+            const tbody = document.querySelector('#leaderboard tbody');
+            const totalColumnHeader = document.getElementById('totalColumnHeader');
+
+            loadingDiv.style.display = 'none';
+            leaderboardContainer.style.display = 'block';
+
+            const multiplier = timeMultipliers[currentTimePeriod];
+
+            tbody.innerHTML = ""; // Clear existing rows
+
+            data.sort((a, b) => b.pxj - a.pxj); // Sort by PXJ (default)
+
+            data.forEach((user, index) => {
+                const pxjReward = user.pxj * multiplier;
+                const wufReward = user.wuf * multiplier;
+                const pxjValueUSD = pxjReward * pxjPriceUSD;
+                const wufValueUSD = wufReward * wufPriceUSD;
+                const totalUSD = pxjValueUSD + wufValueUSD;
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${user.username}</td>
+                    <td>${user.templatesOwned}</td>
+                    <td>${pxjReward.toFixed(2)}</td>
+                    <td>${wufReward.toFixed(2)}</td>
+                    <td>${user.pxjUpgrades.toLocaleString()} PXJ</td>
+                    <td>
+                        ${
+                            currentView === "WAXP"
+                                ? `${(totalUSD / waxPriceUSD).toFixed(2)} WAX ($${totalUSD.toFixed(2)})`
+                                : `$${totalUSD.toFixed(2)} (${(totalUSD / waxPriceUSD).toFixed(2)} WAX)`
+                        }
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+
+        async function updateLeaderboard() {
+            try {
+                await fetchPrices(); // Fetch prices globally once
+
+                const selectedTemplates = templates.filter(template => {
+                    const checkbox = document.getElementById(`template-${template.id}`);
+                    return checkbox.checked;
+                });
+
+                if (selectedTemplates.length === 0) {
+                    alert('Please select at least one template!');
+                    return;
+                }
+
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('leaderboard-container').style.display = 'none';
+
+                const data = await fetchAllData(selectedTemplates);
+                populateLeaderboard(data);
+            } catch (error) {
+                console.error("Error updating leaderboard:", error);
+                alert("Failed to update leaderboard. Please try again later.");
+            }
+        }
+
+        function toggleView() {
+            currentView = currentView === "WAXP" ? "USD" : "WAXP";
+            document.getElementById("toggleView").textContent =
+                currentView === "WAXP" ? "Switch to USD View" : "Switch to WAXP View";
+            updateLeaderboard();
+        }
+
+        async function initLeaderboard() {
+            createTemplateFilters();
+            updateBlacklistModal();
+
+            // Add event listeners for filters
+            document.querySelectorAll('.form-check-input').forEach(input => {
+                input.addEventListener('change', updateLeaderboard);
+            });
+
+            // Add event listener for time period change
+            document.getElementById('timePeriod').addEventListener('change', (event) => {
+                currentTimePeriod = event.target.value;
+                updateLeaderboard();
+            });
+
+            // Add toggle button listener
+            document.getElementById('toggleView').addEventListener('click', toggleView);
+
+            // Initial load
+            await updateLeaderboard();
+        }
+
+        function createTemplateFilters() {
+            const filtersDiv = document.getElementById('templateFilters');
+
+            templates.forEach(template => {
+                const filter = document.createElement('div');
+                filter.className = 'form-check';
+                filter.innerHTML = `
+                    <input class="form-check-input" type="checkbox" id="template-${template.id}" value="${template.id}" checked>
+                    <label class="form-check-label" for="template-${template.id}">
+                        Template ${template.id}
+                    </label>
+                `;
+                filtersDiv.appendChild(filter);
+            });
+
+            document.getElementById('selectAllTemplates').addEventListener('click', () => {
+                document.querySelectorAll('.form-check-input').forEach(input => input.checked = true);
+                updateLeaderboard();
+            });
+
+            document.getElementById('deselectAllTemplates').addEventListener('click', () => {
+                document.querySelectorAll('.form-check-input').forEach(input => input.checked = false);
+                updateLeaderboard();
+            });
+        }
+
+
+                async function updateBlacklistModal() {
+                    const blacklistAccounts = document.getElementById("blacklistAccounts");
+                    if (!blacklistAccounts) return;
+
+                    blacklistAccounts.innerHTML = "";
+                    excludedWallets.forEach(wallet => {
+                        const listItem = document.createElement("li");
+                        listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                        listItem.textContent = wallet;
+
+                        const removeBtn = document.createElement("button");
+                        removeBtn.className = "btn btn-sm btn-danger";
+                        removeBtn.textContent = "Remove";
+                        removeBtn.onclick = () => {
+                            excludedWallets.delete(wallet);
+                            updateBlacklistModal();
+                        };
+
+                        listItem.appendChild(removeBtn);
+                        blacklistAccounts.appendChild(listItem);
+                    });
+                }
+
+        // Initialize leaderboard on page load
+        window.onload = initLeaderboard;
+
+        
+    </script>
+</body>
+</html>
