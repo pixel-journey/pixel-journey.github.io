@@ -6,62 +6,266 @@
     <title>Pixel Journey WaxDAO Farm Collection Power Leaderboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <style>
-    body {
-        background-color: #f8f9fa;
-    }
-    .dropdown-menu {
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    .loading {
-        text-align: center;
-        font-size: 1.2em;
-        color: #555;
-    }
-    .tooltip-inner {
-        max-width: 200px;
-        white-space: pre-wrap;
-    }
-    .highlight {
-        font-weight: bold;
-        text-decoration: underline;
-    }
-    .stats-bar {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #212529;
-        color: #fff;
-        font-size: 0.9rem;
-    }
-    .stats-bar img {
-        height: 40px;
-        margin-right: 10px;
-    }
-    .stats-bar a {
-        color: #fff;
-        text-decoration: none;
-    }
-    .stat {
-        margin-right: 15px;
-    }
-    .modal-body {
-        max-height: 400px;
-        overflow-y: auto;
-    }
+    :root {
+    --bg-dark: #202123;
+    --bg-light: #ffffff;
+    --accent-light: #f2f3f5;
+    --accent-dark: #2d2f31;
+    --highlight: #10a37f;
+    --hover-bg-dark: #2f3134;
+    --hover-bg-light: #eaeaea;
+    --table-row-alt-dark: #27292b;
+    --table-row-alt-light: #f9f9f9;
+    --table-text-dark: #d1d5db;
+    --table-text-light: #1f2937;
+    --border-dark: #3a3d40;
+    --border-light: #d1d5db;
+    --card-dark: #27292b;
+    --card-light: #f5f5f5;
+    --btn-bg-dark: linear-gradient(90deg, #10a37f, #14b885);
+    --btn-bg-light: linear-gradient(90deg, #10a37f, #14b885);
+    --btn-hover-dark: #18b493;
+    --btn-hover-light: #18b493;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--table-text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.light-mode {
+    background-color: var(--bg-light);
+    color: var(--table-text-light);
+}
+
+a {
+    color: var(--highlight);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    background-color: var(--bg-dark);
+    padding: 16px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+header.light-mode {
+    background-color: var(--bg-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+header h1 {
+    color: var(--highlight);
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.stats-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+}
+
+.stats-bar img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.stats-bar.light-mode {
+    background: var(--card-light);
+    border: 1px solid var(--border-light);
+}
+
+
+button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    background: var(--btn-bg-dark);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--btn-hover-dark);
+}
+
+.light-mode button {
+    background: var(--btn-bg-light);
+}
+
+.light-mode button:hover {
+    background: var(--btn-hover-light);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table thead th {
+    background: var(--card-dark);
+    color: var(--table-text-dark);
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid var(--border-dark);
+}
+
+.light-mode table thead th {
+    background: var(--card-light);
+    color: var(--table-text-light);
+    border-bottom: 2px solid var(--border-light);
+}
+
+table tbody tr {
+    background-color: var(--bg-dark);
+    color: var(--table-text-dark);
+    transition: background 0.3s ease;
+}
+
+table tbody tr:nth-child(2n) {
+    background-color: var(--table-row-alt-dark);
+}
+
+table tbody tr:hover {
+    background-color: var(--hover-bg-dark);
+}
+
+.light-mode table tbody tr {
+    background-color: var(--accent-light);
+    color: var(--table-text-light);
+}
+
+.light-mode table tbody tr:nth-child(2n) {
+    background-color: var(--table-row-alt-light);
+}
+
+.light-mode table tbody tr:hover {
+    background-color: var(--hover-bg-light);
+}
+
+table tbody td {
+    padding: 10px;
+    border-top: 1px solid var(--border-dark);
+}
+
+.light-mode table tbody td {
+    border-top: 1px solid var(--border-light);
+}
+
+.card {
+    background: var(--card-dark);
+    color: var(--table-text-dark);
+    padding: 20px;
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.card.light-mode {
+    background: var(--card-light);
+    color: var(--table-text-light);
+    border: 1px solid var(--border-light);
+}
+
+.dropdown-menu {
+    background: var(--card-dark);
+    color: var(--table-text-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu.light-mode {
+    background: var(--card-light);
+    color: var(--table-text-light);
+    border: 1px solid var(--border-light);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown-item:hover {
+    background: var(--highlight);
+    color: white;
+}
+
+.dark-mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--highlight);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    background: #18b493;
+    color: white;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    background: var(--accent-dark);
+    color: var(--table-text-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--highlight);
+    outline: none;
+}
+
+.light-mode .input-group input {
+    background: var(--accent-light);
+    color: var(--table-text-light);
+    border: 1px solid var(--border-light);
+}
+
     </style>
 </head>
 <body>
+  <!-- Dark Mode Toggle -->
+     <button class="dark-mode-toggle" id="darkModeToggle">Light Mode</button>
 
-  <!-- Stats Bar -->
-  <div class="stats-bar">
-      <a href="https://pixeljourney.xyz/" target="_blank">
-          <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey">
-      </a>
-      <div class="stat" id="waxPrice">WAX: $0.00</div>
-      <div class="stat" id="wufPrice">WUF: $0.00</div>
-      <div class="stat" id="pxjPrice">PXJ: $0.00</div>
-  </div>
+     <!-- Stats Bar -->
+     <div class="stats-bar">
+         <a href="https://pixeljourney.xyz/" target="_blank">
+             <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey" style="height: 40px; margin-right: 15px;">
+         </a>
+         <div class="stat" id="waxPrice">WAX: $0.00</div>
+         <div class="stat" id="wufPrice">WUF: $0.00</div>
+         <div class="stat" id="pxjPrice">PXJ: $0.00</div>
+     </div>
 
     <div class="container mt-4">
         <h1 class="text-center mb-4">Pixel Journey WaxDAO Farm Collection Power Leaderboard</h1>
@@ -76,9 +280,9 @@
                     <div class="exclude-wallets-container">
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" id="excludeWalletsInput" placeholder="Blacklist wallets (Comma-separated)">
-                            <button class="btn btn-outline-secondary" id="updateExclusions">Update</button>
+                            <button class="btn btn-secondary" id="updateExclusions">Update</button>
                         </div>
-                        <button class="btn btn-outline-info w-100" data-bs-toggle="modal" data-bs-target="#blacklistModal">
+                        <button class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#blacklistModal">
                             View/Edit Blacklisted Accounts
                         </button>
                     </div>
@@ -95,12 +299,13 @@
                           <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="templateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                               Filter Templates
                           </button>
-                          <ul class="dropdown-menu p-3" aria-labelledby="templateDropdown">
+                          <ul class="dropdown-menu p-3" aria-labelledby="templateDropdown" id="templateFilters">
                               <li><button class="btn btn-sm btn-primary w-100 mb-2" id="selectAllTemplates">Select All</button></li>
                               <li><button class="btn btn-sm btn-danger w-100 mb-2" id="deselectAllTemplates">Deselect All</button></li>
                               <div id="templateFilters"></div>
                           </ul>
                       </div>
+                  </div>
                         <select id="timePeriod" class="form-select mb-2">
                             <option value="second">Per Second</option>
                             <option value="minute">Per Minute</option>
@@ -114,33 +319,31 @@
                 </div>
             </div>
 
-            <button id="toggleView" class="btn btn-outline-primary w-100">
+            <button id="toggleView" class="btn btn-outline-primary w-100" style="display:none">
                 Switch to USD View
             </button>
         </div>
 
-
-
-        <div id="loading" class="loading mt-3">Loading data, please wait...</div>
-        <div class="table-responsive" id="leaderboard-container" style="display:none;">
-            <table class="table table-striped table-bordered mt-4" id="leaderboard">
-              <thead class="thead-dark">
-    <tr>
-        <th>Ranking</th>
-        <th>User</th>
-        <th>Journey Assets Owned</th>
-        <th>PXJ (in Secondary-Tertiary) Upgrades</th>
-        <th>PXJ (<span id="timePeriodLabel">Per Hour</span>)</th>
-        <th>WUF (<span id="timePeriodLabelWUF">Per Hour</span>)</th>
-        <th id="totalColumnHeader" class="highlight">Farm Yield (<span id="timePeriodLabel">Per Hour</span>)</th>
-    </tr>
-</thead>
-
-                <tbody>
-                    <!-- Rows will be dynamically generated -->
-                </tbody>
-            </table>
-        </div>
+        <!-- Leaderboard -->
+              <div id="loading" class="loading mt-3">Loading data, please wait...</div>
+              <div class="table-responsive" id="leaderboard-container" style="display:none;">
+                  <table class="table table-bordered mt-4" id="leaderboard">
+                      <thead>
+                          <tr>
+                              <th>Rank</th>
+                              <th>User</th>
+                              <th>Journey Assets Owned</th>
+                              <th>PXJ in Upgrades</th>
+                              <th>PXJ (<span id="timePeriodLabel">Per Week</span>)</th>
+                              <th>WUF (<span id="timePeriodLabelWUF">Per Week</span>)</th>
+                              <th id="totalColumnHeader" class="highlight">Farm Yield (<span id="timePeriodLabelTotal">Per Week</span>)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- Rows dynamically added -->
+                      </tbody>
+                  </table>
+              </div>
     </div>
 
 
@@ -195,7 +398,7 @@
             year: 24 * 365
         };
 
-        let currentTimePeriod = "hour";
+        let currentTimePeriod = "week";
         let currentView = "WAXP"; // Default view
         const excludedWallets = new Set(["swap.taco", "bridge.wax", "dao.pxj", "pixals.pxj", "pixeljourney", "wombatmaster", "dev.pxj", "team.pxj", "pepperstake"]);
 
@@ -287,11 +490,19 @@
             const leaderboardContainer = document.getElementById('leaderboard-container');
             const tbody = document.querySelector('#leaderboard tbody');
             const totalColumnHeader = document.getElementById('totalColumnHeader');
+            const timePeriodLabel = document.getElementById('timePeriodLabel');
+           const timePeriodLabelWUF = document.getElementById('timePeriodLabelWUF');
+          const timePeriodLabelTotal = document.getElementById('timePeriodLabelTotal');
+
 
             loadingDiv.style.display = 'none';
             leaderboardContainer.style.display = 'block';
 
             const multiplier = timeMultipliers[currentTimePeriod];
+
+            timePeriodLabel.textContent = `Per ${currentTimePeriod}`;
+            timePeriodLabelWUF.textContent = `Per ${currentTimePeriod}`;
+            timePeriodLabelTotal.textContent = `Per ${currentTimePeriod}`;
 
             tbody.innerHTML = ""; // Clear existing rows
 
@@ -309,9 +520,9 @@
                     <td>${index + 1}</td>
                     <td>${user.username}</td>
                     <td>${user.templatesOwned}</td>
+                    <td>${user.pxjUpgrades.toLocaleString()} PXJ</td>
                     <td>${pxjReward.toFixed(2)}</td>
                     <td>${wufReward.toFixed(2)}</td>
-                    <td>${user.pxjUpgrades.toLocaleString()} PXJ</td>
                     <td>
                         ${
                             currentView === "WAXP"
@@ -432,6 +643,11 @@
         // Initialize leaderboard on page load
         window.onload = initLeaderboard;
 
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            darkModeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
+        });
 
     </script>
 </body>
