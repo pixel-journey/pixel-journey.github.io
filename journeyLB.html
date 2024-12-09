@@ -341,10 +341,10 @@ table tbody td {
                               <th>Rank</th>
                               <th>User</th>
                               <th>Journey Assets Owned</th>
-                              <th>PXJ in Upgrades</th>
+                              <th>PXJ Locked in Second-/Tertiary Ingredients</th>
                               <th>PXJ (<span id="timePeriodLabel">Per Week</span>)</th>
                               <th>WUF (<span id="timePeriodLabelWUF">Per Week</span>)</th>
-                              <th id="totalColumnHeader" class="highlight">Farm Yield (<span id="timePeriodLabelTotal">Per Week</span>)</th>
+                              <th id="totalColumnHeader" class="highlight">Farm Yield Value (<span id="timePeriodLabelTotal">Per Week</span>)</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -534,7 +534,7 @@ table tbody td {
                     <td>
                         ${
                             currentView === "WAXP"
-                                ? `${(totalUSD / waxPriceUSD).toFixed(2)} WAX ($${totalUSD.toFixed(2)})`
+                                ? ` ${(totalUSD / pxjPriceUSD).toFixed(2)} PXJ (= ${(totalUSD / waxPriceUSD).toFixed(2)} WAX or $${totalUSD.toFixed(2)})`
                                 : `$${totalUSD.toFixed(2)} (${(totalUSD / waxPriceUSD).toFixed(2)} WAX)`
                         }
                     </td>
