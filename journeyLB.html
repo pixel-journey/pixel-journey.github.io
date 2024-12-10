@@ -32,8 +32,6 @@ body {
     background-color: var(--bg-dark);
     color: var(--table-text-dark);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
     transition: all 0.3s ease;
 }
 
@@ -119,9 +117,10 @@ button:hover {
 }
 
 table {
-    width: 100%;
+    max-width: 97.5%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table thead th {
@@ -529,12 +528,12 @@ table tbody td {
                     <td>${user.username}</td>
                     <td>${user.templatesOwned}</td>
                     <td>${user.pxjUpgrades.toLocaleString()} PXJ</td>
-                    <td>${pxjReward.toFixed(2)}</td>
-                    <td>${wufReward.toFixed(2)}</td>
+                    <td>${pxjReward.toLocaleString()}</td>
+                    <td>${wufReward.toLocaleString()}</td>
                     <td>
                         ${
                             currentView === "WAXP"
-                                ? ` ${(totalUSD / pxjPriceUSD).toFixed(2)} PXJ (= ${(totalUSD / waxPriceUSD).toFixed(2)} WAX or $${totalUSD.toFixed(2)})`
+                                ? ` ${(totalUSD / pxjPriceUSD).toLocaleString()} PXJ (= ${(totalUSD / waxPriceUSD).toLocaleString()} WAX or $${totalUSD.toLocaleString()})`
                                 : `$${totalUSD.toFixed(2)} (${(totalUSD / waxPriceUSD).toFixed(2)} WAX)`
                         }
                     </td>
