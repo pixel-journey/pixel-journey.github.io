@@ -945,6 +945,79 @@ nav#navigation a:hover {
   left: -41px;
 }
 
+/* Dropdown Menu Styling */
+nav#navigation .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+nav#navigation .dropdown-menu {
+  display: none;
+  position: absolute;
+  bottom: 100%; /* Makes it a drop-up */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17, 17, 17, .85);
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  min-width: 200px;
+  text-align: center;
+  z-index: 1000;
+}
+
+nav#navigation .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+nav#navigation .dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  color: #fff;
+  font-family: 'Dosis', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 1px 1px 2px #111;
+  transition: all 0.3s ease;
+}
+
+nav#navigation .dropdown-item:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #111;
+  text-shadow: none;
+}
+
+/* Ensure dropdown button matches style */
+nav#navigation .dropdown-toggle {
+  cursor: pointer;
+  background: transparent;
+  padding: 12px 30px;
+  display: inline-block;
+  transition: all 0.5s ease;
+}
+
+nav#navigation .dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #111;
+  text-shadow: none;
+}
+
+/* Adjust positioning for specific dropdowns */
+#navigation > ul > li:nth-child(1) .dropdown-menu {
+  background-color: rgba(88, 101, 242, 0.85); /* Discord theme */
+}
+
+#navigation > ul > li:nth-child(3) .dropdown-menu {
+  margin-top: 5px;
+}
+#navigation > ul > li:nth-child(4) .dropdown-menu {
+  margin-top: 5px;
+}
+
+
 h6 {
   font-family: 'Dosis', sans-serif;
   font-size: 11px;
@@ -1285,6 +1358,27 @@ ul.social-icons a:hover {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
+/* showmore-pixelpaper */
+  .more-text {
+    display: none;
+  }
+  .expanded .more-text {
+    display: block;
+  }
+  .dots {
+    display: inline;
+  }
+  .expanded .dots {
+    display: none;
+  }
+  .read-more-btn {
+    background-color: transparent;
+    border: none;
+    color: #111;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px;
+  }
 
 /* hero slider */
 .slide-SINGLE .slide {
