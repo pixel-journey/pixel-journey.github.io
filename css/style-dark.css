@@ -946,6 +946,7 @@ nav#navigation a:hover {
 nav#navigation .dropdown {
   position: relative;
   display: inline-block;
+  min-width: 250px;
 }
 
 nav#navigation .dropdown-menu {
