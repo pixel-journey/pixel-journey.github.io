@@ -148,6 +148,17 @@ $(function() {
     }
 
 
+	// readmore-pixelpaper
+	 document.querySelectorAll('.read-more-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const content = this.previousElementSibling;
+      content.classList.toggle('expanded');
+      this.textContent = content.classList.contains('expanded') ? "Show Less" : "Show More";
+    });
+  });
+
+	
+
     // knowledgebank accordion
 $(".knowledgebank-accordion ul li span").on("click", function() {
   $(this).parent("li").siblings("li.toggled").removeClass("toggled").children("ul").stop(true, true).slideUp();
