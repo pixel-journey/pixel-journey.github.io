@@ -946,7 +946,6 @@ nav#navigation a:hover {
 nav#navigation .dropdown {
   position: relative;
   display: inline-block;
-  min-width: 250px;
 }
 
 nav#navigation .dropdown-menu {
@@ -967,6 +966,7 @@ nav#navigation .dropdown-menu {
 
 nav#navigation .dropdown:hover .dropdown-menu {
   display: block;
+  min-width: 250px;
 }
 
 nav#navigation .dropdown-item {
