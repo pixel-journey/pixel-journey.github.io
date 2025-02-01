@@ -904,17 +904,13 @@ nav#navigation a:hover {
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  margin-top: 5px;
 }
 
 #navigation > ul > li:nth-child(1) {
   background-color: rgba(88, 101, 242, 0.5);
 }
 
-#navigation > ul > li:nth-child(3) {
-  margin-top: 5px;
-}
-#navigation > ul > li:nth-child(4) {
+#navigation > ul > li {
   margin-top: 5px;
 }
 
