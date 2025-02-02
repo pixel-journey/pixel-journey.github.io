@@ -147,6 +147,21 @@ $(function() {
         $(".border-left, .border-right").css("height", "0px");
     }
 
+	document.querySelectorAll(".toggle-btn").forEach(button => {
+  button.addEventListener("click", function () {
+    const targetId = this.getAttribute("data-bs-target");
+    const targetElement = document.querySelector(targetId);
+
+    targetElement.addEventListener("shown.bs.collapse", () => {
+      this.textContent = "Show Less";
+    });
+
+    targetElement.addEventListener("hidden.bs.collapse", () => {
+      this.textContent = "Show More";
+    });
+  });
+});
+
 
     // knowledgebank accordion
 $(".knowledgebank-accordion ul li span").on("click", function() {
