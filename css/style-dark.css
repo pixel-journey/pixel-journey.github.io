@@ -468,7 +468,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Remove margin between visible and hidden text */
 .season-content p {
-  font-size: 16px;
   line-height: 1.6;
   margin: 0; /* Remove default margin */
   padding: 0;
@@ -490,8 +489,9 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   width: 120px;
   text-align: center;
-  margin-top: 5px; /* Keeps it close to text */
+  margin-top: 10px; /* Keeps it close to text */
   font-weight: 500;
+  margin-bottom: 5px;
 }
 
 
