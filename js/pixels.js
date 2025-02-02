@@ -148,24 +148,6 @@ $(function() {
     }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".read-more-btn").forEach(button => {
-    button.addEventListener("click", function () {
-      const seasonContent = this.closest(".season-content"); // Locate the closest season container
-      const moreText = seasonContent.querySelector(".more-text");
-      const dots = seasonContent.querySelector(".dots");
-
-      if (moreText) {
-        const isExpanded = moreText.classList.toggle("expanded");
-        dots.style.display = isExpanded ? "none" : "inline"; // Hide or show dots
-        this.textContent = isExpanded ? "Show Less" : "Show More";
-      }
-    });
-  });
-});
-
-	
-
     // knowledgebank accordion
 $(".knowledgebank-accordion ul li span").on("click", function() {
   $(this).parent("li").siblings("li.toggled").removeClass("toggled").children("ul").stop(true, true).slideUp();
