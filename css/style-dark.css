@@ -574,6 +574,14 @@ h1, h2, h3, h4, h5, h6 {
   visibility: hidden;
 }
 
+.more-text {
+  display: none; /* Hide additional content by default */
+}
+
+.more-text.expanded {
+  display: block; /* Show when expanded */
+}
+
 
 /* panel left bg */
 .panel-left-bg {
