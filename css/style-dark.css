@@ -451,15 +451,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Improve Readability & Layout */
 .season-content {
-  background: rgba(255, 255, 255, 0.05); /* Subtle background */
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   margin-bottom: 15px; /* Space between roadmap sections */
 }
 
 .season-content p {
-  font-size: 16px;
   line-height: 1.6; /* Improves readability */
   margin: 5px 0; /* Adjusts text spacing */
 }
