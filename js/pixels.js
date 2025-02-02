@@ -148,14 +148,30 @@ $(function() {
     }
 
 
-	// readmore-pixelpaper
-	 document.querySelectorAll('.read-more-btn').forEach(button => {
+document.addEventListener("DOMContentLoaded", function () {
+  // Debugging: Check if the main selector works
+  const testButton = document.querySelector("body > div.panel-right.open > div.lower-page > div > div > div > div > div:nth-child(5) > div:nth-child(3) > button");
+  console.log("Test button found:", testButton);
+
+  // Attach event listeners to all read-more buttons
+  document.querySelectorAll('.read-more-btn').forEach(button => {
     button.addEventListener('click', function () {
-      const content = this.previousElementSibling;
-      content.classList.toggle('expanded');
-      this.textContent = content.classList.contains('expanded') ? "Show Less" : "Show More";
+      let content = this.previousElementSibling; // Assumes content is the previous sibling
+
+      // Debugging: Check if content exists
+      console.log("Toggling content for:", this);
+      console.log("Found content:", content);
+
+      if (content) {
+        content.classList.toggle('expanded');
+        this.textContent = content.classList.contains('expanded') ? "Show Less" : "Show More";
+      } else {
+        console.error("Error: No content found before button", this);
+      }
     });
   });
+});
+
 
 	
 
