@@ -449,6 +449,40 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 5px;
 }
 
+/* Improve Readability & Layout */
+.season-content {
+  background: rgba(255, 255, 255, 0.05); /* Subtle background */
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 15px; /* Space between roadmap sections */
+}
+
+.season-content p {
+  font-size: 16px;
+  line-height: 1.6; /* Improves readability */
+  margin: 5px 0; /* Adjusts text spacing */
+}
+
+/* Prevents "gaps" inside collapsed content */
+.collapse:not(.show) {
+  display: none; /* Ensures the hidden content doesn't take up space */
+}
+
+.collapse.show {
+  display: block;
+}
+
+/* Style the button */
+.toggle-btn {
+  display: block;
+  width: 120px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+
 
 /* divider */
 .dividerOT-about-top {
