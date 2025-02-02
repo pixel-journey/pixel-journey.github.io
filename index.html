@@ -251,8 +251,8 @@
     <span class="dots">...</span>
   </p>
 
-  <input type="checkbox" class="toggle-more" id="season1-toggle">
-  <div class="more-text">
+  <!-- Collapsible Content -->
+  <div class="collapse" id="season1-more">
     <p>
       4. **PFP Collection**: Launch of 10,000 Pixal PFPs, opening new paths in our Pixel Journey.  
       5. **Pixel Recycling**: Burn up to 80% of PFPs to release pixels via PixelPacks.  
@@ -266,7 +266,10 @@
     </p>
   </div>
 
-  <label for="season1-toggle" class="read-more-btn">Show More</label>
+  <!-- Toggle Button -->
+  <button class="btn btn-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#season1-more" aria-expanded="false" aria-controls="season1-more">
+    Show More
+  </button>
 </div>
 
 <!-- Season 2 -->
@@ -277,15 +280,19 @@
     <span class="dots">...</span>
   </p>
 
-  <input type="checkbox" class="toggle-more" id="season2-toggle">
-  <div class="more-text">
+  <!-- Collapsible Content -->
+  <div class="collapse" id="season2-more">
     <p>
       We're gearing up for **new PFP evolutions**, **enhanced utility for Pixel Ingredients**, and **deeper cross-chain interactions**. More information will be revealed soon, as we prepare to take Pixel Journey even further!  
     </p>
   </div>
 
-  <label for="season2-toggle" class="read-more-btn">Show More</label>
+  <!-- Toggle Button -->
+  <button class="btn btn-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#season2-more" aria-expanded="false" aria-controls="season2-more">
+    Show More
+  </button>
 </div>
+
 </div><!-- row end -->
 
             <!-- row start -->
