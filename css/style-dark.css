@@ -574,13 +574,35 @@ h1, h2, h3, h4, h5, h6 {
   visibility: hidden;
 }
 
-.more-text {
-  display: none; /* Hide additional content by default */
+/* Hide the checkbox */
+.toggle-more {
+  display: none;
 }
 
-.more-text.expanded {
-  display: block; /* Show when expanded */
+/* Hide more text by default */
+.more-text {
+  display: none;
 }
+
+/* When checkbox is checked, show the full content */
+.toggle-more:checked + .more-text {
+  display: block;
+}
+
+/* Hide "..." when expanded */
+.toggle-more:checked ~ p .dots {
+  display: none;
+}
+
+/* Change button text dynamically */
+.toggle-more + .read-more-btn::after {
+  content: "Show More";
+}
+
+.toggle-more:checked + .read-more-btn::after {
+  content: "Show Less";
+}
+
 
 
 /* panel left bg */
