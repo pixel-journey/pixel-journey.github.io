@@ -451,30 +451,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Improve Readability & Layout */
 .season-content {
-  margin-bottom: 15px; /* Space between roadmap sections */
-}
-
-.season-content p {
-  line-height: 1.6; /* Improves readability */
-  margin: 5px 0; /* Adjusts text spacing */
-}
-
-/* Prevents "gaps" inside collapsed content */
-.collapse:not(.show) {
-  display: none; /* Ensures the hidden content doesn't take up space */
+  margin-bottom: 0px; /* Space between roadmap sections */
 }
 
 .collapse.show {
   display: block;
-}
-
-/* Style the button */
-.toggle-btn {
-  display: block;
-  width: 120px;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: 500;
 }
 
 .more-text {
@@ -484,6 +465,35 @@ h1, h2, h3, h4, h5, h6 {
 .more-text.expanded {
   display: block; /* Show when expanded */
 }
+
+/* Remove margin between visible and hidden text */
+.season-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0; /* Remove default margin */
+  padding: 0;
+}
+
+/* Prevents extra spacing before the collapse */
+.more-text {
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevents unwanted whitespace when collapsed */
+.collapse:not(.show) {
+  display: none;
+}
+
+/* Button styling */
+.toggle-btn {
+  display: block;
+  width: 120px;
+  text-align: center;
+  margin-top: 5px; /* Keeps it close to text */
+  font-weight: 500;
+}
+
 
 
 
