@@ -26,7 +26,7 @@
   <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
 
   <meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-  
+
   <link rel="icon" type="image/x-icon" href="https://pixeljourney.xyz/img/logo.png">
 
     <title>Pixel Journey || WaxDAO Farm Collection Power Leaderboard</title>
@@ -386,6 +386,15 @@ table tbody td {
                 Switch to USD View
             </button>
         </div>
+
+        <div id="apr-notification" class="text-center p-4 mt-3 mb-3"
+             style="font-size: 24px; font-weight: bold; color: #fff; background: #10a37f; border-radius: 10px;">
+            🔥 Current Ingredient <u>PXJ</u> Lockup-Staking APR rates (WUF bonus excluded) 🔥 <br>
+            Secondary: <span id="secondaryApr">Calculating...</span>% |
+            Tertiary: <span id="tertiaryApr">Calculating...</span>%|
+            Black: <span id="blackApr">Calculating...</span>%
+        </div>
+
 
         <!-- Collapsible Info Box -->
 <div class="info-box mt-4 mb-4 text-center">
@@ -921,6 +930,23 @@ function sortTable(columnIndex) {
             document.body.classList.toggle('light-mode');
             darkModeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
         });
+
+        function calculateAPR() {
+    const secondaryReward = 2.5;  // Update this dynamically from your template values if needed
+    const tertiaryReward = 13.5;  // Update this dynamically from your template values if needed
+    const blackReward = 100;
+
+    const secondaryAPR = ((secondaryReward * 24 * 365) / 25000) * 100;
+    const tertiaryAPR = ((tertiaryReward * 24 * 365) / 125000) * 100;
+    const blackAPR = ((blackReward * 24 * 365) / 1500000) * 100;
+
+    document.getElementById("secondaryApr").textContent = secondaryAPR.toFixed(2);
+    document.getElementById("tertiaryApr").textContent = tertiaryAPR.toFixed(2);
+    document.getElementById("blackApr").textContent = blackAPR.toFixed(2);
+}
+
+// Run APR calculation when the page loads
+document.addEventListener("DOMContentLoaded", calculateAPR);
 
 
     </script>
