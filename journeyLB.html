@@ -26,6 +26,8 @@
   <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
 
   <meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <link rel="icon" type="image/x-icon" href="https://pixeljourney.xyz/img/logo.png">
 
@@ -288,6 +290,25 @@ table tbody td {
 
 }
 
+.total-row {
+    background-color: var(--highlight) !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.total-row td {
+    border-top: 2px solid var(--border-dark) !important;
+}
+
+.light-mode .total-row {
+    background-color: var(--highlight) !important;
+    color: white !important;
+}
+
+.light-mode .total-row td {
+    border-top: 2px solid var(--border-light) !important;
+}
+
     </style>
 </head>
 <body>
@@ -478,22 +499,22 @@ table tbody td {
         <!-- Leaderboard -->
               <div id="loading" class="loading mt-3">Loading data, please wait...</div>
               <div class="table-responsive" id="leaderboard-container" style="display:none;">
-                  <table class="table table-bordered mt-4" id="leaderboard">
-                      <thead>
-                          <tr>
-                              <th>Rank</th>
-                              <th>User</th>
-                              <th>Journey Assets Owned</th>
-                              <th>PXJ Locked in Second-/Tertiary Ingredients</th>
-                              <th>PXJ (<span id="timePeriodLabel">Per Week</span>)</th>
-                              <th>WUF (<span id="timePeriodLabelWUF">Per Week</span>)</th>
-                              <th id="totalColumnHeader" class="highlight">Farm Yield Value (<span id="timePeriodLabelTotal">Per Week</span>)</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <!-- Rows dynamically added -->
-                      </tbody>
-                  </table>
+                <table class="table table-bordered mt-4" id="leaderboard">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">Rank</th>
+            <th onclick="sortTable(1)">User</th>
+            <th onclick="sortTable(2)">Journey Assets Owned</th>
+            <th onclick="sortTable(3)">PXJ Locked in Second-/Tertiary Ingredients</th>
+            <th id="totalColumnHeader" class="highlight" onclick="sortTable(4)">
+                Farm Yield Value (<span id="timePeriodLabelTotal">Per Week</span>)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows dynamically added -->
+    </tbody>
+</table>
               </div>
     </div>
 
@@ -609,84 +630,141 @@ table tbody td {
         }
 
         async function fetchAllData(selectedTemplates) {
-            const leaderboardData = {};
+    const leaderboardData = {};
 
-            for (const template of selectedTemplates) {
-                const holders = await fetchTemplateHolders(template);
+    for (const template of selectedTemplates) {
+        const holders = await fetchTemplateHolders(template);
 
-                holders.forEach(holder => {
-                    if (excludedWallets.has(holder.username)) return;
+        holders.forEach(holder => {
+            if (excludedWallets.has(holder.username)) return;
 
-                    if (!leaderboardData[holder.username]) {
-                        leaderboardData[holder.username] = { templatesOwned: 0, pxj: 0, wuf: 0, pxjUpgrades: 0 };
-                    }
-
-                    leaderboardData[holder.username].templatesOwned += holder.assets;
-                    leaderboardData[holder.username].pxj += holder.pxj;
-                    leaderboardData[holder.username].wuf += holder.wuf;
-
-                    if (template.pxjUpgrade > 0) {
-                        leaderboardData[holder.username].pxjUpgrades += holder.assets * template.pxjUpgrade;
-                    }
-                });
+            if (!leaderboardData[holder.username]) {
+                leaderboardData[holder.username] = {
+                    templatesOwned: 0,
+                    pxj: 0,
+                    wuf: 0,
+                    pxjUpgrades: 0,
+                    templates: {}, // Track template composition
+                    upgradedIngredients: {} // Track upgraded ingredients
+                };
             }
 
-            return Object.entries(leaderboardData).map(([username, data]) => ({
-                username,
-                ...data
-            }));
-        }
+            leaderboardData[holder.username].templatesOwned += holder.assets;
+            leaderboardData[holder.username].pxj += holder.pxj;
+            leaderboardData[holder.username].wuf += holder.wuf;
 
+            // Track template composition
+            leaderboardData[holder.username].templates[template.id] = (leaderboardData[holder.username].templates[template.id] || 0) + holder.assets;
 
-        function populateLeaderboard(data) {
-            const loadingDiv = document.getElementById('loading');
-            const leaderboardContainer = document.getElementById('leaderboard-container');
-            const tbody = document.querySelector('#leaderboard tbody');
-            const totalColumnHeader = document.getElementById('totalColumnHeader');
-            const timePeriodLabel = document.getElementById('timePeriodLabel');
-           const timePeriodLabelWUF = document.getElementById('timePeriodLabelWUF');
-          const timePeriodLabelTotal = document.getElementById('timePeriodLabelTotal');
+            if (template.pxjUpgrade > 0) {
+                leaderboardData[holder.username].pxjUpgrades += holder.assets * template.pxjUpgrade;
+                // Track upgraded ingredients
+                leaderboardData[holder.username].upgradedIngredients[template.name] = (leaderboardData[holder.username].upgradedIngredients[template.name] || 0) + holder.assets;
+            }
+        });
+    }
 
+    return Object.entries(leaderboardData).map(([username, data]) => ({
+        username,
+        ...data
+    }));
+}
 
-            loadingDiv.style.display = 'none';
-            leaderboardContainer.style.display = 'block';
+function populateLeaderboard(data) {
+const loadingDiv = document.getElementById('loading');
+const leaderboardContainer = document.getElementById('leaderboard-container');
+const tbody = document.querySelector('#leaderboard tbody');
+const totalColumnHeader = document.getElementById('totalColumnHeader');
+const timePeriodLabelTotal = document.getElementById('timePeriodLabelTotal');
 
-            const multiplier = timeMultipliers[currentTimePeriod];
+loadingDiv.style.display = 'none';
+leaderboardContainer.style.display = 'block';
 
-            timePeriodLabel.textContent = `Per ${currentTimePeriod}`;
-            timePeriodLabelWUF.textContent = `Per ${currentTimePeriod}`;
-            timePeriodLabelTotal.textContent = `Per ${currentTimePeriod}`;
+const multiplier = timeMultipliers[currentTimePeriod];
 
-            tbody.innerHTML = ""; // Clear existing rows
+timePeriodLabelTotal.textContent = `Per ${currentTimePeriod}`;
 
-            data.sort((a, b) => b.pxj - a.pxj); // Sort by PXJ (default)
+tbody.innerHTML = ""; // Clear existing rows
 
-            data.forEach((user, index) => {
-                const pxjReward = user.pxj * multiplier;
-                const wufReward = user.wuf * multiplier;
-                const pxjValueUSD = pxjReward * pxjPriceUSD;
-                const wufValueUSD = wufReward * wufPriceUSD;
-                const totalUSD = pxjValueUSD + wufValueUSD;
+data.sort((a, b) => b.pxj - a.pxj); // Sort by PXJ (default)
 
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${user.username}</td>
-                    <td>${user.templatesOwned}</td>
-                    <td>${user.pxjUpgrades.toLocaleString()} PXJ</td>
-                    <td>${pxjReward.toLocaleString()}</td>
-                    <td>${wufReward.toLocaleString()}</td>
-                    <td>
-                        ${
-                            currentView === "WAXP"
-                                ? ` ${(totalUSD / pxjPriceUSD).toLocaleString()} PXJ (= ${(totalUSD / waxPriceUSD).toLocaleString()} WAX or $${totalUSD.toLocaleString()})`
-                                : `$${totalUSD.toFixed(2)} (${(totalUSD / waxPriceUSD).toFixed(2)} WAX)`
-                        }
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+// Initialize totals
+let totalTemplatesOwned = 0;
+let totalPxjUpgrades = 0;
+let totalPxjReward = 0;
+let totalWufReward = 0;
+let totalUSD = 0;
+
+data.forEach((user, index) => {
+    const pxjReward = user.pxj * multiplier;
+    const wufReward = user.wuf * multiplier;
+    const pxjValueUSD = pxjReward * pxjPriceUSD;
+    const wufValueUSD = wufReward * wufPriceUSD;
+    const userTotalUSD = pxjValueUSD + wufValueUSD;
+
+    // Accumulate totals
+    totalTemplatesOwned += user.templatesOwned;
+    totalPxjUpgrades += user.pxjUpgrades;
+    totalPxjReward += pxjReward;
+    totalWufReward += wufReward;
+    totalUSD += userTotalUSD;
+
+    // Generate tooltip content for "Journey Assets Owned"
+    const templatesTooltip = `
+        <strong>Templates Held:</strong><br>
+        ${Object.entries(user.templates).map(([templateId, count]) => `
+            ${templates.find(t => t.id === parseInt(templateId))?.name || templateId}: ${count}
+        `).join('<br>')}
+    `;
+
+    // Generate tooltip content for "Locked PXJ"
+    const upgradesTooltip = `
+        <strong>Upgraded Ingredients:</strong><br>
+        ${Object.entries(user.upgradedIngredients).map(([ingredient, count]) => `
+            ${ingredient}: ${count}
+        `).join('<br>')}
+    `;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>
+            <a href="https://atomichub.io/profile/wax-mainnet/${user.username}" target="_blank">
+                ${user.username}
+            </a>
+        </td>
+        <td data-bs-toggle="tooltip" data-bs-html="true" title="${templatesTooltip}">
+            ${user.templatesOwned}
+        </td>
+        <td data-bs-toggle="tooltip" data-bs-html="true" title="${upgradesTooltip}">
+            ${user.pxjUpgrades.toLocaleString()} PXJ
+        </td>
+        <td>
+            <strong>=~ ${(userTotalUSD / waxPriceUSD).toFixed(2)} WAX or $${userTotalUSD.toFixed(2)}</strong><br>
+            <small>(${pxjReward.toLocaleString()} PXJ + ${wufReward.toLocaleString()} WUF)</small>
+        </td>
+    `;
+    tbody.appendChild(row);
+});
+
+// Add the total row
+const totalRow = document.createElement("tr");
+totalRow.className = "total-row"; // Add a class for styling
+totalRow.innerHTML = `
+    <td colspan="2"><strong>Total</strong></td>
+    <td><strong>${totalTemplatesOwned.toLocaleString()}</strong></td>
+    <td><strong>${totalPxjUpgrades.toLocaleString()} PXJ</strong></td>
+    <td>
+        <strong>=~ ${(totalUSD / waxPriceUSD).toFixed(2)} WAX or $${totalUSD.toFixed(2)}</strong><br>
+        <small>(${totalPxjReward.toLocaleString()} PXJ + ${totalWufReward.toLocaleString()} WUF)</small>
+    </td>
+`;
+tbody.appendChild(totalRow);
+
+// Initialize tooltips
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+}
 
 
         async function updateLeaderboard() {
@@ -742,6 +820,39 @@ table tbody td {
             // Initial load
             await updateLeaderboard();
         }
+
+        let sortDirection = 1; // 1 for ascending, -1 for descending
+
+function sortTable(columnIndex) {
+    const tbody = document.querySelector('#leaderboard tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    rows.sort((a, b) => {
+        const aValue = a.children[columnIndex].textContent.trim();
+        const bValue = b.children[columnIndex].textContent.trim();
+
+        if (columnIndex === 0 || columnIndex === 2 || columnIndex === 3) {
+            // Sort numbers
+            return sortDirection * (parseFloat(aValue.replace(/,/g, '')) - parseFloat(bValue.replace(/,/g, '')));
+        } else if (columnIndex === 1) {
+            // Sort usernames alphabetically
+            return sortDirection * aValue.localeCompare(bValue);
+        } else if (columnIndex === 4) {
+            // Sort by WAX value
+            const aWax = parseFloat(a.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
+            const bWax = parseFloat(b.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
+            return sortDirection * (aWax - bWax);
+        }
+        return 0;
+    });
+
+    // Toggle sort direction
+    sortDirection *= -1;
+
+    // Clear and re-add sorted rows
+    tbody.innerHTML = "";
+    rows.forEach(row => tbody.appendChild(row));
+}
 
         function createTemplateFilters() {
             const filtersDiv = document.getElementById('templateFilters');
