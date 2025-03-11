@@ -874,6 +874,15 @@ function sortTable(columnIndex) {
                 updateLeaderboard();
             });
 
+            const stakingButton = document.querySelector('[data-bs-target="#stakingTable"]');
+stakingButton.addEventListener('click', () => {
+    if (stakingButton.textContent.includes("Show")) {
+        stakingButton.textContent = "Hide Staking Information";
+    } else {
+        stakingButton.textContent = "Show Staking Information";
+    }
+});
+
             document.getElementById('deselectAllTemplates').addEventListener('click', () => {
                 document.querySelectorAll('.form-check-input').forEach(input => input.checked = false);
                 updateLeaderboard();
