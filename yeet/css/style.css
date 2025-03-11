@@ -730,7 +730,7 @@ p {
 }
 
 .progress .progress-bar {
-  width: 25%;
+  width: 95%;
   -webkit-transition: width 2s ease-in-out;
   transition: width 2s ease-in-out;
 }
