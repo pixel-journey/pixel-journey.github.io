@@ -332,6 +332,13 @@ table tbody td {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
+
+                        <!-- Quick Filter Buttons -->
+  <div class="d-flex flex-wrap mb-3">
+      <button class="btn btn-sm btn-secondary" id="toggleSecondary">Toggle Primary Ingredients</button>
+      <button class="btn btn-sm btn-secondary" id="toggleSecondary">Toggle Secondary Ingredients</button>
+      <button class="btn btn-sm btn-secondary" id="toggleTertiary">Toggle Tertiary Ingredients</button>
+  </div>
                       <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="templateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                               Filter Templates
@@ -360,6 +367,104 @@ table tbody td {
                 Switch to USD View
             </button>
         </div>
+
+        <!-- Collapsible Info Box -->
+<div class="info-box mt-4 mb-4 text-center">
+    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#stakingTable" aria-expanded="false" aria-controls="stakingTable">
+        Show Staking Information
+    </button>
+    <div class="collapse" id="stakingTable">
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Name</b></td>
+                        <td><b>WUF Staking / Hour</b></td>
+                        <td><b>PXJ Staking / Hour</b></td>
+                    </tr>
+                    <tr>
+                        <td>Pixal PFP</td>
+                        <td>5.0000 WUF</td>
+                        <td>0.25000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Pixel Ingredient Pack</td>
+                        <td>20.0000 WUF</td>
+                        <td>2.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Black (Primary)</td>
+                        <td>100.0000 WUF</td>
+                        <td>100.00000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Red (Primary)</td>
+                        <td>2.0000 WUF</td>
+                        <td>0.20000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Yellow (Primary)</td>
+                        <td>2.0000 WUF</td>
+                        <td>0.20000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Blue (Primary)</td>
+                        <td>2.0000 WUF</td>
+                        <td>0.20000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Green (Secondary)</td>
+                        <td>9.0000 WUF</td>
+                        <td>2.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Orange (Secondary)</td>
+                        <td>9.0000 WUF</td>
+                        <td>2.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Purple (Secondary)</td>
+                        <td>9.0000 WUF</td>
+                        <td>2.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Amber (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Chartreuse (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Violet (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Teal (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Vermillion (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                    <tr>
+                        <td>Magenta (Tertiary)</td>
+                        <td>46.0000 WUF</td>
+                        <td>13.50000000 PXJ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 
         <!-- Leaderboard -->
               <div id="loading" class="loading mt-3">Loading data, please wait...</div>
@@ -409,21 +514,21 @@ table tbody td {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     const templates = [
-        { id: 781515, pxj: 0.25, wuf: 5.0, pxjUpgrade: 0 },
-        { id: 820134, pxj: 2.5, wuf: 20.0, pxjUpgrade: 0 },
-        { id: 858568, pxj: 100.0, wuf: 100.0, pxjUpgrade: 0 },
-        { id: 858569, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0 },
-        { id: 858570, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0 },
-        { id: 858571, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0 },
-        { id: 858572, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000 },
-        { id: 858573, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000 },
-        { id: 858574, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000 },
-        { id: 858575, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 },
-        { id: 858576, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 },
-        { id: 858577, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 },
-        { id: 858578, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 },
-        { id: 858580, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 },
-        { id: 859273, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000 }
+        { id: 781515, pxj: 0.25, wuf: 5.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
+        { id: 820134, pxj: 2.5, wuf: 20.0, pxjUpgrade: 0, name: "Pixel Ingredient Pack", type: "pixelpack" },
+        { id: 858568, pxj: 100.0, wuf: 100.0, pxjUpgrade: 0, name: "Black (Primary)", type: "primary" },
+        { id: 858569, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Red (Primary)", type: "primary" },
+        { id: 858570, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0,  name: "Yellow (Primary)", type: "primary" },
+        { id: 858571, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Blue (Primary)", type: "primary" },
+        { id: 858572, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Green (Secondary)", type: "secondary" },
+        { id: 858573, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Orange (Secondary)", type: "secondary" },
+        { id: 858574, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Purple (Secondary)", type: "secondary" },
+        { id: 858575, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Amber (Tertiary)", type: "tertiary" },
+        { id: 858576, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Chartreuse (Tertiary)", type: "tertiary" },
+        { id: 858577, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Violet (Tertiary)", type: "tertiary" },
+        { id: 858578, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Teal (Tertiary)", type: "tertiary" },
+        { id: 858580, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Vermillion (Tertiary)", type: "tertiary" },
+        { id: 859273, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Magenta (Tertiary)", type: "tertiary" }
     ];
 
 
@@ -638,7 +743,7 @@ table tbody td {
                 filter.innerHTML = `
                     <input class="form-check-input" type="checkbox" id="template-${template.id}" value="${template.id}" checked>
                     <label class="form-check-label" for="template-${template.id}">
-                        Template ${template.id}
+                        Template ${template.id}: ${template.name}
                     </label>
                 `;
                 filtersDiv.appendChild(filter);
@@ -687,6 +792,7 @@ table tbody td {
             document.body.classList.toggle('light-mode');
             darkModeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
         });
+
 
     </script>
 </body>
