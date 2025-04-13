@@ -1425,9 +1425,9 @@ text.no-interact {
       height: 100vh; /* Full height of the viewport */
     }
     #game {
-scale: 0.9;
-overflow: hidden;
+      
     }
+
     /* Example sidebar or button adjustments */
     #left-sidebar {
       max-width: 200px;
@@ -1517,7 +1517,7 @@ overflow: hidden;
   #orientation-message {
     display: block;
     text-align: center;
-    font-size: 18px;
+    font-size: 32px;
     padding: 20px;
   }
 }
