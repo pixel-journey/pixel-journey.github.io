@@ -1443,12 +1443,12 @@ text.no-interact {
 
     /* Resource grid adjustments */
   .resource-display {
-    font-size: 12px; /* Smaller text */
+    font-size: 8px; /* Smaller text */
     padding: 5px; /* Reduced padding */
   }
   /* Menu buttons */
   .sidebar-btn {
-    font-size: 14px; /* Smaller, readable text */
+    font-size: 8px; /* Smaller, readable text */
     padding: 8px;
     min-width: 50px; /* Touch-friendly size */
   }
@@ -1465,22 +1465,19 @@ text.no-interact {
   }
 
   #top-stats-bar {
-        scale: 0.5;
-    height: 60px;
+        scale: 0.4;
+    height: 40px;
     background: none;
     border: none;
-    display: flex
-;
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
     backdrop-filter: none;
 }
 
 #wave-progress-frame {
-    max-width: 100%;
-    height: 40px;
+    max-width: 25vw;
+    height: 25;
     background: none;
     border: none;
     display: flex;
