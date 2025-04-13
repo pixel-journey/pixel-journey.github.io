@@ -1508,3 +1508,26 @@ overflow: hidden;
   }
 
 }
+
+/* Hide game in portrait mode */
+@media (orientation: portrait) {
+  #game-wrapper {
+    display: none;
+  }
+  #orientation-message {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+  }
+}
+
+/* Show game in landscape mode */
+@media (orientation: landscape) {
+  #game-wrapper {
+    display: block;
+  }
+  #orientation-message {
+    display: none;
+  }
+}
