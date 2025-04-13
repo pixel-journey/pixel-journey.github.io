@@ -146,6 +146,28 @@ body {
       font-size: 14px; /* Smaller, touch-friendly buttons */
       padding: 10px;
     }
+
+    /* Resource grid adjustments */
+  .resource-display {
+    font-size: 12px; /* Smaller text */
+    padding: 5px; /* Reduced padding */
+  }
+  /* Menu buttons */
+  .sidebar-btn {
+    font-size: 14px; /* Smaller, readable text */
+    padding: 8px;
+    min-width: 60px; /* Touch-friendly size */
+  }
+  /* Title */
+  .game-title {
+    font-size: 24px; /* Scale down the "PXTD" title */
+  }
+  /* Central gameplay grid */
+  .tower-grid {
+    width: 100%;
+    height: auto;
+  }
+
 }
 
 .sidebar-section {
@@ -1485,7 +1507,7 @@ text.no-interact {
 
 /* Mobile */
 
-/* Hide the game and show a message in portrait mode */
+/* Hide game in portrait mode */
 @media (orientation: portrait) {
   #game-wrapper {
     display: none;
@@ -1498,7 +1520,7 @@ text.no-interact {
   }
 }
 
-/* Show the game and hide the message in landscape mode */
+/* Show game in landscape mode */
 @media (orientation: landscape) {
   #game-wrapper {
     display: block;
