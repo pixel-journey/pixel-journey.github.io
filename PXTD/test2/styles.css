@@ -1425,7 +1425,8 @@ text.no-interact {
       height: 100vh; /* Full height of the viewport */
     }
     #game {
-
+scale: 0.9;
+overflow: hidden;
     }
     /* Example sidebar or button adjustments */
     #left-sidebar {
@@ -1473,6 +1474,9 @@ text.no-interact {
     justify-content: space-around;
     align-items: center;
     backdrop-filter: none;
+        margin-bottom: -20px;
+        margin-top: -5px;
+        z-index: 99;
 }
 
 #wave-progress-frame {
@@ -1487,10 +1491,13 @@ text.no-interact {
     margin-left: 20px;
     padding: 0 10px;
     backdrop-filter: none;
+        flex-direction: column;
+        margin-top: -5px;
 }
 
 #wave-progress-svg {
     height: 25px;
+    width: -webkit-fill-available;
 }
 
 #wave-progress-frame .sidebar-btn {
