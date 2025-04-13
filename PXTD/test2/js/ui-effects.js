@@ -87,13 +87,15 @@ function createParticles(x, y, count, color, size, duration) {
 function showCreditsPop(x, y, amount) {
   // Skip animation in "off" mode but still show the value
   if (gameState.graphicsMode === "off") {
-    updateUI() // Just update the UI instead
-    return
-  }
-
-  const popup = document.createElement("div")
-  popup.className = "credit-pop"
-  popup.textContent = `+${amount}`
+      updateUI();
+      return;
+    }
+    const popup = document.createElement("div");
+    popup.className = "credit-pop";
+    popup.textContent = `+${amount}`;
+    popup.style.left = `${x}px`; // Use screen coordinates
+    popup.style.top = `${y}px`;
+    document.body.appendChild(popup);
 
   // Use transform for better performance
   popup.style.transform = `translate(${x}px, ${y}px)`

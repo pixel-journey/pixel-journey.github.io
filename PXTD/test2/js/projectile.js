@@ -126,17 +126,38 @@ class Projectile {
     if (this.tower.type === "ice") {
       this.target.freezeLevel = Math.min(this.target.freezeLevel + 0.1, 1); // Apply freeze effect
     }
-    if (this.tower.type === "gold" && Math.random() < 0.1) { // 10% chance
-      gameState.credits += 5;
-      gameState.totalCredits += 5;
-      updateUI();
-      const targetX = Number.parseFloat(this.target.element.getAttribute("transform").split("translate(")[1].split(",")[0]);
-      const targetY = Number.parseFloat(this.target.element.getAttribute("transform").split(",")[1].split(")")[0]);
-      showCreditsPop(targetX, targetY, 5);
-    }
+    if (this.tower.type === "gold" && Math.random() < 0.1) {
+        gameState.credits += 5;
+        gameState.totalCredits += 5;
+        updateUI();
+        const svgRect = svg.getBoundingClientRect();
+        const screenX = (this.tower.x / 500) * svgRect.width + svgRect.left;
+        const screenY = (this.tower.y / 500) * svgRect.height + svgRect.top;
+        showCreditsPop(screenX, screenY - 20, 5);
+      }
     this.applySpecialEffects();
     this.remove();
   }
+
+    findNearestEnemy() {
+      let nearest = null;
+      let minDistance = this.tower.range;
+      gameState.enemies.forEach(enemy => {
+        if (enemy.element && enemy.element.parentNode) {
+          const transform = enemy.element.getAttribute("transform");
+          if (transform && transform.includes("translate")) {
+            const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+            const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+            const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+            if (distance < minDistance) {
+              minDistance = distance;
+              nearest = enemy;
+            }
+          }
+        }
+      });
+      return nearest;
+    }
 
   applySpecialEffects() {
     const targetTransform = this.target.element.getAttribute("transform");

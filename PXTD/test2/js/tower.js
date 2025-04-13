@@ -21,6 +21,7 @@ class Tower {
     this.powerAuraApplied = false // Track Power Aura application
     this.isActive = false // Track if tower is currently attacking
     this.activityIndicator = null // Visual indicator for "Graphics off" mode
+    this.targetingMode = "closest"; // Default
 
     // Special abilities from upgrades or defaults
     this.powerAura = upgrades ? upgrades.powerAura : false
@@ -212,21 +213,44 @@ class Tower {
       if (existingMenu) document.body.removeChild(existingMenu);
 
       const menu = document.createElement("div");
-      menu.className = "upgrade-menu";
-      const svgRect = svg.getBoundingClientRect();
-      const towerX = this.x * (svgRect.width / 500);
-      const towerY = this.y * (svgRect.height / 500);
-      menu.style.left = `${svgRect.left + towerX}px`;
-      menu.style.top = `${svgRect.top + towerY - 120}px`;
+        menu.className = "upgrade-menu";
+        if (!svg) {
+          console.error("SVG element not found");
+          return;
+        }
+        const svgRect = svg.getBoundingClientRect();
+        const towerX = this.x * (svgRect.width / 500);
+        const towerY = this.y * (svgRect.height / 500);
+        menu.style.left = `${Math.max(0, svgRect.left + towerX)}px`;
+        menu.style.top = `${Math.max(0, svgRect.top + towerY - 120)}px`;
 
-      const towerName = this.type.charAt(0).toUpperCase() + this.type.slice(1);
-      menu.innerHTML = `
-        <h3>${towerName} Tower (Level ${this.upgradeLevel})</h3>
-        <div class="stats">
-          <div><span class="label">DPS</span><span class="value">${Math.round(this.dps)}</span></div>
-          <div><span class="label">Range</span><span class="value">${Math.round(this.range)}</span></div>
-        </div>
-      `;
+        const towerName = this.type.charAt(0).toUpperCase() + this.type.slice(1);
+        menu.innerHTML = `
+          <h3>${towerName} Tower (Level ${this.upgradeLevel})</h3>
+          <div class="stats">
+            <div><span class="label">DPS</span><span class="value">${Math.round(this.dps)}</span></div>
+            <div><span class="label">Range</span><span class="value">${Math.round(this.range)}</span></div>
+          </div>
+          <div>Targeting:
+            <select id="targeting-select-${this.x}-${this.y}">
+              <option value="closest" ${this.targetingMode === "closest" ? "selected" : ""}>Closest</option>
+              <option value="lowestHealth" ${this.targetingMode === "lowestHealth" ? "selected" : ""}>Lowest Health</option>
+              <option value="strongest" ${this.targetingMode === "strongest" ? "selected" : ""}>Strongest</option>
+              <option value="first" ${this.targetingMode === "first" ? "selected" : ""}>First</option>
+              <option value="last" ${this.targetingMode === "last" ? "selected" : ""}>Last</option>
+            </select>
+          </div>
+        `;
+
+        document.body.appendChild(menu);
+
+        const targetingSelect = document.getElementById(`targeting-select-${this.x}-${this.y}`);
+        if (targetingSelect) {
+          targetingSelect.addEventListener("change", (e) => {
+            this.targetingMode = e.target.value;
+            logEvent(`Changed ${this.type} tower targeting to ${this.targetingMode}`);
+          });
+        }
 
       const upgradeCost = Math.floor(CONFIG.towers[this.type].cost * 0.2 * (this.upgradeLevel + 1));
       const upgradeBtn = document.createElement("div");
@@ -280,32 +304,37 @@ class Tower {
       setTimeout(() => document.addEventListener("click", closeMenu), 100);
     }
 
-    upgrade(cost) {
+    upgrade() {
+      // Check if the tower is already at max level
       if (this.upgradeLevel >= 100) {
         showNotification("Tower at maximum level!", "warning");
         return;
       }
-      if (gameState.credits < cost) {
+
+      // Calculate the base cost (before reduction)
+      const baseCost = CONFIG.towers[this.type].cost * 0.2 * (this.upgradeLevel + 1);
+
+      // Apply the cost reduction multiplier
+      const upgradeCost = Math.floor(baseCost * gameState.levelUpCostMultiplier);
+
+      // Check if the player has enough credits
+      if (gameState.credits < upgradeCost) {
         showNotification("Not Enough Credits!", "error");
-        // playSound("buttonClick");
         return;
       }
 
-      gameState.credits -= cost;
-      gameState.totalCredits -= cost;
-      updateUI();
-
+      // Deduct the reduced cost and upgrade the tower
+      gameState.credits -= upgradeCost;
+      gameState.totalCredits -= upgradeCost;
       this.upgradeLevel++;
+
+      // Update tower stats (damage and range)
       this.dps = Math.min(this.baseDps * Math.pow(1.15, this.upgradeLevel), 250000);
       this.range = this.baseRange * Math.pow(1.15, this.upgradeLevel);
       this.updateSize();
 
-      // playSound("upgrade");
-      const svgRect = svg.getBoundingClientRect();
-      const x = (this.x / 500) * svgRect.width + svgRect.left;
-      const y = (this.y / 500) * svgRect.height + svgRect.top;
-      createParticles(x, y, 20, "#ffff00", 3, 1);
-
+      // Update the game interface and log the upgrade
+      updateUI();
       logEvent(`Upgraded ${this.type} Tower to Level ${this.upgradeLevel}`);
       showNotification(`${this.type.charAt(0).toUpperCase() + this.type.slice(1)} Tower upgraded to Level ${this.upgradeLevel}!`, "success");
     }
@@ -329,25 +358,99 @@ class Tower {
       showNotification(`${this.type.charAt(0).toUpperCase() + this.type.slice(1)} Tower sold for ${value} credits!`, "info");
     }
 
-  findTarget() {
-    let closestEnemy = null
-    let closestDistance = this.range
-
-    gameState.enemies.forEach((enemy) => {
-      if (!enemy.element || !enemy.element.parentNode) return
-      const enemyTransform = enemy.element.getAttribute("transform")
-      if (!enemyTransform || !enemyTransform.includes("translate")) return
-      const enemyX = Number.parseFloat(enemyTransform.split("translate(")[1].split(",")[0])
-      const enemyY = Number.parseFloat(enemyTransform.split(",")[1].split(")")[0])
-      const distance = calculateDistance(this.x, this.y, enemyX, enemyY)
-      if (distance < closestDistance) {
-        closestDistance = distance
-        closestEnemy = enemy
+    findTarget() {
+      let target = null;
+      if (this.targetingMode === "closest") {
+        let minDistance = this.range;
+        gameState.enemies.forEach(enemy => {
+          if (enemy.element && enemy.element.parentNode) {
+            const transform = enemy.element.getAttribute("transform");
+            if (transform && transform.includes("translate")) {
+              const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+              const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+              const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+              if (distance < minDistance) {
+                minDistance = distance;
+                target = enemy;
+              }
+            }
+          }
+        });
+      } else if (this.targetingMode === "lowestHealth") {
+        let minHealth = Infinity;
+        gameState.enemies.forEach(enemy => {
+          if (enemy.element && enemy.element.parentNode) {
+            const transform = enemy.element.getAttribute("transform");
+            if (transform && transform.includes("translate")) {
+              const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+              const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+              const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+              if (distance < this.range && enemy.health < minHealth) {
+                minHealth = enemy.health;
+                target = enemy;
+              }
+            }
+          }
+        });
+      } else if (this.targetingMode === "strongest") {
+        let maxHealth = 0;
+        gameState.enemies.forEach(enemy => {
+          if (enemy.element && enemy.element.parentNode) {
+            const transform = enemy.element.getAttribute("transform");
+            if (transform && transform.includes("translate")) {
+              const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+              const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+              const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+              if (distance < this.range && enemy.health > maxHealth) {
+                maxHealth = enemy.health;
+                target = enemy;
+              }
+            }
+          }
+        });
+      } else if (this.targetingMode === "first") {
+        let maxProgress = -1;
+        gameState.enemies.forEach(enemy => {
+          if (enemy.element && enemy.element.parentNode) {
+            const transform = enemy.element.getAttribute("transform");
+            if (transform && transform.includes("translate")) {
+              const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+              const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+              const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+              if (distance < this.range) {
+                const progress = enemy.currentPoint + enemy.progress / 100;
+                if (progress > maxProgress) {
+                  maxProgress = progress;
+                  target = enemy;
+                }
+              }
+            }
+          }
+        });
+      } else if (this.targetingMode === "last") {
+        let minProgress = Infinity;
+        gameState.enemies.forEach(enemy => {
+          if (enemy.element && enemy.element.parentNode) {
+            const transform = enemy.element.getAttribute("transform");
+            if (transform && transform.includes("translate")) {
+              const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+              const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+              const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+              if (distance < this.range) {
+                const progress = enemy.currentPoint + enemy.progress / 100;
+                if (progress < minProgress) {
+                  minProgress = progress;
+                  target = enemy;
+                }
+              }
+            }
+          }
+        });
       }
-    })
+      return target;
+    }
 
-    return closestEnemy
-  }
+
 
   shoot() {
     const now = Date.now()
@@ -355,17 +458,23 @@ class Tower {
     this.isActive = false // Reset activity state
 
     if (this.type === "water") {
-      const interval = 200; // ms
+      const interval = 200;
       if (now - this.lastShot < interval) return;
-
       let hitEnemy = false;
-      gameState.enemies.forEach((enemy) => {
-        if (calculateDistance(this.x, this.y, enemy.x, enemy.y) < this.range) {
-          enemy.takeDamage(this.dps * (interval / 1000)); // e.g., 250 * 0.2 = 50 damage per shot
-          hitEnemy = true;
+      gameState.enemies.forEach(enemy => {
+        if (enemy.element && enemy.element.parentNode) {
+          const transform = enemy.element.getAttribute("transform");
+          if (transform && transform.includes("translate")) {
+            const enemyX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+            const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
+            const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
+            if (distance < this.range) {
+              enemy.takeDamage(this.dps * (interval / 1000));
+              hitEnemy = true;
+            }
+          }
         }
       });
-
       if (hitEnemy) {
         this.isActive = true;
         this.lastShot = now;
@@ -414,25 +523,25 @@ class Tower {
         }
 
         if (this.type === "lightning") {
-          // Instant damage for lightning towers
-          this.target.takeDamage(this.dps / 60)
-          this.applySpecialEffects(this.target)
-
-          // Visual beam effect for non-off modes
-          if (gameState.graphicsMode !== "off") {
-            const beam = document.createElementNS("http://www.w3.org/2000/svg", "line")
-            beam.setAttribute("x1", this.x)
-            beam.setAttribute("y1", this.y)
-            beam.setAttribute("x2", this.target.x)
-            beam.setAttribute("y2", this.target.y)
-            beam.setAttribute("stroke", CONFIG.towers[this.type].projectileColor || "#ffff00")
-            beam.setAttribute("stroke-width", "3")
-            beam.setAttribute("opacity", "0.8")
-            svg.appendChild(beam)
-            setTimeout(() => {
-              if (beam.parentNode) svg.removeChild(beam)
-            }, 100) // Beam disappears after 100ms
-          }
+            this.target.takeDamage(this.dps / 60);
+            this.applySpecialEffects(this.target);
+            if (gameState.graphicsMode !== "off") {
+              const transform = this.target.element.getAttribute("transform");
+              if (transform && transform.includes("translate")) {
+                const targetX = parseFloat(transform.split("translate(")[1].split(",")[0]);
+                const targetY = parseFloat(transform.split(",")[1].split(")")[0]);
+                const beam = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                beam.setAttribute("x1", this.x);
+                beam.setAttribute("y1", this.y);
+                beam.setAttribute("x2", targetX);
+                beam.setAttribute("y2", targetY);
+                beam.setAttribute("stroke", CONFIG.towers[this.type].projectileColor);
+                beam.setAttribute("stroke-width", "3");
+                beam.setAttribute("opacity", "0.8");
+                svg.appendChild(beam);
+                setTimeout(() => { if (beam.parentNode) svg.removeChild(beam); }, 100);
+              }
+            }
         } else {
           // Create projectile for fire, ice, and other towers
           if (gameState.graphicsMode !== "off") {

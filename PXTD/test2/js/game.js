@@ -33,11 +33,25 @@ const gameState = {
   graphicsMode: "high", // "high", "low", "off"
   interestLevel: 0,
   interestCost: 50,
+  interestMultiplier: 1,         // Multiplies interest income
+  waveBonusMultiplier: 1,        // Multiplies wave completion rewards
+  killBonusMultiplier: 1,        // Multiplies enemy kill rewards
+  levelUpCostMultiplier: 1,      // Multiplies upgrade costs (less than 1 reduces cost)
   globalUpgrades: {
   speed: { rank: 0, cost: 100 },
   damage: { rank: 0, cost: 100 },
   range: { rank: 0, cost: 100 },
 },
+boosterRanks: {
+    damage: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower damage by 5%" },
+    "attack speed": { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower firing rate by 5%" },
+    range: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower range by 5%" },
+    interest: { rank: 0, maxRank: 5, cost: 5, effect: "Increases interest income by 10%" },
+    "wave bonus": { rank: 0, maxRank: 5, cost: 10, effect: "Increases wave completion rewards by 10%" },
+    "kill bonus": { rank: 0, maxRank: 5, cost: 15, effect: "Increases enemy kill rewards by 10%" },
+    "reduce level up costs": { rank: 0, maxRank: 5, cost: 10, effect: "Reduces tower upgrade costs by 5%" },
+  },
+  boosterPoints: 0,
 };
 
 function initGame() {
@@ -53,7 +67,7 @@ function initGame() {
   ];
 
   generateGrid();
-  window.initUI(); 
+  window.initUI();
   gameLoop();
   logEvent("Game Started!");
   showEnhancedNotification("Welcome to PxTD Tower Defense!", "success");
@@ -135,11 +149,11 @@ function checkWaveCompletion() {
     document.getElementById("start-wave-btn").disabled = false;
     gameState.wave++;
 
-    const waveReward = CONFIG.wave.waveCompletionReward;
     const baseInterest = 0.005;
-      const interestIncrement = 0.005;
-      const incomePercentage = baseInterest + gameState.interestLevel * interestIncrement;
-      const income = Math.floor(gameState.credits * incomePercentage);
+    const interestIncrement = 0.005;
+    const incomePercentage = (baseInterest + gameState.interestLevel * interestIncrement) * gameState.interestMultiplier;
+    const income = Math.floor(gameState.credits * incomePercentage);
+    const waveReward = Math.floor(CONFIG.wave.waveCompletionReward * gameState.waveBonusMultiplier);
     gameState.credits += waveReward + income;
     gameState.totalCredits += waveReward + income;
 

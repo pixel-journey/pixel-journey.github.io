@@ -8,6 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="orientation-message">
+    <p>Please rotate your device to landscape mode to play the game.</p>
+  </div>
   <div id="game-wrapper">
     <!-- Start Screen -->
     <div id="start-screen">
@@ -61,7 +64,8 @@
           <h2 class="expandable">Event Log <span class="toggle-icon">+</span></h2>
           <div class="expandable-content">
             <div id="event-log"></div>
-          </div>
+                <button id="submit-log-btn" class="sidebar-btn">Submit Log</button>
+              </div>
         </div>
         <div class="sidebar-section">
           <h2 class="expandable">Notifications <span class="toggle-icon">+</span></h2>
@@ -199,16 +203,16 @@
   <div id="buy-lives-btn" class="sidebar-btn">Buy Life (100)</div>
 </div>
 
-<div class="sidebar-section" style="display:none">
+<div id="pxj-boosters-section" class="sidebar-section" style="display:none">
 <h2>PXJourney Boosters (0 points):</h2>
 <div id="PXJbooster-row" class="sidebar-row">
-<div id="PXJbooster" class="sidebar-btn">Boost Damage (1pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Boost Attack Speed (1pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Boost Range (1pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Boost Interest (5pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Boost Wave Bonus (10pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Boost Kill Bonus (15pt)</div>
-<div id="PXJbooster" class="sidebar-btn">Reduce Level Up Costs (10pt)</div>
+  <div data-type="damage" class="sidebar-btn">Boost Damage (1pt)</div>
+  <div data-type="attack speed" class="sidebar-btn">Boost Attack Speed (1pt)</div>
+  <div data-type="range" class="sidebar-btn">Boost Range (1pt)</div>
+  <div data-type="interest" class="sidebar-btn">Boost Interest (5pt)</div>
+  <div data-type="wave bonus" class="sidebar-btn">Boost Wave Bonus (10pt)</div>
+  <div data-type="kill bonus" class="sidebar-btn">Boost Kill Bonus (15pt)</div>
+  <div data-type="reduce level up costs" class="sidebar-btn">Reduce Level Up Costs (10pt)</div>
 </div>
 </div>
       </div>

@@ -92,8 +92,84 @@ async function onLoginSuccess(userAccount) {
     const assets = await fetchUserAssets(userAccount);
     const templateCounts = countUserTemplates(assets);
     populateBoostersTable(templateCounts);
-    // Optionally, show a modal or update UI to display the table
-}
+    let totalBonus = 0;
+      templates.forEach(template => {
+        if (templateCounts[template.id]) totalBonus += template.bonusEffect * templateCounts[template.id];
+      });
+      gameState.boosterPoints = Math.floor(totalBonus); // Convert % to points
+      updateBoostersUI();
+    }
+
+    function updateBoostersUI() {
+      const boosterSection = document.getElementById("pxj-boosters-section");
+      if (boosterSection) {
+        boosterSection.style.display = "block";
+        const h2 = boosterSection.querySelector("h2");
+        if (h2) {
+          h2.textContent = `PXJourney Boosters (${gameState.boosterPoints} points)`;
+        }
+      }
+    }
+
+    const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbz4zOQAj7s_eQ7wfwtTm-kS8q5GsRPLPjFwE-2wnoXgWChIBza_uxeRRKGQOor-4BBHlA/exec";
+    // SCRIPT ON SHEETS:
+    // function doPost(e) {
+    //   var sheetName = data.type === "highscore" ? "HighScores" : "Logs";
+    //   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+    //   const data = JSON.parse(e.postData.contents);
+    //
+    //
+    //   if (data.type === "highscore") {
+    //   sheet.appendRow([
+    //     new Date(),
+    //     data.player || '',
+    //     data.totalCredits || 0,
+    //     data.wave || 0,
+    //     data.damage || 0,
+    //     data.wallet || '',
+    //     data.gameMode || '',
+    //     data.notes || ''
+    //   ]);
+    //   } else if (data.type === "log") {
+    //     sheet.appendRow([data.username, data.eventLog, data.boardConfig, new Date()]);
+    //   }
+    //
+    //
+    //
+    //   return ContentService
+    //     .createTextOutput(JSON.stringify({status: 'success'}))
+    //     .setMimeType(ContentService.MimeType.JSON);
+    // }
+
+
+    document.getElementById("submit-log-btn").addEventListener("click", () => {
+      const playerName = localStorage.getItem("playerName") || "Guest";
+      const wallet = localStorage.getItem("wallet") || "NotConnected";
+
+      const logData = {
+        player: playerName,
+        totalCredits: gameState.totalCredits,
+        wave: gameState.wave,
+        //damage: calculateTotalDamage(), // Replace or implement this
+        wallet: wallet,
+        gameMode: gameState.gameMode,
+        notes: "Submitted from PxTD"
+      };
+
+      fetch(SHEETS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors", // bypass CORS for simple logging
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "log", logData })
+      }).then(() => {
+        logEvent("Gameplay data submitted to Google Sheets.");
+        showNotification("Log submitted. Thank you!", "success");
+      }).catch(err => {
+        logEvent("Failed to submit log.");
+        showNotification("Error submitting log.", "error");
+      });
+    });
+
 
 // Login function to authenticate the user and display their account and trust score
 async function login() {

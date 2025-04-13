@@ -5,6 +5,25 @@ let rangeToggleBtn, mobileRangeToggleBtn, gameOverScreen, finalScoreText;
 
 // Move setupEventListeners to the top to ensure it’s defined before initUI
 function setupEventListeners() {
+
+  window.addEventListener('orientationchange', function() {
+    if (window.innerHeight > window.innerWidth) {
+      // Portrait mode
+      document.getElementById('game-wrapper').style.display = 'none';
+      document.getElementById('orientation-message').style.display = 'block';
+    } else {
+      // Landscape mode
+      document.getElementById('game-wrapper').style.display = 'block';
+      document.getElementById('orientation-message').style.display = 'none';
+    }
+  });
+
+  // Trigger the check on page load
+  if (window.innerHeight > window.innerWidth) {
+    document.getElementById('game-wrapper').style.display = 'none';
+    document.getElementById('orientation-message').style.display = 'block';
+  }
+
   document.querySelectorAll(".tower-btn").forEach(btn => {
     btn.addEventListener("click", handleTowerSelection);
     btn.addEventListener("touchstart", handleTowerSelection);
@@ -59,6 +78,27 @@ function setupEventListeners() {
     });
   });
 
+  function applyBoosterEffect(type) {
+  const rank = gameState.boosterRanks[type].rank;
+  if (type === "damage") {
+    gameState.globalUpgrades.damage.rank += rank * 0.05; // +5% per rank
+  } else if (type === "attack speed") {
+    gameState.globalUpgrades.speed.rank += rank * 0.05;
+  } else if (type === "range") {
+    gameState.globalUpgrades.range.rank += rank * 0.05;
+  } else if (type === "interest") {
+    gameState.interestMultiplier = 1 + rank * 0.1;
+  } else if (type === "wave bonus") {
+    gameState.waveBonusMultiplier = 1 + rank * 0.1;
+  } else if (type === "kill bonus") {
+    gameState.killBonusMultiplier = 1 + rank * 0.1;
+  } else if (type === "reduce level up costs") {
+    gameState.levelUpCostMultiplier = Math.pow(0.95, rank);
+  }
+  updateAllTowers(); // Refresh tower stats
+}
+
+
   const graphicsToggleBtn = document.getElementById("graphics-toggle-btn");
   graphicsToggleBtn.addEventListener("click", toggleGraphicsMode);
 
@@ -101,7 +141,43 @@ function setupEventListeners() {
       });
     }
   });
-}
+
+  document.querySelectorAll("#PXJbooster-row .sidebar-btn").forEach(btn => {
+    const type = btn.getAttribute("data-type"); // e.g., data-type="damage"
+    btn.addEventListener("click", () => {
+      const booster = gameState.boosterRanks[type];
+      if (booster.rank >= booster.maxRank) {
+        showNotification(`${type} at max rank!`, "warning");
+        return;
+      }
+      if (gameState.boosterPoints < booster.cost) {
+        showNotification("Not enough booster points!", "error");
+        return;
+      }
+      gameState.boosterPoints -= booster.cost;
+      booster.rank++;
+      applyBoosterEffect(type);
+      updateBoostersUI();
+      logEvent(`Applied ${type} boost to rank ${booster.rank}`);
+    });
+  });
+
+  document.querySelectorAll("#PXJbooster-row .sidebar-btn").forEach(btn => {
+  const type = btn.getAttribute("data-type");
+  const booster = gameState.boosterRanks[type];
+  btn.addEventListener("mouseenter", e => {
+    const tooltip = createTooltip(`${booster.effect}\nCurrent Rank: ${booster.rank}/${booster.maxRank}`);
+    positionTooltip(tooltip, e.clientX, e.clientY);
+    btn.tooltip = tooltip;
+  });
+  btn.addEventListener("mouseleave", () => {
+    if (btn.tooltip) {
+      removeTooltip(btn.tooltip);
+      btn.tooltip = null;
+    }
+  });
+});
+  }
 
     window.initUI = function() {
       creditsText = document.getElementById("credits");
@@ -150,11 +226,12 @@ function showGameOver(totalCredits) {
       `Waves Completed: ${gameState.wave - 1}<br>` +
       `Game Duration: ${minutes}m ${seconds}s<br>` +
       `Best Score: ${formatCurrency(gameState.bestScore)}`;
-    if (totalCredits > gameState.bestScore) {
-      gameState.bestScore = totalCredits;
-      localStorage.setItem("bestScore", totalCredits);
-      finalScoreText.innerHTML += `<br>New Highscore!`;
-    }
+  if (totalCredits > gameState.bestScore) {
+    gameState.bestScore = totalCredits;
+    localStorage.setItem("bestScore", totalCredits);
+    finalScoreText.innerHTML += `<br>New Highscore!`;
+  }
+  gameOverScreen.style.display = "block";
   }
 
 function randomizeMap() {
@@ -366,6 +443,13 @@ mobileUpgradeBtn.style.setProperty('--progress', currentRank);
     gameState.credits -= upgradeCost;
     gameState.totalCredits -= upgradeCost;
     upgrade[upgradeType]++;
+
+    // Apply the upgrade to all existing towers of this type
+  gameState.towers.forEach(tower => {
+    if (tower.type === type) {
+      tower[upgradeType] = true; // Enable the ability (e.g., powerAura, splinters)
+    }
+  });
     updateUI();
 
     const upgradeBtn = document.getElementById(`${type}-upgrade`);
@@ -385,6 +469,20 @@ mobileUpgradeBtn.style.setProperty('--progress', currentRank);
 
   upgradeBtn.style.setProperty('--progress', newRank);
   mobileUpgradeBtn.style.setProperty('--progress', newRank);
+}
+
+function updateBoostersUI() {
+  const boosterSection = document.getElementById("pxj-boosters-section");
+  if (boosterSection) {
+    boosterSection.style.display = "block";
+    const h2 = boosterSection.querySelector("h2");
+    h2.textContent = `PXJourney Boosters (${gameState.boosterPoints} points)`;
+    document.querySelectorAll("#PXJbooster-row .sidebar-btn").forEach(btn => {
+      const type = btn.getAttribute("data-type");
+      const booster = gameState.boosterRanks[type];
+      btn.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)} (Rank ${booster.rank}/${booster.maxRank}) - Cost: ${booster.cost}pt`;
+    });
+  }
 }
 
 function toggleGraphicsMode() {
@@ -426,6 +524,26 @@ function handleTouchMove(e) {
   const y = (touch.clientY - rect.top) * (500 / rect.height);
   updateTargetIndicator(x, y);
 }
+
+// Touch start (equivalent to mousedown)
+svg.addEventListener('touchstart', function(e) {
+  e.preventDefault(); // Prevent scrolling/zooming
+  const touch = e.touches[0];
+  const x = (touch.clientX - rect.left) * (500 / rect.width);
+  const y = (touch.clientY - rect.top) * (500 / rect.height);
+  // Example: place a game object at touch location
+  placeTower(x, y);
+});
+
+// Touch move (equivalent to mousemove)
+svg.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const x = (touch.clientX - rect.left) * (500 / rect.width);
+  const y = (touch.clientY - rect.top) * (500 / rect.height);
+  // Example: update a target indicator
+  updateTargetIndicator(x, y);
+});
 
 function updateTargetIndicator(x, y) {
   const gridX = Math.floor(x / CONFIG.grid.size) * CONFIG.grid.size;
