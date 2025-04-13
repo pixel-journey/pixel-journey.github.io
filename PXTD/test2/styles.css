@@ -62,7 +62,6 @@ body {
   height: 70vw;
   max-width: 700px;
   max-height: 700px;
-  flex: none;
   filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
   image-rendering: pixelated;
 }
@@ -125,49 +124,6 @@ body {
   box-sizing: border-box;
   overflow-y: auto;
   backdrop-filter: blur(5px);
-}
-
-@media (max-width: 768px) {
-  #game-wrapper {
-      flex-direction: column; /* Stack elements vertically if needed */
-      width: 100%;
-      height: 100vh; /* Full height of the viewport */
-    }
-    #game {
-      width: 98vw;
-      height: 98vh;
-    }
-    /* Example sidebar or button adjustments */
-    #left-sidebar, #right-sidebar {
-      width: 100%;
-      margin: 10px 0;
-    }
-    .sidebar-btn {
-      font-size: 14px; /* Smaller, touch-friendly buttons */
-      padding: 10px;
-    }
-
-    /* Resource grid adjustments */
-  .resource-display {
-    font-size: 12px; /* Smaller text */
-    padding: 5px; /* Reduced padding */
-  }
-  /* Menu buttons */
-  .sidebar-btn {
-    font-size: 14px; /* Smaller, readable text */
-    padding: 8px;
-    min-width: 60px; /* Touch-friendly size */
-  }
-  /* Title */
-  .game-title {
-    font-size: 24px; /* Scale down the "PXTD" title */
-  }
-  /* Central gameplay grid */
-  .tower-grid {
-    width: 100%;
-    height: auto;
-  }
-
 }
 
 .sidebar-section {
@@ -363,41 +319,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23ffff00' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
 }
 
-#mobile-grass-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%2300ff00' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Ccircle cx='20' cy='20' r='8' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-wood-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%238b4513' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-gold-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23ffd700' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-fire-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23ff4500' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Cpolygon points='20,10 30,30 10,30' fill='%23ffcc00'/%3E%3C/svg%3E");
-}
-
-#mobile-ice-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%2300b7eb' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-water-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%231e90ff' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Ccircle cx='20' cy='20' r='8' fill='%2300ffff' opacity='0.7'/%3E%3C/svg%3E");
-}
-
-#mobile-arcane-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23aa55ff' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-rock-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23808080' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
-
-#mobile-lightning-tower::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='5' y='5' width='30' height='30' fill='%23ffff00' stroke='%23ffffff' stroke-width='2' rx='3'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23ffffff'/%3E%3C/svg%3E");
-}
 .expandable {
   cursor: pointer;
   position: relative;
@@ -1344,47 +1265,6 @@ text.no-interact {
   font-family: "Rajdhani", sans-serif;
 }
 
-#mobile-menus .sidebar-section {
-  margin-bottom: 20px;
-}
-
-#mobile-menus h2 {
-  color: #00ffff;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-#mobile-menus .sidebar-btn {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  padding: 10px;
-  border: 1px solid #ff0000;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-#mobile-menus .sidebar-btn:disabled {
-  background-color: #333;
-  color: #666;
-  cursor: not-allowed;
-}
-
-#mobile-menus p {
-  margin: 5px 0;
-  font-size: 0.9em;
-}
-
-#mobile-menus pre {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  padding: 10px;
-  border-radius: 5px;
-  overflow-x: auto;
-  font-size: 0.9em;
-}
-
 #loginresponse {
   color: #ef9d47;
   font-size: 0.9em;
@@ -1523,9 +1403,104 @@ text.no-interact {
 /* Show game in landscape mode */
 @media (orientation: landscape) {
   #game-wrapper {
-    display: block;
+    display: flex;
   }
   #orientation-message {
     display: none;
   }
+}
+
+
+
+@media (max-width: 768px) {
+
+  #container {
+    width: 100%;
+  }
+
+  #game-wrapper {
+      flex-direction: column; /* Stack elements vertically if needed */
+      display: flex;
+      width: 100vw;
+      height: 100vh; /* Full height of the viewport */
+    }
+    #game {
+
+    }
+    /* Example sidebar or button adjustments */
+    #left-sidebar {
+      max-width: 200px;
+    }
+
+    #left-sidebar {
+      max-width: 150px;
+    }
+
+    .sidebar-btn {
+      font-size: 14px; /* Smaller, touch-friendly buttons */
+      padding: 10px;
+    }
+
+    /* Resource grid adjustments */
+  .resource-display {
+    font-size: 12px; /* Smaller text */
+    padding: 5px; /* Reduced padding */
+  }
+  /* Menu buttons */
+  .sidebar-btn {
+    font-size: 14px; /* Smaller, readable text */
+    padding: 8px;
+    min-width: 50px; /* Touch-friendly size */
+  }
+  /* Title */
+  .game-title {
+    font-size: 20px; /* Scale down the "PXTD" title */
+  }
+  /* Central gameplay grid */
+  .tower-grid {
+    width: 100%;
+    height: auto;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+  }
+
+  #top-stats-bar {
+        scale: 0.5;
+    height: 60px;
+    background: none;
+    border: none;
+    display: flex
+;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    backdrop-filter: none;
+}
+
+#wave-progress-frame {
+    max-width: 100%;
+    height: 40px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 0 10px;
+    backdrop-filter: none;
+}
+
+#wave-progress-svg {
+    height: 25px;
+}
+
+#wave-progress-frame .sidebar-btn {
+    padding: 4px 10px;
+    font-size: 14px;
+    margin-left: 5px;
+
+  }
+
 }
