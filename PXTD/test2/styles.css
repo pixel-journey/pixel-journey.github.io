@@ -58,10 +58,6 @@ body {
 }
 
 #game {
-  width: 70vw;
-  height: 70vw;
-  max-width: 700px;
-  max-height: 700px;
   filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
   image-rendering: pixelated;
 }
@@ -1412,7 +1408,7 @@ text.no-interact {
 
 
 
-@media (max-width: 1268px) {
+@media (max-width: 868px) {
 
   #container {
     width: 100%;
@@ -1421,11 +1417,9 @@ text.no-interact {
   #game-wrapper {
       flex-direction: column; /* Stack elements vertically if needed */
       display: flex;
-      width: 100vw;
-      height: 100vh; /* Full height of the viewport */
     }
     #game {
-      
+
     }
 
     /* Example sidebar or button adjustments */
@@ -1440,6 +1434,18 @@ text.no-interact {
     .sidebar-btn {
       font-size: 14px; /* Smaller, touch-friendly buttons */
       padding: 10px;
+    }
+
+    .sidebar-section h2 {
+    font-size: 10px;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 400;
+    position: relative;
+    padding-left: 15px;
+}
+
+    #center-column {
+      overflow: hidden;
     }
 
     /* Resource grid adjustments */
@@ -1466,17 +1472,20 @@ text.no-interact {
   }
 
   #top-stats-bar {
-        scale: 0.6;
     height: 40px;
     background: none;
     border: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     backdrop-filter: none;
         margin-bottom: -20px;
         margin-top: -5px;
         z-index: 99;
+}
+
+#top-stats-bar text {
+  font-size: 8px;
 }
 
 #wave-progress-frame {
@@ -1487,8 +1496,7 @@ text.no-interact {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
-    margin-left: 20px;
+    margin: auto;
     padding: 0 10px;
     backdrop-filter: none;
         flex-direction: column;
@@ -1496,14 +1504,14 @@ text.no-interact {
 }
 
 #wave-progress-svg {
-    height: 25px;
+    height: -webkit-fill-available;
     width: -webkit-fill-available;
 }
 
 #wave-progress-frame .sidebar-btn {
-    padding: 4px 10px;
-    font-size: 14px;
-    margin-left: 5px;
+    padding: 2px 4px;
+    font-size: 10px;
+    margin-left: 4px;
 
   }
 

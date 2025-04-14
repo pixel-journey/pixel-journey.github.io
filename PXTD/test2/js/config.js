@@ -23,7 +23,7 @@ const CONFIG = {
     water: {
       cost: 450,
       range: 100, // Small range for area damage
-      dps: 250,
+      dps: 50,
       color: "#1e90ff",
       projectile: "area", // Indicates area damage
       projectileColor: "#1e90ff",

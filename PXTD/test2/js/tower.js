@@ -458,7 +458,7 @@ class Tower {
     this.isActive = false // Reset activity state
 
     if (this.type === "water") {
-      const interval = 200;
+      const interval = 600;
       if (now - this.lastShot < interval) return;
       let hitEnemy = false;
       gameState.enemies.forEach(enemy => {
@@ -469,7 +469,7 @@ class Tower {
             const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
             const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
             if (distance < this.range) {
-              enemy.takeDamage(this.dps * (interval / 1000));
+              enemy.takeDamage(this.dps * (interval / 3600));
               hitEnemy = true;
             }
           }

@@ -13,7 +13,7 @@ function setupEventListeners() {
       document.getElementById('orientation-message').style.display = 'block';
     } else {
       // Landscape mode
-      document.getElementById('game-wrapper').style.display = 'block';
+      document.getElementById('game-wrapper').style.display = 'flex';
       document.getElementById('orientation-message').style.display = 'none';
     }
   });
@@ -231,7 +231,7 @@ function showGameOver(totalCredits) {
     localStorage.setItem("bestScore", totalCredits);
     finalScoreText.innerHTML += `<br>New Highscore!`;
   }
-  gameOverScreen.style.display = "block";
+  gameOverScreen.style.display = "flex";
   }
 
 function randomizeMap() {

@@ -5,9 +5,9 @@ class Projectile {
     this.x = tower.x;
     this.y = tower.y;
     this.element = null;
-    // Speed: 50 for fire and ice, 5 for rock and wood, 10 for others
+    // Speed: 50 for fire and ice, 5 for rock and wood, 25 for others
     this.speed = (this.tower.type === "fire" || this.tower.type === "ice") ? 50 :
-                 (["rock", "wood"].includes(this.tower.type) ? 5 : 10);
+                 (["rock", "wood"].includes(this.tower.type) ? 5 : 25);
     // Size: 3 for fire and ice, 5 for others
     this.size = (this.tower.type === "fire" || this.tower.type === "ice") ? 3 : 5;
     this.createElement();
@@ -122,9 +122,9 @@ class Projectile {
   }
 
   hitTarget() {
-    this.target.takeDamage(this.tower.dps / 60);
+    this.target.takeDamage(this.tower.dps / 360);
     if (this.tower.type === "ice") {
-      this.target.freezeLevel = Math.min(this.target.freezeLevel + 0.1, 1); // Apply freeze effect
+      this.target.freezeLevel = Math.min(this.target.freezeLevel + 0.3, 1); // Apply freeze effect
     }
     if (this.tower.type === "gold" && Math.random() < 0.1) {
         gameState.credits += 5;
