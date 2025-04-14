@@ -696,9 +696,9 @@ function handleGlobalUpgrade(type) {
 
 function updateAllTowers() {
   gameState.towers.forEach(tower => {
-    tower.fireInterval = (tower.type === "fire" || tower.type === "ice" ? 100 : 500) / (1 + gameState.globalUpgrades.speed.rank * 0.05);
-    tower.dps = tower.baseDps * Math.pow(1.15, tower.upgradeLevel) * (1 + gameState.globalUpgrades.damage.rank * 0.05);
-    tower.range = tower.baseRange * Math.pow(1.15, tower.upgradeLevel) * (1 + gameState.globalUpgrades.range.rank * 0.05);
+    tower.fireInterval = (tower.type === "fire" || tower.type === "ice" ? 100 : 500) / (1 + gameState.globalUpgrades.globalSpeed.rank * 0.05);
+    tower.dps = tower.baseDps * Math.pow(1.15, tower.upgradeLevel) * (1 + gameState.globalUpgrades.globalDamage.rank * 0.05);
+    tower.range = tower.baseRange * Math.pow(1.15, tower.upgradeLevel) * (1 + gameState.globalUpgrades.globalRange.rank * 0.05);
     tower.updateSize();
   });
 }

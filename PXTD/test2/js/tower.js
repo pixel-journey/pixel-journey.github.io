@@ -7,9 +7,9 @@ class Tower {
     this.y = y + 25
     this.baseRange = CONFIG.towers[type].range
     this.baseDps = CONFIG.towers[type].dps
-    this.fireInterval = (this.type === "fire" || this.type === "ice" ? 100 : 500) / (1 + gameState.globalUpgrades.speed.rank * 0.05);
-    this.range = this.baseRange * (1 + gameState.globalUpgrades.range.rank * 0.05);
-    this.dps = this.baseDps * (1 + gameState.globalUpgrades.damage.rank * 0.05);
+    this.fireInterval = (this.type === "fire" || this.type === "ice" ? 100 : 500) / (1 + gameState.globalUpgrades.globalSpeed.rank * 0.05);
+    this.range = this.baseRange * (1 + gameState.globalUpgrades.globalRange.rank * 0.05);
+    this.dps = this.baseDps * (1 + gameState.globalUpgrades.globalDamage.rank * 0.05);
     this.target = null
     this.element = null
     this.rangeCircle = null
@@ -492,7 +492,7 @@ class Tower {
         this.isActive = true;
         this.lastShot = now;
 
-        const criticalChance = gameState.globalUpgrades.criticalChance.rank * 0.02; // 2% per rank
+        const criticalChance = gameState.globalUpgrades.globalCrit.rank * 0.02; // 2% per rank
     const isCritical = Math.random() < criticalChance;
     const damage = (this.dps / 60) * (isCritical ? 2 : 1);
 
