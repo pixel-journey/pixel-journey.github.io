@@ -22,7 +22,7 @@ const CONFIG = {
     },
     water: {
       cost: 450,
-      range: 100, // Small range for area damage
+      range: 60, // Small range for area damage
       dps: 50,
       color: "#1e90ff",
       projectile: "area", // Indicates area damage
@@ -140,9 +140,9 @@ const CONFIG = {
     speedMultiplier: 1,
     gameMode: "normal",
     healthModifier: 1,
-    autoRun: false,
+    autoRun: true,
   },
   grid: { size: 50, width: 10, height: 10 },
   enemy: { baseHealth: 10, baseSpeed: 0.25, healthIncreasePerWave: 1, speedIncreasePerWave: 0.005, creditReward: 5 },
-  wave: { baseEnemyCount: 5, enemyIncreasePerWave: 2, maxEnemies: 15, waveCompletionReward: 50, incomePercentage: 0.05 },
+  wave: { baseEnemyCount: 5, enemyIncreasePerWave: 2, maxEnemies: 100, waveCompletionReward: 50, incomePercentage: 0.05 },
 };

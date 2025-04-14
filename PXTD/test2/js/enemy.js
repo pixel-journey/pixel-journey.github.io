@@ -179,7 +179,7 @@ class Enemy {
   updateSpeed() {
     let speedMultiplier = gameState.speedMultiplier;
     if (this.freezeLevel > 0) {
-      speedMultiplier *= Math.max(0.3, 1 - this.freezeLevel * 0.1);
+      speedMultiplier *= Math.max(0.3, 1 - this.freezeLevel * 0.3);
     }
     this.speed = this.baseSpeed * speedMultiplier;
   }

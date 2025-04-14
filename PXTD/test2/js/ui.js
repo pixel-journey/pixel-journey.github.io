@@ -60,6 +60,27 @@ function setupEventListeners() {
   svg.addEventListener("click", handleBoardClick);
   svg.addEventListener("touchstart", handleBoardTouch);
 
+
+  // Touch start (equivalent to mousedown)
+  svg.addEventListener('touchstart', function(e) {
+    e.preventDefault(); // Prevent scrolling/zooming
+    const touch = e.touches[0];
+    const x = (touch.clientX - rect.left) * (500 / rect.width);
+    const y = (touch.clientY - rect.top) * (500 / rect.height);
+    // Example: place a game object at touch location
+    placeTower(x, y);
+  });
+
+  // Touch move (equivalent to mousemove)
+  svg.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const x = (touch.clientX - rect.left) * (500 / rect.width);
+    const y = (touch.clientY - rect.top) * (500 / rect.height);
+    // Example: update a target indicator
+    updateTargetIndicator(x, y);
+  });
+
   document.querySelectorAll(".expandable").forEach(header => {
     header.addEventListener("click", () => {
       const content = header.nextElementSibling;
@@ -79,84 +100,43 @@ function setupEventListeners() {
   });
 
   function applyBoosterEffect(type) {
-  const rank = gameState.boosterRanks[type].rank;
-  if (type === "damage") {
-    gameState.boosterRanks.damage.rank += rank * 0.05; // +5% per rank
-  } else if (type === "attack speed") {
-    gameState.boosterRanks.speed.rank += rank * 0.05;
-  } else if (type === "range") {
-    gameState.boosterRanks.range.rank += rank * 0.05;
-  } else if (type === "interest") {
-    gameState.interestMultiplier = 1 + rank * 0.1;
-  } else if (type === "wave bonus") {
-    gameState.waveBonusMultiplier = 1 + rank * 0.1;
-  } else if (type === "kill bonus") {
-    gameState.killBonusMultiplier = 1 + rank * 0.1;
-  } else if (type === "reduce level up costs") {
-    gameState.levelUpCostMultiplier = Math.pow(0.95, rank);
-  }
-  updateAllTowers(); // Refresh tower stats
-}
+    const rank = gameState.boosterRanks[type].rank;
 
-function initializeGlobalUpgrades() {
-  // Select all global upgrade buttons
-  document.querySelectorAll(".sidebar-section .sidebar-btn").forEach(btn => {
-    btn.addEventListener("click", function() {
-      const id = this.id; // e.g., "speed-upgrade", "crit-upgrade"
-      let type;
-
-      // Determine the upgrade type based on id or data-type
-      if (id === "globalSpeed-upgrade") type = "globalSpeed";
-      else if (id === "globalDamage-upgrade") type = "globalDamage";
-      else if (id === "globalRange-upgrade") type = "globalRange";
-      else if (id === "globalCrit-upgrade") type = "globalCrit";
-      else if (id === "globalIncome-upgrade") type = "globalIncome";
-      else if (id === "interest-upgrade") {
-        // Handle Interest upgrade separately
-        handleInterestUpgrade(this);
-        return;
-      }
-
-      const upgrade = gameState.globalUpgrades[type];
-      const costMultiplier = 1 + upgrade.rank * 0.5; // Increase cost with rank
-      const upgradeCost = Math.floor(upgrade.cost * costMultiplier);
-
-      // Check if player has enough credits
-      if (gameState.credits < upgradeCost) {
-        showNotification(`Not enough credits for ${type} upgrade!`, "error");
-        return;
-      }
-
-      // Apply the upgrade
-      gameState.credits -= upgradeCost;
-      gameState.totalCredits -= upgradeCost;
-      upgrade.rank++;
-
-      // Update button text
-      this.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalIncome" ? "Wave Income" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${upgrade.rank} (${upgradeCost})`;
-
-      // Update game state and UI
-      updateAllTowers(); // If upgrades affect towers (e.g., speed, damage, range)
-      updateUI();
-      logEvent(`Upgraded ${type} to Rank ${upgrade.rank}`);
-    });
-
-    // Initialize display
-    const id = btn.id;
-    let type;
-    if (id === "globalSpeed-upgrade") type = "globalSpeed";
-    else if (id === "globalDamage-upgrade") type = "globalDamage";
-    else if (id === "globalRange-upgrade") type = "globalRange";
-    else if (id === "globalCrit-upgrade") type = "globalCrit";
-    else if (id === "globalIncome-upgrade") type = "globalIncome";
-    else if (id === "interest-upgrade") {
-      btn.textContent = `Interest: Rank ${gameState.interestLevel} (50)`;
-      return;
+    if (type === "damage") {
+      // Apply damage boost to all towers (5% per rank)
+      gameState.towers.forEach(tower => {
+        tower.dps = tower.baseDps * Math.pow(1.05, rank); // 5% increase per rank
+      });
+    } else if (type === "attackspeed") {
+      // Apply attack speed boost to all towers (5% per rank)
+      gameState.towers.forEach(tower => {
+        // Assuming towers have a cooldown or fireRate property
+        // If using cooldown, reduce it to increase attack speed
+        if (tower.fireInterval) {
+          tower.fireInterval = tower.fireInterval / Math.pow(1.05, rank); // Decrease fireInterval
+        }
+      });
+    } else if (type === "range") {
+      // Apply range boost to all towers (5% per rank)
+      gameState.towers.forEach(tower => {
+        tower.range = tower.baseRange * Math.pow(1.05, rank);
+        if (tower.rangeCircle) {
+          tower.rangeCircle.setAttribute("r", tower.range);
+        }
+      });
+    } else if (type === "interest") {
+      gameState.interestMultiplier = 1 + rank * 0.1; // 10% per rank
+    } else if (type === "wavebonus") {
+      gameState.waveBonusMultiplier = 1 + rank * 0.1; // 10% per rank
+    } else if (type === "killbonus") {
+      gameState.killBonusMultiplier = 1 + rank * 0.1; // 10% per rank
+    } else if (type === "reducelvlup") {
+      gameState.levelUpCostMultiplier = Math.pow(0.95, rank); // 5% reduction per rank
     }
-    const rank = gameState.globalUpgrades[type].rank;
-    btn.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalIncome" ? "Wave Income" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${rank} (${gameState.globalUpgrades[type].cost})`;
-  });
-}
+
+    updateAllTowers(); // Refresh tower stats
+  }
+
 
 function handleInterestUpgrade() {
   if (gameState.interestLevel >= 9) {
@@ -182,12 +162,6 @@ function handleInterestUpgrade() {
   updateUI();
   logEvent(`Interest Upgraded to ${(0.5 + gameState.interestLevel * 0.5)}%`);
 }
-
-
-// Call this function after the DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  initializeGlobalUpgrades();
-});
 
 
   const graphicsToggleBtn = document.getElementById("graphics-toggle-btn");
@@ -321,6 +295,7 @@ function showGameOver(totalCredits) {
   }
   gameOverScreen.style.display = "flex";
   }
+
 
 function randomizeMap() {
   const points = [];
@@ -626,25 +601,6 @@ function handleTouchMove(e) {
   updateTargetIndicator(x, y);
 }
 
-// Touch start (equivalent to mousedown)
-svg.addEventListener('touchstart', function(e) {
-  e.preventDefault(); // Prevent scrolling/zooming
-  const touch = e.touches[0];
-  const x = (touch.clientX - rect.left) * (500 / rect.width);
-  const y = (touch.clientY - rect.top) * (500 / rect.height);
-  // Example: place a game object at touch location
-  placeTower(x, y);
-});
-
-// Touch move (equivalent to mousemove)
-svg.addEventListener('touchmove', function(e) {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const x = (touch.clientX - rect.left) * (500 / rect.width);
-  const y = (touch.clientY - rect.top) * (500 / rect.height);
-  // Example: update a target indicator
-  updateTargetIndicator(x, y);
-});
 
 function updateTargetIndicator(x, y) {
   const gridX = Math.floor(x / CONFIG.grid.size) * CONFIG.grid.size;
@@ -855,3 +811,60 @@ function placeTower(x, y) {
 
     logEvent(`Placed ${tower.type} Tower at (${gridX}, ${gridY})`);
 }
+
+function initializeGlobalUpgrades() {
+  console.log("initializeGlobalUpgrades running");
+  document.querySelectorAll(".sidebar-section .sidebar-btn").forEach(btn => {
+    const id = btn.id;
+    let type;
+
+    if (id === "globalSpeed-upgrade") type = "globalSpeed";
+    else if (id === "globalDamage-upgrade") type = "globalDamage";
+    else if (id === "globalRange-upgrade") type = "globalRange";
+    else if (id === "globalCrit-upgrade") type = "globalCrit";
+    else if (id === "globalIncome-upgrade") type = "globalIncome";
+    else if (id === "interest-upgrade") type = "globalInterest";
+    else return; // Skip non-global upgrade buttons
+
+    btn.addEventListener("click", function() {
+      const upgrade = gameState.globalUpgrades[type];
+      const costMultiplier = 1 + upgrade.rank * 0.5;
+      const upgradeCost = Math.floor(upgrade.cost * costMultiplier);
+
+      if (gameState.credits < upgradeCost) {
+        showNotification(`Not enough credits for ${type} upgrade!`, "error");
+        return;
+      }
+
+      gameState.credits -= upgradeCost;
+      gameState.totalCredits -= upgradeCost;
+      upgrade.rank++;
+
+      // Apply the effect immediately
+      if (["globalSpeed", "globalDamage", "globalRange"].includes(type)) {
+        gameState.towers.forEach(tower => {
+          tower.dps = tower.baseDps * (1 + gameState.globalUpgrades.globalDamage.rank * 0.05) * (1 + gameState.boosterRanks.damage.rank * 0.05);
+          tower.fireRate = tower.fireRate / (1 + gameState.globalUpgrades.globalSpeed.rank * 0.05) / (1 + gameState.boosterRanks.attackspeed.rank * 0.05);
+          tower.range = tower.baseRange * (1 + gameState.globalUpgrades.globalRange.rank * 0.05) * (1 + gameState.boosterRanks.range.rank * 0.05);
+          if (tower.rangeCircle) {
+            tower.rangeCircle.setAttribute("r", tower.range);
+          }
+        });
+      }
+
+      this.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalDamage" ? "Tower Damage" : type === "globalSpeed" ? "Tower Speed" : type === "globalRange" ? "Tower Range" : type === "globalIncome" ? "Wave Income" : type === "globalInterest" ? "Interest" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${upgrade.rank} (${upgradeCost})`;
+      updateUI();
+      logEvent(`Upgraded ${type} to Rank ${upgrade.rank}`);
+    });
+
+    // Initialize display
+    const upgrade = gameState.globalUpgrades[type];
+    const rank = upgrade.rank;
+    btn.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalDamage" ? "Tower Damage" : type === "globalSpeed" ? "Tower Speed" : type === "globalRange" ? "Tower Range" : type === "globalIncome" ? "Wave Income" : type === "globalInterest" ? "Interest" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${rank} (${upgrade.cost})`;
+  });
+}
+
+  // Call after DOM is loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeGlobalUpgrades();
+  });

@@ -122,13 +122,13 @@ class Projectile {
   }
 
   hitTarget() {
-    this.target.takeDamage(this.tower.dps / 360);
+    this.target.takeDamage(this.tower.dps / 60);
     if (this.tower.type === "ice") {
       this.target.freezeLevel = Math.min(this.target.freezeLevel + 0.3, 1); // Apply freeze effect
     }
-    if (this.tower.type === "gold" && Math.random() < 0.1) {
-        gameState.credits += 5;
-        gameState.totalCredits += 5;
+    if (this.tower.type === "gold" && Math.random() < 0.25) {
+        gameState.credits += 2.5;
+        gameState.totalCredits += 2.5;
         updateUI();
         const svgRect = svg.getBoundingClientRect();
         const screenX = (this.tower.x / 500) * svgRect.width + svgRect.left;
@@ -193,7 +193,7 @@ class Projectile {
           const enemyX = Number.parseFloat(enemyTransform.split("translate(")[1].split(",")[0]);
           const enemyY = Number.parseFloat(enemyTransform.split(",")[1].split(")")[0]);
           if (calculateDistance(enemyX, enemyY, targetX, targetY) < 75) {
-            enemy.takeDamage(this.tower.dps / 120);
+            enemy.takeDamage(this.tower.dps / 60);
             const splinterLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
             splinterLine.setAttribute("x1", targetX);
             splinterLine.setAttribute("y1", targetY);
@@ -283,7 +283,7 @@ class Projectile {
           const enemyX = Number.parseFloat(enemy.element.getAttribute("transform").split("translate(")[1].split(",")[0]);
           const enemyY = Number.parseFloat(enemy.element.getAttribute("transform").split(",")[1].split(")")[0]);
           if (calculateDistance(enemyX, enemyY, targetX, targetY) < 75) {
-            enemy.takeDamage(this.tower.dps / 120);
+            enemy.takeDamage(this.tower.dps / 90);
           }
         }
       });

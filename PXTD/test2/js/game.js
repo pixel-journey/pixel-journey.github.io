@@ -47,12 +47,12 @@ const gameState = {
     },
 boosterRanks: {
     damage: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower damage by 5%" },
-    "attack speed": { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower firing rate by 5%" },
+    attackspeed: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower firing rate by 5%" },
     range: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower range by 5%" },
     interest: { rank: 0, maxRank: 5, cost: 5, effect: "Increases interest income by 10%" },
-    "wave bonus": { rank: 0, maxRank: 5, cost: 10, effect: "Increases wave completion rewards by 10%" },
-    "kill bonus": { rank: 0, maxRank: 5, cost: 15, effect: "Increases enemy kill rewards by 10%" },
-    "reduce level up costs": { rank: 0, maxRank: 5, cost: 10, effect: "Reduces tower upgrade costs by 5%" },
+    wavebonus: { rank: 0, maxRank: 5, cost: 10, effect: "Increases wave completion rewards by 10%" },
+    killbonus: { rank: 0, maxRank: 5, cost: 15, effect: "Increases enemy kill rewards by 10%" },
+    reducelvlup: { rank: 0, maxRank: 5, cost: 10, effect: "Reduces tower upgrade costs by 5%" },
   },
   boosterPoints: 0,
 };
