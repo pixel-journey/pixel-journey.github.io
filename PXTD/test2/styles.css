@@ -1380,33 +1380,34 @@ text.no-interact {
   font-size: 12px;
 }
 
-
-/* Mobile */
-
-/* Hide game in portrait mode */
-@media (orientation: portrait) {
-  #game-wrapper {
-    display: none;
-  }
-  #orientation-message {
-    display: block;
-    text-align: center;
-    font-size: 18px;
-    padding: 20px;
-  }
+.confirm-popup {
+  position: absolute;
+  text-align: center;
+}
+.confirm-btn, .cancel-btn {
+  margin: 5px;
+  padding: 5px 10px;
+  background: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 3px;
+}
+.cancel-btn {
+  background: #f44336;
 }
 
-/* Show game in landscape mode */
-@media (orientation: landscape) {
-  #game-wrapper {
-    display: flex;
-  }
-  #orientation-message {
-    display: none;
-  }
+.global-upgrade-btn {
+  background: #333;
+  color: white;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
 }
-
-
+.global-upgrade-btn:hover {
+  background: #555;
+}
 
 @media (max-width: 868px) {
 

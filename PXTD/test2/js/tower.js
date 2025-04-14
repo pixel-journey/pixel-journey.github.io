@@ -38,87 +38,96 @@ class Tower {
   }
 
   createElement(x, y) {
-    this.element = document.createElementNS("http://www.w3.org/2000/svg", "g")
-    const base = document.createElementNS("http://www.w3.org/2000/svg", "rect")
-    const offset = (50 - this.size) / 2 // Center in 50x50 grid
-    base.setAttribute("x", x + offset)
-    base.setAttribute("y", y + offset)
-    base.setAttribute("width", this.size)
-    base.setAttribute("height", this.size)
-    base.setAttribute("fill", CONFIG.towers[this.type].color)
-    base.setAttribute("stroke", "#ffffff")
-    base.setAttribute("stroke-width", "2")
-    base.setAttribute("rx", "3")
-    this.element.appendChild(base)
+    this.element = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const base = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    const offset = (50 - this.size) / 2;
+    base.setAttribute("x", x + offset);
+    base.setAttribute("y", y + offset);
+    base.setAttribute("width", this.size);
+    base.setAttribute("height", this.size);
+    base.setAttribute("fill", CONFIG.towers[this.type].color);
+    base.setAttribute("stroke", "#ffffff");
+    base.setAttribute("stroke-width", "2");
+    base.setAttribute("rx", "3");
+    this.element.appendChild(base);
 
-    // Tower-specific visuals
+    // Tower-specific visuals (unchanged)
     if (this.type === "grass") {
-      const top = document.createElementNS("http://www.w3.org/2000/svg", "circle")
-      top.setAttribute("cx", x + 25)
-      top.setAttribute("cy", y + 25)
-      top.setAttribute("r", this.size / 4)
-      top.setAttribute("fill", "#ffffff")
-      this.element.appendChild(top)
+      const top = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      top.setAttribute("cx", x + 25);
+      top.setAttribute("cy", y + 25);
+      top.setAttribute("r", this.size / 4);
+      top.setAttribute("fill", "#ffffff");
+      this.element.appendChild(top);
     } else if (this.type === "fire") {
-      const top = document.createElementNS("http://www.w3.org/2000/svg", "polygon")
-      top.setAttribute(
-        "points",
-        `${x + 25},${y + offset + 5} ${x + offset + this.size - 5},${y + offset + this.size - 5} ${x + offset + 5},${y + offset + this.size - 5}`,
-      )
-      top.setAttribute("fill", "#ffcc00")
-      this.element.appendChild(top)
+      const top = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      top.setAttribute("points", `${x + 25},${y + offset + 5} ${x + offset + this.size - 5},${y + offset + this.size - 5} ${x + offset + 5},${y + offset + this.size - 5}`);
+      top.setAttribute("fill", "#ffcc00");
+      this.element.appendChild(top);
     } else if (this.type === "water") {
-      const top = document.createElementNS("http://www.w3.org/2000/svg", "circle")
-      top.setAttribute("cx", x + 25)
-      top.setAttribute("cy", y + 25)
-      top.setAttribute("r", this.size / 3)
-      top.setAttribute("fill", "#00ffff")
-      top.setAttribute("opacity", "0.7")
-      this.element.appendChild(top)
+      const top = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      top.setAttribute("cx", x + 25);
+      top.setAttribute("cy", y + 25);
+      top.setAttribute("r", this.size / 3);
+      top.setAttribute("fill", "#00ffff");
+      top.setAttribute("opacity", "0.7");
+      this.element.appendChild(top);
     } else {
-      const top = document.createElementNS("http://www.w3.org/2000/svg", "rect")
-      top.setAttribute("x", x + offset + this.size / 4)
-      top.setAttribute("y", y + offset + this.size / 4)
-      top.setAttribute("width", this.size / 2)
-      top.setAttribute("height", this.size / 2)
-      top.setAttribute("fill", "#ffffff")
-      this.element.appendChild(top)
+      const top = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      top.setAttribute("x", x + offset + this.size / 4);
+      top.setAttribute("y", y + offset + this.size / 4);
+      top.setAttribute("width", this.size / 2);
+      top.setAttribute("height", this.size / 2);
+      top.setAttribute("fill", "#ffffff");
+      this.element.appendChild(top);
     }
 
-    // Add activity indicator for "Graphics off" mode
-    this.activityIndicator = document.createElementNS("http://www.w3.org/2000/svg", "circle")
-    this.activityIndicator.setAttribute("cx", x + 25)
-    this.activityIndicator.setAttribute("cy", y + offset - 5) // Position above tower
-    this.activityIndicator.setAttribute("r", 3)
-    this.activityIndicator.setAttribute("fill", "#ffffff")
-    this.activityIndicator.setAttribute("opacity", "0") // Hidden by default
-    this.element.appendChild(this.activityIndicator)
+    this.activityIndicator = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    this.activityIndicator.setAttribute("cx", x + 25);
+    this.activityIndicator.setAttribute("cy", y + offset - 5);
+    this.activityIndicator.setAttribute("r", 3);
+    this.activityIndicator.setAttribute("fill", "#ffffff");
+    this.activityIndicator.setAttribute("opacity", "0");
+    this.element.appendChild(this.activityIndicator);
 
-    this.updateGlow() // Apply initial glow
-    svg.appendChild(this.element)
+    this.updateGlow();
+    svg.appendChild(this.element);
 
-    // Range circle for visualization
-    this.rangeCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle")
-    this.rangeCircle.setAttribute("cx", this.x)
-    this.rangeCircle.setAttribute("cy", this.y)
-    this.rangeCircle.setAttribute("r", this.range)
-    this.rangeCircle.setAttribute("fill", "none")
-    this.rangeCircle.setAttribute("stroke", CONFIG.towers[this.type].color)
-    this.rangeCircle.setAttribute("stroke-width", "2")
-    this.rangeCircle.setAttribute("stroke-opacity", "0.3")
-    this.rangeCircle.setAttribute("opacity", gameState.showRange ? "1" : "0")
-    svg.appendChild(this.rangeCircle)
+    this.rangeCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    this.rangeCircle.setAttribute("cx", this.x);
+    this.rangeCircle.setAttribute("cy", this.y);
+    this.rangeCircle.setAttribute("r", this.range);
+    this.rangeCircle.setAttribute("fill", "none");
+    this.rangeCircle.setAttribute("stroke", CONFIG.towers[this.type].color);
+    this.rangeCircle.setAttribute("stroke-width", "2");
+    this.rangeCircle.setAttribute("stroke-opacity", "0.3");
+    this.rangeCircle.setAttribute("opacity", "0"); // Hidden by default
+    svg.appendChild(this.rangeCircle);
 
-    // Event listeners for upgrade menu
+    // Add event listeners for click/touch to open menu
     this.element.addEventListener("click", (e) => {
-      e.stopPropagation()
-      this.showUpgradeMenu()
-    })
+      e.stopPropagation();
+      this.showUpgradeMenu();
+      this.rangeCircle.setAttribute("opacity", "1"); // Show range when menu opens
+    });
     this.element.addEventListener("touchstart", (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      this.showUpgradeMenu()
-    })
+      e.preventDefault();
+      e.stopPropagation();
+      this.showUpgradeMenu();
+      this.rangeCircle.setAttribute("opacity", "1");
+    });
+
+    // Add hover event listeners for desktop
+    this.element.addEventListener("mouseenter", () => {
+      if (!document.querySelector(`.upgrade-menu[data-tower="${this.x}-${this.y}"]`)) {
+        this.rangeCircle.setAttribute("opacity", "1");
+      }
+    });
+    this.element.addEventListener("mouseleave", () => {
+      if (!document.querySelector(`.upgrade-menu[data-tower="${this.x}-${this.y}"]`)) {
+        this.rangeCircle.setAttribute("opacity", "0");
+      }
+    });
   }
 
   updateGlow() {
@@ -295,13 +304,17 @@ class Tower {
         menu.appendChild(abilitiesSection);
       }
 
-      const closeMenu = e => {
-        if (!menu.contains(e.target) && !this.element.contains(e.target)) {
-          document.body.removeChild(menu);
-          document.removeEventListener("click", closeMenu);
-        }
-      };
-      setTimeout(() => document.addEventListener("click", closeMenu), 100);
+      const closeMenu = (e) => {
+            if (!menu.contains(e.target) && !this.element.contains(e.target)) {
+              menu.remove();
+              document.removeEventListener("click", closeMenu);
+              document.removeEventListener("touchstart", closeMenu);
+            }
+          };
+          setTimeout(() => {
+            document.addEventListener("click", closeMenu);
+            document.addEventListener("touchstart", closeMenu);
+          }, 100);
     }
 
     upgrade() {
@@ -469,7 +482,7 @@ class Tower {
             const enemyY = parseFloat(transform.split(",")[1].split(")")[0]);
             const distance = calculateDistance(this.x, this.y, enemyX, enemyY);
             if (distance < this.range) {
-              enemy.takeDamage(this.dps * (interval / 3600));
+              enemy.takeDamage(this.dps * (interval / 3600) * (isCritical ? 2 : 1));
               hitEnemy = true;
             }
           }
@@ -478,6 +491,10 @@ class Tower {
       if (hitEnemy) {
         this.isActive = true;
         this.lastShot = now;
+
+        const criticalChance = gameState.globalUpgrades.criticalChance.rank * 0.02; // 2% per rank
+    const isCritical = Math.random() < criticalChance;
+    const damage = (this.dps / 60) * (isCritical ? 2 : 1);
 
         // Show activity in "Graphics off" mode
         if (gameState.graphicsMode === "off" && !wasActive) {
@@ -523,7 +540,7 @@ class Tower {
         }
 
         if (this.type === "lightning") {
-            this.target.takeDamage(this.dps / 60);
+            this.target.takeDamage(this.dps / 60) * (isCritical ? 2 : 1);
             this.applySpecialEffects(this.target);
             if (gameState.graphicsMode !== "off") {
               const transform = this.target.element.getAttribute("transform");
@@ -549,7 +566,7 @@ class Tower {
             gameState.projectiles.push(projectile)
           } else {
             // Direct damage in "off" mode without projectile animation
-            this.target.takeDamage(this.dps / 60)
+            this.target.takeDamage(this.dps / 60 * (isCritical ? 2 : 1))
             this.applySpecialEffects(this.target)
           }
         }

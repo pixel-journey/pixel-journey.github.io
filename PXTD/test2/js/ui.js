@@ -98,6 +98,97 @@ function setupEventListeners() {
   updateAllTowers(); // Refresh tower stats
 }
 
+function initializeGlobalUpgrades() {
+  // Select all global upgrade buttons
+  document.querySelectorAll(".sidebar-section .sidebar-btn").forEach(btn => {
+    btn.addEventListener("click", function() {
+      const id = this.id; // e.g., "speed-upgrade", "crit-upgrade"
+      let type;
+
+      // Determine the upgrade type based on id or data-type
+      if (id === "globalSpeed-upgrade") type = "globalSpeed";
+      else if (id === "globalDamage-upgrade") type = "globalDamage";
+      else if (id === "globalRange-upgrade") type = "globalRange";
+      else if (id === "globalCrit-upgrade") type = "globalCrit";
+      else if (id === "globalIncome-upgrade") type = "globalIncome";
+      else if (id === "interest-upgrade") {
+        // Handle Interest upgrade separately
+        handleInterestUpgrade(this);
+        return;
+      }
+
+      const upgrade = gameState.globalUpgrades[type];
+      const costMultiplier = 1 + upgrade.rank * 0.5; // Increase cost with rank
+      const upgradeCost = Math.floor(upgrade.cost * costMultiplier);
+
+      // Check if player has enough credits
+      if (gameState.credits < upgradeCost) {
+        showNotification(`Not enough credits for ${type} upgrade!`, "error");
+        return;
+      }
+
+      // Apply the upgrade
+      gameState.credits -= upgradeCost;
+      gameState.totalCredits -= upgradeCost;
+      upgrade.rank++;
+
+      // Update button text
+      this.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalIncome" ? "Wave Income" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${upgrade.rank} (${upgradeCost})`;
+
+      // Update game state and UI
+      updateAllTowers(); // If upgrades affect towers (e.g., speed, damage, range)
+      updateUI();
+      logEvent(`Upgraded ${type} to Rank ${upgrade.rank}`);
+    });
+
+    // Initialize display
+    const id = btn.id;
+    let type;
+    if (id === "globalSpeed-upgrade") type = "globalSpeed";
+    else if (id === "globalDamage-upgrade") type = "globalDamage";
+    else if (id === "globalRange-upgrade") type = "globalRange";
+    else if (id === "globalCrit-upgrade") type = "globalCrit";
+    else if (id === "globalIncome-upgrade") type = "globalIncome";
+    else if (id === "interest-upgrade") {
+      btn.textContent = `Interest: Rank ${gameState.interestLevel} (50)`;
+      return;
+    }
+    const rank = gameState.globalUpgrades[type].rank;
+    btn.textContent = `${type === "globalCrit" ? "Critical Chance" : type === "globalIncome" ? "Wave Income" : type.charAt(0).toUpperCase() + type.slice(1)}: Rank ${rank} (${gameState.globalUpgrades[type].cost})`;
+  });
+}
+
+function handleInterestUpgrade() {
+  if (gameState.interestLevel >= 9) {
+    showNotification("Interest at max level!", "warning");
+    return;
+  }
+  if (gameState.credits < gameState.interestCost) {
+    showNotification("Not enough credits!", "error");
+    return;
+  }
+  gameState.credits -= gameState.interestCost;
+  gameState.totalCredits -= gameState.interestCost;
+  gameState.interestLevel++;
+  gameState.interestCost = Math.floor(gameState.interestCost * 2.5);
+  const interestBtn = document.getElementById("interest-upgrade");
+  if (gameState.interestLevel < 9) {
+    const nextInterest = 0.5 + (gameState.interestLevel + 1) * 0.5;
+    interestBtn.textContent = `Upgrade Interest to ${nextInterest}% (${gameState.interestCost})`;
+  } else {
+    interestBtn.textContent = `Interest: Max`;
+    interestBtn.disabled = true;
+  }
+  updateUI();
+  logEvent(`Interest Upgraded to ${(0.5 + gameState.interestLevel * 0.5)}%`);
+}
+
+
+// Call this function after the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  initializeGlobalUpgrades();
+});
+
 
   const graphicsToggleBtn = document.getElementById("graphics-toggle-btn");
   graphicsToggleBtn.addEventListener("click", toggleGraphicsMode);
@@ -123,9 +214,6 @@ function setupEventListeners() {
       showNotification("Bought 1 Life!", "success");
     });
 
-    ["speed", "damage", "range"].forEach(type => {
-        document.getElementById(`${type}-upgrade`).addEventListener("click", () => handleGlobalUpgrade(type));
-      });
 
       document.getElementById("share-btn").addEventListener("click", () => {
     const shareText = `I scored ${formatCurrency(gameState.totalCredits)} credits in PxTD Tower Defense!`;
@@ -274,9 +362,22 @@ function randomizeMap() {
 
 function handleTowerSelection(e) {
   e.preventDefault();
-  document.querySelectorAll(".tower-btn").forEach(b => b.classList.remove("selected"));
-  this.classList.add("selected");
-  gameState.selectedTower = this.getAttribute("data-type");
+  const type = this.getAttribute("data-type");
+
+  // If the same tower is clicked again, de-select it
+  if (gameState.selectedTower === type) {
+    gameState.selectedTower = null;
+    document.querySelectorAll(".tower-btn").forEach(b => b.classList.remove("selected"));
+    targetIndicator.setAttribute("opacity", "0");
+    rangePreview.setAttribute("opacity", "0");
+    // Close any open confirmation popups
+    document.querySelectorAll(".confirm-popup").forEach(popup => popup.remove());
+  } else {
+    // Select a new tower
+    document.querySelectorAll(".tower-btn").forEach(b => b.classList.remove("selected"));
+    this.classList.add("selected");
+    gameState.selectedTower = type;
+  }
 }
 
 function handleInterestUpgrade() {
@@ -295,7 +396,7 @@ function handleInterestUpgrade() {
   const interestBtn = document.getElementById("interest-upgrade");
   if (gameState.interestLevel < 9) {
     const nextInterest = 0.5 + (gameState.interestLevel + 1) * 0.5;
-    interestBtn.textContent = `Upgrade Interest to ${nextInterest}% (${gameState.interestCost})`;
+    interestBtn.textContent = `Interest: Rank: ${nextInterest} (${gameState.interestCost})`;
   } else {
     interestBtn.textContent = `Interest: Max`;
     interestBtn.disabled = true;
@@ -570,7 +671,7 @@ function handleBoardClick(e) {
   const rect = svg.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (500 / rect.width);
   const y = (e.clientY - rect.top) * (500 / rect.height);
-  placeTower(x, y);
+  showPlacementConfirmation(x, y);
 }
 
 function handleGlobalUpgrade(type) {
@@ -609,7 +710,89 @@ function handleBoardTouch(e) {
   const touch = e.touches[0];
   const x = (touch.clientX - rect.left) * (500 / rect.width);
   const y = (touch.clientY - rect.top) * (500 / rect.height);
-  placeTower(x, y);
+  showPlacementConfirmation(x, y);
+}
+
+function showPlacementConfirmation(x, y) {
+  document.querySelectorAll(".confirm-popup").forEach(popup => popup.remove());
+  const gridX = Math.floor(x / 50) * 50;
+  const gridY = Math.floor(y / 50) * 50 ;
+
+  // Validate position
+  if (!gameState.selectedTower) {
+    showNotification("No tower selected!", "warning");
+    return;
+  }
+
+  const towerCost = CONFIG.towers[gameState.selectedTower].cost;
+  if (gameState.credits < towerCost) {
+    showNotification("Not Enough Credits!", "error");
+    return;
+  }
+
+  if (isOnPath(gridX + 25, gridY + 25, gameState.pathPoints)) {
+    showNotification("Cannot Place Tower On Path!", "error");
+    return;
+  }
+
+  if (gridX < 0 || gridX >= 500 || gridY < 0 || gridY >= 500) {
+    showNotification("Cannot Place Tower Outside Grid!", "error");
+    return;
+  }
+
+  const occupied = gameState.towers.some(tower => tower.x === gridX + 25 && tower.y === gridY + 25);
+  if (occupied) {
+    showNotification("Space Already Occupied!", "error");
+    return;
+  }
+
+// Show confirmation popup
+  const confirmPopup = document.createElement("div");
+  confirmPopup.className = "confirm-popup";
+  confirmPopup.style.position = "absolute";
+  confirmPopup.style.background = "rgba(0, 0, 0, 0.8)";
+  confirmPopup.style.color = "white";
+  confirmPopup.style.padding = "10px";
+  confirmPopup.style.borderRadius = "5px";
+  confirmPopup.style.zIndex = "1000";
+  confirmPopup.innerHTML = `
+    <p>Place ${gameState.selectedTower} Tower here for ${towerCost} credits?</p>
+    <button class="confirm-btn">Confirm</button>
+    <button class="cancel-btn">Cancel</button>
+  `;
+
+  // Calculate position relative to the SVG's position and scaling
+  const svg = document.getElementById("game");
+  const svgRect = svg.getBoundingClientRect();
+  const scaleX = svgRect.width / 500; // SVG width in pixels / SVG coordinate width
+  const scaleY = svgRect.height / 500; // SVG height in pixels / SVG coordinate height
+  const screenX = svgRect.left + (gridX + 25) * scaleX; // Translate SVG coords to screen coords
+  const screenY = svgRect.top + (gridY + 25) * scaleY;
+
+  confirmPopup.style.left = `${screenX}px`;
+  confirmPopup.style.top = `${screenY}px`;
+  confirmPopup.style.transform = "translate(-50%, -50%)"; // Center the popup on the tower position
+
+  document.body.appendChild(confirmPopup);
+
+  confirmPopup.querySelector(".confirm-btn").addEventListener("click", () => {
+    placeTower(x, y);
+    confirmPopup.remove();
+  });
+
+  confirmPopup.querySelector(".cancel-btn").addEventListener("click", () => {
+    confirmPopup.remove();
+  });
+
+  // Also support touch events for confirmation
+  confirmPopup.querySelector(".confirm-btn").addEventListener("touchstart", () => {
+    placeTower(x, y);
+    confirmPopup.remove();
+  });
+
+  confirmPopup.querySelector(".cancel-btn").addEventListener("touchstart", () => {
+    confirmPopup.remove();
+  });
 }
 
 function placeTower(x, y) {

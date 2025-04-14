@@ -38,10 +38,13 @@ const gameState = {
   killBonusMultiplier: 1,        // Multiplies enemy kill rewards
   levelUpCostMultiplier: 1,      // Multiplies upgrade costs (less than 1 reduces cost)
   globalUpgrades: {
-  speed: { rank: 0, cost: 100 },
-  damage: { rank: 0, cost: 100 },
-  range: { rank: 0, cost: 100 },
-},
+      globalSpeed: { rank: 0, cost: 100, description: "Increases attack speed by 5%" },
+      globalDamage: { rank: 0, cost: 100, description: "Increases damage by 5%" },
+      globalRange: { rank: 0, cost: 100, description: "Increases range by 5%" },
+      globalCrit: { rank: 0, cost: 150, description: "Increases chance of critical hits (2x damage)" },
+      globalIncome: { rank: 0, cost: 200, description: "Increases passive income per wave" },
+      globalInterest: { rank: 0, cost: 200, description: "Increases passive interest per round" },
+    },
 boosterRanks: {
     damage: { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower damage by 5%" },
     "attack speed": { rank: 0, maxRank: 10, cost: 1, effect: "Increases tower firing rate by 5%" },
@@ -152,7 +155,9 @@ function checkWaveCompletion() {
     const baseInterest = 0.005;
     const interestIncrement = 0.005;
     const incomePercentage = (baseInterest + gameState.interestLevel * interestIncrement) * gameState.interestMultiplier;
-    const income = Math.floor(gameState.credits * incomePercentage);
+    const incomeBonus = 1 + gameState.globalUpgrades.globalIncome.rank * 0.1; // 10% per rank
+    const income = Math.floor(gameState.credits * incomePercentage * incomeBonus);
+    gameState.credits += waveReward + income;
     const waveReward = Math.floor(CONFIG.wave.waveCompletionReward * gameState.waveBonusMultiplier);
     gameState.credits += waveReward + income;
     gameState.totalCredits += waveReward + income;
