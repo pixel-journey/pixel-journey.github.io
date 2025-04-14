@@ -469,6 +469,8 @@ class Tower {
     const now = Date.now()
     const wasActive = this.isActive
     this.isActive = false // Reset activity state
+            const criticalChance = gameState.globalUpgrades.globalCrit.rank * 0.02; // 2% per rank
+        const isCritical = Math.random() < criticalChance;
 
     if (this.type === "water") {
       const interval = 600;
@@ -492,8 +494,6 @@ class Tower {
         this.isActive = true;
         this.lastShot = now;
 
-        const criticalChance = gameState.globalUpgrades.globalCrit.rank * 0.02; // 2% per rank
-    const isCritical = Math.random() < criticalChance;
     const damage = (this.dps / 60) * (isCritical ? 2 : 1);
 
         // Show activity in "Graphics off" mode
