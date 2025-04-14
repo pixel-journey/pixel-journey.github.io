@@ -157,7 +157,6 @@ function checkWaveCompletion() {
     const incomePercentage = (baseInterest + gameState.interestLevel * interestIncrement) * gameState.interestMultiplier;
     const incomeBonus = 1 + gameState.globalUpgrades.globalIncome.rank * 0.1; // 10% per rank
     const income = Math.floor(gameState.credits * incomePercentage * incomeBonus);
-    gameState.credits += waveReward + income;
     const waveReward = Math.floor(CONFIG.wave.waveCompletionReward * gameState.waveBonusMultiplier);
     gameState.credits += waveReward + income;
     gameState.totalCredits += waveReward + income;

@@ -81,11 +81,11 @@ function setupEventListeners() {
   function applyBoosterEffect(type) {
   const rank = gameState.boosterRanks[type].rank;
   if (type === "damage") {
-    gameState.globalUpgrades.damage.rank += rank * 0.05; // +5% per rank
+    gameState.boosterRanks.damage.rank += rank * 0.05; // +5% per rank
   } else if (type === "attack speed") {
-    gameState.globalUpgrades.speed.rank += rank * 0.05;
+    gameState.boosterRanks.speed.rank += rank * 0.05;
   } else if (type === "range") {
-    gameState.globalUpgrades.range.rank += rank * 0.05;
+    gameState.boosterRanks.range.rank += rank * 0.05;
   } else if (type === "interest") {
     gameState.interestMultiplier = 1 + rank * 0.1;
   } else if (type === "wave bonus") {
