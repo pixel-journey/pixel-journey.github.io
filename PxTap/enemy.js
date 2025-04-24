@@ -2,13 +2,14 @@ var enemy = {
   current: null,
 
   generateEnemy: function(wave) {
+    console.log('enemy.generateEnemy called with wave:', wave);
     var enemyInfo = CONSTANTS.determineEnemy(wave);
     var tier = enemyInfo.tier;
     var color = enemyInfo.color;
     var hp = CONSTANTS.getEnemyHP(tier, wave);
     var videoSrc = './ingredients/Pixel_lvl_' + tier + '_' + color + '_vid_25fps_1k.mp4';
 
-    return {
+    var enemy = {
       id: 'enemy-' + Date.now(),
       tier: tier,
       color: color,
@@ -20,73 +21,76 @@ var enemy = {
       width: 0,
       height: 0
     };
+    console.log('Generated enemy:', enemy);
+    return enemy;
   },
 
   spawnNewEnemy: function() {
+    console.log('enemy.spawnNewEnemy called');
     this.current = this.generateEnemy(gameState.wave);
+    console.log('Current enemy set:', this.current);
 
     var video = document.getElementById('enemy-video');
     video.src = this.current.videoSrc;
     video.load();
     video.play().catch(error => {
       console.error("Video play error:", error);
-      // Fallback to static image
-      video.src = '';
       video.poster = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_static.png';
       ui.notify('Failed to load enemy video, using static image.', true);
     });
 
-    // Ensure video is visible
     video.style.display = 'block';
     video.style.opacity = '1';
 
-    // Get video dimensions
     video.onloadedmetadata = () => {
       this.current.width = video.videoWidth;
       this.current.height = video.videoHeight;
-      // Force UI update
+      console.log('Video dimensions:', { width: this.current.width, height: this.current.height });
+      // Ensure responsive sizing
+      video.style.maxWidth = '100%';
+      video.style.maxHeight = '100%';
       ui.updateHealthBar();
     };
 
     video.onerror = () => {
       console.error('Video load error:', this.current.videoSrc);
       video.poster = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_static.png';
-      video.src = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_vid_25fps_1k.mp4'; // Reset to avoid empty source
+      video.src = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_vid_25fps_1k.mp4';
       ui.notify('Failed to load enemy video, using static image.', true);
     };
 
-    // Apply color filter
     ui.applyColorFilter(this.current.color);
-
-    // Update UI
     ui.updateHealthBar();
 
-    // Add entrance animation
     video.style.transform = 'scale(0.8)';
     setTimeout(() => {
       video.style.transform = 'scale(1)';
     }, 50);
 
-    // Update player statistics
     if (player.statistics) {
       player.statistics.enemiesDefeated = (player.statistics.enemiesDefeated || 0) + 1;
+      player.save();
     }
   },
 
   damage: function(amount) {
-    if (!this.current) return;
+    console.log('enemy.damage called with amount:', amount);
+    if (!this.current) {
+      console.warn('No current enemy to damage');
+      return;
+    }
 
-    // Apply damage
     this.current.hp -= amount;
+    console.log('Enemy HP after damage:', this.current.hp);
 
-    // Calculate color drain percentage
     this.current.colorDrain = clamp(1 - this.current.hp / this.current.maxHp, 0, 1);
+    console.log('Color drain:', this.current.colorDrain);
 
-    // Apply visual effects
     const video = document.getElementById('enemy-video');
+    // Add shake animation
     video.style.transition = 'transform 0.1s';
-      video.style.transform = 'scale(0.95)';
-      setTimeout(() => video.style.transform = 'scale(1)', 100);
+    video.style.transform = 'scale(0.95)';
+    setTimeout(() => video.style.transform = 'scale(1)', 100);
 
     if (ui.settings && ui.settings.showDamageNumbers) {
       const damageText = document.createElement('div');
@@ -98,15 +102,11 @@ var enemy = {
       setTimeout(() => damageText.remove(), 1000);
     }
 
-    // Update health bar
     ui.updateHealthBar();
-
-    // Play hit sound
     AUDIO.play('tap');
   }
 };
 
-// Utility
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }

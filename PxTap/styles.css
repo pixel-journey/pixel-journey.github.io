@@ -357,7 +357,8 @@ body {
   padding: 15px 0;
   display: flex;
   background: rgba(0, 0, 0, 0.8);
-  position: relative;
+  position: fixed;
+  bottom: 0;
   z-index: 10;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -447,6 +448,7 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 20vh;
 }
 
 .panel-header {
@@ -878,9 +880,15 @@ body {
     height: 60vh;
   }
 
-  #top-stats-bar, #bottom-nav {
+  #top-stats-bar {
     padding: 20px 0;
   }
+
+    #bottom-nav {
+      padding: 20px 0;
+      position: fixed;
+      bottom: 0;
+    }
 
   .resource-display {
     font-size: 20px;
@@ -894,6 +902,7 @@ body {
     padding: 30px;
     max-width: 800px;
     margin: 0 auto;
+    margin-top: 20vh;
   }
 }
 
@@ -918,6 +927,7 @@ body {
 
   .panel-content {
     padding: 15px;
+    margin-top: 20vh;
   }
 
   .collection-grid {

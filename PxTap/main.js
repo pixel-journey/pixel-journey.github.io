@@ -8,7 +8,6 @@ var tapCount = 0;
 var TAP_BATCH_SIZE = 100;
 
 function initGame() {
-  // Initialize all systems with error handling
   safeCall(() => {
     player.init();
     AUDIO.init();
@@ -24,22 +23,14 @@ function initGame() {
       console.warn('WALLET not defined, skipping wallet initialization');
     }
 
-    // Load saved wave
     var savedWave = localStorage.getItem('pxjWave');
     if (savedWave) {
       gameState.wave = parseInt(savedWave, 10);
     }
 
-    // Initialize UI
     ui.init();
-
-    // Render shop
     SHOP.renderShop();
-
-    // Spawn initial enemy
     enemy.spawnNewEnemy();
-
-    // Start game loop
     requestAnimationFrame(gameLoop);
   }, 'initGame');
 }
@@ -53,25 +44,15 @@ function gameLoop(timestamp) {
 }
 
 function updateGame() {
-  // Update boosters
+  if (!enemy.current) return;
   player.updateBoosters();
-
-  // Check achievements
   ACHIEVEMENTS.check();
-
-  // Update collection for current enemy
-  if (enemy.current) {
-    COLLECTION.discoverIngredient(enemy.current.tier, enemy.current.color);
-  }
-
-  // Update UI notices
+  COLLECTION.discoverIngredient(enemy.current.tier, enemy.current.color);
   ui.checkUpgradeNotice();
   ui.checkPrestigeIndicator();
 }
 
 function renderGame() {
-  // Update all UI elements
-  ui.updateHealthBar();
   ui.updateWaveCounter();
   ui.updateCurrencyBar();
   ui.updateXPBar();
@@ -80,6 +61,7 @@ function renderGame() {
 }
 
 function handleTap(event) {
+  event.preventDefault(); // Prevent zoom/scroll
   var now = Date.now();
   if (now - lastClickTime < TAP_RATE_LIMIT) {
     ui.showAntiCheatWarning();
@@ -88,16 +70,12 @@ function handleTap(event) {
   lastClickTime = now;
   tapCount++;
 
-  // Play tap sound
   AUDIO.play('tap');
-
-  // Trigger tap event with particle effects
   safeCall(() => {
     events.tapEnemy();
-    PARTICLES.createTapParticles(event.clientX, event.clientY, enemy.current ? enemy.current.color : null);
+    PARTICLES.createTapParticles(event.clientX || event.touches[0].clientX, event.clientY || event.touches[0].clientY, enemy.current ? enemy.current.color : null);
   }, 'tapEnemy');
 
-  // Log tap batch for analytics
   if (tapCount >= TAP_BATCH_SIZE) {
     console.log({
       playerID: 'player1',
@@ -111,7 +89,6 @@ function handleTap(event) {
   }
 }
 
-// Error handling wrapper
 function safeCall(fn, name) {
   try {
     fn();
@@ -121,8 +98,8 @@ function safeCall(fn, name) {
   }
 }
 
-// Setup event listeners
 document.getElementById('enemy-container').addEventListener('click', handleTap);
+document.getElementById('enemy-container').addEventListener('touchstart', handleTap);
 document.getElementById('settings-icon').addEventListener('click', () => ui.togglePanel('settings-panel'));
 document.getElementById('collection-btn').addEventListener('click', () => {
   COLLECTION.renderCollection();
