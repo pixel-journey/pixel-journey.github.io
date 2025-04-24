@@ -50,8 +50,8 @@ var enemy = {
 
     video.onerror = () => {
       console.error('Video load error:', this.current.videoSrc);
-      video.src = '';
       video.poster = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_static.png';
+      video.src = './ingredients/Pixel_lvl_' + this.current.tier + '_' + this.current.color + '_vid_25fps_1k.mp4'; // Reset to avoid empty source
       ui.notify('Failed to load enemy video, using static image.', true);
     };
 
@@ -84,6 +84,10 @@ var enemy = {
 
     // Apply visual effects
     const video = document.getElementById('enemy-video');
+    video.style.transition = 'transform 0.1s';
+      video.style.transform = 'scale(0.95)';
+      setTimeout(() => video.style.transform = 'scale(1)', 100);
+
     if (ui.settings && ui.settings.showDamageNumbers) {
       const damageText = document.createElement('div');
       damageText.className = 'floating-text damage-text';

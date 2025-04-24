@@ -117,12 +117,30 @@ const SKILLS = [
     getEffect: function(level) { return 1 + 0.05 * level; }
   },
   {
-    id: 'elemental_affinity',
-    name: 'Ingredient Drop Bias',
-    description: 'Increases chance to fight specific ingredients.',
+    id: 'yellow_affinity',
+    name: 'Yellow Ingredient Drop Bias',
+    description: 'Increases chance to fight yellow ingredients.',
     maxLevel: 20,
     baseCost: 90,
     type: 'yellow',
+    getEffect: function(level) { return 0.02 * level; }
+  },
+  {
+    id: 'blue_affinity',
+    name: 'Blue Ingredient Drop Bias',
+    description: 'Increases chance to fight blue ingredients.',
+    maxLevel: 20,
+    baseCost: 90,
+    type: 'blue',
+    getEffect: function(level) { return 0.02 * level; }
+  },
+  {
+    id: 'red_affinity',
+    name: 'Red Ingredient Drop Bias',
+    description: 'Increases chance to fight red ingredients.',
+    maxLevel: 20,
+    baseCost: 90,
+    type: 'red',
     getEffect: function(level) { return 0.02 * level; }
   },
   {

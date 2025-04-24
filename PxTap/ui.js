@@ -26,10 +26,15 @@ var ui = {
   },
 
   updateCurrencyBar: function() {
+  if (this.currencyUpdatePending) return;
+  this.currencyUpdatePending = true;
+  setTimeout(() => {
     document.getElementById('dye-red').textContent = '🔴 ' + (player.dye.red || 0).toFixed(1);
     document.getElementById('dye-blue').textContent = '🔵 ' + (player.dye.blue || 0).toFixed(1);
     document.getElementById('dye-yellow').textContent = '🟡 ' + (player.dye.yellow || 0).toFixed(1);
-  },
+    this.currencyUpdatePending = false;
+  }, 100); // Update every 100ms
+},
 
   updateXPBar: function() {
     const pct = ((player.xp || 0) / (player.xpToNext || 100)) * 100;
@@ -42,27 +47,17 @@ var ui = {
   },
 
   updateHealthBar: function() {
-    console.log('ui.updateHealthBar called');
-    if (!enemy.current) {
-      console.warn('No current enemy for health bar update');
-      return;
-    }
+    if (!enemy.current) return;
     const pct = Math.max(0, enemy.current.hp / enemy.current.maxHp);
-    console.log('Health percentage:', pct, 'HP:', enemy.current.hp, 'Max HP:', enemy.current.maxHp);
-
-    // Skip update if percentage hasn't changed significantly
-    if (this.lastHealthPct !== null && Math.abs(pct - this.lastHealthPct) < 0.0001) {
-      console.log('Skipping health bar update, no significant change');
-      return;
-    }
+    if (this.lastHealthPct !== null && Math.abs(pct - this.lastHealthPct) < 0.0001) return;
     this.lastHealthPct = pct;
-
-    document.getElementById('health-fill').style.width = (pct * 100) + '%';
-    document.getElementById('health-fill').style.backgroundColor = 'hsl(' + (pct * 120) + ', 80%, 60%)';
-    const video = document.getElementById('enemy-video');
-    video.style.filter = 'grayscale(' + (1 - pct) + ')';
-    document.getElementById('enemy-name').textContent = enemy.current.color.replace('_', ' ');
-    document.getElementById('enemy-hp').textContent = `${Math.max(0, enemy.current.hp).toFixed(1)} / ${enemy.current.maxHp.toFixed(1)}`;
+    requestAnimationFrame(() => {
+      document.getElementById('health-fill').style.width = (pct * 100) + '%';
+      document.getElementById('health-fill').style.backgroundColor = 'hsl(' + (pct * 120) + ', 80%, 60%)';
+      document.getElementById('enemy-video').style.filter = 'grayscale(' + (1 - pct) + ')';
+      document.getElementById('enemy-name').textContent = enemy.current.color.replace('_', ' ');
+      document.getElementById('enemy-hp').textContent = `${Math.max(0, enemy.current.hp).toFixed(1)} / ${enemy.current.maxHp.toFixed(1)}`;
+    });
   },
 
   updateWaveCounter: function() {
