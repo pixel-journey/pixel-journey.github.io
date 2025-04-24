@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PxTapper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="game-wrapper">
+    <div id="game-header">
+      <div id="logo">PxTapper</div>
+      <div id="settings-icon">⚙️</div>
+    </div>
+    <div id="top-stats-bar">
+      <div class="resource-display red-bar">
+        <span id="dye-red">🔴 0</span>
+        <div class="resource-bar"><div class="resource-fill"></div></div>
+      </div>
+      <div class="resource-display blue-bar">
+        <span id="dye-blue">🔵 0</span>
+        <div class="resource-bar"><div class="resource-fill"></div></div>
+      </div>
+      <div class="resource-display yellow-bar">
+        <span id="dye-yellow">🟡 0</span>
+        <div class="resource-bar"><div class="resource-fill"></div></div>
+      </div>
+      <div id="level-container">
+        <span id="level-tracker">Level: 1</span>
+      </div>
+    </div>
+    <div id="xp-container">
+      <div id="xp-bar">
+        <div id="xp-fill"></div>
+        <span id="xp-text">0 / 100</span>
+      </div>
+    </div>
+    <div id="game">
+      <div id="enemy-container">
+        <div id="enemy-background"></div>
+        <video id="enemy-video" autoplay loop muted></video>
+        <div id="damage-numbers"></div>
+        <div id="health-bar">
+          <div id="health-fill"></div>
+          <span id="enemy-hp">100 / 100</span>
+        </div>
+        <div id="enemy-info">
+          <span id="enemy-name">Ingredient</span>
+        </div>
+      </div>
+    </div>
+    <div id="active-boosters"></div>
+    <div id="wave-progress-frame">
+      <div id="wave-counter-container">
+        <span id="wave-counter">Wave: 1</span>
+        <div id="wave-progress-bar">
+          <div id="wave-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+    <div id="bottom-nav">
+      <button id="profile-btn" class="nav-btn">👤 Guest</button>
+      <button id="upgrade-btn" class="nav-btn">⬆️ Upgrades</button>
+      <button id="shop-btn" class="nav-btn">🛒 Shop</button>
+      <button id="prestige-btn" class="nav-btn">🔄 Prestige</button>
+      <button id="collection-btn" class="nav-btn">📚 Collection</button>
+      <button id="leaderboard-btn" class="nav-btn">🏆 Leaderboard</button>
+    </div>
+    <div id="profile-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Profile</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="profile-content"></div>
+      </div>
+    </div>
+    <div id="upgrade-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Upgrades</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="skill-options"></div>
+      </div>
+    </div>
+    <div id="shop-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Shop</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="shop-items"></div>
+      </div>
+    </div>
+    <div id="prestige-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Prestige</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="prestige-content"></div>
+        <button id="confirm-prestige-btn" class="sidebar-btn">Confirm Prestige</button>
+      </div>
+    </div>
+    <div id="settings-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Settings</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div class="settings-group">
+          <h3>Audio</h3>
+          <div class="setting-item">
+            <label for="music-volume">Music Volume</label>
+            <input type="range" id="music-volume" min="0" max="100" value="100">
+          </div>
+          <div class="setting-item">
+            <label for="sfx-volume">SFX Volume</label>
+            <input type="range" id="sfx-volume" min="0" max="100" value="100">
+          </div>
+          <div class="setting-item">
+            <label for="mute-audio">Mute Audio</label>
+            <input type="checkbox" id="mute-audio">
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3>Gameplay</h3>
+          <div class="setting-item">
+            <label for="particle-effects">Particle Effects</label>
+            <input type="checkbox" id="particle-effects" checked>
+          </div>
+          <div class="setting-item">
+            <label for="damage-numbers-setting">Damage Numbers</label>
+            <input type="checkbox" id="damage-numbers-setting" checked>
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3>Save Settings</h3>
+          <div class="setting-item">
+            <label for="auto-save">Auto-Save Interval (seconds)</label>
+            <input type="number" id="auto-save" min="10" max="300" value="30">
+          </div>
+          <button id="reset-game" class="danger-btn">Reset Game</button>
+        </div>
+        <div class="settings-group">
+          <h3>Wallet</h3>
+          <button id="wallet-connect-btn" class="sidebar-btn">Connect WAX Wallet</button>
+          <button id="wallet-logout-btn" class="sidebar-btn" style="display: none;">Logout</button>
+        </div>
+      </div>
+    </div>
+    <div id="collection-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Collection</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="collection-content" class="collection-grid"></div>
+      </div>
+    </div>
+    <div id="daily-reward-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h3>Daily Rewards</h3>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="daily-reward-calendar"></div>
+        <button id="claim-reward" class="sidebar-btn">Claim Reward</button>
+      </div>
+    </div>
+    <div id="tutorial-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Tutorial</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="tutorial-content"></div>
+        <div id="tutorial-navigation">
+          <button id="tutorial-prev" class="sidebar-btn">Previous</button>
+          <button id="tutorial-next" class="sidebar-btn">Next</button>
+        </div>
+      </div>
+    </div>
+    <div id="leaderboard-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Leaderboard</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="leaderboard-content">
+          <h3>Monthly Leaderboard</h3>
+          <p>Season ends in: <span id="leaderboard-countdown">Calculating...</span></p>
+          <table id="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+          </table>
+          <h3>Prizes</h3>
+          <p>Top players will receive one of the following Primary Pixel Ingredients:</p>
+          <ul id="leaderboard-prizes"></ul>
+        </div>
+      </div>
+    </div>
+    <div id="wallet-modal">
+      <div id="wallet-modal-content">
+        <h2>Welcome to PxTapper</h2>
+        <p>Connect your WAX wallet to unlock NFT bonuses or play as a guest.</p>
+        <button id="wax-login-btn" class="sidebar-btn">Connect WAX Wallet</button>
+        <button id="guest-btn" class="sidebar-btn">Play as Guest</button>
+      </div>
+    </div>
+    <div id="achievement-notification">
+      <span id="achievement-icon"></span>
+      <div>
+        <div id="achievement-title"></div>
+        <div id="achievement-description"></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://notify.waxsweden.org/static/assets/waxjs.js"></script>
+  <script src="constants.js"></script>
+  <script src="skills.js"></script>
+  <script src="player.js"></script>
+  <script src="enemy.js"></script>
+  <script src="events.js"></script>
+  <script src="ui.js"></script>
+  <script src="shop.js"></script>
+  <script src="tutorial.js"></script>
+  <script src="settings.js"></script>
+  <script src="particles.js"></script>
+  <script src="achievements.js"></script>
+  <script src="daily-rewards.js"></script>
+  <script src="audio.js"></script>
+  <script src="collection.js"></script>
+  <script src="wallet.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
