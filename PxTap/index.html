@@ -38,6 +38,15 @@
     <div id="game">
       <div id="enemy-container">
         <div id="enemy-background"></div>
+
+        <div id="wave-counter-container">
+  <span id="wave-counter">Wave: 1</span>
+  <div id="wave-progress-bar" style="display:none">
+    <div id="wave-progress-fill"></div>
+  </div>
+</div>
+<div id="active-boosters"></div>
+
         <video id="enemy-video" autoplay loop muted></video>
         <div id="damage-numbers"></div>
         <div id="health-bar">
@@ -49,21 +58,11 @@
         </div>
       </div>
     </div>
-    <div id="active-boosters"></div>
-    <div id="wave-progress-frame">
-      <div id="wave-counter-container">
-        <span id="wave-counter">Wave: 1</span>
-        <div id="wave-progress-bar">
-          <div id="wave-progress-fill"></div>
-        </div>
-      </div>
-    </div>
+
     <div id="bottom-nav">
       <button id="profile-btn" class="nav-btn">👤 Guest</button>
-      <button id="upgrade-btn" class="nav-btn">⬆️ Upgrades</button>
       <button id="shop-btn" class="nav-btn">🛒 Shop</button>
       <button id="prestige-btn" class="nav-btn">🔄 Prestige</button>
-      <button id="collection-btn" class="nav-btn">📚 Collection</button>
       <button id="leaderboard-btn" class="nav-btn">🏆 Leaderboard</button>
     </div>
     <div id="profile-panel" class="panel">
@@ -72,7 +71,14 @@
           <h2>Profile</h2>
           <button class="panel-close">✖</button>
         </div>
-        <div id="profile-content"></div>
+        <div class="profile-tabs">
+          <button class="profile-tab active" data-tab="profile-info">Profile</button>
+          <button class="profile-tab" data-tab="achievements-info">Achievements</button>
+          <button class="profile-tab" data-tab="collection-info">Collection</button>
+        </div>
+        <div id="profile-info" class="profile-tab-content active"></div>
+        <div id="achievements-info" class="profile-tab-content"></div>
+        <div id="collection-info" class="profile-tab-content"></div>
       </div>
     </div>
     <div id="upgrade-panel" class="panel">
@@ -133,6 +139,10 @@
           <div class="setting-item">
             <label for="damage-numbers-setting">Damage Numbers</label>
             <input type="checkbox" id="damage-numbers-setting" checked>
+          </div>
+          <div class="setting-item">
+            <label for="always-show-buffs">Always Show Buffs</label>
+            <input type="checkbox" id="always-show-buffs">
           </div>
         </div>
         <div class="settings-group">

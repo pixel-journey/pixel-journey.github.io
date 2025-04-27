@@ -1,34 +1,111 @@
 var events = {
-  tapEnemy: function() {
-    console.log('events.tapEnemy called');
+  tapEnemy: () => {
+    console.log("events.tapEnemy called")
     if (!enemy.current) {
-      console.warn('No current enemy to tap');
-      return;
+      console.warn("No current enemy to tap")
+      return
     }
-    var damage = player.calculateTapDamage();
-    console.log('Damage calculated:', damage);
-    enemy.damage(damage);
-    ui.applyColorFilter(enemy.current.color);
-    ui.spawnTapParticles(window.innerWidth / 2, window.innerHeight / 2);
-    var dyeReward = CONSTANTS.calculateDyePerTap(enemy.current.tier, damage, player.activeBoosters, enemy.current.color);
-    console.log('Dye reward:', dyeReward);
-    player.earnDye(dyeReward);
-    player.addXP(1);
+
+    var damage = player.calculateTapDamage()
+    console.log("Damage calculated:", damage)
+
+    // Apply multi_tap
+    var tapCount = 1
+    if (player.skills.multi_tap) {
+      const multiTapChance = SKILLS.find((s) => s.id === "multi_tap").getEffect(player.skills.multi_tap)
+      if (Math.random() < multiTapChance) {
+        tapCount = Math.floor(2 + Math.random() * 4) // 2 to 5 taps
+        console.log(`Multi-tap triggered! Tap count: ${tapCount}`)
+        ui.notify(`Multi-Tap x${tapCount}!`, false)
+      }
+    }
+
+    // Get the click coordinates from the last tap event
+    const clickX = window.lastClickX || window.innerWidth / 2
+    const clickY = window.lastClickY || window.innerHeight / 2
+
+    for (let i = 0; i < tapCount; i++) {
+      enemy.damage(damage)
+      console.log(`Tap ${i + 1}: ${damage} damage dealt`)
+
+      // Show damage number at a random position near the click point
+      if (ui.settings.showDamageNumbers) {
+        const randomOffsetX = Math.random() * 60 - 30
+        const randomOffsetY = Math.random() * 60 - 30
+        const damageText = document.createElement("div")
+        damageText.className = "floating-text damage-text"
+        damageText.textContent = `-${damage.toFixed(1)}`
+        damageText.style.left = clickX + randomOffsetX + "px"
+        damageText.style.top = clickY + randomOffsetY + "px"
+        document.getElementById("damage-numbers").appendChild(damageText)
+        setTimeout(() => damageText.remove(), 1000)
+      }
+    }
+
+    var dyeReward = CONSTANTS.calculateDyePerTap(enemy.current.tier, damage, player.activeBoosters, enemy.current.color)
+    console.log("Dye reward calculated:", dyeReward)
+            // Pass click coordinates to earnDye for visual feedback
+        player.earnDye(dyeReward, clickX, clickY)
+
+    var xpReward = enemy.current.xp
+    console.log("XP reward:", xpReward)
+    player.addXP(xpReward)
+
     if (enemy.current.hp <= 0) {
-      console.log('Enemy defeated');
-      this.onEnemyDefeated();
+      console.log("Enemy defeated:", enemy.current)
+      gameState.wave++
+      localStorage.setItem("pxjWave", gameState.wave)
+
+      enemy.current = null
+
+      setTimeout(() => {
+        enemy.spawnNewEnemy()
+      }, 500)
+
+      if (gameState.wave % 10 === 0) {
+        var skills = player.getRandomSkills(3)
+        ui.showSkillChoice(skills)
+      }
     }
   },
 
-  onEnemyDefeated: function() {
-    console.log('events.onEnemyDefeated called');
-    var bonusDye = CONSTANTS.calculateKillBonus(enemy.current.tier, player.activeBoosters, enemy.current.color);
-    console.log('Bonus dye:', bonusDye);
-    player.earnDye(bonusDye);
-    player.addXP(enemy.current.xp);
-    gameState.wave++;
-    localStorage.setItem('pxjWave', gameState.wave);
-    enemy.spawnNewEnemy();
-    ui.updateWaveCounter();
-  }
-};
+  autoTap: function () {
+    if (!enemy.current) return
+    const now = Date.now()
+    let delay = 1000 // Default 1s
+
+    // Apply auto_tap_speed skill if available
+    if (player.skills.auto_tap_speed) {
+      const speedEffect = SKILLS.find((s) => s.id === "auto_tap_speed").getEffect(player.skills.auto_tap_speed)
+      if (!isNaN(speedEffect) && speedEffect > 0) {
+        delay = speedEffect * 1000
+        console.log(`Auto tap speed effect: ${speedEffect}, delay: ${delay}ms`)
+      }
+    }
+
+    let shouldAutoTap = false
+
+        // Check if autoTap30s booster is active
+        if (Array.isArray(player.activeBoosters) && player.activeBoosters.some((booster) => booster.key === "autoTap30s")) {
+          // If autoTap30s is active, ensure we tap at least once per second
+          delay = Math.min(delay, 1000)
+          shouldAutoTap = true
+          console.log("Auto tap booster is active")
+        }
+        // Otherwise check if auto_tap skill is active
+        else if (player.skills.auto_tap) {
+          shouldAutoTap = true
+          console.log("Auto tap skill is active")
+        }
+
+        // Execute auto tap if conditions are met
+        if (shouldAutoTap && now - player.lastAutoTap >= delay) {
+          player.lastAutoTap = now
+          console.log(`Auto tap executing with delay: ${delay}ms`)
+          this.tapEnemy()
+          return true // Return true if auto tap was executed
+        }
+
+        return false // Return false if auto tap was not executed
+      },
+}
