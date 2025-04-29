@@ -41,9 +41,9 @@ var ui = {
     if (this.currencyUpdatePending) return
     this.currencyUpdatePending = true
     setTimeout(() => {
-      document.getElementById("dye-red").textContent = "🔴 " + (player.dye.red || 0).toFixed(1)
-      document.getElementById("dye-blue").textContent = "🔵 " + (player.dye.blue || 0).toFixed(1)
-      document.getElementById("dye-yellow").textContent = "🟡 " + (player.dye.yellow || 0).toFixed(1)
+      document.getElementById("dye-red").textContent = "🔴 " + (player.dye.red || 0).toFixed(0)
+      document.getElementById("dye-blue").textContent = "🔵 " + (player.dye.blue || 0).toFixed(0)
+      document.getElementById("dye-yellow").textContent = "🟡 " + (player.dye.yellow || 0).toFixed(0)
       this.currencyUpdatePending = false
     }, 100) // Update every 100ms
   },
@@ -52,7 +52,7 @@ var ui = {
     const pct = ((player.xp || 0) / (player.xpToNext || 100)) * 100
     document.getElementById("xp-fill").style.width = pct + "%"
     document.getElementById("xp-text").textContent =
-      `${(player.xp || 0).toFixed(1)} / ${(player.xpToNext || 100).toFixed(1)}`
+      `${(player.xp || 0).toFixed(1)} / ${(player.xpToNext || 100).toFixed(0)}`
   },
 
   updateLevelTracker: () => {
@@ -562,7 +562,7 @@ var ui = {
       div.title = boosterDef.description;
 
       boostersContainer.appendChild(div);
-    }
+      }
   });
 
   // Attach event listeners after rendering new elements

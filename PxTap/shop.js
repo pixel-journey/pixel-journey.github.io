@@ -6,7 +6,7 @@ const SHOP = {
       icon: "🤖",
       baseDuration: 30000,
       cost: { red: 100, blue: 100, yellow: 100 },
-      description: "Automatically taps the enemy every second.",
+      description: "Automatically taps the enemy (every ~second).",
       multiplier: 1,
     },
     {
@@ -14,7 +14,7 @@ const SHOP = {
       name: "Double Dye",
       icon: "🎨",
       baseDuration: 60000,
-      cost: { red: 150, blue: 150, yellow: 150 },
+      cost: { red: 1500, blue: 1500, yellow: 1500 },
       description: "Doubles all dye earned from taps and kills.",
       multiplier: 2,
     },
@@ -23,7 +23,7 @@ const SHOP = {
       name: "Critical Chance",
       icon: "⚡",
       baseDuration: 30000,
-      cost: { red: 200, blue: 200, yellow: 200 },
+      cost: { red: 2000, blue: 2000, yellow: 2000 },
       description: "Increases critical hit chance by 10%.",
       multiplier: 0.1,
     },
@@ -32,16 +32,16 @@ const SHOP = {
       name: "Mega Tap",
       icon: "👊",
       baseDuration: 10000,
-      cost: { red: 300, blue: 300, yellow: 300 },
+      cost: { red: 5000, blue: 5000, yellow: 5000 },
       description: "Triples your tap damage for a short time.",
       multiplier: 3,
     },
     {
       id: "colorRush45s",
       name: "Color Rush",
-      icon: "🌈",
+      icon: "💫",
       baseDuration: 45000,
-      cost: { red: 250, blue: 250, yellow: 250 },
+      cost: { red: 25000, blue: 25000, yellow: 25000 },
       description: "Increases chance of higher tier ingredients.",
       multiplier: 0.2,
     },
@@ -50,7 +50,7 @@ const SHOP = {
       name: "XP Boost",
       icon: "📚",
       baseDuration: 45000,
-      cost: { red: 200, blue: 200, yellow: 200 },
+      cost: { red: 2000, blue: 2000, yellow: 2000 },
       description: "Increases XP gained by 50%.",
       multiplier: 1.5,
     },
@@ -103,14 +103,7 @@ const SHOP = {
 
     // Update UI
     ui.updateCurrencyBar();
-    ui.renderBoosters(); // This will also call SHOP.initBoosterListeners()
-
-    // Don't close the panel if called from buff bar
-    // Only close if we're in the shop panel
-    const shopPanel = document.getElementById("shop-panel")
-    if (shopPanel && shopPanel.classList.contains("active")) {
-      ui.togglePanel("shop-panel")
-    }
+    ui.renderBoosters(); // This calls SHOP.initBoosterListeners()
 
     return true;
   },
@@ -131,8 +124,13 @@ const SHOP = {
       const newDiv = div.cloneNode(true);
       div.parentNode.replaceChild(newDiv, div);
 
+      // Debug: Add a temporary inline click handler to confirm clicks are captured
+      newDiv.onclick = () => {
+        console.log(`Inline click captured for booster: ${newDiv.dataset.boosterId}`);
+      };
+
       newDiv.addEventListener("click", (e) => {
-        console.log('Booster clicked:', newDiv.dataset.boosterId);
+        console.log(`Event listener triggered for booster: ${newDiv.dataset.boosterId}`);
         e.stopPropagation(); // Prevent enemy tap event
 
         const boosterId = newDiv.dataset.boosterId;
@@ -159,7 +157,8 @@ const SHOP = {
         if (canAfford) {
           try {
             console.log(`Attempting to purchase booster: ${boosterId}`);
-            const success = SHOP.purchaseBooster(boosterId);
+            // Bind the context to ensure `this` refers to SHOP
+            const success = SHOP.purchaseBooster.bind(SHOP)(boosterId);
             if (success) {
               console.log(`Booster ${boosterId} purchased successfully`);
             } else {
@@ -175,9 +174,14 @@ const SHOP = {
         }
       });
 
-      // Debug: Confirm listener is attached
       console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
     });
+
+    // Debug: Log all click listeners on the first booster element
+    if (boosterElements.length > 0) {
+      const firstBooster = boosterElements[0];
+      console.log(`Click listeners on ${firstBooster.dataset.boosterId}:`, firstBooster.__proto__.onclick);
+    }
   },
 
   renderShop: function () {
@@ -255,7 +259,7 @@ const SHOP = {
         const boosterDiv = document.createElement("div")
         boosterDiv.className = `shop-item ${!canAfford ? "disabled" : ""} ${isActive ? "active" : ""}`
 
-        // Calculate duration with player's skills
+        // Calculate baseDuration with player's skills
         let durationSeconds = booster.baseDuration / 1000
         if (player.skills.booster_duration) {
           durationSeconds *= SKILLS.find((s) => s.id === "booster_duration").getEffect(player.skills.booster_duration)
