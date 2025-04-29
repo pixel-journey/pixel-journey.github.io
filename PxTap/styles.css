@@ -261,11 +261,17 @@ body {
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 5px;
+  user-select: none;       /* Prevent text selection */
+-webkit-user-select: none; /* Safari compatibility */
+pointer-events: none;    /* Disable clicks/hovers (if needed) */
 }
 
 #wave-counter {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.8);
+  user-select: none;       /* Prevent text selection */
+-webkit-user-select: none; /* Safari compatibility */
+pointer-events: none;    /* Disable clicks/hovers (if needed) */
 }
 
 #health-bar {
@@ -304,6 +310,9 @@ body {
   font-size: 12px;
   color: var(--text-color);
   text-shadow: 0 0 2px var(--background-dark);
+  user-select: none;       /* Prevent text selection */
+-webkit-user-select: none; /* Safari compatibility */
+pointer-events: none;    /* Disable clicks/hovers (if needed) */
 }
 
 #active-boosters {
@@ -681,6 +690,20 @@ pointer-events: auto;
   animation: floatUp 1s ease-out forwards;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   z-index: 20;
+}
+
+.floating-text.damage-text {
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff5555;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1000;
 }
 
 .damage-text {

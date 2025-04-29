@@ -25,21 +25,9 @@ var events = {
     const clickY = window.lastClickY || window.innerHeight / 2
 
     for (let i = 0; i < tapCount; i++) {
-      enemy.damage(damage)
+      enemy.damage(damage);
       console.log(`Tap ${i + 1}: ${damage} damage dealt`)
 
-      // Show damage number at a random position near the click point
-      if (ui.settings.showDamageNumbers) {
-        const randomOffsetX = Math.random() * 60 - 30
-        const randomOffsetY = Math.random() * 60 - 30
-        const damageText = document.createElement("div")
-        damageText.className = "floating-text damage-text"
-        damageText.textContent = `-${damage.toFixed(1)}`
-        damageText.style.left = clickX + randomOffsetX + "px"
-        damageText.style.top = clickY + randomOffsetY + "px"
-        document.getElementById("damage-numbers").appendChild(damageText)
-        setTimeout(() => damageText.remove(), 1000)
-      }
     }
 
     var dyeReward = CONSTANTS.calculateDyePerTap(enemy.current.tier, damage, player.activeBoosters, enemy.current.color)
@@ -79,7 +67,6 @@ var events = {
       const speedEffect = SKILLS.find((s) => s.id === "auto_tap_speed").getEffect(player.skills.auto_tap_speed)
       if (!isNaN(speedEffect) && speedEffect > 0) {
         delay = speedEffect * 1000
-        console.log(`Auto tap speed effect: ${speedEffect}, delay: ${delay}ms`)
       }
     }
 

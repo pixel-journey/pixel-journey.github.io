@@ -2,8 +2,8 @@ const SKILLS = [
   {
     id: "tap_power",
     name: "Tap Power",
-    description: "Increases damage dealt per tap by 10% per level.",
-    maxLevel: 50,
+    description: "Increases base damage dealt per tap by 10% per upgrade.",
+    maxLevel: 500,
     baseCost: 10,
     type: "red",
     getEffect: (level) => 1 + 0.1 * level, // 1.1 to 6.0
@@ -11,7 +11,7 @@ const SKILLS = [
   {
     id: "auto_tap",
     name: "Auto Tap",
-    description: "Automatically taps the enemy based on auto tap speed.",
+    description: "Enable automatic taps the enemy based on auto tap speed.",
     maxLevel: 1,
     baseCost: 100,
     type: "blue",
@@ -20,52 +20,52 @@ const SKILLS = [
   {
     id: "auto_tap_speed",
     name: "Auto Tap Speed",
-    description: "Reduces auto-tap delay (1s to 0.25s).",
-    maxLevel: 25,
+    description: "Reduces auto-tap delay (1s to 0.000001s).",
+    maxLevel: 250,
     baseCost: 20,
     type: "blue",
-    getEffect: (level) => Math.max(0.25, 1 - 0.03 * level), // 1 to 0.25
+    getEffect: (level) => 1 / (1 + 0.1 * level), // Never reaches 0
   },
   {
     id: "bonus_xp",
     name: "Bonus XP",
-    description: "Increases XP gained by 5% per level.",
-    maxLevel: 20,
+    description: "Increases XP gained by 5% per upgrade.",
+    maxLevel: 200,
     baseCost: 30,
     type: "yellow",
-    getEffect: (level) => 1 + 0.05 * level, // 1.05 to 2.0
+    getEffect: (level) => 1 + 0.05 * level, // 1.05 to 20
   },
   {
     id: "multi_tap",
     name: "Multi Tap",
-    description: "2–5% chance per level for taps to hit 2–5 times.",
-    maxLevel: 10,
+    description: "2–50% chance per upgrade for taps to hit 2–50 times.",
+    maxLevel: 100,
     baseCost: 50,
     type: "red",
-    getEffect: (level) => 0.02 * level, // 0.02 to 0.2
+    getEffect: (level) => 0.02 * level, // 0.02 to 2
   },
   {
     id: "crit_chance",
     name: "Critical Tap Chance",
-    description: "1% chance per level for critical strikes.",
-    maxLevel: 15,
+    description: "1% chance per upgrade for critical strikes.",
+    maxLevel: 100,
     baseCost: 40,
     type: "red",
-    getEffect: (level) => 0.01 * level, // 0.01 to 0.15
+    getEffect: (level) => 0.01 * level, // 0.01 to 1
   },
   {
     id: "crit_multiplier",
     name: "Critical Damage Multiplier",
-    description: "Increases critical strike damage (160% to 250%).",
-    maxLevel: 10,
+    description: "Increases critical strike damage (160% to 1650%).",
+    maxLevel: 100,
     baseCost: 60,
     type: "blue",
-    getEffect: (level) => 1.5 + 0.1 * level, // 1.6 to 2.5
+    getEffect: (level) => 1.5 + 0.1 * level, // 1.6 to 16.5
   },
   {
     id: "prestige_gain",
     name: "Prestige Point Bonus",
-    description: "Increases prestige points by 5% per level.",
+    description: "Increases prestige points by 5% per upgrade.",
     maxLevel: 20,
     baseCost: 100,
     type: "yellow",
@@ -74,7 +74,7 @@ const SKILLS = [
   {
     id: "dye_boost_red",
     name: "Red Dye Boost",
-    description: "Increases red dye earned by 10% per level.",
+    description: "Increases red dye earned by 10% per upgrade.",
     maxLevel: 25,
     baseCost: 25,
     type: "red",
@@ -83,7 +83,7 @@ const SKILLS = [
   {
     id: "dye_boost_blue",
     name: "Blue Dye Boost",
-    description: "Increases blue dye earned by 10% per level.",
+    description: "Increases blue dye earned by 10% per upgrade.",
     maxLevel: 25,
     baseCost: 25,
     type: "blue",
@@ -92,7 +92,7 @@ const SKILLS = [
   {
     id: "dye_boost_yellow",
     name: "Yellow Dye Boost",
-    description: "Increases yellow dye earned by 10% per level.",
+    description: "Increases yellow dye earned by 10% per upgrade.",
     maxLevel: 25,
     baseCost: 25,
     type: "yellow",
@@ -101,8 +101,8 @@ const SKILLS = [
   {
     id: "bonus_color_drop",
     name: "Color Drop Multiplier",
-    description: "Increases base dye drop by 5% per level.",
-    maxLevel: 30,
+    description: "Increases base dye drop by 5% per upgrade.",
+    maxLevel: 300,
     baseCost: 80,
     type: "yellow",
     getEffect: (level) => 1 + 0.05 * level, // 1.05 to 2.5
@@ -110,7 +110,7 @@ const SKILLS = [
   {
     id: "story_chance",
     name: "Flavor Encounter Chance",
-    description: "2% chance per level for story events.",
+    description: "2% chance per upgrade for story events.",
     maxLevel: 10,
     baseCost: 45,
     type: "blue",
@@ -119,17 +119,17 @@ const SKILLS = [
   {
     id: "booster_duration",
     name: "Booster Duration",
-    description: "Increases booster duration by 5% per level.",
-    maxLevel: 15,
-    baseCost: 65,
+    description: "Increases booster duration by 5% per upgrade.",
+    maxLevel: 150,
+    baseCost: 650,
     type: "blue",
     getEffect: (level) => 1 + 0.05 * level, // 1.05 to 1.75
   },
   {
     id: "yellow_affinity",
     name: "Yellow Ingredient Drop Bias",
-    description: "2% chance per level to fight yellow enemies.",
-    maxLevel: 20,
+    description: "2% chance per upgrade to fight yellow enemies.",
+    maxLevel: 50,
     baseCost: 90,
     type: "yellow",
     getEffect: (level) => 0.02 * level, // 0.02 to 0.4
@@ -137,8 +137,8 @@ const SKILLS = [
   {
     id: "blue_affinity",
     name: "Blue Ingredient Drop Bias",
-    description: "2% chance per level to fight blue enemies.",
-    maxLevel: 20,
+    description: "2% chance per upgrade to fight blue enemies.",
+    maxLevel: 50,
     baseCost: 90,
     type: "blue",
     getEffect: (level) => 0.02 * level, // 0.02 to 0.4
@@ -146,8 +146,8 @@ const SKILLS = [
   {
     id: "red_affinity",
     name: "Red Ingredient Drop Bias",
-    description: "2% chance per level to fight red enemies.",
-    maxLevel: 20,
+    description: "2% chance per upgrade to fight red enemies.",
+    maxLevel: 50,
     baseCost: 90,
     type: "red",
     getEffect: (level) => 0.02 * level, // 0.02 to 0.4
@@ -155,7 +155,7 @@ const SKILLS = [
   {
     id: "shop_booster_duration",
     name: "Shop Booster Duration",
-    description: "Increases shop booster duration by 5% per level.",
+    description: "Increases shop booster duration by 5% per upgrade.",
     maxLevel: 15,
     baseCost: 70,
     type: "blue",

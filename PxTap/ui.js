@@ -104,7 +104,7 @@ var ui = {
   showSkillChoice: function (skills) {
     const dyeTypes = ["red", "blue", "yellow"]
     const dyeType = dyeTypes[Math.floor(Math.random() * 3)]
-    const cost = 10
+    const cost = 100
     if (player.dye[dyeType] < cost) {
       this.notify(`Need ${cost} ${dyeType} dye to open upgrades!`, true)
       return
@@ -158,7 +158,7 @@ var ui = {
     }
     const refreshBtn = document.createElement("button")
     refreshBtn.className = "sidebar-btn"
-    refreshBtn.textContent = "Refresh (10 Random Dye)"
+    refreshBtn.textContent = "Refresh (-100 Each Dye)"
     refreshBtn.onclick = () => {
       if (upgradeApplied) {
         this.notify("Cannot refresh after upgrading!", true)
@@ -170,7 +170,7 @@ var ui = {
         this.updateCurrencyBar()
         this.showSkillChoice(player.getRandomSkills(3))
       } else {
-        this.notify(`Need 10 ${refreshType} dye to refresh!`, true)
+        this.notify(`Need 100 of each dye to refresh!`, true)
       }
     }
     controls.appendChild(skipBtn)
@@ -420,8 +420,9 @@ var ui = {
 
     // Randomize position slightly if this is a damage number
     if (options.className && options.className.includes("damage-text")) {
-      const randomX = (options.x || window.innerWidth / 2) + (Math.random() * 60 - 30)
-      const randomY = (options.y || window.innerHeight / 2) + (Math.random() * 60 - 30)
+      // Randomize position slightly around the click point
+      const randomX = (options.x || window.innerWidth / 2) + (Math.random() * 40 - 20)
+      const randomY = (options.y || window.innerHeight / 2) + (Math.random() * 40 - 20)
       el.style.left = randomX + "px"
       el.style.top = randomY + "px"
     } else {
@@ -576,7 +577,7 @@ var ui = {
 
     console.log('Buff-bar DOM after render:', boostersContainer.innerHTML);
 
-      SHOP.initBoosterListeners();
+    SHOP.initBoosterListeners();
 
     boostersContainer.style.display = 'none';
     boostersContainer.offsetHeight;

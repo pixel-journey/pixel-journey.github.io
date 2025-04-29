@@ -59,7 +59,7 @@ const SHOP = {
       name: "Skill Upgrades",
       icon: "⬆️",
       baseDuration: 0, // Not a timed booster
-      cost: { red: 10, blue: 10, yellow: 10 },
+      cost: { red: 100, blue: 100, yellow: 100 },
       description: "View available skill upgrades to enhance your abilities.",
       multiplier: 0,
       special: true, // Flag as special non-timed item
@@ -115,10 +115,6 @@ const SHOP = {
             const newDiv = div.cloneNode(true);
             div.parentNode.replaceChild(newDiv, div);
 
-            // Debug: Add a temporary inline click handler to confirm clicks are captured
-            newDiv.onclick = () => {
-              console.log(`Inline click captured for booster: ${newDiv.dataset.boosterId}`);
-            };
 
             newDiv.addEventListener("click", (e) => {
               console.log(`Event listener triggered for booster: ${newDiv.dataset.boosterId}`);
@@ -148,7 +144,7 @@ const SHOP = {
               if (canAfford) {
                 try {
                   console.log(`Attempting to purchase booster: ${boosterId}`);
-                  const success = SHOP.purchaseBooster(boosterId);
+                  const success = player.purchaseBooster(boosterId);
                   if (success) {
                     console.log(`Booster ${boosterId} purchased successfully`);
                   } else {
@@ -166,12 +162,6 @@ const SHOP = {
 
             console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
           });
-
-          // Debug: Log all click listeners on the first booster element
-          if (boosterElements.length > 0) {
-            const firstBooster = boosterElements[0];
-            console.log(`Click listeners on ${firstBooster.dataset.boosterId}:`, firstBooster.__proto__.onclick);
-          }
     },
 
   renderShop: function () {
@@ -213,6 +203,7 @@ const SHOP = {
       upgradeDiv.onclick = () => {
         if (canAfford) {
           this.purchaseSpecial(skillUpgradeItem.id)
+
         } else {
           ui.notify(`Not enough dye for ${skillUpgradeItem.name}`, true)
         }
@@ -313,15 +304,15 @@ const SHOP = {
   // Add a new function to show skill choice
   showSkillChoice: () => {
     // Check if player can afford the upgrade
-    if (player.dye.red < 10 || player.dye.blue < 10 || player.dye.yellow < 10) {
-      ui.notify("Need 10 of each dye to open upgrades!", true)
+    if (player.dye.red < 100 || player.dye.blue < 100 || player.dye.yellow < 100) {
+      ui.notify("Need 100 of each dye to open upgrades!", true)
       return
     }
 
     // Deduct the cost
-    player.dye.red -= 10
-    player.dye.blue -= 10
-    player.dye.yellow -= 10
+    player.dye.red -= 100
+    player.dye.blue -= 100
+    player.dye.yellow -= 100
     ui.updateCurrencyBar()
 
     // Show the skill choice UI

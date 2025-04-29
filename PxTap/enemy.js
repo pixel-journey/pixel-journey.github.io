@@ -44,13 +44,13 @@ var enemy = {
       })
     }
     if (Math.random() < tierChance) {
-      tier = Math.min(tier + 1, 3)
+      // tier = Math.min(tier + 1, 3)
       console.log(`Tier encounter triggered! Upgraded to tier ${tier}`)
       ui.notify("Rare Enemy Encounter!", false)
     }
 
     var hp = CONSTANTS.getEnemyHP(tier, wave)
-    var videoSrc = "./ingredients/Pixel_lvl_" + tier + "_" + color + "_vid_25fps_1k.mp4"
+    var videoSrc = "./ingredients/Pixel_lvl_" + enemyInfo.tier + "_" + color + "_vid_25fps_1k.mp4"
 
     var enemy = {
       id: "enemy-" + Date.now(),
@@ -134,13 +134,37 @@ var enemy = {
     setTimeout(() => (video.style.transform = "scale(1)"), 100)
 
     if (ui.settings && ui.settings.showDamageNumbers) {
-      const damageText = document.createElement("div")
-      damageText.className = "floating-text damage-text"
-      damageText.textContent = `-${amount.toFixed(1)}`
-      damageText.style.left = window.innerWidth / 2 + "px"
-      damageText.style.top = window.innerHeight / 2 - 50 + "px"
-      document.getElementById("damage-numbers").appendChild(damageText)
-      setTimeout(() => damageText.remove(), 1000)
+      const damageText = document.createElement("div");
+      damageText.className = "floating-text damage-text";
+      damageText.textContent = `-${amount.toFixed(1)}`;
+
+      // Center position with slight random offset
+      const centerX = window.lastClickX / 2 || window.innerHeight / 2;
+      const centerY = window.lastClickY / 2 || window.innerWidth / 2;
+
+      // Random offset (-20px to +20px) for natural feel
+      const randomOffsetX = (Math.random() * 400 - 300);
+      const randomOffsetY = (Math.random() * 20 - 50); // Slightly more upward bias
+
+      damageText.style.left = `${centerX + randomOffsetX}px`;
+      damageText.style.top = `${centerY + 300 + randomOffsetY}px`; // Start 50px above center
+
+      // Add animation properties
+      damageText.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
+      damageText.style.willChange = 'transform, opacity';
+
+      document.getElementById("damage-numbers").appendChild(damageText);
+
+      // Trigger animation in the next frame
+      requestAnimationFrame(() => {
+        damageText.style.transform = 'translateY(-80px)';
+        damageText.style.opacity = '0';
+      });
+
+      // Remove after animation completes
+      setTimeout(() => {
+        damageText.remove();
+      }, 1000);
     }
 
     // Add kill reward when enemy is defeated

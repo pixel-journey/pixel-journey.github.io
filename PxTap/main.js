@@ -28,10 +28,9 @@ function initGame() {
       gameState.wave = Number.parseInt(savedWave, 10)
     }
 
-    ui.init()
     SHOP.renderShop()
-    SHOP.initBoosterListeners();
       SHOP.init();
+          ui.init()
     enemy.spawnNewEnemy()
     requestAnimationFrame(gameLoop)
   }, "initGame")
@@ -47,6 +46,7 @@ function gameLoop(timestamp) {
 
 function updateGame() {
   if (!enemy.current) return
+  ui.renderBoosters()
   player.updateBoosters()
   ACHIEVEMENTS.check()
   // Update UI indicators
@@ -71,7 +71,6 @@ function updateGame() {
 
   // Update UI elements that need frequent updates
 ui.updateHealthBar()
-ui.renderBoosters()
 }
 
 function renderGame() {
@@ -79,7 +78,6 @@ function renderGame() {
   ui.updateCurrencyBar()
   ui.updateXPBar()
   ui.updateLevelTracker()
-  ui.renderBoosters()
 }
 
 function handleTap(event) {
