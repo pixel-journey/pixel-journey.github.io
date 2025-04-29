@@ -59,36 +59,46 @@ var ui = {
     document.getElementById("level-tracker").textContent = "Level: " + (player.level || 1).toFixed(1)
   },
 
-  updateHealthBar: function () {
-    if (!enemy.current) return
-    const pct = Math.max(0, enemy.current.hp / enemy.current.maxHp)
-    if (this.lastHealthPct !== null && Math.abs(pct - this.lastHealthPct) < 0.0001) return
-    this.lastHealthPct = pct
-    requestAnimationFrame(() => {
-      document.getElementById("health-fill").style.width = pct * 100 + "%"
-      document.getElementById("health-fill").style.backgroundColor = "hsl(" + pct * 120 + ", 80%, 60%)"
-      document.getElementById("enemy-video").style.filter = "grayscale(" + (1 - pct) + ")"
-      document.getElementById("enemy-name").textContent = enemy.current.color.replace("_", " ")
-      document.getElementById("enemy-hp").textContent =
-        `${Math.max(0, enemy.current.hp).toFixed(1)} / ${enemy.current.maxHp.toFixed(1)}`
-    })
-  },
+
+    updateHealthBar: function() {
+      console.log('ui.updateHealthBar called');
+      const healthFill = document.getElementById('health-fill');
+      const enemyName = document.getElementById('enemy-name');
+      const enemyHP = document.getElementById('enemy-hp');
+      const waveCounter = document.getElementById('wave-counter');
+      if (!enemy.current) {
+        healthFill.style.width = '0%';
+        enemyName.textContent = 'No Ingredient';
+        enemyHP.textContent = '0 / 0';
+        waveCounter.textContent = `Wave: ${gameState.wave}`;
+        return;
+      }
+      const healthPercent = (enemy.current.hp / enemy.current.maxHp) * 100;
+      healthFill.style.width = `${healthPercent}%`;
+      enemyName.textContent = `${enemy.current.color.charAt(0).toUpperCase() + enemy.current.color.slice(1)} Tier ${enemy.current.tier}`;
+      enemyHP.textContent = `${Math.round(enemy.current.hp)} / ${enemy.current.maxHp}`;
+      waveCounter.textContent = `Wave: ${gameState.wave}`;
+    },
 
   updateWaveCounter: () => {
-    document.getElementById("wave-counter").textContent = "Wave: " + (gameState.wave || 1).toFixed(1)
-    const waveProgress = ((gameState.wave % 10) / 10) * 100
-    document.getElementById("wave-progress-fill").style.width = waveProgress + "%"
+    document.getElementById("wave-counter").textContent = "Wave: " + (gameState.wave || 1).toFixed(0)
   },
 
-  togglePanel: (panelId) => {
-    const panels = document.querySelectorAll(".panel")
-    const buttons = document.querySelectorAll(".nav-btn")
-    panels.forEach((panel) => {
-      panel.classList.toggle("active", panel.id === panelId)
-    })
-    buttons.forEach((btn) => {
-      btn.classList.toggle("active", btn.id === panelId.replace("-panel", "-btn"))
-    })
+  togglePanel: function(panelId) {
+    console.log('ui.togglePanel called:', panelId);
+    const panel = document.getElementById(panelId);
+    const isOpen = panel.classList.contains('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    if (!isOpen) {
+      panel.classList.add('active');
+      if (panelId === 'shop-panel') {
+        SHOP.renderShop();
+      } else if (panelId === 'collection-panel') {
+        COLLECTION.renderCollection();
+      } else if (panelId === 'profile-panel') {
+        this.renderProfile();
+      }
+    }
   },
 
   showSkillChoice: function (skills) {
@@ -483,94 +493,86 @@ var ui = {
   },
 
   renderBoosters: () => {
-      const boostersContainer = document.getElementById("active-boosters")
-      if (!boostersContainer) return
+  console.log('ui.renderBoosters called');
+  const boostersContainer = document.getElementById("active-boosters");
+  if (!boostersContainer) return;
 
-      boostersContainer.innerHTML = ""
+  boostersContainer.innerHTML = "";
 
-      // Check if we need to show empty boosters based on settings
-      const showEmptyBoosters = ui.settings.alwaysShowBuffs || false
+  // Check if we need to show empty boosters based on settings
+  const showEmptyBoosters = ui.settings.alwaysShowBuffs || false;
 
-      // Get all available booster types, filtering out special items
-      const allBoosterTypes = SHOP.boosters
-        .filter((b) => !b.special) // Filter out special items like upgradeSkills
-        .map((b) => b.id)
+  // Get all available booster types, filtering out special items
+  const allBoosterTypes = SHOP?.boosters
+    ?.filter((b) => !b.special) // Filter out special items like upgradeSkills
+    ?.map((b) => b.id) || [];
 
-      // Create a map of active boosters
-      const activeBoosterMap = {}
-      if (Array.isArray(player.activeBoosters)) {
-        player.activeBoosters.forEach((booster) => {
-          activeBoosterMap[booster.key] = booster
-        })
+  // Create a map of active boosters
+  const activeBoosterMap = {};
+  if (Array.isArray(player.activeBoosters)) {
+    player.activeBoosters.forEach((booster) => {
+      activeBoosterMap[booster.key] = booster;
+    });
+  }
+
+  // Display boosters, including empty ones if setting is enabled
+  allBoosterTypes.forEach((boosterId) => {
+    const boosterDef = SHOP?.boosters?.find((b) => b.id === boosterId);
+    if (!boosterDef) {
+      console.warn(`Booster definition not found for ID: ${boosterId}`);
+      return;
+    }
+
+    const activeBooster = activeBoosterMap[boosterId];
+
+    if (activeBooster || showEmptyBoosters) {
+      const div = document.createElement("div");
+
+      let timeDisplay = "0s";
+      if (activeBooster) {
+        const now = Date.now();
+        const remaining = Math.max(0, Math.ceil((activeBooster.expires - now) / 1000));
+
+        // Format remaining time nicely
+        if (remaining >= 60) {
+          timeDisplay = `${Math.floor(remaining / 60)}m ${remaining % 60}s`;
+        } else {
+          timeDisplay = `${remaining}s`;
+        }
+
+        div.className = "active-booster";
+
+        // Add pulsing effect for boosters about to expire
+        if (remaining <= 5) {
+          div.classList.add("expiring");
+        }
+      } else {
+        div.className = "empty-booster";
       }
 
-      // Display boosters, including empty ones if setting is enabled
-      allBoosterTypes.forEach((boosterId) => {
-        const boosterDef = SHOP.boosters.find((b) => b.id === boosterId)
-        if (!boosterDef) return
+      // Add data-booster-id attribute for shop.js to identify the booster
+      div.dataset.boosterId = boosterId;
 
-        const activeBooster = activeBoosterMap[boosterId]
+      div.innerHTML = `
+        <span class="booster-icon">${boosterDef.icon}</span>
+        <span class="booster-name">${boosterDef.name}</span>
+        <span class="booster-timer">${timeDisplay}</span>
+      `;
 
-        if (activeBooster || showEmptyBoosters) {
-          const div = document.createElement("div")
+      div.title = boosterDef.description;
 
-          if (activeBooster) {
-            const now = Date.now()
-            const remaining = Math.max(0, Math.ceil((activeBooster.expires - now) / 1000))
+      boostersContainer.appendChild(div);
+    }
+  });
 
-            // Format remaining time nicely
-            let timeDisplay
-            if (remaining >= 60) {
-              timeDisplay = `${Math.floor(remaining / 60)}m ${remaining % 60}s`
-            } else {
-              timeDisplay = `${remaining}s`
-            }
+  // Attach event listeners after rendering new elements
+  if (typeof SHOP?.initBoosterListeners === 'function') {
+    SHOP.initBoosterListeners();
+  } else {
+    console.warn('SHOP.initBoosterListeners is not defined. Ensure shop.js is loaded and initialized.');
+  }
 
-            div.className = "active-booster"
-
-            // Add pulsing effect for boosters about to expire
-            if (remaining <= 5) {
-              div.classList.add("expiring")
-            }
-
-            div.innerHTML = `
-              <span class="booster-icon">${boosterDef.icon}</span>
-              <span class="booster-name">${boosterDef.name}</span>
-              <span class="booster-timer">${timeDisplay}</span>
-            `
-          } else {
-            div.className = "empty-booster"
-            div.innerHTML = `
-              <span class="booster-icon">${boosterDef.icon}</span>
-              <span class="booster-name">${boosterDef.name}</span>
-              <span class="booster-timer">0s</span>
-            `
-          }
-
-          // Make booster clickable to buy/extend
-          div.title = boosterDef.description
-          div.addEventListener("click", (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-
-            // Check if player can afford it
-            const canAfford =
-              player.dye.red >= boosterDef.cost.red &&
-              player.dye.blue >= boosterDef.cost.blue &&
-              player.dye.yellow >= boosterDef.cost.yellow
-
-            if (canAfford) {
-                          // Call the shop's purchase function directly
-              SHOP.purchaseBooster(boosterId)
-            } else {
-              ui.notify(`Not enough dye for ${boosterDef.name}`, true)
-            }
-          })
-
-          boostersContainer.appendChild(div)
-        }
-      })
-    },
+},
 
     saveSettings: function () {
       localStorage.setItem("pxjUISettings", JSON.stringify(this.settings))

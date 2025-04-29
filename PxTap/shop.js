@@ -66,37 +66,118 @@ const SHOP = {
     },
   ],
 
-  purchaseBooster: function (boosterId) {
-    console.log("SHOP.purchaseBooster called with:", boosterId)
-    const booster = this.boosters.find((b) => b.id === boosterId)
-    if (!booster) {
-      ui.notify("Booster not found!", true)
-      return
-    }
-    if (
-      player.dye.red < booster.cost.red ||
-      player.dye.blue < booster.cost.blue ||
-      player.dye.yellow < booster.cost.yellow
-    ) {
-      ui.notify(`Not enough dye for ${booster.name}`, true)
-      return
+  purchaseBooster: function(boosterId) {
+    console.log(`SHOP.purchaseBooster called for booster: ${boosterId}`);
+    const boosterDef = this.boosters.find(b => b.id === boosterId);
+    if (!boosterDef) {
+      console.warn(`Booster not found: ${boosterId}`);
+      return false;
     }
 
-        // Call player's purchaseBooster method
-        player.purchaseBooster(boosterId)
+    // Check if player can afford
+    const canAfford =
+      player.dye.red >= boosterDef.cost.red &&
+      player.dye.blue >= boosterDef.cost.blue &&
+      player.dye.yellow >= boosterDef.cost.yellow;
 
-        // Notify the user
-        ui.notify(`Purchased ${booster.name}`)
+    if (!canAfford) {
+      console.log(`Not enough dye for ${boosterDef.name}`);
+      return false;
+    }
 
-        // Update UI
-        ui.updateCurrencyBar()
+    // Deduct cost
+    player.dye.red -= boosterDef.cost.red;
+    player.dye.blue -= boosterDef.cost.blue;
+    player.dye.yellow -= boosterDef.cost.yellow;
 
-        // Don't close the panel if called from buff bar
-        // Only close if we're in the shop panel
-        const shopPanel = document.getElementById("shop-panel")
-        if (shopPanel && shopPanel.classList.contains("active")) {
-          ui.togglePanel("shop-panel")
+    // Extend or activate booster
+    const existingBooster = player.activeBoosters.find(b => b.key === boosterId);
+    if (existingBooster) {
+      existingBooster.expires += boosterDef.baseDuration;
+    } else {
+      player.activeBoosters.push({
+        key: boosterId,
+        expires: Date.now() + boosterDef.baseDuration
+      });
+    }
+
+    // Update UI
+    ui.updateCurrencyBar();
+    ui.renderBoosters(); // This will also call SHOP.initBoosterListeners()
+
+    // Don't close the panel if called from buff bar
+    // Only close if we're in the shop panel
+    const shopPanel = document.getElementById("shop-panel")
+    if (shopPanel && shopPanel.classList.contains("active")) {
+      ui.togglePanel("shop-panel")
+    }
+
+    return true;
+  },
+
+  initBoosterListeners: function() {
+    console.log('SHOP.initBoosterListeners called');
+    const boostersContainer = document.getElementById("active-boosters");
+    if (!boostersContainer) {
+      console.warn('Boosters container not found');
+      return;
+    }
+
+    const boosterElements = boostersContainer.querySelectorAll('.active-booster, .empty-booster');
+    console.log(`Found ${boosterElements.length} booster elements to attach listeners to`);
+
+    boosterElements.forEach(div => {
+      // Remove any existing listeners to prevent duplicates
+      const newDiv = div.cloneNode(true);
+      div.parentNode.replaceChild(newDiv, div);
+
+      newDiv.addEventListener("click", (e) => {
+        console.log('Booster clicked:', newDiv.dataset.boosterId);
+        e.stopPropagation(); // Prevent enemy tap event
+
+        const boosterId = newDiv.dataset.boosterId;
+        if (!boosterId) {
+          console.warn('Booster ID not found on element');
+          return;
         }
+
+        const boosterDef = SHOP.boosters.find(b => b.id === boosterId);
+        if (!boosterDef) {
+          console.warn(`Booster definition not found for ID: ${boosterId}`);
+          return;
+        }
+
+        console.log(`Booster clicked: ${boosterId}, Description: ${boosterDef.description}, Active: ${newDiv.classList.contains('active-booster')}`);
+
+        // Check if player can afford it
+        const canAfford =
+          player.dye.red >= boosterDef.cost.red &&
+          player.dye.blue >= boosterDef.cost.blue &&
+          player.dye.yellow >= boosterDef.cost.yellow;
+        console.log(`Can afford: ${canAfford}, Player dye:`, player.dye, `Cost:`, boosterDef.cost);
+
+        if (canAfford) {
+          try {
+            console.log(`Attempting to purchase booster: ${boosterId}`);
+            const success = SHOP.purchaseBooster(boosterId);
+            if (success) {
+              console.log(`Booster ${boosterId} purchased successfully`);
+            } else {
+              console.log(`Failed to purchase booster ${boosterId}`);
+              ui.notify(`Failed to extend ${boosterDef.name}`, true);
+            }
+          } catch (error) {
+            console.error(`Error purchasing booster ${boosterId}:`, error);
+            ui.notify(`Error extending ${boosterDef.name}`, true);
+          }
+        } else {
+          ui.notify(`Not enough dye for ${boosterDef.name}`, true);
+        }
+      });
+
+      // Debug: Confirm listener is attached
+      console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
+    });
   },
 
   renderShop: function () {

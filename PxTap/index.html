@@ -38,23 +38,16 @@
     <div id="game">
       <div id="enemy-container">
         <div id="enemy-background"></div>
-
-        <div id="wave-counter-container">
-  <span id="wave-counter">Wave: 1</span>
-  <div id="wave-progress-bar" style="display:none">
-    <div id="wave-progress-fill"></div>
-  </div>
-</div>
-<div id="active-boosters"></div>
-
-        <video id="enemy-video" autoplay loop muted></video>
+        <div id="active-boosters"></div>
+        <video id="enemy-video" autoplay loop muted playsinline></video>
         <div id="damage-numbers"></div>
+        <div id="enemy-info">
+          <span id="enemy-name">Ingredient</span>
+          <span id="wave-counter">Wave: 1</span>
+        </div>
         <div id="health-bar">
           <div id="health-fill"></div>
           <span id="enemy-hp">100 / 100</span>
-        </div>
-        <div id="enemy-info">
-          <span id="enemy-name">Ingredient</span>
         </div>
       </div>
     </div>
@@ -251,5 +244,6 @@
   <script src="collection.js"></script>
   <script src="wallet.js"></script>
   <script src="main.js"></script>
+
 </body>
 </html>
