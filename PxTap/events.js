@@ -60,7 +60,7 @@ var events = {
 
       setTimeout(() => {
         enemy.spawnNewEnemy()
-      }, 500)
+      }, 100)
 
       if (gameState.wave % 10 === 0) {
         var skills = player.getRandomSkills(3)

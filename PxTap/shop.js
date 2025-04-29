@@ -66,123 +66,113 @@ const SHOP = {
     },
   ],
 
-  purchaseBooster: function(boosterId) {
-    console.log(`SHOP.purchaseBooster called for booster: ${boosterId}`);
-    const boosterDef = this.boosters.find(b => b.id === boosterId);
-    if (!boosterDef) {
-      console.warn(`Booster not found: ${boosterId}`);
-      return false;
-    }
-
-    // Check if player can afford
-    const canAfford =
-      player.dye.red >= boosterDef.cost.red &&
-      player.dye.blue >= boosterDef.cost.blue &&
-      player.dye.yellow >= boosterDef.cost.yellow;
-
-    if (!canAfford) {
-      console.log(`Not enough dye for ${boosterDef.name}`);
-      return false;
-    }
-
-    // Deduct cost
-    player.dye.red -= boosterDef.cost.red;
-    player.dye.blue -= boosterDef.cost.blue;
-    player.dye.yellow -= boosterDef.cost.yellow;
-
-    // Extend or activate booster
-    const existingBooster = player.activeBoosters.find(b => b.key === boosterId);
-    if (existingBooster) {
-      existingBooster.expires += boosterDef.baseDuration;
-    } else {
-      player.activeBoosters.push({
-        key: boosterId,
-        expires: Date.now() + boosterDef.baseDuration
-      });
-    }
-
-    // Update UI
-    ui.updateCurrencyBar();
-    ui.renderBoosters(); // This calls SHOP.initBoosterListeners()
-
-    return true;
-  },
-
-  initBoosterListeners: function() {
-    console.log('SHOP.initBoosterListeners called');
-    const boostersContainer = document.getElementById("active-boosters");
-    if (!boostersContainer) {
-      console.warn('Boosters container not found');
-      return;
-    }
-
-    const boosterElements = boostersContainer.querySelectorAll('.active-booster, .empty-booster');
-    console.log(`Found ${boosterElements.length} booster elements to attach listeners to`);
-
-    boosterElements.forEach(div => {
-      // Remove any existing listeners to prevent duplicates
-      const newDiv = div.cloneNode(true);
-      div.parentNode.replaceChild(newDiv, div);
-
-      // Debug: Add a temporary inline click handler to confirm clicks are captured
-      newDiv.onclick = () => {
-        console.log(`Inline click captured for booster: ${newDiv.dataset.boosterId}`);
-      };
-
-      newDiv.addEventListener("click", (e) => {
-        console.log(`Event listener triggered for booster: ${newDiv.dataset.boosterId}`);
-        e.stopPropagation(); // Prevent enemy tap event
-
-        const boosterId = newDiv.dataset.boosterId;
-        if (!boosterId) {
-          console.warn('Booster ID not found on element');
-          return;
+  init: function() {
+      // Start a timer to update the buff-bar every second
+      setInterval(() => {
+        if (player.activeBoosters.length > 0) {
+          console.log('Updating buff-bar timers');
+          ui.renderBoosters(); // Pass false to skip listener reattachment
         }
+      }, 1000);
+    },
 
-        const boosterDef = SHOP.boosters.find(b => b.id === boosterId);
-        if (!boosterDef) {
-          console.warn(`Booster definition not found for ID: ${boosterId}`);
-          return;
-        }
+    purchaseBooster: function(boosterId) {
+      console.log(`SHOP.purchaseBooster called for booster: ${boosterId}`);
+      const boosterDef = this.boosters.find(b => b.id === boosterId);
+      if (!boosterDef) {
+        console.warn(`Booster not found: ${boosterId}`);
+        return false;
+      }
 
-        console.log(`Booster clicked: ${boosterId}, Description: ${boosterDef.description}, Active: ${newDiv.classList.contains('active-booster')}`);
+      const success = player.purchaseBooster(boosterId);
+      if (!success) {
+        console.log(`Failed to purchase booster ${boosterId}`);
+        ui.notify(`Not enough dye for ${boosterDef.name}`, true);
+        return false;
+      }
 
-        // Check if player can afford it
-        const canAfford =
-          player.dye.red >= boosterDef.cost.red &&
-          player.dye.blue >= boosterDef.cost.blue &&
-          player.dye.yellow >= boosterDef.cost.yellow;
-        console.log(`Can afford: ${canAfford}, Player dye:`, player.dye, `Cost:`, boosterDef.cost);
+      console.log('Updating UI after successful purchase');
+      ui.updateCurrencyBar();
+      ui.renderBoosters(); // Pass true to reattach listeners after purchase
 
-        if (canAfford) {
-          try {
-            console.log(`Attempting to purchase booster: ${boosterId}`);
-            // Bind the context to ensure `this` refers to SHOP
-            const success = SHOP.purchaseBooster.bind(SHOP)(boosterId);
-            if (success) {
-              console.log(`Booster ${boosterId} purchased successfully`);
-            } else {
-              console.log(`Failed to purchase booster ${boosterId}`);
-              ui.notify(`Failed to extend ${boosterDef.name}`, true);
-            }
-          } catch (error) {
-            console.error(`Error purchasing booster ${boosterId}:`, error);
-            ui.notify(`Error extending ${boosterDef.name}`, true);
+      console.log(`Booster ${boosterId} purchased successfully`);
+      return true;
+    },
+
+    initBoosterListeners: function() {
+      console.log('SHOP.initBoosterListeners called');
+      const boostersContainer = document.getElementById("active-boosters");
+      if (!boostersContainer) {
+        console.warn('Boosters container not found');
+        return;
+      }
+
+      const boosterElements = boostersContainer.querySelectorAll('.active-booster, .empty-booster');
+      console.log(`Found ${boosterElements.length} booster elements to attach listeners to`);
+
+          boosterElements.forEach(div => {
+            // Remove any existing listeners to prevent duplicates
+            const newDiv = div.cloneNode(true);
+            div.parentNode.replaceChild(newDiv, div);
+
+            // Debug: Add a temporary inline click handler to confirm clicks are captured
+            newDiv.onclick = () => {
+              console.log(`Inline click captured for booster: ${newDiv.dataset.boosterId}`);
+            };
+
+            newDiv.addEventListener("click", (e) => {
+              console.log(`Event listener triggered for booster: ${newDiv.dataset.boosterId}`);
+              e.stopPropagation(); // Prevent enemy tap event
+
+              const boosterId = newDiv.dataset.boosterId;
+              if (!boosterId) {
+                console.warn('Booster ID not found on element');
+                return;
+              }
+
+              const boosterDef = SHOP.boosters.find(b => b.id === boosterId);
+              if (!boosterDef) {
+                console.warn(`Booster definition not found for ID: ${boosterId}`);
+                return;
+              }
+
+              console.log(`Booster clicked: ${boosterId}, Description: ${boosterDef.description}, Active: ${newDiv.classList.contains('active-booster')}`);
+
+              // Check if player can afford it
+              const canAfford =
+                player.dye.red >= boosterDef.cost.red &&
+                player.dye.blue >= boosterDef.cost.blue &&
+                player.dye.yellow >= boosterDef.cost.yellow;
+              console.log(`Can afford: ${canAfford}, Player dye:`, player.dye, `Cost:`, boosterDef.cost);
+
+              if (canAfford) {
+                try {
+                  console.log(`Attempting to purchase booster: ${boosterId}`);
+                  const success = SHOP.purchaseBooster(boosterId);
+                  if (success) {
+                    console.log(`Booster ${boosterId} purchased successfully`);
+                  } else {
+                    console.log(`Failed to purchase booster ${boosterId}`);
+                    ui.notify(`Failed to extend ${boosterDef.name}`, true);
+                  }
+                } catch (error) {
+                  console.error(`Error purchasing booster ${boosterId}:`, error);
+                  ui.notify(`Error extending ${boosterDef.name}`, true);
+                }
+              } else {
+                ui.notify(`Not enough dye for ${boosterDef.name}`, true);
+              }
+            });
+
+            console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
+          });
+
+          // Debug: Log all click listeners on the first booster element
+          if (boosterElements.length > 0) {
+            const firstBooster = boosterElements[0];
+            console.log(`Click listeners on ${firstBooster.dataset.boosterId}:`, firstBooster.__proto__.onclick);
           }
-        } else {
-          ui.notify(`Not enough dye for ${boosterDef.name}`, true);
-        }
-      });
-
-      console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
-    });
-
-    // Debug: Log all click listeners on the first booster element
-    if (boosterElements.length > 0) {
-      const firstBooster = boosterElements[0];
-      console.log(`Click listeners on ${firstBooster.dataset.boosterId}:`, firstBooster.__proto__.onclick);
-    }
-  },
+    },
 
   renderShop: function () {
     console.log("SHOP.renderShop called")
@@ -217,7 +207,7 @@ const SHOP = {
           <div class="shop-name">${skillUpgradeItem.name}</div>
         </div>
         <div class="shop-desc">${skillUpgradeItem.description}</div>
-        <div class="shop-cost">Cost: 🔴 ${skillUpgradeItem.cost.red.toFixed(1)} 🔵 ${skillUpgradeItem.cost.blue.toFixed(1)} 🟡 ${skillUpgradeItem.cost.yellow.toFixed(1)}</div>
+        <div class="shop-cost">Cost: 🔴 ${skillUpgradeItem.cost.red.toFixed(0)} 🔵 ${skillUpgradeItem.cost.blue.toFixed(0)} 🟡 ${skillUpgradeItem.cost.yellow.toFixed(0)}</div>
       `
 
       upgradeDiv.onclick = () => {
@@ -277,7 +267,7 @@ const SHOP = {
 </div>
           <div class="shop-desc">${booster.description}</div>
           <div class="shop-duration">Duration: ${Math.round(durationSeconds)}s</div>
-          <div class="shop-cost">Cost: 🔴 ${booster.cost.red.toFixed(1)} 🔵 ${booster.cost.blue.toFixed(1)} 🟡 ${booster.cost.yellow.toFixed(1)}</div>
+          <div class="shop-cost">Cost: 🔴 ${booster.cost.red.toFixed(0)} 🔵 ${booster.cost.blue.toFixed(0)} 🟡 ${booster.cost.yellow.toFixed(0)}</div>
         `
 
       boosterDiv.onclick = () => {

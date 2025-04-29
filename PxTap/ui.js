@@ -75,7 +75,7 @@ var ui = {
       }
       const healthPercent = (enemy.current.hp / enemy.current.maxHp) * 100;
       healthFill.style.width = `${healthPercent}%`;
-      enemyName.textContent = `${enemy.current.color.charAt(0).toUpperCase() + enemy.current.color.slice(1)} Tier ${enemy.current.tier}`;
+      enemyName.textContent = `${enemy.current.color.charAt(0).toUpperCase() + enemy.current.color.slice(1)} Tier ${enemy.current.tier}`.replace("_", " ");
       enemyHP.textContent = `${Math.round(enemy.current.hp)} / ${enemy.current.maxHp}`;
       waveCounter.textContent = `Wave: ${gameState.wave}`;
     },
@@ -493,86 +493,95 @@ var ui = {
   },
 
   renderBoosters: () => {
-  console.log('ui.renderBoosters called');
-  const boostersContainer = document.getElementById("active-boosters");
-  if (!boostersContainer) return;
-
-  boostersContainer.innerHTML = "";
-
-  // Check if we need to show empty boosters based on settings
-  const showEmptyBoosters = ui.settings.alwaysShowBuffs || false;
-
-  // Get all available booster types, filtering out special items
-  const allBoosterTypes = SHOP?.boosters
-    ?.filter((b) => !b.special) // Filter out special items like upgradeSkills
-    ?.map((b) => b.id) || [];
-
-  // Create a map of active boosters
-  const activeBoosterMap = {};
-  if (Array.isArray(player.activeBoosters)) {
-    player.activeBoosters.forEach((booster) => {
-      activeBoosterMap[booster.key] = booster;
-    });
-  }
-
-  // Display boosters, including empty ones if setting is enabled
-  allBoosterTypes.forEach((boosterId) => {
-    const boosterDef = SHOP?.boosters?.find((b) => b.id === boosterId);
-    if (!boosterDef) {
-      console.warn(`Booster definition not found for ID: ${boosterId}`);
+    console.log('ui.renderBoosters called');
+    const boostersContainer = document.getElementById("active-boosters");
+    if (!boostersContainer) {
+      console.warn('Active boosters container not found');
       return;
     }
 
-    const activeBooster = activeBoosterMap[boosterId];
+    boostersContainer.innerHTML = "";
 
-    if (activeBooster || showEmptyBoosters) {
-      const div = document.createElement("div");
+    const showEmptyBoosters = ui.settings.alwaysShowBuffs || false;
 
-      let timeDisplay = "0s";
-      if (activeBooster) {
-        const now = Date.now();
-        const remaining = Math.max(0, Math.ceil((activeBooster.expires - now) / 1000));
+    const allBoosterTypes = SHOP?.boosters
+      ?.filter((b) => !b.special)
+      ?.map((b) => b.id) || [];
 
-        // Format remaining time nicely
-        if (remaining >= 60) {
-          timeDisplay = `${Math.floor(remaining / 60)}m ${remaining % 60}s`;
+    console.log('Available booster types:', allBoosterTypes);
+
+    const activeBoosterMap = {};
+    if (Array.isArray(player.activeBoosters)) {
+      player.activeBoosters.forEach((booster) => {
+        activeBoosterMap[booster.key] = booster;
+      });
+    } else {
+      console.warn('player.activeBoosters is not an array:', player.activeBoosters);
+    }
+
+    console.log('Active boosters map:', activeBoosterMap);
+
+    allBoosterTypes.forEach((boosterId) => {
+      const boosterDef = SHOP?.boosters?.find((b) => b.id === boosterId);
+      if (!boosterDef) {
+        console.warn(`Booster definition not found for ID: ${boosterId}`);
+        return;
+      }
+
+      const activeBooster = activeBoosterMap[boosterId];
+
+      if (activeBooster || showEmptyBoosters) {
+        const div = document.createElement("div");
+
+        let timeDisplay = "0s";
+        if (activeBooster) {
+          const now = Date.now();
+          const remaining = Number.isFinite(activeBooster.expires) && Number.isFinite(now)
+            ? Math.max(0, Math.ceil((activeBooster.expires - now) / 1000))
+            : 0;
+
+          console.log(`Timer calculation for ${boosterId}: expires=${activeBooster.expires}, now=${now}, remaining=${remaining}`);
+
+          if (Number.isNaN(remaining)) {
+            console.warn(`Invalid remaining time for ${boosterId}, setting to 0`);
+            timeDisplay = "0s";
+          } else if (remaining >= 60) {
+            timeDisplay = `${Math.floor(remaining / 60)}m ${remaining % 60}s`;
+          } else {
+            timeDisplay = `${remaining}s`;
+          }
+
+          div.className = "active-booster";
+
+          if (remaining <= 5 && remaining > 0) {
+            div.classList.add("expiring");
+          }
         } else {
-          timeDisplay = `${remaining}s`;
+          div.className = "empty-booster";
         }
 
-        div.className = "active-booster";
+        div.dataset.boosterId = boosterId;
 
-        // Add pulsing effect for boosters about to expire
-        if (remaining <= 5) {
-          div.classList.add("expiring");
-        }
-      } else {
-        div.className = "empty-booster";
+        div.innerHTML = `
+          <span class="booster-icon">${boosterDef.icon}</span>
+          <span class="booster-name">${boosterDef.name}</span>
+          <span class="booster-timer">${timeDisplay}</span>
+        `;
+
+        div.title = boosterDef.description;
+
+        boostersContainer.appendChild(div);
       }
+    });
 
-      // Add data-booster-id attribute for shop.js to identify the booster
-      div.dataset.boosterId = boosterId;
+    console.log('Buff-bar DOM after render:', boostersContainer.innerHTML);
 
-      div.innerHTML = `
-        <span class="booster-icon">${boosterDef.icon}</span>
-        <span class="booster-name">${boosterDef.name}</span>
-        <span class="booster-timer">${timeDisplay}</span>
-      `;
+      SHOP.initBoosterListeners();
 
-      div.title = boosterDef.description;
-
-      boostersContainer.appendChild(div);
-      }
-  });
-
-  // Attach event listeners after rendering new elements
-  if (typeof SHOP?.initBoosterListeners === 'function') {
-    SHOP.initBoosterListeners();
-  } else {
-    console.warn('SHOP.initBoosterListeners is not defined. Ensure shop.js is loaded and initialized.');
-  }
-
-},
+    boostersContainer.style.display = 'none';
+    boostersContainer.offsetHeight;
+    boostersContainer.style.display = 'flex';
+  },
 
     saveSettings: function () {
       localStorage.setItem("pxjUISettings", JSON.stringify(this.settings))

@@ -30,6 +30,8 @@ function initGame() {
 
     ui.init()
     SHOP.renderShop()
+    SHOP.initBoosterListeners();
+      SHOP.init();
     enemy.spawnNewEnemy()
     requestAnimationFrame(gameLoop)
   }, "initGame")
