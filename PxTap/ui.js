@@ -61,7 +61,7 @@ var ui = {
 
 
     updateHealthBar: function() {
-      console.log('ui.updateHealthBar called');
+      //console.log('ui.updateHealthBar called');
       const healthFill = document.getElementById('health-fill');
       const enemyName = document.getElementById('enemy-name');
       const enemyHP = document.getElementById('enemy-hp');
@@ -494,7 +494,7 @@ var ui = {
   },
 
   renderBoosters: () => {
-    console.log('ui.renderBoosters called');
+    //console.log('ui.renderBoosters called');
     const boostersContainer = document.getElementById("active-boosters");
     if (!boostersContainer) {
       console.warn('Active boosters container not found');
@@ -509,7 +509,7 @@ var ui = {
       ?.filter((b) => !b.special)
       ?.map((b) => b.id) || [];
 
-    console.log('Available booster types:', allBoosterTypes);
+    //console.log('Available booster types:', allBoosterTypes);
 
     const activeBoosterMap = {};
     if (Array.isArray(player.activeBoosters)) {
@@ -520,7 +520,7 @@ var ui = {
       console.warn('player.activeBoosters is not an array:', player.activeBoosters);
     }
 
-    console.log('Active boosters map:', activeBoosterMap);
+    //console.log('Active boosters map:', activeBoosterMap); MAYBE
 
     allBoosterTypes.forEach((boosterId) => {
       const boosterDef = SHOP?.boosters?.find((b) => b.id === boosterId);
@@ -541,7 +541,6 @@ var ui = {
             ? Math.max(0, Math.ceil((activeBooster.expires - now) / 1000))
             : 0;
 
-          console.log(`Timer calculation for ${boosterId}: expires=${activeBooster.expires}, now=${now}, remaining=${remaining}`);
 
           if (Number.isNaN(remaining)) {
             console.warn(`Invalid remaining time for ${boosterId}, setting to 0`);
@@ -574,10 +573,6 @@ var ui = {
         boostersContainer.appendChild(div);
       }
     });
-
-    console.log('Buff-bar DOM after render:', boostersContainer.innerHTML);
-
-    SHOP.initBoosterListeners();
 
     boostersContainer.style.display = 'none';
     boostersContainer.offsetHeight;

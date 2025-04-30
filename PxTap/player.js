@@ -120,8 +120,9 @@ var player = {
     this.xp -= this.xpToNext
     this.level++
     this.xpToNext = Math.round(100 * Math.pow(1.15, this.level - 1))
+    //this.xpToNext = Math.round(100 + Math.pow(this.level, 2.3) * 20);
     ui.notify("Level Up! " + this.level, false)
-    if (this.level % 10 === 0) {
+    if (this.level % 1 === 0) {
       const skills = this.getRandomSkills(3)
       ui.showSkillChoice(skills)
     }
@@ -248,6 +249,14 @@ var player = {
 
     this.save()
     ui.renderBoosters() // Update boosters display immediately
+
+    // Pass true to reattach listeners after purchase
+   // Don't close the panel if called from buff bar
+   // Only close if we're in the shop panel
+   const shopPanel = document.getElementById("shop-panel")
+   if (shopPanel && shopPanel.classList.contains("active")) {
+     ui.togglePanel("shop-panel")
+   }
   },
 
   updateBoosters: function () {

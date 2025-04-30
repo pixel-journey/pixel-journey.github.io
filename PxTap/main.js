@@ -46,7 +46,6 @@ function gameLoop(timestamp) {
 
 function updateGame() {
   if (!enemy.current) return
-  ui.renderBoosters()
   player.updateBoosters()
   ACHIEVEMENTS.check()
   // Update UI indicators
@@ -71,6 +70,7 @@ function updateGame() {
 
   // Update UI elements that need frequent updates
 ui.updateHealthBar()
+ui.renderBoosters()
 }
 
 function renderGame() {

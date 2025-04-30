@@ -75,14 +75,14 @@ var events = {
         // Check if autoTap30s booster is active
         if (Array.isArray(player.activeBoosters) && player.activeBoosters.some((booster) => booster.key === "autoTap30s")) {
           // If autoTap30s is active, ensure we tap at least once per second
-          delay = Math.min(delay, 1000)
+          delay = Math.min(delay, 200)
           shouldAutoTap = true
-          console.log("Auto tap booster is active")
+          //console.log("Auto tap booster is active")
         }
         // Otherwise check if auto_tap skill is active
         else if (player.skills.auto_tap) {
           shouldAutoTap = true
-          console.log("Auto tap skill is active")
+          //console.log("Auto tap skill is active")
         }
 
         // Execute auto tap if conditions are met

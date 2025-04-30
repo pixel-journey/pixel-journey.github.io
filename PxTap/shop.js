@@ -6,7 +6,7 @@ const SHOP = {
       icon: "🤖",
       baseDuration: 30000,
       cost: { red: 100, blue: 100, yellow: 100 },
-      description: "Automatically taps the enemy (every ~second).",
+      description: "Automatically taps the enemy (every ~second). OR increases Auto Tap Speed by 500% if skill unlocked.",
       multiplier: 1,
     },
     {
@@ -93,7 +93,15 @@ const SHOP = {
 
       console.log('Updating UI after successful purchase');
       ui.updateCurrencyBar();
-      ui.renderBoosters(); // Pass true to reattach listeners after purchase
+      ui.renderBoosters();
+
+      // Pass true to reattach listeners after purchase
+     // Don't close the panel if called from buff bar
+     // Only close if we're in the shop panel
+     const shopPanel = document.getElementById("shop-panel")
+     if (shopPanel && shopPanel.classList.contains("active")) {
+       ui.togglePanel("shop-panel")
+     }
 
       console.log(`Booster ${boosterId} purchased successfully`);
       return true;
@@ -173,13 +181,6 @@ const SHOP = {
     }
 
     shopEl.innerHTML = ""
-
-
-    // Add a separator
-    const separator = document.createElement("hr")
-    separator.style.margin = "20px 0"
-    separator.style.borderColor = "rgba(255, 255, 255, 0.1)"
-    shopEl.appendChild(separator)
 
     // First, render the special Skill Upgrades item
     const skillUpgradeItem = this.boosters.find((b) => b.id === "upgradeSkills")
