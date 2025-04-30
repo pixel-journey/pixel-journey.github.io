@@ -147,7 +147,7 @@ var enemy = {
       const randomOffsetY = (Math.random() * 20 - 50); // Slightly more upward bias
 
       damageText.style.left = `${centerX + randomOffsetX}px`;
-      damageText.style.top = `${centerY + 300 + randomOffsetY}px`; // Start 50px above center
+      damageText.style.top = `${centerY + 175 + randomOffsetY}px`; // Start 50px above center
 
       // Add animation properties
       damageText.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';

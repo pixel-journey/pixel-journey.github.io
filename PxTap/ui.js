@@ -426,8 +426,8 @@ var ui = {
       el.style.left = randomX + "px"
       el.style.top = randomY + "px"
     } else {
-    el.style.left = (options.x || window.innerWidth / 2) + "px"
-    el.style.top = (options.y || window.innerHeight / 2) + "px"
+    el.style.left = (options.x || window.innerWidth / 2) + (Math.random() * 40 - 20) + "px"
+    el.style.top = (options.y || window.innerHeight / 2) + (Math.random() * 40 - 20) + "px"
         }
     el.style.color = isError ? "#ff4444" : "#fff"
     el.textContent = message
@@ -480,7 +480,7 @@ var ui = {
     const elements = [
       document.getElementById("bottom-nav"),
       document.querySelectorAll(".nav-btn"),
-      document.querySelectorAll(".panel"),
+      // document.querySelectorAll(".panel"),
     ]
     elements.forEach((el) => {
       if (el) {
