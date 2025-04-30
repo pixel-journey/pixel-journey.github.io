@@ -625,10 +625,6 @@ var ui = {
         })
       }
 
-      const tutorialPrev = document.getElementById("tutorial-prev")
-      const tutorialNext = document.getElementById("tutorial-next")
-      if (tutorialPrev) tutorialPrev.addEventListener("click", () => TUTORIAL.prevStep())
-      if (tutorialNext) tutorialNext.addEventListener("click", () => TUTORIAL.nextStep())
 
       document.querySelectorAll(".panel-close").forEach((closeBtn) => {
         closeBtn.addEventListener("click", () => {

@@ -29,8 +29,9 @@ function initGame() {
     }
 
     SHOP.renderShop()
-      SHOP.init();
+      SHOP.init()
           ui.init()
+          SHOP.initBoosterListeners()
     enemy.spawnNewEnemy()
     requestAnimationFrame(gameLoop)
   }, "initGame")
