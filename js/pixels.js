@@ -44,33 +44,52 @@ $(function() {
         }
     });
 
-    // countdown date
-    var end = new Date("04/30/2025 11:59 PM"); // FORMAT: month/day/year time
-    var _second = 1000;
-    var _minute = _second * 60;
-    var _hour = _minute * 60;
-    var _day = _hour * 24;
-    var timer;
-
-    // countdown
-    function showRemaining() {
-        var now = new Date();
-        var distance = end - now;
-        if (distance < 0) {
-            clearInterval(timer);
-            document.getElementById("countdown").innerHTML = "SNAPSHOT TBA";
-            return;
-        }
-        var days = Math.floor(distance / _day);
-        var hours = Math.floor((distance % _day) / _hour);
-        var minutes = Math.floor((distance % _hour) / _minute);
-        var seconds = Math.floor((distance % _minute) / _second);
-        document.getElementById("countdown").innerHTML = days + "d, ";
-        document.getElementById("countdown").innerHTML += hours + "h, ";
-        document.getElementById("countdown").innerHTML += minutes + "m &amp; ";
-        document.getElementById("countdown").innerHTML += seconds + "s till next Pixal Holder snapshot";
+// Function to get the last minute of the current month
+function getEndOfCurrentMonth() {
+    var now = new Date();
+    // Get the next month (0-11, so month+1)
+    var nextMonth = now.getMonth() + 1;
+    // If it's December, we need to go to January of next year
+    if (nextMonth > 11) {
+        nextMonth = 0;
     }
-    timer = setInterval(showRemaining, 1000);
+    // Create a date for the first day of next month at 23:59:00
+    var endDate = new Date(now.getFullYear(), nextMonth, 1, 23, 59, 0);
+    // Subtract one day to get to the last day of current month
+    endDate.setDate(0);
+    return endDate;
+}
+
+var _second = 1000;
+var _minute = _second * 60;
+var _hour = _minute * 60;
+var _day = _hour * 24;
+var timer;
+
+// countdown
+function showRemaining() {
+    var end = getEndOfCurrentMonth();
+    var now = new Date();
+    var distance = end - now;
+    
+    if (distance < 0) {
+        // If we've passed the end date, get the next month's end date
+        end = getEndOfCurrentMonth();
+        distance = end - now;
+    }
+    
+    var days = Math.floor(distance / _day);
+    var hours = Math.floor((distance % _day) / _hour);
+    var minutes = Math.floor((distance % _hour) / _minute);
+    var seconds = Math.floor((distance % _minute) / _second);
+    
+    document.getElementById("countdown").innerHTML = days + "d, ";
+    document.getElementById("countdown").innerHTML += hours + "h, ";
+    document.getElementById("countdown").innerHTML += minutes + "m & ";
+    document.getElementById("countdown").innerHTML += seconds + "s till next Pixal Holder snapshot";
+}
+
+timer = setInterval(showRemaining, 1000);
 
     // morphext
     $("#js-rotating").Morphext({
