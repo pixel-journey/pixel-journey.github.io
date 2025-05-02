@@ -109,8 +109,8 @@ const SKILLS = [
   },
   {
     id: "story_chance",
-    name: "Flavor Encounter Chance",
-    description: "2% chance per upgrade for story events.",
+    name: "Bonus Encounter Chance",
+    description: "2% chance per upgrade for bonus shops/rare enemies/story events.",
     maxLevel: 10,
     baseCost: 45,
     type: "blue",

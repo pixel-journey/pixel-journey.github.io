@@ -55,6 +55,11 @@ const SETTINGS = {
         this.startAutoSave()
       }
     })
+        
+        document.getElementById("auto-select-skills").addEventListener("change", (e) => {
+          ui.autoSelectSkills = e.target.checked
+          this.saveSettings()
+        })
 
     document.getElementById("reset-game").addEventListener("click", () => {
       if (confirm("Are you sure you want to reset all game progress? This cannot be undone!")) {

@@ -2,7 +2,7 @@ var enemy = {
   current: null,
 
   generateEnemy: (wave) => {
-    console.log("enemy.generateEnemy called with wave:", wave)
+    // console.log("enemy.generateEnemy called with wave:", wave)
     var enemyInfo = CONSTANTS.determineEnemy(wave)
     var tier = enemyInfo.tier
     var color = enemyInfo.color
@@ -25,7 +25,7 @@ var enemy = {
         cumulative += biases[affinity]
         if (rand < cumulative) {
           color = affinity.split("_")[0]
-          console.log(`Color bias applied: ${color}`)
+          // console.log(`Color bias applied: ${color}`)
           break
         }
       }
@@ -39,18 +39,18 @@ var enemy = {
       player.activeBoosters.forEach((booster) => {
         if (booster.key === "colorRush45s") {
           tierChance += SHOP.boosters.find((b) => b.id === booster.key).multiplier
-          console.log(`Booster colorRush45s added: ${tierChance}`)
+          // console.log(`Booster colorRush45s added: ${tierChance}`)
         }
       })
     }
     if (Math.random() < tierChance) {
-      // tier = Math.min(tier + 1, 3)
-      console.log(`Tier encounter triggered! Upgraded to tier ${tier}`)
+      tier = Math.min(tier + 1, 3)
+      // console.log(`Tier encounter triggered! Upgraded to tier ${tier}`)
       ui.notify("Rare Enemy Encounter!", false)
     }
 
     var hp = CONSTANTS.getEnemyHP(tier, wave)
-    var videoSrc = "./ingredients/Pixel_lvl_" + enemyInfo.tier + "_" + color + "_vid_25fps_1k.mp4"
+    var videoSrc = "./ingredients/Pixel_" + color + "_vid_25fps_1k.mp4"
 
     var enemy = {
       id: "enemy-" + Date.now(),
@@ -64,42 +64,42 @@ var enemy = {
       width: 0,
       height: 0,
     }
-    console.log("Generated enemy:", enemy)
+    // console.log("Generated enemy:", enemy)
     return enemy
   },
 
   spawnNewEnemy: function () {
-    console.log("enemy.spawnNewEnemy called")
+    // console.log("enemy.spawnNewEnemy called")
     this.current = this.generateEnemy(gameState.wave)
-    console.log("Current enemy set:", this.current)
+    // console.log("Current enemy set:", this.current)
 
     var video = document.getElementById("enemy-video")
+    
+    // Clear enemy info before loading new enemy
+    document.getElementById('enemy-name').textContent = ''
+    document.getElementById('enemy-hp').textContent = ''
+    
     video.src = this.current.videoSrc
     video.load()
     video.play().catch((error) => {
       console.error("Video play error:", error)
-      video.poster = "./ingredients/Pixel_lvl_" + this.current.tier + "_" + this.current.color + "_static.png"
+      video.poster = "./ingredients/Pixel_" + this.current.color + "_static.png"
       ui.notify("Failed to load enemy video, using static image.", true)
     })
 
     video.style.display = "block"
     video.style.opacity = "1"
 
+    if (video) {
     video.onloadedmetadata = () => {
       this.current.width = video.videoWidth
       this.current.height = video.videoHeight
-      console.log("Video dimensions:", { width: this.current.width, height: this.current.height })
+      // console.log("Video dimensions:", { width: this.current.width, height: this.current.height })
       video.style.maxWidth = "100%"
       video.style.maxHeight = "100%"
       ui.updateHealthBar()
     }
-
-    video.onerror = () => {
-      console.error("Video load error:", this.current.videoSrc)
-      video.poster = "./ingredients/Pixel_lvl_" + this.current.tier + "_" + this.current.color + "_static.png"
-      video.src = "./ingredients/Pixel_lvl_" + this.current.tier + "_" + this.current.color + "_vid_25fps_1k.mp4"
-      ui.notify("Failed to load enemy video, using static image.", true)
-    }
+  }
 
     ui.applyColorFilter(this.current.color)
     ui.updateHealthBar()
@@ -115,18 +115,18 @@ var enemy = {
     }
   },
 
-  damage: function (amount) {
-    console.log("enemy.damage called with amount:", amount)
+  damage: function(amount) {
+    // console.log("enemy.damage called with amount:", amount)
     if (!this.current) {
       console.warn("No current enemy to damage")
       return
     }
 
     this.current.hp -= amount
-    console.log("Enemy HP after damage:", this.current.hp)
+    // console.log("Enemy HP after damage:", this.current.hp)
 
     this.current.colorDrain = clamp(1 - this.current.hp / this.current.maxHp, 0, 1)
-    console.log("Color drain:", this.current.colorDrain)
+    // console.log("Color drain:", this.current.colorDrain)
 
     const video = document.getElementById("enemy-video")
     video.style.transition = "transform 0.1s"
@@ -143,8 +143,8 @@ var enemy = {
       const centerY = window.lastClickY / 2 || window.innerWidth / 2;
 
       // Random offset (-20px to +20px) for natural feel
-      const randomOffsetX = (Math.random() * 400 - 300);
-      const randomOffsetY = (Math.random() * 20 - 50); // Slightly more upward bias
+      const randomOffsetX = (Math.random() * 20);
+      const randomOffsetY = (Math.random() * 20 - 100); // Slightly more upward bias
 
       damageText.style.left = `${centerX + randomOffsetX}px`;
       damageText.style.top = `${centerY + 175 + randomOffsetY}px`; // Start 50px above center
@@ -167,22 +167,29 @@ var enemy = {
       }, 1000);
     }
 
-    // Add kill reward when enemy is defeated
-if (this.current.hp <= 0 && this.current) {
-  // Calculate kill bonus
-  const killBonus = CONSTANTS.calculateKillBonus(this.current.tier, player.activeBoosters, this.current.color)
-  player.earnDye(killBonus)
-
-  // Add collection discovery
-  COLLECTION.discoverIngredient(this.current.tier, this.current.color)
-
-  // Play defeat sound
-  AUDIO.play("enemyDefeat")
-}
-
-    ui.updateHealthBar()
-    AUDIO.play("tap")
-  },
+    // Check if enemy is defeated
+    if (this.current.hp <= 0) {
+      // Calculate kill bonus
+      const killBonus = CONSTANTS.calculateKillBonus(this.current.tier, player.activeBoosters, this.current.color)
+      player.earnDye(killBonus)
+  
+      // Add collection discovery
+      COLLECTION.discoverIngredient(this.current.tier, this.current.color)
+  
+      // Play defeat sound
+      AUDIO.play("enemyDefeat")
+  
+      // Apply kill damage boost talent if available
+      if (player.talentEffects && player.talentEffects.kill_damage_boost) {
+        player.talentEffects.kill_damage_boost.active = true;
+        player.talentEffects.kill_damage_boost.expires = Date.now() + 
+          (player.talentEffects.kill_damage_boost.duration * 1000);
+        
+        // Visual feedback
+        ui.notify(`Overkill activated for ${player.talentEffects.kill_damage_boost.duration}s!`, false);
+      }
+    }
+},
 }
 
 function clamp(value, min, max) {

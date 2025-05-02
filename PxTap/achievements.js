@@ -193,7 +193,7 @@ const ACHIEVEMENTS = {
   },
 
   renderAchievements: function () {
-    const content = document.getElementById("achievements-content")
+    const content = document.getElementById("achievements-info")
     if (!content) return
 
     content.innerHTML = `

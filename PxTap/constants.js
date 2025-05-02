@@ -84,7 +84,7 @@ const CONSTANTS = {
        for (var dyeColorName in result) {
          result[dyeColorName] *= boosterDef.multiplier
        }
-       console.log(`Applied doubleDye60s multiplier: ${boosterDef.multiplier}, result:`, result)
+       // console.log(`Applied doubleDye60s multiplier: ${boosterDef.multiplier}, result:`, result)
      }
 
      return result

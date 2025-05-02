@@ -1,658 +1,558 @@
+// This file manages the prestige talent system
 const PRESTIGE_TALENTS = {
-  // Talent tree structure
-  tiers: [
-    // Tier 1 (Root)
-    [
-      {
-        id: "prestige_foundation",
-        name: "Prestige Foundation",
-        description: "The foundation of your prestige journey. Increases all dye gains by 5%.",
-        cost: 5,
-        effect: (player) => {
-          return {
-            type: "dye_multiplier",
-            value: 1.05,
-          }
-        },
-        position: { x: 0, y: 0 },
-        connections: ["auto_mastery", "resource_mastery", "power_mastery"],
-      },
-    ],
-
-    // Tier 2
-    [
-      {
-        id: "auto_mastery",
-        name: "Automation Mastery",
-        description: "Auto-taps deal 25% more damage.",
-        cost: 8,
-        effect: (player) => {
-          return {
-            type: "auto_tap_damage",
-            value: 1.25,
-          }
-        },
-        position: { x: -2, y: 1 },
-        connections: ["rapid_automation", "multi_auto"],
-      },
-      {
-        id: "resource_mastery",
-        name: "Resource Mastery",
-        description: "All dye gains increased by 15%.",
-        cost: 8,
-        effect: (player) => {
-          return {
-            type: "dye_multiplier",
-            value: 1.15,
-          }
-        },
-        position: { x: 0, y: 1 },
-        connections: ["color_specialization", "dye_explosion"],
-      },
-      {
-        id: "power_mastery",
-        name: "Power Mastery",
-        description: "Base tap damage increased by 20%.",
-        cost: 8,
-        effect: (player) => {
-          return {
-            type: "tap_damage",
-            value: 1.2,
-          }
-        },
-        position: { x: 2, y: 1 },
-        connections: ["critical_mastery", "overkill"],
-      },
-    ],
-
-    // Tier 3
-    [
-      {
-        id: "rapid_automation",
-        name: "Rapid Automation",
-        description: "Reduces auto-tap cooldown by 15%.",
-        cost: 12,
-        effect: (player) => {
-          return {
-            type: "auto_tap_speed",
-            value: 0.85, // Multiplier to reduce cooldown
-          }
-        },
-        position: { x: -3, y: 2 },
-        connections: ["auto_efficiency"],
-      },
-      {
-        id: "multi_auto",
-        name: "Multi-Auto",
-        description: "15% chance for auto-taps to hit multiple times.",
-        cost: 12,
-        effect: (player) => {
-          return {
-            type: "auto_multi_chance",
-            value: 0.15,
-          }
-        },
-        position: { x: -1, y: 2 },
-        connections: ["auto_critical"],
-      },
-      {
-        id: "color_specialization",
-        name: "Color Specialization",
-        description: "One random dye type gains 30% bonus each prestige.",
-        cost: 12,
-        effect: (player) => {
-          // Randomly select a color each prestige
-          const colors = ["red", "blue", "yellow"]
-          const selectedColor = colors[Math.floor(Math.random() * colors.length)]
-          return {
-            type: "specific_dye_boost",
-            color: selectedColor,
-            value: 1.3,
-          }
-        },
-        position: { x: -1, y: 2 },
-        connections: ["resource_efficiency"],
-      },
-      {
-        id: "dye_explosion",
-        name: "Dye Explosion",
-        description: "10% chance for dye rewards to be doubled.",
-        cost: 12,
-        effect: (player) => {
-          return {
-            type: "dye_double_chance",
-            value: 0.1,
-          }
-        },
-        position: { x: 1, y: 2 },
-        connections: ["rainbow_affinity"],
-      },
-      {
-        id: "critical_mastery",
-        name: "Critical Mastery",
-        description: "Critical hit chance and damage increased by 10%.",
-        cost: 12,
-        effect: (player) => {
-          return {
-            type: "critical_boost",
-            chance: 0.1,
-            damage: 0.1,
-          }
-        },
-        position: { x: 1, y: 2 },
-        connections: ["power_overwhelming"],
-      },
-      {
-        id: "overkill",
-        name: "Overkill",
-        description: "Defeating enemies grants bonus damage for 5 seconds.",
-        cost: 12,
-        effect: (player) => {
-          return {
-            type: "kill_damage_boost",
-            value: 1.2,
-            duration: 5,
-          }
-        },
-        position: { x: 3, y: 2 },
-        connections: ["momentum"],
-      },
-    ],
-
-    // Tier 4
-    [
-      {
-        id: "auto_efficiency",
-        name: "Auto Efficiency",
-        description: "Auto-taps have a 5% chance to not consume their cooldown.",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "auto_tap_no_cooldown_chance",
-            value: 0.05,
-          }
-        },
-        position: { x: -4, y: 3 },
-        connections: [],
-      },
-      {
-        id: "auto_critical",
-        name: "Auto Critical",
-        description: "Auto-taps have +15% critical hit chance.",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "auto_crit_chance",
-            value: 0.15,
-          }
-        },
-        position: { x: -2, y: 3 },
-        connections: [],
-      },
-      {
-        id: "resource_efficiency",
-        name: "Resource Efficiency",
-        description: "Skills cost 10% less dye to upgrade.",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "skill_cost_reduction",
-            value: 0.9,
-          }
-        },
-        position: { x: 0, y: 3 },
-        connections: [],
-      },
-      {
-        id: "rainbow_affinity",
-        name: "Rainbow Affinity",
-        description: "Gain small amounts of all dye types when collecting any dye.",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "cross_dye_gain",
-            value: 0.1, // 10% of primary dye gained as other colors
-          }
-        },
-        position: { x: 2, y: 3 },
-        connections: [],
-      },
-      {
-        id: "power_overwhelming",
-        name: "Power Overwhelming",
-        description: "Every 10 consecutive taps increases damage by 5% (stacks up to 50%).",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "consecutive_tap_bonus",
-            value: 0.05,
-            maxStacks: 10,
-          }
-        },
-        position: { x: 2, y: 3 },
-        connections: [],
-      },
-      {
-        id: "momentum",
-        name: "Momentum",
-        description: "Tapping speed increases damage up to 30% based on tap frequency.",
-        cost: 15,
-        effect: (player) => {
-          return {
-            type: "tap_speed_damage",
-            value: 0.3,
-          }
-        },
-        position: { x: 4, y: 3 },
-        connections: [],
-      },
-    ],
+  // Store all talent definitions
+  talents: [
+    // Tier 1 - Basic talents
+    {
+      id: "dye_efficiency",
+      name: "Dye Efficiency",
+      description: "Increases all dye gained by 10% per level",
+      maxLevel: 5,
+      tier: 1,
+      cost: 1,
+      effect: (level) => 1 + (level * 0.1),
+      applyEffect: (level) => {
+        player.talentEffects.dye_multiplier = 1 + (level * 0.1);
+      }
+    },
+    {
+      id: "tap_power",
+      name: "Tap Power",
+      description: "Increases tap damage by 15% per level",
+      maxLevel: 5,
+      tier: 1,
+      cost: 1,
+      effect: (level) => 1 + (level * 0.15),
+      applyEffect: (level) => {
+        player.talentEffects.tap_damage = 1 + (level * 0.15);
+      }
+    },
+    {
+      id: "auto_tap_efficiency",
+      name: "Auto Tap Efficiency",
+      description: "Increases auto tap damage by 20% per level",
+      maxLevel: 5,
+      tier: 1,
+      cost: 1,
+      effect: (level) => 1 + (level * 0.2),
+      applyEffect: (level) => {
+        player.talentEffects.auto_tap_damage = 1 + (level * 0.2);
+      }
+    },
+    
+    // Tier 2 - Advanced talents
+    {
+      id: "critical_mastery",
+      name: "Critical Mastery",
+      description: "Increases critical hit chance by 5% and critical damage by 20% per level",
+      maxLevel: 3,
+      tier: 2,
+      cost: 2,
+      requires: ["tap_power"],
+      effect: (level) => ({ chance: level * 0.05, damage: 1 + (level * 0.2) }),
+      applyEffect: (level) => {
+        player.talentEffects.critical_boost.chance = level * 0.05;
+        player.talentEffects.critical_boost.damage = 1 + (level * 0.2);
+      }
+    },
+    {
+      id: "auto_tap_speed",
+      name: "Auto Tap Speed",
+      description: "Increases auto tap speed by 25% per level",
+      maxLevel: 3,
+      tier: 2,
+      cost: 2,
+      requires: ["auto_tap_efficiency"],
+      effect: (level) => 1 + (level * 0.25),
+      applyEffect: (level) => {
+        player.talentEffects.auto_tap_speed = 1 + (level * 0.25);
+      }
+    },
+    {
+      id: "dye_specialization",
+      name: "Dye Specialization",
+      description: "10% chance to double a random dye color on enemy defeat",
+      maxLevel: 3,
+      tier: 2,
+      cost: 2,
+      requires: ["dye_efficiency"],
+      effect: (level) => level * 0.1,
+      applyEffect: (level) => {
+        player.talentEffects.dye_double_chance = level * 0.1;
+      }
+    },
+    
+    // Tier 3 - Expert talents
+    {
+      id: "auto_multi_tap",
+      name: "Auto Multi-Tap",
+      description: "Auto tap has a 15% chance per level to hit multiple times",
+      maxLevel: 2,
+      tier: 3,
+      cost: 3,
+      requires: ["auto_tap_speed"],
+      effect: (level) => level * 0.15,
+      applyEffect: (level) => {
+        player.talentEffects.auto_multi_chance = level * 0.15;
+      }
+    },
+    {
+      id: "skill_efficiency",
+      name: "Skill Efficiency",
+      description: "Reduces skill upgrade costs by 10% per level",
+      maxLevel: 2,
+      tier: 3,
+      cost: 3,
+      requires: ["dye_specialization"],
+      effect: (level) => 1 - (level * 0.1),
+      applyEffect: (level) => {
+        player.talentEffects.skill_cost_reduction = 1 - (level * 0.1);
+      }
+    },
+    {
+      id: "killing_momentum",
+      name: "Killing Momentum",
+      description: "Gain 25% increased damage for 5 seconds after defeating an enemy",
+      maxLevel: 2,
+      tier: 3,
+      cost: 3,
+      requires: ["critical_mastery"],
+      effect: (level) => 1 + (level * 0.25),
+      applyEffect: (level) => {
+        // This effect is applied dynamically when an enemy is defeated
+        player.talentEffects.kill_damage_boost.value = 1 + (level * 0.25);
+        player.talentEffects.kill_damage_boost.active = false;
+      }
+    },
+    
+    // Tier 4 - Master talents
+    {
+      id: "auto_critical",
+      name: "Auto Critical",
+      description: "Auto taps have a 10% chance per level to critically hit",
+      maxLevel: 1,
+      tier: 4,
+      cost: 5,
+      requires: ["auto_multi_tap"],
+      effect: (level) => level * 0.1,
+      applyEffect: (level) => {
+        player.talentEffects.auto_crit_chance = level * 0.1;
+      }
+    },
+    {
+      id: "dye_synergy",
+      name: "Dye Synergy",
+      description: "Gain 5% of other dye colors when collecting any dye",
+      maxLevel: 1,
+      tier: 4,
+      cost: 5,
+      requires: ["skill_efficiency"],
+      effect: (level) => level * 0.05,
+      applyEffect: (level) => {
+        player.talentEffects.cross_dye_gain = level * 0.05;
+      }
+    },
+    {
+      id: "combo_master",
+      name: "Combo Master",
+      description: "Consecutive taps within 0.5s stack damage up to 50%",
+      maxLevel: 1,
+      tier: 4,
+      cost: 5,
+      requires: ["killing_momentum"],
+      effect: (level) => ({ value: level * 0.1, maxStacks: 5 }),
+      applyEffect: (level) => {
+        player.talentEffects.consecutive_tap_bonus.value = level * 0.1;
+        player.talentEffects.consecutive_tap_bonus.maxStacks = 5;
+        player.talentEffects.consecutive_tap_bonus.stacks = 0;
+      }
+    }
   ],
-
-  // Player's purchased talents
-  purchased: [],
-
-  // Initialize the talent system
-  init: function () {
+  
+  // Store player's purchased talents
+  purchasedTalents: {},
+  
+  init: function() {
+    console.log("PRESTIGE_TALENTS.init called");
     // Load saved talents
-    const savedTalents = localStorage.getItem("pxjPrestigeTalents")
+    const savedTalents = localStorage.getItem("pxjPrestigeTalents");
     if (savedTalents) {
-      this.purchased = JSON.parse(savedTalents)
+      this.purchasedTalents = JSON.parse(savedTalents);
+      // Apply all talent effects
+      this.applyAllTalentEffects();
     }
-
-    // Apply effects of purchased talents
-    this.applyTalentEffects()
+    
+    // Render the talent tree
+    this.renderTalentTree();
+    
+    // Set up event listeners
+    this.setupEventListeners();
   },
-
-  // Get a talent by ID
-  getTalent: function (talentId) {
-    for (const tier of this.tiers) {
-      for (const talent of tier) {
-        if (talent.id === talentId) {
-          return talent
-        }
-      }
-    }
-    return null
-  },
-
-  // Check if a talent is purchased
-  isTalentPurchased: function (talentId) {
-    return this.purchased.includes(talentId)
-  },
-
-  // Check if a talent is available to purchase
-  isTalentAvailable: function (talentId) {
-    const talent = this.getTalent(talentId)
-    if (!talent) return false
-
-    // If it's the first talent, it's always available
-    if (talent.id === "prestige_foundation") return true
-
-    // Check if any prerequisite talent is purchased
-    for (const tier of this.tiers) {
-      for (const t of tier) {
-        if (t.connections.includes(talentId) && this.isTalentPurchased(t.id)) {
-          return true
-        }
-      }
-    }
-
-    return false
-  },
-
-  // Purchase a talent
-  purchaseTalent: function (talentId) {
-    const talent = this.getTalent(talentId)
-    if (!talent) {
-      ui.notify("Talent not found!", true)
-      return false
-    }
-
-    // Check if already purchased
-    if (this.isTalentPurchased(talentId)) {
-      ui.notify("Talent already purchased!", true)
-      return false
-    }
-
-    // Check if available to purchase
-    if (!this.isTalentAvailable(talentId)) {
-      ui.notify("Talent prerequisites not met!", true)
-      return false
-    }
-
-    // Check if player has enough prestige points
-    if (player.prestigePoints < talent.cost) {
-      ui.notify(`Not enough prestige points! Need ${talent.cost}`, true)
-      return false
-    }
-
-    // Purchase the talent
-    player.prestigePoints -= talent.cost
-    this.purchased.push(talentId)
-
-    // Apply the talent effect
-    this.applyTalentEffects()
-
-    // Save
-    this.save()
-    player.save()
-
-    ui.notify(`Purchased ${talent.name}!`, false)
-    AUDIO.play("purchase")
-
-    return true
-  },
-
+  
   // Apply all purchased talent effects
-  applyTalentEffects: function () {
-    // Reset talent effects
-    player.talentEffects = {
-      dye_multiplier: 1,
-      tap_damage: 1,
-      auto_tap_damage: 1,
-      auto_tap_speed: 1,
-      auto_multi_chance: 0,
-      auto_crit_chance: 0,
-      auto_tap_no_cooldown_chance: 0,
-      specific_dye_boost: {},
-      dye_double_chance: 0,
-      critical_boost: { chance: 0, damage: 0 },
-      kill_damage_boost: { active: false, value: 1, expires: 0 },
-      skill_cost_reduction: 1,
-      cross_dye_gain: 0,
-      consecutive_tap_bonus: { value: 0, stacks: 0, maxStacks: 0 },
-      tap_speed_damage: { value: 0, lastTapTime: 0, bonus: 0 },
-    }
-
-    // Apply each purchased talent
-    for (const talentId of this.purchased) {
-      const talent = this.getTalent(talentId)
-      if (!talent) continue
-
-      const effect = talent.effect(player)
-
-      switch (effect.type) {
-        case "dye_multiplier":
-          player.talentEffects.dye_multiplier *= effect.value
-          break
-        case "tap_damage":
-          player.talentEffects.tap_damage *= effect.value
-          break
-        case "auto_tap_damage":
-          player.talentEffects.auto_tap_damage *= effect.value
-          break
-        case "auto_tap_speed":
-          player.talentEffects.auto_tap_speed *= effect.value
-          break
-        case "auto_multi_chance":
-          player.talentEffects.auto_multi_chance += effect.value
-          break
-        case "auto_crit_chance":
-          player.talentEffects.auto_crit_chance += effect.value
-          break
-        case "auto_tap_no_cooldown_chance":
-          player.talentEffects.auto_tap_no_cooldown_chance += effect.value
-          break
-        case "specific_dye_boost":
-          player.talentEffects.specific_dye_boost[effect.color] =
-            (player.talentEffects.specific_dye_boost[effect.color] || 1) * effect.value
-          break
-        case "dye_double_chance":
-          player.talentEffects.dye_double_chance += effect.value
-          break
-        case "critical_boost":
-          player.talentEffects.critical_boost.chance += effect.chance
-          player.talentEffects.critical_boost.damage += effect.damage
-          break
-        case "kill_damage_boost":
-          // This is applied when an enemy is defeated
-          player.talentEffects.kill_damage_boost = {
-            value: effect.value,
-            duration: effect.duration,
-            active: false,
-            expires: 0,
+  applyAllTalentEffects: function() {
+      // Reset talent effects to default values
+      player.talentEffects = {
+        tap_damage: 1,
+        auto_tap_damage: 1,
+        auto_tap_speed: 1,
+        auto_multi_chance: 0,
+        auto_crit_chance: 0,
+        auto_tap_no_cooldown_chance: 0,
+        dye_multiplier: 1,
+        specific_dye_boost: { color: null, value: 1 },
+        dye_double_chance: 0,
+        critical_boost: { chance: 0, damage: 1 },
+        kill_damage_boost: { active: false, value: 1, duration: 5, expires: 0 },
+        skill_cost_reduction: 1,
+        cross_dye_gain: 0,
+        consecutive_tap_bonus: { value: 0, stacks: 0, maxStacks: 10, lastTapTime: 0 },
+        tap_speed_damage: { value: 0, lastTapTime: 0, bonus: 0 }
+      };
+      
+      // Apply effects from purchased talents
+      if (this.purchasedTalents && Object.keys(this.purchasedTalents).length > 0) {
+        Object.keys(this.purchasedTalents).forEach(talentId => {
+          const talent = this.talents.find(t => t.id === talentId);
+          if (!talent) return;
+          
+          const level = this.purchasedTalents[talentId];
+          if (talent.applyEffect) {
+            talent.applyEffect(level);
           }
-          break
-        case "skill_cost_reduction":
-          player.talentEffects.skill_cost_reduction *= effect.value
-          break
-        case "cross_dye_gain":
-          player.talentEffects.cross_dye_gain += effect.value
-          break
-        case "consecutive_tap_bonus":
-          player.talentEffects.consecutive_tap_bonus = {
-            value: effect.value,
-            stacks: 0,
-            maxStacks: effect.maxStacks,
-          }
-          break
-        case "tap_speed_damage":
-          player.talentEffects.tap_speed_damage = {
-            value: effect.value,
-            lastTapTime: 0,
-            bonus: 0,
-          }
-          break
+        });
       }
+    
+    console.log("Applied talent effects:", player.talentEffects);
+  },
+  
+  // Purchase a talent
+  purchaseTalent: function(talentId) {
+    // Instead of using this.getTalent, find the talent directly from the talents array
+    const talent = this.talents.find(t => t.id === talentId);
+    
+    // Check if talent exists
+    if (!talent) return false;
+    
+    // Check if talent is already at max level
+    if (this.purchasedTalents[talentId] >= talent.maxLevel) return false;
+    
+    // Check if player has enough prestige points
+    if (player.prestigePoints - player.allocatedPrestigePoints < talent.cost) return false;
+    
+    // Check if prerequisites are met
+    if (talent.requires) {
+      for (const reqId of talent.requires) {
+        const reqTalent = this.talents.find(t => t.id === reqId);
+        if (!reqTalent) continue;
+        
+        // Check if the required talent is at max level
+        const reqLevel = this.purchasedTalents[reqId] || 0;
+        if (reqLevel < reqTalent.maxLevel) return false;
+      }
+    }
+    
+    // Purchase the talent
+    this.purchasedTalents[talentId] = (this.purchasedTalents[talentId] || 0) + 1;
+    player.allocatedPrestigePoints += talent.cost;
+    
+    // Apply talent effect
+    this.applyAllTalentEffects(talentId);
+    
+    // Save changes
+    this.save();
+    
+    // Update the UI to show the new available prestige points
+    this.updatePrestigePointsDisplay();
+
+    // Update UI
+    this.renderTalentTree();
+
+    ui.notify(`${talent.name} upgraded to level ${this.purchasedTalents[talent.id]}!`, false);
+    return true;
+  },
+  
+  updatePrestigePointsDisplay: function() {
+    // Update the prestige points display in the UI
+    const pointsAvailable = document.querySelector("#prestige-upgrades .prestige-points-available .points-value");
+    if (pointsAvailable) {
+      pointsAvailable.textContent = (player.prestigePoints - player.allocatedPrestigePoints).toFixed(0);
     }
   },
 
+  resetTalents: function() {
+    // Don't modify player.prestigePoints, just reset allocatedPrestigePoints
+    player.allocatedPrestigePoints = 0;
+    
+    // Reset purchased talents
+    this.purchasedTalents = {};
+    
+    // Reset talent effects
+    this.applyAllTalentEffects();
+    
+    // Save changes
+    this.save();
+    
+    // Update prestige points display
+    this.updatePrestigePointsDisplay();
+    
+    // Update UI
+    this.renderTalentTree();
+    
+    // Notify player
+    ui.notify("Talent allocations have been reset!", false);
+    
+    return true;
+  },
+  
   // Render the talent tree UI
-  renderTalentTree: function () {
-    const container = document.getElementById("prestige-talent-tree")
-    if (!container) return
-
-    container.innerHTML = ""
-
+  renderTalentTree: function() {    
+    const container = document.getElementById("prestige-talent-tree");
+    if (!container) return;
+    
+    // Clear container
+    container.innerHTML = "";
+    
+    // Add info icon with tooltip
+    const titleContainer = document.createElement("div");
+    titleContainer.className = "talent-tree-title-container";
+    
+    const title = document.createElement("h2");
+    title.textContent = "Prestige Talents";
+    
+    const infoIcon = document.createElement("span");
+    infoIcon.className = "info-icon";
+    infoIcon.textContent = "ℹ️";
+    infoIcon.title = "Click for talent tree information";
+    
+    // Create tooltip content (hidden by default)
+    const tooltip = document.createElement("div");
+    tooltip.className = "talent-tree-tooltip";
+    tooltip.innerHTML = `
+      <p><strong>How to unlock talents:</strong></p>
+      <p>• Tier 1 talents are available immediately</p>
+      <p>• To unlock a talent in a higher tier, you must <strong>fully max out</strong> the connected talent in the previous tier</p>
+      <p>• Gold borders indicate maxed talents</p>
+    `;
+    tooltip.style.display = "none";
+    
+    // Toggle tooltip on info icon click
+    infoIcon.addEventListener("click", function(e) {
+      e.stopPropagation();
+      tooltip.style.display = tooltip.style.display === "none" ? "block" : "none";
+    });
+    
+    // Hide tooltip when clicking elsewhere
+    document.addEventListener("click", function() {
+      tooltip.style.display = "none";
+    });
+    
+    titleContainer.appendChild(title);
+    titleContainer.appendChild(infoIcon);
+    titleContainer.appendChild(tooltip);
+    container.appendChild(titleContainer);
+    
+    // Create talent tree structure
+    const treeContainer = document.createElement("div");
+    treeContainer.className = "talent-tree-container";
+    
     // Create SVG for connections
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    svg.setAttribute("class", "talent-connections")
-    svg.setAttribute("width", "100%")
-    svg.setAttribute("height", "100%")
-    container.appendChild(svg)
-
-    // Create talent nodes
-    const talentNodes = document.createElement("div")
-    talentNodes.className = "talent-nodes"
-    container.appendChild(talentNodes)
-
-    // Track rendered talents to avoid duplicates
-    const renderedTalents = new Set()
-
-    // Render each tier
-    for (let tierIndex = 0; tierIndex < this.tiers.length; tierIndex++) {
-      const tier = this.tiers[tierIndex]
-
-      // Create tier container
-      const tierContainer = document.createElement("div")
-      tierContainer.className = "talent-tier"
-      tierContainer.dataset.tier = tierIndex
-      talentNodes.appendChild(tierContainer)
-
-      // Render each talent in this tier
-      for (const talent of tier) {
-        // Skip if already rendered
-        if (renderedTalents.has(talent.id)) continue
-        renderedTalents.add(talent.id)
-
-        // Check if talent should be visible
-        const isVisible = tierIndex === 0 || this.isConnectedToUnlocked(talent.id)
-        if (!isVisible) continue
-
-        // Create talent node
-        const talentNode = document.createElement("div")
-        talentNode.className = "talent-node"
-        talentNode.dataset.id = talent.id
-        talentNode.style.left = `${50 + talent.position.x * 15}%`
-        talentNode.style.top = `${talent.position.y * 120 + 20}px`
-
-        // Add purchased class if purchased
-        if (this.isTalentPurchased(talent.id)) {
-          talentNode.classList.add("purchased")
-        } else if (this.isTalentAvailable(talent.id)) {
-          talentNode.classList.add("available")
+    const connections = document.createElement("svg");
+    connections.className = "talent-connections";
+    connections.setAttribute("width", "100%");
+    connections.setAttribute("height", "100%");
+    
+    // Create nodes container
+    const nodesContainer = document.createElement("div");
+    nodesContainer.className = "talent-nodes";
+    
+    // Group talents by tier
+    const tierGroups = {};
+    this.talents.forEach(talent => {
+      if (!tierGroups[talent.tier]) tierGroups[talent.tier] = [];
+      tierGroups[talent.tier].push(talent);
+    });
+    
+    // Create tier elements
+    Object.keys(tierGroups).sort((a, b) => a - b).forEach(tier => {
+      const tierDiv = document.createElement("div");
+      tierDiv.className = "talent-tier";
+      tierDiv.dataset.tier = tier;
+      
+      // Add talents to tier
+      tierGroups[tier].forEach(talent => {
+        const talentNode = document.createElement("div");
+        talentNode.className = "talent-node";
+        talentNode.dataset.talentId = talent.id;
+        
+        // Check if talent is available
+        const isAvailable = this.isTalentAvailable(talent);
+        const currentLevel = this.purchasedTalents[talent.id] || 0;
+        const maxLevel = talent.maxLevel || 1;
+        
+        // Add appropriate classes
+        if (currentLevel >= maxLevel) {
+          talentNode.classList.add("purchased", "maxed");
+        } else if (currentLevel > 0) {
+          talentNode.classList.add("purchased");
+        } else if (isAvailable) {
+          talentNode.classList.add("available");
         } else {
-          talentNode.classList.add("locked")
+          talentNode.classList.add("locked");
         }
-
+        
         // Add talent content
         talentNode.innerHTML = `
-          <div class="talent-icon">${this.getTalentIcon(talent)}</div>
-          <div class="talent-tooltip">
-            <div class="talent-name">${talent.name}</div>
-            <div class="talent-description">${talent.description}</div>
-            <div class="talent-cost">Cost: ${talent.cost} Prestige Points</div>
-          </div>
-        `
-
+          <div class="talent-icon">${talent.icon || '⚡'}</div>
+          <div class="talent-name">${talent.name}</div>
+          <div class="talent-description">${talent.description}</div>
+          <div class="talent-level">${currentLevel}/${talent.maxLevel}</div>
+          <div class="talent-cost">${talent.cost} points</div>
+        `;
+        
         // Add click event
         talentNode.addEventListener("click", () => {
-          if (this.isTalentPurchased(talent.id)) {
-            ui.notify(`${talent.name} is already purchased.`, false)
-          } else if (this.isTalentAvailable(talent.id)) {
-            this.purchaseTalent(talent.id)
-            this.renderTalentTree() // Re-render to update
-          } else {
-            ui.notify("Unlock prerequisite talents first!", true)
-          }
-        })
-
-        tierContainer.appendChild(talentNode)
-
-        // Draw connections
-        if (this.isTalentPurchased(talent.id)) {
-          for (const connectedId of talent.connections) {
-            const connectedTalent = this.getTalent(connectedId)
-            if (!connectedTalent) continue
-
-            // Draw line
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line")
-            line.setAttribute("x1", `${50 + talent.position.x * 15}%`)
-            line.setAttribute("y1", `${talent.position.y * 120 + 20}px`)
-            line.setAttribute("x2", `${50 + connectedTalent.position.x * 15}%`)
-            line.setAttribute("y2", `${connectedTalent.position.y * 120 + 20}px`)
-            line.setAttribute("class", "talent-connection")
-
-            if (this.isTalentPurchased(connectedId)) {
-              line.classList.add("active")
+          if (isAvailable) {
+            this.purchaseTalent(talent.id);
+          } else if (currentLevel === 0) {
+            // Show a more informative message about why the talent is locked
+            if (talent.requires) {
+              const requiredTalents = talent.requires.map(reqId => {
+                const reqTalent = this.talents.find(t => t.id === reqId);
+                if (!reqTalent) return "unknown talent";
+                
+                const reqLevel = this.purchasedTalents[reqId] || 0;
+                return `${reqTalent.name} (${reqLevel}/${reqTalent.maxLevel})`;
+              }).join(", ");
+              
+              ui.notify(`This talent requires: ${requiredTalents} to be maxed out first!`, true);
+            } else {
+              ui.notify("This talent is not yet available!", true);
             }
-
-            svg.appendChild(line)
           }
+        });
+        
+        tierDiv.appendChild(talentNode);
+      });
+      
+      nodesContainer.appendChild(tierDiv);
+
+
+    });
+    
+    // Add connections between talents with clearer visual indication
+    this.talents.forEach(talent => {
+      if (talent.requires) {
+        talent.requires.forEach(reqId => {
+          const reqTalent = this.talents.find(t => t.id === reqId);
+          if (reqTalent) {
+            // Create connection line
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("class", "talent-connection");
+            line.dataset.from = reqId;
+            line.dataset.to = talent.id;
+            
+            // Check if connection should be active
+            const reqLevel = this.purchasedTalents[reqId] || 0;
+            const reqMaxLevel = reqTalent.maxLevel || 1;
+            
+            if (reqLevel >= reqMaxLevel && this.purchasedTalents[talent.id]) {
+              line.classList.add("active");
+            } else if (reqLevel >= reqMaxLevel) {
+              line.classList.add("available");
+            }
+            
+            connections.appendChild(line);
+          }
+        });
+      }
+    });
+    
+    // Add elements to container
+    treeContainer.appendChild(connections);
+    treeContainer.appendChild(nodesContainer);
+    container.appendChild(treeContainer);
+    
+    // Position connection lines (after DOM is updated)
+    setTimeout(() => this.positionConnectionLines(), 50);
+    
+    // Update prestige points display
+    const pointsDisplay = document.getElementById("prestige-points-display");
+    if (pointsDisplay) {
+      pointsDisplay.textContent = `Available Points: ${player.prestigePoints - player.allocatedPrestigePoints}/${player.prestigePoints}`;
+    }
+  },
+  
+  // Check if a talent is available to be purchased
+  isTalentAvailable: function(talent) {
+    // Check if player has enough prestige points
+    if (player.prestigePoints - player.allocatedPrestigePoints < talent.cost) {
+      return false;
+    }
+    
+    // Check if talent is already at max level
+    const currentLevel = this.purchasedTalents[talent.id] || 0;
+    if (currentLevel >= talent.maxLevel) {
+      return false;
+    }
+    
+    // Check if prerequisites are met
+    if (talent.requires) {
+      for (const reqId of talent.requires) {
+        const requiredTalent = this.talents.find(t => t.id === reqId);
+        if (!requiredTalent) continue;
+        
+        // Check if the required talent is fully unlocked (at max level)
+        const reqLevel = this.purchasedTalents[reqId] || 0;
+        if (reqLevel < requiredTalent.maxLevel) {
+          return false;
         }
       }
     }
-
-    // Add prestige points counter
-    const pointsCounter = document.createElement("div")
-    pointsCounter.className = "prestige-points-counter"
-    pointsCounter.textContent = `Available Prestige Points: ${player.prestigePoints}`
-    container.appendChild(pointsCounter)
+    
+    return true;
   },
-
-  // Check if a talent is connected to any unlocked talent
-  isConnectedToUnlocked: function (talentId) {
-    // Check if any prerequisite talent is purchased
-    for (const tier of this.tiers) {
-      for (const t of tier) {
-        if (t.connections.includes(talentId) && this.isTalentPurchased(t.id)) {
-          return true
-        }
+  
+  // Position connection lines between talents
+  positionConnectionLines: function() {
+    const connections = document.querySelectorAll(".talent-connection");
+    connections.forEach(connection => {
+      const fromId = connection.dataset.from;
+      const toId = connection.dataset.to;
+      
+      const fromNode = document.querySelector(`.talent-node[data-talent-id="${fromId}"]`);
+      const toNode = document.querySelector(`.talent-node[data-talent-id="${toId}"]`);
+      
+      if (fromNode && toNode) {
+        const fromRect = fromNode.getBoundingClientRect();
+        const toRect = toNode.getBoundingClientRect();
+        const svgRect = connection.parentElement.getBoundingClientRect();
+        
+        // Calculate center points
+        const fromX = fromRect.left + fromRect.width/2 - svgRect.left;
+        const fromY = fromRect.top + fromRect.height/2 - svgRect.top;
+        const toX = toRect.left + toRect.width/2 - svgRect.left;
+        const toY = toRect.top + toRect.height/2 - svgRect.top;
+        
+        // Set line attributes
+        connection.setAttribute("x1", fromX);
+        connection.setAttribute("y1", fromY);
+        connection.setAttribute("x2", toX);
+        connection.setAttribute("y2", toY);
       }
-    }
-    return false
+    });
   },
-
-  // Get an icon for a talent based on its effect
-  getTalentIcon: (talent) => {
-    const effect = talent.effect({})
-
-    switch (effect.type) {
-      case "dye_multiplier":
-        return "🎨"
-      case "tap_damage":
-        return "👆"
-      case "auto_tap_damage":
-        return "🤖"
-      case "auto_tap_speed":
-        return "⚡"
-      case "auto_multi_chance":
-        return "🔄"
-      case "auto_crit_chance":
-        return "💥"
-      case "auto_tap_no_cooldown_chance":
-        return "⏱️"
-      case "specific_dye_boost":
-        if (effect.color === "red") return "🔴"
-        if (effect.color === "blue") return "🔵"
-        if (effect.color === "yellow") return "🟡"
-        return "🌈"
-      case "dye_double_chance":
-        return "✨"
-      case "critical_boost":
-        return "⚡"
-      case "kill_damage_boost":
-        return "💪"
-      case "skill_cost_reduction":
-        return "💰"
-      case "cross_dye_gain":
-        return "🌈"
-      case "consecutive_tap_bonus":
-        return "👆"
-      case "tap_speed_damage":
-        return "🚀"
-      default:
-        return "🌟"
-    }
+  
+  // Set up event listeners
+  setupEventListeners: function() {
+    // Handle window resize for connection lines
+    window.addEventListener("resize", () => {
+      this.positionConnectionLines();
+    });
   },
-
-  // Reset all talents (for testing)
-  resetTalents: function () {
-    // Refund prestige points
-    for (const talentId of this.purchased) {
-      const talent = this.getTalent(talentId)
-      if (talent) {
-        player.prestigePoints += talent.cost
-      }
-    }
-
-    // Clear purchased talents
-    this.purchased = []
-
-    // Reset effects
-    this.applyTalentEffects()
-
-    // Save
-    this.save()
-    player.save()
-
-    ui.notify("Talent tree reset!", false)
-  },
-
-  // Save talent data
-  save: function () {
-    localStorage.setItem("pxjPrestigeTalents", JSON.stringify(this.purchased))
-  },
-}
-
-// Mock ui, player, and AUDIO for standalone execution
-const ui = {
-  notify: (message, isError) => {
-    console.log(`${isError ? "Error: " : ""}${message}`)
-  },
-}
-
-const player = {
-  prestigePoints: 100,
-  talentEffects: {},
-  save: () => {
-    console.log("Player data saved.")
-  },
-}
-
-const AUDIO = {
-  play: (sound) => {
-    console.log(`Playing sound: ${sound}`)
-  },
-}
+  
+  // Save talents to localStorage
+  save: function() {
+    localStorage.setItem("pxjPrestigeTalents", JSON.stringify(this.purchasedTalents));
+  }
+};

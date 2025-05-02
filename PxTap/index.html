@@ -34,11 +34,50 @@
         <div id="xp-fill"></div>
         <span id="xp-text">0 / 100</span>
       </div>
+      <div id="player-stats">
+        <span id="autotap-dps">Autotap: 0 DPS</span>
+        <span id="tap-damage">Tap: 0</span>
+        <span id="crit-chance">Crit: 0%</span>
+        <span id="multi-tap">Multi Tap: 0%</span>
+        <span id="xp-bonus">XP Bonus: 0%</span>
+      </div>
     </div>
     <div id="game">
       <div id="enemy-container">
+        <div id="active-effects"></div>
         <div id="enemy-background"></div>
-        <div id="active-boosters"></div>
+        <div id="active-boosters">
+          <div class="booster-slot empty-booster" data-booster-id="autoTap30s">
+            <span class="booster-icon">🤖</span>
+            <span class="booster-name">Auto Tap</span>
+            <span class="booster-timer">0</span>
+          </div>
+          <div class="booster-slot empty-booster" data-booster-id="doubleDye60s">
+            <span class="booster-icon">🎨</span>
+            <span class="booster-name">Double Dye</span>
+            <span class="booster-timer">0</span>
+          </div>
+          <div class="booster-slot empty-booster" data-booster-id="critChance30s">
+            <span class="booster-icon">⚡</span>
+            <span class="booster-name">Crit Chance</span>
+            <span class="booster-timer">0</span>
+          </div>
+          <div class="booster-slot empty-booster" data-booster-id="megaTap10s">
+            <span class="booster-icon">👊</span>
+            <span class="booster-name">Mega Tap</span>
+            <span class="booster-timer">0</span>
+          </div>
+          <div class="booster-slot empty-booster" data-booster-id="colorRush45s">
+            <span class="booster-icon">💫</span>
+            <span class="booster-name">Color Rush</span>
+            <span class="booster-timer">0</span>
+          </div>
+          <div class="booster-slot empty-booster" data-booster-id="xpBoost45s">
+            <span class="booster-icon">📚</span>
+            <span class="booster-name">XP Boost</span>
+            <span class="booster-timer">0</span>
+          </div>
+        </div>
         <video id="enemy-video" autoplay loop muted playsinline></video>
         <div id="damage-numbers"></div>
         <div id="enemy-info">
@@ -54,7 +93,13 @@
 
     <div id="bottom-nav">
       <button id="profile-btn" class="nav-btn">👤 Guest</button>
-      <button id="shop-btn" class="nav-btn">🛒 Shop</button>
+      <button id="shop-btn" class="nav-btn">
+          <span class="nav-btn-text">🛒 Shop</span>
+          <div class="quick-skill-access" onclick="event.stopPropagation(); ui.showSkillChoice();">
+              <span class="quick-skill-access-icon">⬆️</span>
+          </div>
+      </button>
+      <button id="inventory-btn" class="nav-btn">🎒 Inventory</button>
       <button id="prestige-btn" class="nav-btn">🔄 Prestige</button>
       <button id="leaderboard-btn" class="nav-btn">🏆 Leaderboard</button>
     </div>
@@ -92,14 +137,35 @@
         <div id="shop-items"></div>
       </div>
     </div>
+
+    <div id="inventory-panel" class="panel">
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2>Inventory</h2>
+          <button class="panel-close">✖</button>
+        </div>
+        <div id="inventory-grid"></div>
+        <div id="inventory-stats">
+          <h3>Item Effects</h3>
+          <div id="item-effects"></div>
+        </div>
+      </div>
+    </div>
+    
     <div id="prestige-panel" class="panel">
       <div class="panel-content">
         <div class="panel-header">
           <h2>Prestige</h2>
           <button class="panel-close">✖</button>
         </div>
-        <div id="prestige-content"></div>
-        <button id="confirm-prestige-btn" class="sidebar-btn">Confirm Prestige</button>
+        <div class="prestige-tabs">
+          <button class="prestige-tab active" data-tab="prestige-info">Prestige</button>
+          <button class="prestige-tab" data-tab="prestige-upgrades">Upgrades</button>
+          <button class="prestige-tab" data-tab="prestige-history">History</button>
+        </div>
+        <div id="prestige-info" class="prestige-tab-content active"></div>
+        <div id="prestige-upgrades" class="prestige-tab-content"></div>
+        <div id="prestige-history" class="prestige-tab-content"></div>
       </div>
     </div>
     <div id="settings-panel" class="panel">
@@ -136,6 +202,10 @@
           <div class="setting-item">
             <label for="always-show-buffs">Always Show Buffs</label>
             <input type="checkbox" id="always-show-buffs">
+          </div>
+          <div class="setting-item">
+            <label for="auto-select-skills">Auto Select Cheapest Skills</label>
+            <input type="checkbox" id="auto-select-skills">
           </div>
         </div>
         <div class="settings-group">
@@ -234,6 +304,7 @@
   <script src="enemy.js"></script>
   <script src="events.js"></script>
   <script src="ui.js"></script>
+  <script src="prestige-talents.js"></script>
   <script src="shop.js"></script>
   <script src="tutorial.js"></script>
   <script src="settings.js"></script>

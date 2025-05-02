@@ -1,4 +1,4 @@
-console.log("wallet.js loaded")
+// console.log("wallet.js loaded")
 const WALLET = {
   userAccount: null,
   wax: null,
@@ -22,7 +22,7 @@ const WALLET = {
   ],
 
   init: function () {
-    console.log("WALLET.init called")
+    // console.log("WALLET.init called")
     if (typeof waxjs === "undefined") {
       console.error("waxjs is not defined. Ensure waxjs.min.js is loaded.")
       ui.notify("WAX wallet integration unavailable. Playing in Guest Mode.", true)
@@ -38,19 +38,19 @@ const WALLET = {
     const waxBtn = document.getElementById("wax-login-btn")
     if (guestBtn) {
       guestBtn.addEventListener("click", () => {
-        console.log("Guest button clicked")
+        // console.log("Guest button clicked")
         this.guestMode()
       })
-      console.log("Guest button listener added")
+      // console.log("Guest button listener added")
     } else {
       console.error("Guest button not found")
     }
     if (waxBtn) {
       waxBtn.addEventListener("click", () => {
-        console.log("WAX login button clicked")
+        // console.log("WAX login button clicked")
         this.login()
       })
-      console.log("WAX login button listener added")
+      // console.log("WAX login button listener added")
     } else {
       console.error("WAX login button not found")
     }
@@ -93,7 +93,7 @@ const WALLET = {
   },
 
   showWalletModal: () => {
-    console.log("WALLET.showWalletModal called")
+    // console.log("WALLET.showWalletModal called")
     const modal = document.getElementById("wallet-modal")
     if (!modal) {
       console.error("Wallet modal not found!")
@@ -101,11 +101,11 @@ const WALLET = {
     }
     modal.style.display = "flex"
     modal.classList.add("active")
-    console.log("Wallet modal displayed")
+    // console.log("Wallet modal displayed")
   },
 
   async login() {
-    console.log("WALLET.login called")
+    // console.log("WALLET.login called")
     if (!this.wax) {
       ui.notify("WAX wallet integration unavailable.", true)
       return
@@ -122,6 +122,11 @@ const WALLET = {
       document.getElementById("profile-btn").textContent = `👤 ${this.userAccount}`
       document.getElementById("wallet-connect-btn").style.display = "none"
       document.getElementById("wallet-logout-btn").style.display = "block"
+      const profilePanel = document.getElementById("profile-panel")
+      if (profilePanel.classList.contains('active')) {
+        ui.showProfile();
+      }
+
     } catch (e) {
       ui.notify(`Login failed: ${e.message}`, true)
       console.error("Login Error:", e)
@@ -129,7 +134,7 @@ const WALLET = {
   },
 
   guestMode: () => {
-    console.log("WALLET.guestMode called")
+    // console.log("WALLET.guestMode called")
     player.setNFTBonus(0)
     ui.notify("Playing in Guest Mode", false)
     const modal = document.getElementById("wallet-modal")
@@ -143,10 +148,11 @@ const WALLET = {
   },
 
   logout: function () {
-    console.log("WALLET.logout called")
+    // console.log("WALLET.logout called")
     this.userAccount = null
     player.setNFTBonus(0)
     ui.notify("Logged out", false)
+    this.notifyListeners('logout', {});
     document.getElementById("profile-btn").textContent = "👤 Guest"
     document.getElementById("wallet-connect-btn").style.display = "block"
     document.getElementById("wallet-logout-btn").style.display = "none"
@@ -154,7 +160,7 @@ const WALLET = {
   },
 
   async checkAutoLogin() {
-    console.log("WALLET.checkAutoLogin called")
+    // console.log("WALLET.checkAutoLogin called")
     if (!this.wax) return
     if (this.wax.userAccount) {
       this.userAccount = this.wax.userAccount
@@ -168,6 +174,10 @@ const WALLET = {
       document.getElementById("profile-btn").textContent = `👤 ${this.userAccount}`
       document.getElementById("wallet-connect-btn").style.display = "none"
       document.getElementById("wallet-logout-btn").style.display = "block"
+      const profilePanel = document.getElementById("profile-panel")
+      if (profilePanel.classList.contains('active')) {
+        ui.renderProfile();
+      }
     }
   },
 }

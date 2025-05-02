@@ -22,6 +22,11 @@ function initGame() {
     } else {
       console.warn("WALLET not defined, skipping wallet initialization")
     }
+    if (typeof PRESTIGE_TALENTS !== "undefined") {
+      PRESTIGE_TALENTS.init()
+    } else {
+      console.warn("PRESTIGE_TALENTS not defined, skipping initialization")
+    }
 
     var savedWave = localStorage.getItem("pxjWave")
     if (savedWave) {
@@ -31,7 +36,6 @@ function initGame() {
     SHOP.renderShop()
       SHOP.init()
           ui.init()
-          SHOP.initBoosterListeners()
     enemy.spawnNewEnemy()
     requestAnimationFrame(gameLoop)
   }, "initGame")
@@ -47,7 +51,6 @@ function gameLoop(timestamp) {
 
 function updateGame() {
   if (!enemy.current) return
-  player.updateBoosters()
   ACHIEVEMENTS.check()
   // Update UI indicators
    try {
@@ -71,13 +74,16 @@ function updateGame() {
 
   // Update UI elements that need frequent updates
 ui.updateHealthBar()
-ui.renderBoosters()
+player.updateBoosters()
 }
 
 function renderGame() {
   ui.updateWaveCounter()
   ui.updateCurrencyBar()
   ui.updateXPBar()
+  ui.updateHealthBar()
+  ui.updatePlayerStats() // Add this line to update stats
+  player.updateBoosters()
   ui.updateLevelTracker()
 }
 
