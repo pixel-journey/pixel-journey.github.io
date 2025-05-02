@@ -101,7 +101,7 @@ var enemy = {
     }
   }
 
-    ui.applyColorFilter(this.current.color)
+    // ui.applyColorFilter(this.current.color)
     ui.updateHealthBar()
 
     video.style.transform = "scale(0.8)"
