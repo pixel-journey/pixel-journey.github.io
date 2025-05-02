@@ -137,9 +137,13 @@ const SHOP = {
         const newDiv = div.cloneNode(true);
         div.parentNode.replaceChild(newDiv, div);
 
-        newDiv.addEventListener("click", (e) => {
-          // console.log(`Event listener triggered for booster: ${newDiv.dataset.boosterId}`);
+        // Add both click and touch events for mobile compatibility
+        newDiv.addEventListener("click", handleBoosterEvent);
+        newDiv.addEventListener("touchstart", handleBoosterEvent);
+
+        function handleBoosterEvent(e) {
           e.stopPropagation(); // Prevent enemy tap event
+          e.preventDefault(); // Prevent default touch behavior
 
           const boosterId = newDiv.dataset.boosterId;
           if (!boosterId) {
@@ -183,11 +187,9 @@ const SHOP = {
           } else {
             ui.notify(`Not enough dye for ${boosterDef.name}`, true);
           }
+        }
         });
-
-        // console.log(`Attached click listener to booster: ${newDiv.dataset.boosterId}`);
-      });
-    },
+      },
 
   renderShop: function () {
     // console.log("SHOP.renderShop called")

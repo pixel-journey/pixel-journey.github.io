@@ -506,6 +506,7 @@ var player = {
     this.activeBoosters = []
     this.lastAutoTap = 0
     this.inventorySlots = 2
+    PRESTIGE_TALENTS.purchasedTalents = []
 
     // Reset wave progress
     gameState.wave = 1

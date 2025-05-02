@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PxTapper</title>
+  <title>PxTap</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="game-wrapper">
     <div id="game-header">
-      <div id="logo">PxTapper</div>
+      <div id="logo">PxTap</div>
       <div id="settings-icon">⚙️</div>
     </div>
     <div id="top-stats-bar">
@@ -93,13 +93,19 @@
 
     <div id="bottom-nav">
       <button id="profile-btn" class="nav-btn">👤 Guest</button>
+      <button id="inventory-btn" class="nav-btn">🎒 Inventory</button>
       <button id="shop-btn" class="nav-btn">
           <span class="nav-btn-text">🛒 Shop</span>
           <div class="quick-skill-access" onclick="event.stopPropagation(); ui.showSkillChoice();">
               <span class="quick-skill-access-icon">⬆️</span>
           </div>
       </button>
-      <button id="inventory-btn" class="nav-btn">🎒 Inventory</button>
+      <div class="quick-skill-access-mobile">
+        <button class="quick-skill-btn" onclick="ui.showSkillChoice(player.getRandomSkills(3));">
+            <span class="quick-skill-icon">⚡</span>
+            <span class="quick-skill-text">Skills</span>
+        </button>
+    </div>
       <button id="prestige-btn" class="nav-btn">🔄 Prestige</button>
       <button id="leaderboard-btn" class="nav-btn">🏆 Leaderboard</button>
     </div>
@@ -283,7 +289,7 @@
     </div>
     <div id="wallet-modal">
       <div id="wallet-modal-content">
-        <h2>Welcome to PxTapper</h2>
+        <h2>Welcome to PxTap</h2>
         <p>Connect your WAX wallet to unlock NFT bonuses or play as a guest.</p>
         <button id="wax-login-btn" class="sidebar-btn">Connect WAX Wallet</button>
         <button id="guest-btn" class="sidebar-btn">Play as Guest</button>
