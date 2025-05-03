@@ -1,350 +1,1054 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-  <meta name="title" content="
+    <meta name="title" content="
   Pixel Journey || WaxDAO Farm Collection Power Leaderboard
   " />
-  <meta name="description" content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
+    <meta name="description"
+        content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lb.pixeljourney.xyz/" />
-  <meta property="og:title" content="
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lb.pixeljourney.xyz/" />
+    <meta property="og:title" content="
   Pixel Journey || WaxDAO Farm Collection Power Leaderboard
   " />
-  <meta property="og:description" content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
-  <meta property="og:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
+    <meta property="og:description"
+        content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
+    <meta property="og:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://lb.pixeljourney.xyz/" />
-  <meta property="twitter:title" content="
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://lb.pixeljourney.xyz/" />
+    <meta property="twitter:title" content="
   Pixel Journey || WaxDAO Farm Collection Power Leaderboard
   " />
-  <meta property="twitter:description" content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
-  <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
+    <meta property="twitter:description"
+        content="Pixel Journey is an innovative new crypto-education focused project starting off from Wax.io, NFT-bridged to both Polygon and Ethereum, soon our goal is to explore all that the Web3 and crypto space has to offer. Together, we'll work towards Pixels binding together endless worlds in our shared metaverse." />
+    <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelblue.png" />
 
-  <meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta
+        content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        name="viewport">
 
-  <link rel="icon" type="image/x-icon" href="https://pixeljourney.xyz/img/logo.png">
+    <link rel="icon" type="image/x-icon" href="https://pixeljourney.xyz/img/logo.png">
 
     <title>Pixel Journey || WaxDAO Farm Collection Power Leaderboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <style>
-    :root {
-    --bg-dark: #202123;
-    --bg-light: #ffffff;
-    --accent-light: #f2f3f5;
-    --accent-dark: #2d2f31;
-    --highlight: #10a37f;
-    --hover-bg-dark: #2f3134;
-    --hover-bg-light: #eaeaea;
-    --table-row-alt-dark: #27292b;
-    --table-row-alt-light: #f9f9f9;
-    --table-text-dark: #d1d5db;
-    --table-text-light: #1f2937;
-    --border-dark: #3a3d40;
-    --border-light: #d1d5db;
-    --card-dark: #27292b;
-    --card-light: #f5f5f5;
-    --btn-bg-dark: linear-gradient(90deg, #10a37f, #14b885);
-    --btn-bg-light: linear-gradient(90deg, #10a37f, #14b885);
-    --btn-hover-dark: #18b493;
-    --btn-hover-light: #18b493;
+        :root {
+            /* Modern color palette */
+            --primary-color: #10a37f;
+            --primary-dark: #0d8c6e;
+            --primary-light: #1cbe94;
+            --bg-dark: #1a1b1e;
+            --bg-light: #ffffff;
+            --card-dark: #27292d;
+            --card-light: #f5f7fa;
+            --text-dark: #e4e6eb;
+            --text-light: #1f2937;
+            --accent-dark: #2d2f31;
+            --accent-light: #f2f3f5;
+            --border-dark: #3a3d40;
+            --border-light: #e5e7eb;
+            --hover-dark: #2f3134;
+            --hover-light: #eaeaea;
+            --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #10a37f, #14b885);
+            --gradient-secondary: linear-gradient(135deg, #2d2f31, #3a3d40);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* Base styles */
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            transition: all var(--transition-normal);
+            margin: 25px;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        body.light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 600;
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        /* Layout components */
+        .container {
+            max-width: 1400px;
+            /* Increased from 1200px */
+            padding: 0 30px;
+            /* Increased from 20px */
+            margin: 0 auto;
+        }
+
+        /* Header improvements */
+        header {
+            background: var(--gradient-secondary);
+            padding: 20px 0;
+            box-shadow: var(--shadow-dark);
+            position: relative;
+            z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        header.light-mode {
+            background-color: var(--card-light);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Add this to your CSS */
+        .dashboard-btn {
+            top: 20px;
+            right: 120px;
+            /* Adjust based on your dark mode button width */
+            z-index: 1000;
+            background: #6c757d;
+            /* Bootstrap's secondary color */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--radius-sm);
+            cursor: not-allowed;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.7;
+            margin: 10px;
+            margin-left: 25px;
+        }
+
+        .dashboard-btn:hover {
+            opacity: 1;
+        }
+
+        body > div.container.mt-4 > div > div:nth-child(2) > div > div > div.d-flex.flex-wrap.mb-3.gap-2 {
+    justify-content: center;
 }
 
-body {
-    background-color: var(--bg-dark);
-    color: var(--table-text-dark);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: all 0.3s ease;
+        /* For mobile responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-btn {
+                top: 10px;
+                right: 100px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Stats bar improvements */
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(39, 41, 45, 0.7); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(58, 61, 64, 0.5); /* Subtle border */
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-dark);
+            margin: 20px auto;
+            max-width: 1200px;
+            justify-content: space-between;
+        }
+
+        .stats-bar .stat {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background: rgba(16, 163, 127, 0.1);
+            border: 1px solid rgba(16, 163, 127, 0.2);
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .stats-bar .stat:hover {
+            background: rgba(16, 163, 127, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stats-bar img {
+            height: 32px;
+            margin-right: 15px;
+            transition: transform var(--transition-fast);
+        }
+
+        .stats-bar img:hover {
+            transform: scale(1.1);
+        }
+
+        .stats-bar.light-mode {
+            background: rgba(245, 247, 250, 0.7); /* Light mode glass */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+            box-shadow: var(--shadow-light);
+        }
+
+        .light-mode .stat {
+            background: var(--accent-light);
+            color: var(--text-light);
+        }
+
+        /* Buttons */
+        button,
+        .btn {
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            background: var(--gradient-primary);
+            font-weight: 500;
+            transition: all var(--transition-fast), transform 0.1s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-transform: none;
+            letter-spacing: 0.3px;
+        }
+
+        button:hover,
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: var(--primary-color);
+        }
+
+        button:active,
+        .btn:active {
+            transform: translateY(1px) scale(0.98); /* Add subtle press effect */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            margin: 0 5px 5px 0;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-dark);
+        }
+
+        .light-mode .btn-secondary {
+            background: var(--accent-light);
+            color: var(--text-light);
+        }
+
+        .light-mode .btn-secondary:hover {
+            background: var(--hover-light);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            padding: 20px;
+            border: none;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .card.light-mode {
+            background: var(--card-light);
+            color: var(--text-light);
+            box-shadow: var(--shadow-light);
+        }
+
+        .card-body {
+            padding: 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            /* Increased from 20px */
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .light-mode table {
+            box-shadow: var(--shadow-light);
+        }
+
+        table thead th {
+            background: var(--primary-color);
+            color: white;    
+            text-align: center;
+            padding: 18px;
+            /* Increased from 15px */
+            font-weight: 600;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+
+        }
+
+        table thead th:first-child {
+            border-top-left-radius: var(--radius-sm);
+        }
+
+        table thead th:last-child {
+            border-top-right-radius: var(--radius-sm);
+        }
+
+        .light-mode table thead th {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        table tbody tr {
+            background-color: var(--card-dark);
+            color: var(--text-dark);
+            transition: background var(--transition-fast);
+            animation: fadeInRow 0.3s ease-out forwards;
+        }
+
+        table tbody tr:nth-child(2n) {
+            background-color: var(--accent-dark);
+        }
+
+        /* Table row hover effect */
+        table tbody tr {
+            transition: all var(--transition-fast);
+        }
+
+        table tbody tr:hover {
+            transform: translate(5px, -2px); /* Slight lift and shift */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+    background-color: var(--hover-dark);
+    z-index: 1; /* Ensure hovered row is on top */
+    position: relative; /* Needed for z-index */
+        }
+
+        .light-mode table tbody tr:hover {
+            background-color: var(--hover-light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .light-mode ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        .light-mode table tbody tr {
+            background-color: var(--card-light);
+            color: var(--text-light);
+        }
+
+        .light-mode table tbody tr:nth-child(2n) {
+            background-color: var(--accent-light);
+        }
+
+        .light-mode table tbody tr:hover {
+            background-color: var(--hover-light);
+        }
+
+        /* Add more breathing room to table cells */
+        table tbody td {
+            padding: 14px 18px;
+            /* Increased from 12px 15px */
+            border-top: 1px solid var(--border-dark);
+            vertical-align: middle;    
+            text-align: center;
+        }
+
+        .light-mode table tbody td {
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* APR notification */
+        #apr-notification {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-dark);
+            color: white;
+            text-align: center;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 163, 127, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 163, 127, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 163, 127, 0);
+            }
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            margin: 10px 15px;
+            margin-left: 0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode-toggle:before {
+            content: "☀️";
+            font-size: 16px;
+        }
+
+        /* Form elements */
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 10px 15px;
+            background: var(--accent-dark);
+            color: var(--text-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .input-group button {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.2);
+        }
+
+        .light-mode .input-group input {
+            background: var(--accent-light);
+            color: var(--text-light);
+            border: 1px solid var(--border-light);
+        }
+
+        /* Loading indicator */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .loading:after {
+            content: "";
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Total row */
+        .total-row {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .total-row td {
+            border-top: 2px solid var(--border-dark) !important;
+            padding: 15px !important;
+        }
+
+        .light-mode .total-row {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+
+        .light-mode .total-row td {
+            border-top: 2px solid var(--primary-dark) !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .stats-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .stats-bar .stat {
+                margin-bottom: 5px;
+                width: 100%;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            table thead th,
+            table tbody td {
+                padding: 10px 8px;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            #apr-notification {
+                font-size: 16px !important;
+                padding: 15px 10px;
+            }
+
+            .dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Dropdown styling */
+        .dropdown-menu {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            border: none;
+            border-radius: var(--radius-md);
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .dropdown-menu.light-mode {
+            background: var(--card-light);
+            color: var(--text-light);
+            box-shadow: var(--shadow-light);
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+            margin-bottom: 5px;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: var(--card-dark);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-dark);
+            transition: all var(--transition-normal);
+        }
+
+        .info-box.light-mode {
+            background: var(--card-light);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* APR notification */
+        #apr-notification {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: var(--shadow-dark);
+            color: white;
+            text-align: center;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        .apr-title {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .apr-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .apr-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .apr-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .apr-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .apr-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .apr-breakdown {
+            display: flex;
+            justify-content: space-around;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .apr-token {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+        }
+
+        @media (max-width: 768px) {
+            .apr-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .apr-card {
+                margin-bottom: 15px;
+            }
+
+            .apr-title {
+                font-size: 20px;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 163, 127, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 163, 127, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 163, 127, 0);
+            }
+        }
+
+        /* Settings section */
+        .settings-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .settings-card {
+            background: var(--card-dark);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .settings-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .filter-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-dark);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .light-mode .filter-btn {
+            background: var(--accent-light);
+            color: var(--text-light);
+        }
+
+        .light-mode .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .settings-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .filter-btn {
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+
+        .filter-btn i {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+        }
+
+        .filter-btn.active i {
+            display: inline-block;
+        }
+
+ /* Rank Badges */
+.rank-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.light-mode {
-    background-color: var(--bg-light);
-    color: var(--table-text-light);
+/* Gold for #1 */
+.rank-1 { 
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #4a2c00;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
-a {
-    color: var(--highlight);
-    text-decoration: none;
+/* Silver for #2-4 */
+.rank-2 { 
+    background: linear-gradient(135deg, #E5E4E2, #C0C0C0);
+    color: #333;
+    box-shadow: 0 0 5px rgba(192, 192, 192, 0.5);
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-header {
-    background-color: var(--bg-dark);
-    padding: 16px;
-    border-bottom: 1px solid var(--border-dark);
-}
-
-header.light-mode {
-    background-color: var(--bg-light);
-    border-bottom: 1px solid var(--border-light);
-}
-
-header h1 {
-    color: var(--highlight);
-    margin: 0;
-    font-size: 1.8rem;
-}
-
-.stats-bar {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background: var(--card-dark);
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-}
-
-.stats-bar .stat{
-  margin-right: 5px;
-}
-
-.stats-bar img {
-    height: 40px;
-    margin-right: 15px;
-}
-
-.stats-bar.light-mode {
-    background: var(--card-light);
-    border: 1px solid var(--border-light);
-}
-
-.light-mode .stat {
-    color: var(--table-text-dark);
-}
-
-
-button {
-    border: none;
+/* Bronze for #5-10 */
+.rank-3 { 
+    background: linear-gradient(135deg, #CD7F32, #A0522D);
     color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 6px;
-    background: var(--btn-bg-dark);
-    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(205, 127, 50, 0.5);
 }
 
-button:hover {
-    background: var(--btn-hover-dark);
-}
-
-.light-mode button {
-    background: var(--btn-bg-light);
-}
-
-.light-mode button:hover {
-    background: var(--btn-hover-light);
-}
-
-table {
-    max-width: 97.5%;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-table thead th {
-    background: var(--card-dark);
-    color: var(--table-text-dark);
-    text-align: left;
-    padding: 12px;
-    border-bottom: 2px solid var(--border-dark);
-}
-
-.light-mode table thead th {
-    background: var(--card-light);
-    color: var(--table-text-light);
-    border-bottom: 2px solid var(--border-light);
-}
-
-table tbody tr {
-    background-color: var(--bg-dark);
-    color: var(--table-text-dark);
-    transition: background 0.3s ease;
-}
-
-table tbody tr:nth-child(2n) {
-    background-color: var(--table-row-alt-dark);
-}
-
-table tbody tr:hover {
-    background-color: var(--hover-bg-dark);
-}
-
-.light-mode table tbody tr {
-    background-color: var(--accent-light);
-    color: var(--table-text-light);
-}
-
-.light-mode table tbody tr:nth-child(2n) {
-    background-color: var(--table-row-alt-light);
-}
-
-.light-mode table tbody tr:hover {
-    background-color: var(--hover-bg-light);
-}
-
-table tbody td {
-    padding: 10px;
-    border-top: 1px solid var(--border-dark);
-}
-
-.light-mode table tbody td {
-    border-top: 1px solid var(--border-light);
-}
-
-.card {
-    background: var(--card-dark);
-    color: var(--table-text-dark);
-    padding: 20px;
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.card.light-mode {
-    background: var(--card-light);
-    color: var(--table-text-light);
-    border: 1px solid var(--border-light);
-}
-
-.dropdown-menu {
-    background: var(--card-dark);
-    color: var(--table-text-dark);
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-menu.light-mode {
-    background: var(--card-light);
-    color: var(--table-text-light);
-    border: 1px solid var(--border-light);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.dropdown-item {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.dropdown-item:hover {
-    background: var(--highlight);
-    color: white;
-}
-
-.dark-mode-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--highlight);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.dark-mode-toggle:hover {
-    background: #18b493;
-    color: white;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
+/* Default for others */
+.rank-other { 
     background: var(--accent-dark);
-    color: var(--table-text-dark);
-    border: 1px solid var(--border-dark);
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    color: var(--text-dark);
 }
 
-.input-group input:focus {
-    border-color: var(--highlight);
-    outline: none;
-}
-
-.light-mode .input-group input {
+.light-mode .rank-other { 
     background: var(--accent-light);
-    color: var(--table-text-light);
-    border: 1px solid var(--border-light);
+    color: var(--text-light);
 }
 
-.loading {
-  text-align: center;
-
+/* Subtle animation for table rows appearing (if dynamically loaded) */
+@keyframes fadeInRow {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.total-row {
-    background-color: var(--highlight) !important;
-    color: white !important;
-    font-weight: bold;
+
+@keyframes subtleGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+  50% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
 }
 
-.total-row td {
-    border-top: 2px solid var(--border-dark) !important;
+@keyframes fireEffect {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.light-mode .total-row {
-    background-color: var(--highlight) !important;
-    color: white !important;
+@keyframes lightning {
+  0% { opacity: 0.3; }
+  10% { opacity: 0.8; }
+  20% { opacity: 0.2; }
+  30% { opacity: 1; }
+  40% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  60% { opacity: 0.2; }
+  100% { opacity: 0.7; }
 }
 
-.light-mode .total-row td {
-    border-top: 2px solid var(--border-light) !important;
+/* Update your existing .apr-card styles */
+.apr-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  animation: subtleGlow 4s infinite ease-in-out;
 }
 
+/* Add pseudo-elements for effects */
+.apr-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.1) 0%,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,0) 80%,
+    rgba(255,255,255,0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effects */
+.apr-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(255, 165, 0, 0.3);
+  animation: none;
+}
+
+.apr-card:hover::before {
+  opacity: 1;
+}
+
+/* Individual card effects */
+.apr-card:nth-child(1):hover { /* Black card */
+  background: 
+    linear-gradient(135deg, 
+      rgba(0,0,0,0.2) 0%, 
+      rgba(50,50,50,0.3) 100%),
+    rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+}
+
+.apr-card:nth-child(2):hover { /* Primary card */
+  background: 
+    linear-gradient(135deg, 
+      rgba(255,0,0,0.1) 0%, 
+      rgba(255,255,0,0.1) 50%,
+      rgba(0,0,255,0.1) 100%),
+    rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(100, 200, 255, 0.4);
+}
+
+.apr-card:nth-child(3):hover { /* Secondary card */
+  background: 
+    linear-gradient(135deg, 
+      rgba(0,255,0,0.1) 0%, 
+      rgba(255,165,0,0.1) 50%,
+      rgba(128,0,128,0.1) 100%),
+    rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(50, 205, 50, 0.4);
+}
+
+.apr-card:nth-child(4):hover { /* Tertiary card */
+  background: 
+    linear-gradient(135deg, 
+      rgba(255,191,0,0.1) 0%, 
+      rgba(127,255,0,0.1) 33%,
+      rgba(148,0,211,0.1) 66%,
+      rgba(255,0,255,0.1) 100%),
+    rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+}
+
+/* Add lightning/fire effects on hover */
+.apr-card:hover .apr-value {
+  position: relative;
+}
+
+.apr-card:hover .apr-value::after {
+  content: '🧑‍🌾';
+  position: absolute;
+  font-size: 1.5em;
+  animation: lightning 0.5s infinite;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Add particle effects */
+.apr-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+        /* Add Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     </style>
 </head>
-<body>
-  <!-- Dark Mode Toggle -->
-     <button class="dark-mode-toggle" id="darkModeToggle">Light Mode</button>
 
-     <!-- Stats Bar -->
-     <div class="stats-bar">
-         <a href="https://pixeljourney.xyz/" target="_blank">
-             <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey" style="height: 40px; margin-right: 15px;">
-         </a>
-         <div class="stat" id="waxPrice">WAX: $0.00</div>
-         <div class="stat" id="wufPrice">WUF: $0.00</div>
-         <div class="stat" id="pxjPrice">PXJ: $0.00</div>
-     </div>
+<body>
+
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <a href="https://pixeljourney.xyz/" target="_blank">
+            <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey"
+                style="height: 40px; margin-right: 15px;">
+        </a>
+        <div class="stat" id="waxPrice">WAX: $0.00</div>
+        <div class="stat" id="wufPrice">WUF: $0.00</div>
+        <div class="stat" id="pxjPrice">PXJ: $0.00</div>
+        <div class="stat" id="wpixalPrice">WPIXAL: $0.00</div>
+
+            <!-- Dark Mode Toggle -->
+    <button class="dashboard-btn" id="dashboardBtn" disabled>Dashboard</button>
+    <button class="dark-mode-toggle" id="darkModeToggle">Light Mode</button>
+    </div>
 
     <div class="container mt-4">
         <h1 class="text-center mb-4">Pixel Journey WaxDAO Farm Collection Power Leaderboard</h1>
 
-                <!-- Settings Section -->
-                <div class="row mb-3">
+        <!-- Settings Section -->
+        <div class="row mb-3">
 
-        <!-- Blacklist Settings -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="exclude-wallets-container">
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control" id="excludeWalletsInput" placeholder="Blacklist wallets (Comma-separated)">
-                            <button class="btn btn-secondary" id="updateExclusions">Update</button>
+            <!-- Blacklist Settings -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="exclude-wallets-container">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" id="excludeWalletsInput"
+                                    placeholder="Blacklist wallets (Comma-separated)">
+                                <button class="btn btn-secondary" id="updateExclusions">Update</button>
+                            </div>
+                            <button class="btn btn-secondary w-100" data-bs-toggle="modal"
+                                data-bs-target="#blacklistModal">
+                                View/Edit Blacklisted Accounts
+                            </button>
                         </div>
-                        <button class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#blacklistModal">
-                            View/Edit Blacklisted Accounts
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
 
 
             <!-- Filter Settings -->
@@ -353,222 +1057,285 @@ table tbody td {
                     <div class="card-body">
 
                         <!-- Quick Filter Buttons -->
-  <div class="d-flex flex-wrap mb-3">
-      <button class="btn btn-sm btn-secondary" id="togglePrimary">Toggle Primary Ingredients</button>
-      <button class="btn btn-sm btn-secondary" id="toggleSecondary">Toggle Secondary Ingredients</button>
-      <button class="btn btn-sm btn-secondary" id="toggleTertiary">Toggle Tertiary Ingredients</button>
-  </div>
-                      <div class="dropdown">
-                          <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="templateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                              Filter Templates
-                          </button>
-                          <ul class="dropdown-menu p-3" aria-labelledby="templateDropdown" id="templateFilters">
-                              <li><button class="btn btn-sm btn-primary w-100 mb-2" id="selectAllTemplates">Select All</button></li>
-                              <li><button class="btn btn-sm btn-danger w-100 mb-2" id="deselectAllTemplates">Deselect All</button></li>
-                              <div id="templateFilters"></div>
-                          </ul>
-                      </div>
-                  </div>
-                        <select id="timePeriod" class="form-select mb-2">
-                            <option value="second">Per Second</option>
-                            <option value="minute">Per Minute</option>
-                            <option value="hour">Per Hour</option>
-                            <option value="day">Per Day</option>
-                            <option value="week" selected="">Per Week</option>
-                            <option value="month">Per Month</option>
-                            <option value="year">Per Year</option>
-                        </select>
+                        <!-- Replace your current filter buttons section with this -->
+                        <div class="d-flex flex-wrap mb-3 gap-2">
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="pixals">
+                                <i class="bi bi-check-circle-fill me-1"></i> Pixals
+                            </button>
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="pixelpack">
+                                <i class="bi bi-check-circle-fill me-1"></i> Packs
+                            </button>
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="primary">
+                                <i class="bi bi-check-circle-fill me-1"></i> Primary
+                            </button>
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="secondary">
+                                <i class="bi bi-check-circle-fill me-1"></i> Secondary
+                            </button>
+                            <button class="btn btn-sm btn-secondary filter-btn active" data-filter="tertiary">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tertiary
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" id="selectAllFilters">
+                                Select All
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" id="deselectAllFilters">
+                                Deselect All
+                            </button>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="templateDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Filter Templates
+                            </button>
+                            <ul class="dropdown-menu p-3" aria-labelledby="templateDropdown" id="templateFilters">
+                                <li><button class="btn btn-sm btn-primary w-100 mb-2" id="selectAllTemplates">Select
+                                        All</button></li>
+                                <li><button class="btn btn-sm btn-danger w-100 mb-2" id="deselectAllTemplates">Deselect
+                                        All</button></li>
+                                <div id="templateFilters"></div>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <button id="toggleView" class="btn btn-outline-primary w-100" style="display:none">
-                Switch to USD View
-            </button>
-        </div>
-
-        <div id="apr-notification" class="text-center p-4 mt-3 mb-3"
-             style="font-size: 24px; font-weight: bold; color: #fff; background: #10a37f; border-radius: 10px;">
-            🔥 Current Ingredient <u>PXJ</u> Lockup-Staking APR rates (WUF bonus excluded) 🔥 <br>
-
-            Black: <span id="blackApr">Calculating...</span>% |
-            Secondary: <span id="secondaryApr">Calculating...</span>% |
-            Tertiary: <span id="tertiaryApr">Calculating...</span>%
-        </div>
-
-
-        <!-- Collapsible Info Box -->
-<div class="info-box mt-4 mb-4 text-center">
-
-                <a href="https://waxdao.io/v2/farm/pixeljourney" class="btn btn-secondary" target="_blank">
-               Go to Pixel Journey Farm
-           </a>
-           <button class="btn btn-secondary" id="stakingToggle" data-bs-toggle="collapse" data-bs-target="#stakingTable">
-           Show Staking Information
-       </button>
-
-    <div class="collapse" id="stakingTable">
-        <div class="table-responsive">
-            <table class="table table-borderless table-sm">
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>WUF Staking / Hour</b></td>
-                        <td><b>PXJ Staking / Hour</b></td>
-                    </tr>
-                    <tr>
-                        <td>Pixal PFP</td>
-                        <td>5.0000 WUF</td>
-                        <td>0.25000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Pixel Ingredient Pack</td>
-                        <td>20.0000 WUF</td>
-                        <td>2.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Black (Primary)</td>
-                        <td>124.0000 WUF</td>
-                        <td>124.00000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Red (Primary)</td>
-                        <td>2.0000 WUF</td>
-                        <td>0.20000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Yellow (Primary)</td>
-                        <td>2.0000 WUF</td>
-                        <td>0.20000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Blue (Primary)</td>
-                        <td>2.0000 WUF</td>
-                        <td>0.20000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Green (Secondary)</td>
-                        <td>9.0000 WUF</td>
-                        <td>2.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Orange (Secondary)</td>
-                        <td>9.0000 WUF</td>
-                        <td>2.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Purple (Secondary)</td>
-                        <td>9.0000 WUF</td>
-                        <td>2.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Amber (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Chartreuse (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Violet (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Teal (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Vermillion (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                    <tr>
-                        <td>Magenta (Tertiary)</td>
-                        <td>46.0000 WUF</td>
-                        <td>13.50000000 PXJ</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-<br>
-                  <a href="https://docs.pixeljourney.xyz/introduction/season-1-starting-from-wax/recycling-and-crafting/pixel-ingredients-and-pack-staking" class="btn btn-secondary mt-3" target="_blank">
-                 Stakables Guides of our Pixel Journey Docs
-             </a>
-</div>
-
-
-        <!-- Leaderboard -->
-              <div id="loading" class="loading mt-3">Loading data, please wait...</div>
-              <div class="table-responsive" id="leaderboard-container" style="display:none;">
-                <table class="table table-bordered mt-4" id="leaderboard">
-    <thead>
-        <tr>
-            <th onclick="sortTable(0)">Rank</th>
-            <th onclick="sortTable(1)">User</th>
-            <th onclick="sortTable(2)">Filtered Assets Owned</th>
-            <th onclick="sortTable(3)">PXJ Locked in Second-/Tertiary Ingredients</th>
-            <th id="totalColumnHeader" class="highlight" onclick="sortTable(4)">
-                Farm Yield Value (<span id="timePeriodLabelTotal">Per Week</span>)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Rows dynamically added -->
-    </tbody>
-</table>
-              </div>
-    </div>
-
-
-        <!-- Blacklist Modal -->
-        <div class="modal fade" id="blacklistModal" tabindex="-1" aria-labelledby="blacklistModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="blacklistModalLabel">Blacklisted Accounts</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul id="blacklistAccounts" class="list-group">
-                            <!-- Blacklist items dynamically generated -->
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    <select id="timePeriod" class="form-select mb-2">
+                        <option value="second">Per Second</option>
+                        <option value="minute">Per Minute</option>
+                        <option value="hour">Per Hour</option>
+                        <option value="day">Per Day</option>
+                        <option value="week" selected="">Per Week</option>
+                        <option value="month">Per Month</option>
+                        <option value="year">Per Year</option>
+                    </select>
                 </div>
             </div>
         </div>
+
+        <button id="toggleView" class="btn btn-outline-primary w-100" style="display:none">
+            Switch to USD View
+        </button>
+    </div>
+    <div id="apr-notification" class="text-center p-4 mt-4 mb-4">
+        <h2 class="apr-title">🔥 Current Staking APR Rates 🔥</h2>
+
+        <div class="apr-grid">
+            <div class="apr-card">
+                <div class="apr-card-content">
+                <div class="apr-card-title">Black</div>
+                <div class="apr-value"><span id="blackApr">Calculating...</span>%</div>
+                <div class="apr-breakdown">
+                    <div class="apr-token">PXJ: <span id="blackPxjApr">Calculating...</span>%</div>
+                    <div class="apr-token">WUF: <span id="blackWufApr">Calculating...</span>%</div>
+                </div>
+            </div>
+        </div>
+
+            <div class="apr-card">
+                <div class="apr-card-content">
+                <div class="apr-card-title">Primary</div>
+                <div class="apr-value"><span id="primaryApr">Calculating...</span>%</div>
+                <div class="apr-breakdown">
+                    <div class="apr-token">PXJ: <span id="primaryPxjApr">Calculating...</span>%</div>
+                    <div class="apr-token">WUF: <span id="primaryWufApr">Calculating...</span>%</div>
+                </div>
+            </div>
+        </div>
+
+            <div class="apr-card">
+                <div class="apr-card-content">
+                <div class="apr-card-title">Secondary</div>
+                <div class="apr-value"><span id="secondaryApr">Calculating...</span>%</div>
+                <div class="apr-breakdown">
+                    <div class="apr-token">PXJ: <span id="secondaryPxjApr">Calculating...</span>%</div>
+                    <div class="apr-token">WUF: <span id="secondaryWufApr">Calculating...</span>%</div>
+                </div>
+            </div>
+        </div>
+
+            <div class="apr-card">
+                <div class="apr-card-content">
+                <div class="apr-card-title">Tertiary</div>
+                <div class="apr-value"><span id="tertiaryApr">Calculating...</span>%</div>
+                <div class="apr-breakdown">
+                    <div class="apr-token">PXJ: <span id="tertiaryPxjApr">Calculating...</span>%</div>
+                    <div class="apr-token">WUF: <span id="tertiaryWufApr">Calculating...</span>%</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- Collapsible Info Box -->
+    <div class="info-box mt-4 mb-4 text-center">
+
+        <a href="https://waxdao.io/v2/farm/pixeljourney" class="btn btn-secondary" target="_blank">
+            Go to Pixel Journey Farm
+        </a>
+        <button class="btn btn-secondary" id="stakingToggle" data-bs-toggle="collapse" data-bs-target="#stakingTable">
+            Show Staking Information
+        </button>
+
+        <div class="collapse" id="stakingTable">
+            <div class="table-responsive">
+                <table class="table table-borderless table-sm">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>WUF Staking / Hour</b></td>
+                            <td><b>PXJ Staking / Hour</b></td>
+                        </tr>
+                        <tr>
+                            <td>Pixal PFP</td>
+                            <td>5.0000 WUF</td>
+                            <td>0.25000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Pixel Ingredient Pack</td>
+                            <td>20.0000 WUF</td>
+                            <td>2.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Black (Special/Rare)</td>
+                            <td>124.0000 WUF</td>
+                            <td>124.00000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Red (Primary)</td>
+                            <td>2.0000 WUF</td>
+                            <td>0.20000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Yellow (Primary)</td>
+                            <td>2.0000 WUF</td>
+                            <td>0.20000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Blue (Primary)</td>
+                            <td>2.0000 WUF</td>
+                            <td>0.20000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Green (Secondary)</td>
+                            <td>9.0000 WUF</td>
+                            <td>2.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Orange (Secondary)</td>
+                            <td>9.0000 WUF</td>
+                            <td>2.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Purple (Secondary)</td>
+                            <td>9.0000 WUF</td>
+                            <td>2.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Amber (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Chartreuse (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Violet (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Teal (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Vermillion (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                        <tr>
+                            <td>Magenta (Tertiary)</td>
+                            <td>46.0000 WUF</td>
+                            <td>13.50000000 PXJ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <a href="https://docs.pixeljourney.xyz/introduction/season-1-starting-from-wax/recycling-and-crafting/pixel-ingredients-and-pack-staking"
+            class="btn btn-secondary mt-3" target="_blank">
+            Stakables Guides of our Pixel Journey Docs
+        </a>
+    </div>
+
+
+    <!-- Leaderboard -->
+    <div id="loading" class="loading mt-3">Loading data, please wait...</div>
+    <div class="table-responsive" id="leaderboard-container" style="display:none;">
+        <table class="table table-bordered mt-4" id="leaderboard">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Rank</th>
+                    <th onclick="sortTable(1)">User</th>
+                    <th onclick="sortTable(2)">Filtered Assets Owned</th>
+                    <th onclick="sortTable(3)">PXJ Locked in Second-/Tertiary Ingredients</th>
+                    <th id="totalColumnHeader" class="highlight" onclick="sortTable(4)">
+                        Farm Yield Value (<span id="timePeriodLabelTotal">Per Week</span>)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows dynamically added -->
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+    <!-- Blacklist Modal -->
+    <div class="modal fade" id="blacklistModal" tabindex="-1" aria-labelledby="blacklistModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="blacklistModalLabel">Blacklisted Accounts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="blacklistAccounts" class="list-group">
+                        <!-- Blacklist items dynamically generated -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    const templates = [
-        { id: 781515, pxj: 0.25, wuf: 5.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
-        { id: 820134, pxj: 2.5, wuf: 20.0, pxjUpgrade: 0, name: "Pixel Ingredient Pack", type: "pixelpack" },
-        { id: 858568, pxj: 124.0, wuf: 100.0, pxjUpgrade: 0, name: "Black (Primary)", type: "primary" },
-        { id: 858569, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Red (Primary)", type: "primary" },
-        { id: 858570, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0,  name: "Yellow (Primary)", type: "primary" },
-        { id: 858571, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Blue (Primary)", type: "primary" },
-        { id: 858572, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Green (Secondary)", type: "secondary" },
-        { id: 858573, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Orange (Secondary)", type: "secondary" },
-        { id: 858574, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Purple (Secondary)", type: "secondary" },
-        { id: 858575, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Amber (Tertiary)", type: "tertiary" },
-        { id: 858576, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Chartreuse (Tertiary)", type: "tertiary" },
-        { id: 858577, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Violet (Tertiary)", type: "tertiary" },
-        { id: 858578, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Teal (Tertiary)", type: "tertiary" },
-        { id: 858580, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Vermillion (Tertiary)", type: "tertiary" },
-        { id: 859273, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Magenta (Tertiary)", type: "tertiary" }
-    ];
+        const templates = [
+            { id: 781515, pxj: 0.25, wuf: 5.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
+            { id: 820134, pxj: 2.5, wuf: 20.0, pxjUpgrade: 0, name: "Pixel Ingredient Pack", type: "pixelpack" },
+            { id: 858568, pxj: 124.0, wuf: 100.0, pxjUpgrade: 0, name: "Black (Primary)", type: "primary" },
+            { id: 858569, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Red (Primary)", type: "primary" },
+            { id: 858570, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Yellow (Primary)", type: "primary" },
+            { id: 858571, pxj: 0.2, wuf: 2.0, pxjUpgrade: 0, name: "Blue (Primary)", type: "primary" },
+            { id: 858572, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Green (Secondary)", type: "secondary" },
+            { id: 858573, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Orange (Secondary)", type: "secondary" },
+            { id: 858574, pxj: 2.5, wuf: 9.0, pxjUpgrade: 25000, name: "Purple (Secondary)", type: "secondary" },
+            { id: 858575, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Amber (Tertiary)", type: "tertiary" },
+            { id: 858576, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Chartreuse (Tertiary)", type: "tertiary" },
+            { id: 858577, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Violet (Tertiary)", type: "tertiary" },
+            { id: 858578, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Teal (Tertiary)", type: "tertiary" },
+            { id: 858580, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Vermillion (Tertiary)", type: "tertiary" },
+            { id: 859273, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Magenta (Tertiary)", type: "tertiary" }
+        ];
 
 
         const timeMultipliers = {
@@ -583,35 +1350,41 @@ table tbody td {
 
         let currentTimePeriod = "week";
         let currentView = "WAXP"; // Default view
-        const excludedWallets = new Set(["swap.taco", "bridge.wax", "dao.pxj", "pixals.pxj", "pixeljourney", "wombatmaster", "dev.pxj", "team.pxj", "pepperstake"]);
+        const excludedWallets = new Set(["swap.taco", "bridge.wax", "blend.nefty", "atomicmarket", "atomicdropx", "rwax", "dao.pxj", "pixals.pxj", "pixeljourney", "wombatmaster", "dev.pxj", "team.pxj", "pepperstake"]);
 
         let pxjPriceUSD = 0;
         let wufPriceUSD = 0;
+        let wpixalPriceUSD = 0;
 
         async function fetchPrices() {
             const apiUrlPXJ = "https://alcor.exchange/api/v2/tokens/pxj-pixeljourney";
             const apiUrlWUF = "https://alcor.exchange/api/v2/tokens/wuf-wuffi";
             const apiUrlWAX = "https://alcor.exchange/api/v2/tokens/wax-eosio.token";
+            const apiUrlWPIXAL = "https://alcor.exchange/api/v2/tokens/wpixal-pixeljourney";
 
             try {
                 const pxjResponse = await fetch(apiUrlPXJ);
                 const wufResponse = await fetch(apiUrlWUF);
                 const waxResponse = await fetch(apiUrlWAX);
+                const wpixalResponse = await fetch(apiUrlWPIXAL);
 
-                if (!pxjResponse.ok || !wufResponse.ok || !waxResponse.ok) throw new Error("Failed to fetch token prices.");
+                if (!pxjResponse.ok || !wufResponse.ok || !waxResponse.ok || !wpixalResponse.ok) throw new Error("Failed to fetch token prices.");
 
                 const pxjData = await pxjResponse.json();
                 const wufData = await wufResponse.json();
                 const waxData = await waxResponse.json();
+                const wpixalData = await wpixalResponse.json();
 
                 pxjPriceUSD = pxjData.usd_price;
                 wufPriceUSD = wufData.usd_price;
                 waxPriceUSD = waxData.usd_price;
+                wpixalPriceUSD = wpixalData.usd_price;
 
 
-                                document.getElementById("waxPrice").textContent = `WAX: $${waxPriceUSD.toFixed(8)}`;
-                                document.getElementById("pxjPrice").textContent = `PXJ: $${pxjPriceUSD.toFixed(8)}`;
-                                document.getElementById("wufPrice").textContent = `WUF: $${wufPriceUSD.toFixed(8)}`;
+                document.getElementById("waxPrice").textContent = `WAX: $${waxPriceUSD.toFixed(8)}`;
+                document.getElementById("pxjPrice").textContent = `PXJ: $${pxjPriceUSD.toFixed(8)}`;
+                document.getElementById("wufPrice").textContent = `WUF: $${wufPriceUSD.toFixed(8)}`;
+                document.getElementById("wpixalPrice").textContent = `WPIXAL: $${wpixalPriceUSD.toFixed(8)}`;
             } catch (error) {
                 console.error("Error fetching token prices:", error);
                 throw new Error("Could not fetch token prices.");
@@ -639,142 +1412,195 @@ table tbody td {
         }
 
         async function fetchAllData(selectedTemplates) {
-    const leaderboardData = {};
+            const leaderboardData = {};
 
-    for (const template of selectedTemplates) {
-        const holders = await fetchTemplateHolders(template);
+            for (const template of selectedTemplates) {
+                const holders = await fetchTemplateHolders(template);
 
-        holders.forEach(holder => {
-            if (excludedWallets.has(holder.username)) return;
+                holders.forEach(holder => {
+                    if (excludedWallets.has(holder.username)) return;
 
-            if (!leaderboardData[holder.username]) {
-                leaderboardData[holder.username] = {
-                    templatesOwned: 0,
-                    pxj: 0,
-                    wuf: 0,
-                    pxjUpgrades: 0,
-                    templates: {}, // Track template composition
-                    upgradedIngredients: {} // Track upgraded ingredients
-                };
+                    if (!leaderboardData[holder.username]) {
+                        leaderboardData[holder.username] = {
+                            templatesOwned: 0,
+                            pxj: 0,
+                            wuf: 0,
+                            pxjUpgrades: 0,
+                            templates: {}, // Track template composition
+                            upgradedIngredients: {} // Track upgraded ingredients
+                        };
+                    }
+
+                    leaderboardData[holder.username].templatesOwned += holder.assets;
+                    leaderboardData[holder.username].pxj += holder.pxj;
+                    leaderboardData[holder.username].wuf += holder.wuf;
+
+                    // Track template composition
+                    leaderboardData[holder.username].templates[template.id] = (leaderboardData[holder.username].templates[template.id] || 0) + holder.assets;
+
+                    if (template.pxjUpgrade > 0) {
+                        leaderboardData[holder.username].pxjUpgrades += holder.assets * template.pxjUpgrade;
+                        // Track upgraded ingredients
+                        leaderboardData[holder.username].upgradedIngredients[template.name] = (leaderboardData[holder.username].upgradedIngredients[template.name] || 0) + holder.assets;
+                    }
+                });
             }
 
-            leaderboardData[holder.username].templatesOwned += holder.assets;
-            leaderboardData[holder.username].pxj += holder.pxj;
-            leaderboardData[holder.username].wuf += holder.wuf;
+            return Object.entries(leaderboardData).map(([username, data]) => ({
+                username,
+                ...data
+            }));
+        }
 
-            // Track template composition
-            leaderboardData[holder.username].templates[template.id] = (leaderboardData[holder.username].templates[template.id] || 0) + holder.assets;
+        function populateLeaderboard(data) {
+    const loadingDiv = document.getElementById('loading');
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+    const tbody = document.querySelector('#leaderboard tbody');
+    
+    loadingDiv.style.display = 'none';
+    leaderboardContainer.style.display = 'block';
+    
+    const multiplier = timeMultipliers[currentTimePeriod];
+    
+    tbody.innerHTML = ""; // Clear existing rows
 
-            if (template.pxjUpgrade > 0) {
-                leaderboardData[holder.username].pxjUpgrades += holder.assets * template.pxjUpgrade;
-                // Track upgraded ingredients
-                leaderboardData[holder.username].upgradedIngredients[template.name] = (leaderboardData[holder.username].upgradedIngredients[template.name] || 0) + holder.assets;
-            }
-        });
-    }
+    data.sort((a, b) => b.pxj - a.pxj); // Sort by PXJ (default)
 
-    return Object.entries(leaderboardData).map(([username, data]) => ({
-        username,
-        ...data
-    }));
+    // Initialize totals
+    let totalTemplatesOwned = 0;
+    let totalPxjUpgrades = 0;
+    let totalPxjReward = 0;
+    let totalWufReward = 0;
+    let totalUSD = 0;
+
+    data.forEach((user, index) => {
+        const rank = index + 1;
+        const pxjReward = user.pxj * multiplier;
+        const wufReward = user.wuf * multiplier;
+        const pxjValueUSD = pxjReward * pxjPriceUSD;
+        const wufValueUSD = wufReward * wufPriceUSD;
+        const userTotalUSD = pxjValueUSD + wufValueUSD;
+
+        // Accumulate totals
+        totalTemplatesOwned += user.templatesOwned;
+        totalPxjUpgrades += user.pxjUpgrades;
+        totalPxjReward += pxjReward;
+        totalWufReward += wufReward;
+        totalUSD += userTotalUSD;
+
+        // Generate tooltip content
+        const templatesTooltip = `
+            <strong>Templates Held:</strong><br>
+            ${Object.entries(user.templates).map(([templateId, count]) => `
+                ${templates.find(t => t.id === parseInt(templateId))?.name || templateId}: ${count}
+            `).join('<br>')}
+        `;
+
+        const upgradesTooltip = `
+            <strong>Upgraded Ingredients:</strong><br>
+            ${Object.entries(user.upgradedIngredients).map(([ingredient, count]) => `
+                ${ingredient}: ${count}
+            `).join('<br>')}
+        `;
+
+// Determine rank class
+let rankClass = 'rank-other'; // Default for ranks 11+
+if (rank === 1) {
+    rankClass = 'rank-1'; // Gold for #1
+} else if (rank >= 2 && rank <= 4) {
+    rankClass = 'rank-2'; // Silver for #2-4
+} else if (rank >= 5 && rank <= 10) {
+    rankClass = 'rank-3'; // Bronze for #5-10
 }
 
-function populateLeaderboard(data) {
-const loadingDiv = document.getElementById('loading');
-const leaderboardContainer = document.getElementById('leaderboard-container');
-const tbody = document.querySelector('#leaderboard tbody');
-const totalColumnHeader = document.getElementById('totalColumnHeader');
-const timePeriodLabelTotal = document.getElementById('timePeriodLabelTotal');
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+            <td>
+                <a href="https://atomichub.io/profile/wax-mainnet/${user.username}" target="_blank">
+                    ${user.username}
+                </a>
+            </td>
+            <td data-bs-toggle="tooltip" data-bs-html="true" title="${templatesTooltip}">
+                ${user.templatesOwned}
+            </td>
+            <td data-bs-toggle="tooltip" data-bs-html="true" title="${upgradesTooltip}">
+                ${user.pxjUpgrades.toLocaleString()} PXJ
+            </td>
+            <td>
+                <strong>=~ ${(userTotalUSD / waxPriceUSD).toFixed(2)} WAX or $${userTotalUSD.toFixed(2)}</strong><br>
+                <small>(${pxjReward.toLocaleString()} PXJ + ${wufReward.toLocaleString()} WUF)</small>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
 
-loadingDiv.style.display = 'none';
-leaderboardContainer.style.display = 'block';
-
-const multiplier = timeMultipliers[currentTimePeriod];
-
-timePeriodLabelTotal.textContent = `Per ${currentTimePeriod}`;
-
-tbody.innerHTML = ""; // Clear existing rows
-
-data.sort((a, b) => b.pxj - a.pxj); // Sort by PXJ (default)
-
-// Initialize totals
-let totalTemplatesOwned = 0;
-let totalPxjUpgrades = 0;
-let totalPxjReward = 0;
-let totalWufReward = 0;
-let totalUSD = 0;
-
-data.forEach((user, index) => {
-    const pxjReward = user.pxj * multiplier;
-    const wufReward = user.wuf * multiplier;
-    const pxjValueUSD = pxjReward * pxjPriceUSD;
-    const wufValueUSD = wufReward * wufPriceUSD;
-    const userTotalUSD = pxjValueUSD + wufValueUSD;
-
-    // Accumulate totals
-    totalTemplatesOwned += user.templatesOwned;
-    totalPxjUpgrades += user.pxjUpgrades;
-    totalPxjReward += pxjReward;
-    totalWufReward += wufReward;
-    totalUSD += userTotalUSD;
-
-    // Generate tooltip content for "Journey Assets Owned"
-    const templatesTooltip = `
-        <strong>Templates Held:</strong><br>
-        ${Object.entries(user.templates).map(([templateId, count]) => `
-            ${templates.find(t => t.id === parseInt(templateId))?.name || templateId}: ${count}
-        `).join('<br>')}
-    `;
-
-    // Generate tooltip content for "Locked PXJ"
-    const upgradesTooltip = `
-        <strong>Upgraded Ingredients:</strong><br>
-        ${Object.entries(user.upgradedIngredients).map(([ingredient, count]) => `
-            ${ingredient}: ${count}
-        `).join('<br>')}
-    `;
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${index + 1}</td>
+    // Add the total row
+    const totalRow = document.createElement("tr");
+    totalRow.className = "total-row";
+    totalRow.innerHTML = `
+        <td colspan="2"><strong>Total</strong></td>
+        <td><strong>${totalTemplatesOwned.toLocaleString()}</strong></td>
+        <td><strong>${totalPxjUpgrades.toLocaleString()} PXJ</strong></td>
         <td>
-            <a href="https://atomichub.io/profile/wax-mainnet/${user.username}" target="_blank">
-                ${user.username}
-            </a>
-        </td>
-        <td data-bs-toggle="tooltip" data-bs-html="true" title="${templatesTooltip}">
-            ${user.templatesOwned}
-        </td>
-        <td data-bs-toggle="tooltip" data-bs-html="true" title="${upgradesTooltip}">
-            ${user.pxjUpgrades.toLocaleString()} PXJ
-        </td>
-        <td>
-            <strong>=~ ${(userTotalUSD / waxPriceUSD).toFixed(2)} WAX or $${userTotalUSD.toFixed(2)}</strong><br>
-            <small>(${pxjReward.toLocaleString()} PXJ + ${wufReward.toLocaleString()} WUF)</small>
+            <strong>=~ ${(totalUSD / waxPriceUSD).toFixed(2)} WAX or $${totalUSD.toFixed(2)}</strong><br>
+            <small>(${totalPxjReward.toLocaleString()} PXJ + ${totalWufReward.toLocaleString()} WUF)</small>
         </td>
     `;
-    tbody.appendChild(row);
-});
+    tbody.appendChild(totalRow);
 
-// Add the total row
-const totalRow = document.createElement("tr");
-totalRow.className = "total-row"; // Add a class for styling
-totalRow.innerHTML = `
-    <td colspan="2"><strong>Total</strong></td>
-    <td><strong>${totalTemplatesOwned.toLocaleString()}</strong></td>
-    <td><strong>${totalPxjUpgrades.toLocaleString()} PXJ</strong></td>
-    <td>
-        <strong>=~ ${(totalUSD / waxPriceUSD).toFixed(2)} WAX or $${totalUSD.toFixed(2)}</strong><br>
-        <small>(${totalPxjReward.toLocaleString()} PXJ + ${totalWufReward.toLocaleString()} WUF)</small>
-    </td>
-`;
-tbody.appendChild(totalRow);
-
-// Initialize tooltips
-const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    
+    // Apply theme to badges
+    applyTheme(document.body.classList.contains('light-mode'));
 }
 
+        function setupFilterButtons() {
+            // Handle filter button clicks
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    updateTemplateFilters();
+                });
+            });
+
+            // Select All button
+            document.getElementById('selectAllFilters').addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.add('active');
+                });
+                updateTemplateFilters();
+            });
+
+            // Deselect All button
+            document.getElementById('deselectAllFilters').addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                updateTemplateFilters();
+            });
+        }
+
+        function updateTemplateFilters() {
+            // Get active filter types
+            const activeFilters = Array.from(document.querySelectorAll('.filter-btn.active'))
+                .map(btn => btn.dataset.filter);
+
+            // Update all template checkboxes
+            document.querySelectorAll('.form-check-input').forEach(checkbox => {
+                const templateId = parseInt(checkbox.value);
+                const template = templates.find(t => t.id === templateId);
+
+                if (template) {
+                    checkbox.checked = activeFilters.includes(template.type);
+                }
+            });
+
+            // Update the leaderboard
+            updateLeaderboard();
+        }
 
         async function updateLeaderboard() {
             try {
@@ -811,6 +1637,7 @@ tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerE
         async function initLeaderboard() {
             createTemplateFilters();
             updateBlacklistModal();
+            setupFilterButtons();
 
             // Add event listeners for filters
             document.querySelectorAll('.form-check-input').forEach(input => {
@@ -818,13 +1645,24 @@ tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerE
             });
 
             document.addEventListener("DOMContentLoaded", () => {
-      const stakingButton = document.getElementById("stakingToggle");
-      stakingButton.addEventListener("click", () => {
-          stakingButton.textContent = stakingButton.textContent.includes("Show")
-              ? "Hide Staking Information"
-              : "Show Staking Information";
-      });
-  });
+                const stakingButton = document.getElementById("stakingToggle");
+                stakingButton.addEventListener("click", () => {
+                    stakingButton.textContent = stakingButton.textContent.includes("Show")
+                        ? "Hide Staking Information"
+                        : "Show Staking Information";
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Initialize the dashboard button tooltip
+                const dashboardBtn = document.getElementById('dashboardBtn');
+                if (dashboardBtn) {
+                    new bootstrap.Tooltip(dashboardBtn, {
+                        title: "Coming Soon",
+                        placement: "bottom"
+                    });
+                }
+            });
 
 
             // Add event listener for time period change
@@ -833,8 +1671,8 @@ tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerE
                 updateLeaderboard();
             });
 
-                        // Add toggle button listener
-                        document.getElementById('toggleView').addEventListener('click', toggleView);
+            // Add toggle button listener
+            document.getElementById('toggleView').addEventListener('click', toggleView);
 
             // Initial load
             await updateLeaderboard();
@@ -842,36 +1680,36 @@ tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerE
 
         let sortDirection = 1; // 1 for ascending, -1 for descending
 
-function sortTable(columnIndex) {
-    const tbody = document.querySelector('#leaderboard tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
+        function sortTable(columnIndex) {
+            const tbody = document.querySelector('#leaderboard tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
 
-    rows.sort((a, b) => {
-        const aValue = a.children[columnIndex].textContent.trim();
-        const bValue = b.children[columnIndex].textContent.trim();
+            rows.sort((a, b) => {
+                const aValue = a.children[columnIndex].textContent.trim();
+                const bValue = b.children[columnIndex].textContent.trim();
 
-        if (columnIndex === 0 || columnIndex === 2 || columnIndex === 3) {
-            // Sort numbers
-            return sortDirection * (parseFloat(aValue.replace(/,/g, '')) - parseFloat(bValue.replace(/,/g, '')));
-        } else if (columnIndex === 1) {
-            // Sort usernames alphabetically
-            return sortDirection * aValue.localeCompare(bValue);
-        } else if (columnIndex === 4) {
-            // Sort by WAX value
-            const aWax = parseFloat(a.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
-            const bWax = parseFloat(b.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
-            return sortDirection * (aWax - bWax);
+                if (columnIndex === 0 || columnIndex === 2 || columnIndex === 3) {
+                    // Sort numbers
+                    return sortDirection * (parseFloat(aValue.replace(/,/g, '')) - parseFloat(bValue.replace(/,/g, '')));
+                } else if (columnIndex === 1) {
+                    // Sort usernames alphabetically
+                    return sortDirection * aValue.localeCompare(bValue);
+                } else if (columnIndex === 4) {
+                    // Sort by WAX value
+                    const aWax = parseFloat(a.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
+                    const bWax = parseFloat(b.children[4].textContent.match(/=~ ([\d.]+) WAX/)[1]);
+                    return sortDirection * (aWax - bWax);
+                }
+                return 0;
+            });
+
+            // Toggle sort direction
+            sortDirection *= -1;
+
+            // Clear and re-add sorted rows
+            tbody.innerHTML = "";
+            rows.forEach(row => tbody.appendChild(row));
         }
-        return 0;
-    });
-
-    // Toggle sort direction
-    sortDirection *= -1;
-
-    // Clear and re-add sorted rows
-    tbody.innerHTML = "";
-    rows.forEach(row => tbody.appendChild(row));
-}
 
         function createTemplateFilters() {
             const filtersDiv = document.getElementById('templateFilters');
@@ -900,60 +1738,253 @@ function sortTable(columnIndex) {
         }
 
 
-                async function updateBlacklistModal() {
-                    const blacklistAccounts = document.getElementById("blacklistAccounts");
-                    if (!blacklistAccounts) return;
+        async function updateBlacklistModal() {
+            const blacklistAccounts = document.getElementById("blacklistAccounts");
+            if (!blacklistAccounts) return;
 
-                    blacklistAccounts.innerHTML = "";
-                    excludedWallets.forEach(wallet => {
-                        const listItem = document.createElement("li");
-                        listItem.className = "list-group-item d-flex justify-content-between align-items-center";
-                        listItem.textContent = wallet;
+            blacklistAccounts.innerHTML = "";
+            excludedWallets.forEach(wallet => {
+                const listItem = document.createElement("li");
+                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                listItem.textContent = wallet;
 
-                        const removeBtn = document.createElement("button");
-                        removeBtn.className = "btn btn-sm btn-danger";
-                        removeBtn.textContent = "Remove";
-                        removeBtn.onclick = () => {
-                            excludedWallets.delete(wallet);
-                            updateBlacklistModal();
-                        };
+                const removeBtn = document.createElement("button");
+                removeBtn.className = "btn btn-sm btn-danger";
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = () => {
+                    excludedWallets.delete(wallet);
+                    updateBlacklistModal();
+                };
 
-                        listItem.appendChild(removeBtn);
-                        blacklistAccounts.appendChild(listItem);
-                    });
-                }
+                listItem.appendChild(removeBtn);
+                blacklistAccounts.appendChild(listItem);
+            });
+        }
 
         // Initialize leaderboard on page load
         window.onload = initLeaderboard;
 
         const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            darkModeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
-        });
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    darkModeToggle.textContent = document.body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
+    applyTheme(document.body.classList.contains('light-mode'));
+});
 
-        function calculateAPR() {
-
-    const primaryReward = 2;
-    const secondaryReward = 2.5;
-    const tertiaryReward = 13.5;
-    const blackReward = 124;
-
-    const primaryAPR = ((primaryReward * 24 * 365) / 8000) * 100;
-    const secondaryAPR = ((secondaryReward * 24 * 365) / 25000) * 100;
-    const tertiaryAPR = ((tertiaryReward * 24 * 365) / 125000) * 100;
-    const blackAPR = ((blackReward * 24 * 365) / 1500000) * 100;
-
-    //document.getElementById("primaryApr").textContent = primaryAPR.toFixed(2);
-    document.getElementById("secondaryApr").textContent = secondaryAPR.toFixed(2);
-    document.getElementById("tertiaryApr").textContent = tertiaryAPR.toFixed(2);
-    document.getElementById("blackApr").textContent = blackAPR.toFixed(2);
+function applyTheme(isLight) {
+    document.querySelectorAll('.rank-other').forEach(badge => {
+        if (isLight) {
+            badge.classList.add('light-mode');
+        } else {
+            badge.classList.remove('light-mode');
+        }
+    });
 }
 
-// Run APR calculation when the page loads
-document.addEventListener("DOMContentLoaded", calculateAPR);
+        // Calculate APR including WUF value
+        function calculateCombinedAPR() {
+            // Get token prices
+            const wufPrice = parseFloat(document.getElementById('wufPrice').textContent.split('$')[1]);
+            const pxjPrice = parseFloat(document.getElementById('pxjPrice').textContent.split('$')[1]);
+            const wpixalPrice = parseFloat(document.getElementById('wpixalPrice').textContent.split('$')[1]);
 
+            if (isNaN(wufPrice) || isNaN(pxjPrice) || isNaN(wpixalPrice)) {
+                return; // Wait for prices to load
+            }
+
+            // Black - 124 WUF and 124 PXJ per hour
+            const blackWufValue = 124 * 24 * 365 * wufPrice; // Annual WUF value in USD
+            const blackPxjValue = 124 * 24 * 365 * pxjPrice; // Annual PXJ value in USD
+            const blackTotalValue = blackWufValue + blackPxjValue;
+            const blackNftValue = (wpixalPrice * 2.7 + 1500000) * pxjPrice; // Estimated NFT value in USD
+            const blackApr = (blackTotalValue / blackNftValue) * 100;
+
+            // Primary - 2 WUF and 0.2 PXJ per hour
+            const primaryWufValue = 2 * 24 * 365 * wufPrice; // Annual WUF value in USD
+            const primaryPxjValue = 0.2 * 24 * 365 * pxjPrice; // Annual PXJ value in USD
+            const primaryTotalValue = primaryWufValue + primaryPxjValue;
+            const primaryNftValue = (wpixalPrice / 10); // Estimated NFT value in USD
+            const primaryApr = (primaryTotalValue / primaryNftValue) * 100;
+
+            // Secondary - 9 WUF and 2.5 PXJ per hour
+            const secondaryWufValue = 9 * 24 * 365 * wufPrice;
+            const secondaryPxjValue = 2.5 * 24 * 365 * pxjPrice;
+            const secondaryTotalValue = secondaryWufValue + secondaryPxjValue;
+            const secondaryNftValue = (wpixalPrice / 5 + 25000) * pxjPrice; // Estimated NFT value in USD
+            const secondaryApr = (secondaryTotalValue / secondaryNftValue) * 100;
+
+            // Tertiary - 46 WUF and 13.5 PXJ per hour
+            const tertiaryWufValue = 46 * 24 * 365 * wufPrice;
+            const tertiaryPxjValue = 13.5 * 24 * 365 * pxjPrice;
+            const tertiaryTotalValue = tertiaryWufValue + tertiaryPxjValue;
+            const tertiaryNftValue = (wpixalPrice * 0.3 + 150000) * pxjPrice; // Estimated NFT value in USD
+            const tertiaryApr = (tertiaryTotalValue / tertiaryNftValue) * 100;
+
+            // Update the UI with calculated values
+            document.getElementById('blackApr').textContent = blackApr.toFixed(2);
+            document.getElementById('blackPxjApr').textContent = ((blackPxjValue / blackNftValue) * 100).toFixed(2);
+            document.getElementById('blackWufApr').textContent = ((blackWufValue / blackNftValue) * 100).toFixed(2);
+
+            document.getElementById('primaryApr').textContent = primaryApr.toFixed(2);
+            document.getElementById('primaryPxjApr').textContent = ((primaryPxjValue / primaryNftValue) * 100).toFixed(2);
+            document.getElementById('primaryWufApr').textContent = ((primaryWufValue / primaryNftValue) * 100).toFixed(2);
+
+            document.getElementById('secondaryApr').textContent = secondaryApr.toFixed(2);
+            document.getElementById('secondaryPxjApr').textContent = ((secondaryPxjValue / secondaryNftValue) * 100).toFixed(2);
+            document.getElementById('secondaryWufApr').textContent = ((secondaryWufValue / secondaryNftValue) * 100).toFixed(2);
+
+            document.getElementById('tertiaryApr').textContent = tertiaryApr.toFixed(2);
+            document.getElementById('tertiaryPxjApr').textContent = ((tertiaryPxjValue / tertiaryNftValue) * 100).toFixed(2);
+            document.getElementById('tertiaryWufApr').textContent = ((tertiaryWufValue / tertiaryNftValue) * 100).toFixed(2);
+        }
+
+        // Call this function after prices are loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set up a timer to check prices and calculate APR
+            const aprInterval = setInterval(function () {
+                calculateCombinedAPR();
+            }, 2000); // Check every 2 seconds until prices are loaded
+        });
+
+        // Add particle effects on hover
+document.querySelectorAll('.apr-card').forEach(card => {
+  // Create particles container
+  const particlesContainer = document.createElement('div');
+  particlesContainer.className = 'apr-particles';
+  particlesContainer.style.position = 'absolute';
+  particlesContainer.style.top = '0';
+  particlesContainer.style.left = '0';
+  particlesContainer.style.width = '100%';
+  particlesContainer.style.height = '100%';
+  particlesContainer.style.overflow = 'hidden';
+  particlesContainer.style.pointerEvents = 'none';
+  particlesContainer.style.zIndex = '0';
+  card.appendChild(particlesContainer);
+  
+  // Store particle count
+  let particles = [];
+  
+  card.addEventListener('mouseenter', (e) => {
+    // Create 15-25 particles depending on card
+    const particleCount = 15 + Math.floor(Math.random() * 10);
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'apr-particle';
+      
+      // Random size between 2px and 6px
+      const size = 2 + Math.random() * 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      // Random position
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      particle.style.left = `${x}%`;
+      particle.style.top = `${y}%`;
+      
+      // Random animation
+      const duration = 1 + Math.random() * 2;
+      const delay = Math.random() * 1;
+      const angle = Math.random() * 360;
+      const distance = 5 + Math.random() * 20;
+      
+      particle.style.animation = `
+        float-${i} ${duration}s ease-in-out ${delay}s infinite
+      `;
+      
+      // Add keyframes dynamically
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes float-${i} {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          100% {
+            transform: 
+              translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)
+              rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      particlesContainer.appendChild(particle);
+      particles.push({ element: particle, style });
+    }
+    
+    // Add ember/spark effect
+    if (!card.dataset.embersAdded) {
+      card.dataset.embersAdded = "true";
+      const embers = document.createElement('div');
+      embers.className = 'apr-embers';
+      embers.style.position = 'absolute';
+      embers.style.top = '0';
+      embers.style.left = '0';
+      embers.style.width = '100%';
+      embers.style.height = '100%';
+      embers.style.background = `
+        radial-gradient(circle at 20% 30%, rgba(255,100,0,0.3) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(255,200,0,0.3) 0%, transparent 25%)
+      `;
+      embers.style.opacity = '0';
+      embers.style.transition = 'opacity 0.3s ease';
+      card.appendChild(embers);
+      
+      card.addEventListener('mouseenter', () => {
+        embers.style.opacity = '1';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        embers.style.opacity = '0';
+      });
+    }
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    // Clean up particles
+    particles.forEach(p => {
+      if (p.element.parentNode) {
+        p.element.parentNode.removeChild(p.element);
+      }
+      if (p.style.parentNode) {
+        p.style.parentNode.removeChild(p.style);
+      }
+    });
+    particles = [];
+  });
+});
+
+// Add subtle floating animation to all cards when not hovered
+document.querySelectorAll('.apr-card').forEach((card, index) => {
+  const floatDistance = 2 + (index * 0.5);
+  const duration = 8 + (index * 2);
+  const delay = index * 0.5;
+  
+  card.style.animation = `
+    float ${duration}s ease-in-out ${delay}s infinite
+  `;
+  
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-${floatDistance}px);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+});
 
     </script>
 </body>
+
 </html>
