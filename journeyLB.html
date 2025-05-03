@@ -291,10 +291,12 @@
             box-shadow: var(--shadow-dark);
         }
 
-        .card.light-mode {
-            background: var(--card-light);
-            color: var(--text-light);
+        .light-mode .card {
+            background: rgba(245, 247, 250, 0.7); /* Light mode glass */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
             box-shadow: var(--shadow-light);
+        
         }
 
         .card-body {
@@ -658,9 +660,12 @@
             transition: all var(--transition-normal);
         }
 
-        .info-box.light-mode {
-            background: var(--card-light);
+        .light-mode .info-box {
+            background: rgba(245, 247, 250, 0.7); /* Light mode glass */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
             box-shadow: var(--shadow-light);
+        
         }
 
         /* APR notification */
