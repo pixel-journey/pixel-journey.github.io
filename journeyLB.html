@@ -313,6 +313,13 @@
             box-shadow: var(--shadow-dark);
         }
 
+        table thead {
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    overflow: hidden;
+}
+
         .light-mode table {
             box-shadow: var(--shadow-light);
         }
@@ -553,6 +560,15 @@
             border-top: 2px solid var(--border-dark) !important;
             padding: 15px !important;
         }
+
+        
+.total-row td:first-child {
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.total-row td:last-child {
+    border-bottom-right-radius: var(--radius-md);
+}
 
         .light-mode .total-row {
             background-color: var(--primary-color) !important;
