@@ -140,31 +140,82 @@
             box-shadow: var(--shadow-light);
         }
 
-        /* Add this to your CSS */
         .dashboard-btn {
-            top: 20px;
-            right: 120px;
-            /* Adjust based on your dark mode button width */
-            z-index: 1000;
-            background: #6c757d;
-            /* Bootstrap's secondary color */
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: var(--radius-sm);
-            cursor: not-allowed;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.7;
-            margin: 10px;
-            margin-left: 25px;
-        }
+    z-index: 1000;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .dashboard-btn:hover {
-            opacity: 1;
-        }
+.dashboard-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(16, 163, 127, 0.4);
+}
+
+.dashboard-btn:active {
+    transform: translateY(1px);
+}
+
+/* Add this ripple effect */
+.dashboard-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.dashboard-btn:hover::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
+
+/* Add a subtle pulse animation */
+@keyframes pulse-light {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 163, 127, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 163, 127, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 163, 127, 0);
+    }
+}
+
+.dashboard-btn {
+    animation: pulse-light 2s infinite;
+}
 
         body > div.container.mt-4 > div > div:nth-child(2) > div > div > div.d-flex.flex-wrap.mb-3.gap-2 {
     justify-content: center;
@@ -173,8 +224,7 @@
         /* For mobile responsiveness */
         @media (max-width: 768px) {
             .dashboard-btn {
-                top: 10px;
-                right: 100px;
+
                 padding: 8px 12px;
             }
         }
@@ -466,7 +516,6 @@
             background: var(--primary-color);
             color: white;
             border: none;
-            margin: 10px 15px;
             margin-left: 0;
             border-radius: var(--radius-sm);
             cursor: pointer;
@@ -474,6 +523,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 10px 15px;
         }
 
         .dark-mode-toggle:hover {
@@ -614,9 +664,7 @@
             }
 
             .dark-mode-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 8px 12px;
+                padding: 10px 15px;
             }
         }
 
@@ -1043,7 +1091,7 @@
         <div class="stat" id="wpixalPrice">WPIXAL: $0.00</div>
 
             <!-- Dark Mode Toggle -->
-    <button class="dashboard-btn" id="dashboardBtn" disabled>Dashboard</button>
+            <button class="dashboard-btn" id="dashboardBtn">Staking 👾🧑‍🌾</button>
     <button class="dark-mode-toggle" id="darkModeToggle">Light Mode</button>
     </div>
 
@@ -2004,6 +2052,20 @@ document.querySelectorAll('.apr-card').forEach((card, index) => {
     }
   `;
   document.head.appendChild(style);
+});
+
+// Add event listener for dashboard button
+document.getElementById('dashboardBtn').addEventListener('click', function() {
+    // Add a click animation
+    this.classList.add('clicked');
+    
+    // Navigate to staking page
+    window.location.href = 'staking.html';
+    
+    // Remove the animation class after a short delay
+    setTimeout(() => {
+        this.classList.remove('clicked');
+    }, 300);
 });
 
     </script>
