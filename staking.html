@@ -1287,19 +1287,19 @@
 
         // Template video mappings
         const templateVideos = {
-          '858575': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmTrBnHMF122ToGcYuozwzB6qoSsH23pbt8CvUFvJNZDW8&size=370&output=mp4', // amber
-          '858576': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmbMWRZzMxm554owRqrTszw7psUqzUGutwngcVV4n5w9Rj&size=370&output=mp4', // chartreuse
-          '858577': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmPvVD9CXxaHNEbzpfekMFaUF8c4KQXZcS4TKw7h3Hj5VE&size=370&output=mp4', // violet
-          '858578': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmZx2LLiwcyezor4c1DAc5nq8imJqKJdg77X7dVi1NdFqr&size=370&output=mp4', // teal
-          '858580': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmUp6c8X2HrKyZbK48orBb8JeWGQ6ynvMyJikMU7cfJHfq&size=370&output=mp4', // vermillion
-          '859273': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmagHqsoXsuQQ98Y41SqpV2yFkU6tyV3TbxDcDXfkAF4Yn&size=370&output=mp4', // magenta
-          '858574': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmS6HMsE2kdqGj1H21eRNmiDvCnBS4vKmTvXWruyDNsGqw&size=370&output=mp4', // purple
-          '858573': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmSXdwLhwBP1GvxU4hvrGD7Q6A7sHqsseKxE7bVMdWS2mg&size=370&output=mp4', // orange
-          '858572': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmbhyuUvJJfCxxbnTvUDTZwexJdxzZdnvpgLFrJfEtVAUN&size=370&output=mp4', // green
-          '858570': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmTueG1XrkiA9qUFsaB4WxJWp1WYJZZgcQHHoqi84cDDw3&size=370&output=mp4', // yellow
-          '858569': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmbBTshwtDtE1A1Z59sn6gx3g35rb51ZY5qAzQavAHqhWW&size=370&output=mp4', // red
-          '858571': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=Qmb7f5RHUYYhFu559RrMWFdb2SnNVvdAiYq64dZ34kMRxN&size=370&output=mp4', // blue
-          '858568': 'https://resizer.atomichub.io/videos/v1/preview?ipfs=QmaNsmDMvSqDnbYNbC6fev7MiHW2xdgbVt3bBBKWY3XC3N&size=370&output=mp4',  // black
+          '858575': './ingredients/Pixel_Amber_vid_25fps_1k.mp4', // amber
+  '858576': './ingredients/Pixel_Chartreuse_vid_25fps_1k.mp4', // chartreuse
+  '858577': './ingredients/Pixel_Violet_vid_25fps_1k.mp4', // violet
+  '858578': './ingredients/Pixel_Teal_vid_25fps_1k.mp4', // teal
+  '858580': './ingredients/Pixel_Vermillion_vid_25fps_1k.mp4', // vermillion
+  '859273': './ingredients/Pixel_Magenta_vid_25fps_1k.mp4', // magenta
+  '858574': './ingredients/Pixel_Purple_vid_25fps_1k.mp4', // purple
+  '858573': './ingredients/Pixel_Orange_vid_25fps_1k.mp4', // orange
+  '858572': './ingredients/Pixel_Green_vid_25fps_1k.mp4', // green
+  '858570': './ingredients/Pixel_Yellow_vid_25fps_1k.mp4', // yellow
+  '858569': './ingredients/Pixel_Red_vid_25fps_1k.mp4', // red
+  '858571': './ingredients/Pixel_Blue_vid_25fps_1k.mp4', // blue
+  '858568': './ingredients/Pixel_Black_vid_25fps_1k.mp4', // black
         };
 
         // Group assets by template
@@ -1370,10 +1370,10 @@
               // Special handling for specific template IDs
               if (template.id === 820134) {
                 // Pixelpacks template
-                imageUrl = 'https://resizer.atomichub.io/images/v1/preview?ipfs=QmcYTuSWQwnkaEuhvzkEZ9ugxjLaVPuY3Z9mbFPwVF3hED&size=370&output=webp';
+                imageUrl = './img/pixel_journey_pack_002_500x500.gif';
               } else if (template.id === 781515) {
                 // PixalPFPs template
-                imageUrl = 'https://ipfs.pfpwizard.xyz/ipfs/QmTCGSmGKGozYU4KjnyhzNsJDaMqDjnTq5FrCsagG67rpj';
+                imageUrl = './imng/pixelgrey-bluebg-spliteyes.png';
               } else
                 if (firstAsset && firstAsset.data && firstAsset.data.img) {
                   imageUrl = `https://ipfs.io/ipfs/${firstAsset.data.img}`;
