@@ -1122,48 +1122,103 @@
   text-decoration: none;
 }
 
-.marketplace-links {
+/* Improved Marketplace Links Styling */
+.marketplace-links-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .marketplace-links-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.marketplace-link-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 15px 0;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  height: 100%;
+  min-height: 120px;
+  justify-content: center;
 }
 
-.marketplace-link {
-  padding: 8px 15px;
-  font-weight: 500;
+.marketplace-link-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
 }
 
-.marketplace-link.nfthive {
+.marketplace-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.marketplace-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.marketplace-name {
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Marketplace specific styling */
+.marketplace-link-card.nfthive {
   background: rgba(255, 99, 71, 0.1);
+  border: 1px solid rgba(255, 99, 71, 0.3);
+}
+
+.marketplace-link-card.nfthive .marketplace-name {
   color: tomato;
 }
 
-.marketplace-link.atomichub {
-  background: rgba(65, 105, 225, 0.1);
-  color: royalblue;
-}
-
-.marketplace-link.neftyblocks {
-  background: rgba(138, 43, 226, 0.1);
-  color: blueviolet;
-}
-
-.marketplace-link.nfthive:hover {
+.marketplace-link-card.nfthive:hover {
   background: rgba(255, 99, 71, 0.2);
-  color: tomato;
 }
 
-.marketplace-link.atomichub:hover {
-  background: rgba(65, 105, 225, 0.2);
+.marketplace-link-card.atomichub {
+  background: rgba(65, 105, 225, 0.1);
+  border: 1px solid rgba(65, 105, 225, 0.3);
+}
+
+.marketplace-link-card.atomichub .marketplace-name {
   color: royalblue;
 }
 
-.marketplace-link.neftyblocks:hover {
-  background: rgba(138, 43, 226, 0.2);
+.marketplace-link-card.atomichub:hover {
+  background: rgba(65, 105, 225, 0.2);
+}
+
+.marketplace-link-card.neftyblocks {
+  background: rgba(138, 43, 226, 0.1);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.marketplace-link-card.neftyblocks .marketplace-name {
   color: blueviolet;
+}
+
+.marketplace-link-card.neftyblocks:hover {
+  background: rgba(138, 43, 226, 0.2);
 }
 
 .info-box {
@@ -1528,6 +1583,92 @@
     margin-bottom: 20px;
   }
 }
+
+    /* Connection Loading Animation */
+    .connection-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+    }
+
+    .light-mode .connection-loading-overlay {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .connection-loading-content {
+      background: var(--card-dark);
+      padding: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: var(--shadow-dark);
+      max-width: 90%;
+      width: 400px;
+      border: 1px solid var(--primary-color);
+    }
+
+    .light-mode .connection-loading-content {
+      background: var(--card-light);
+      box-shadow: var(--shadow-light);
+    }
+
+    .connection-loading-text {
+      color: var(--text-dark);
+      font-weight: 500;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .light-mode .connection-loading-text {
+      color: var(--text-light);
+    }
+
+    .connection-loading-status {
+      color: var(--primary-color);
+      font-size: 14px;
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    /* Pixel Loading Animation */
+    .pixel-loader {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 5px;
+      width: 120px;
+      height: 120px;
+    }
+
+    .pixel {
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      animation: pixel-fade 1.8s infinite;
+    }
+
+    .pixel-1 { animation-delay: 0.0s; }
+    .pixel-2 { animation-delay: 0.2s; }
+    .pixel-3 { animation-delay: 0.4s; }
+    .pixel-4 { animation-delay: 0.6s; }
+    .pixel-5 { animation-delay: 0.8s; }
+    .pixel-6 { animation-delay: 1.0s; }
+    .pixel-7 { animation-delay: 1.2s; }
+    .pixel-8 { animation-delay: 1.4s; }
+    .pixel-9 { animation-delay: 1.6s; }
+
+    @keyframes pixel-fade {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 
@@ -1541,6 +1682,27 @@
       </div>
     </div>
   </header>
+
+   <!-- Add this loading overlay -->
+   <div id="connectionLoadingOverlay" class="connection-loading-overlay" style="display: none;">
+    <div class="connection-loading-content">
+      <div class="connection-loading-animation">
+        <div class="pixel-loader">
+          <div class="pixel pixel-1"></div>
+          <div class="pixel pixel-2"></div>
+          <div class="pixel pixel-3"></div>
+          <div class="pixel pixel-4"></div>
+          <div class="pixel pixel-5"></div>
+          <div class="pixel pixel-6"></div>
+          <div class="pixel pixel-7"></div>
+          <div class="pixel pixel-8"></div>
+          <div class="pixel pixel-9"></div>
+        </div>
+      </div>
+      <div class="connection-loading-text">Connecting to WAX Blockchain...</div>
+      <div class="connection-loading-status">Fetching your NFT data...</div>
+    </div>
+  </div>
 
   <div class="container">
     <!-- Connection Status -->
@@ -1690,7 +1852,7 @@
             <div class="preview-info">
               <h4>Pixal PFPs</h4>
               <p>Stake Pixals to earn PXJ tokens</p>
-              <div class="preview-rate">+0.5 PXJ/hour</div>
+              <div class="preview-rate">~+ 0.25 PXJ/hour</div>
             </div>
           </div>
           
@@ -1704,7 +1866,7 @@
             <div class="preview-info">
               <h4>Pixel Ingredients</h4>
               <p>Stake PFPs to earn PXJ and WUF</p>
-              <div class="preview-rate">+~ 0.2 - 120 PXJ/hour</div>
+              <div class="preview-rate">~+ 0.2 - 124 PXJ/hour</div>
             </div>
           </div>
           
@@ -1714,8 +1876,9 @@
             </div>
             <div class="preview-info">
               <h4>Pixel Collectibles</h4>
+              <p>(Coming Soon!)</p>
               <p>Craft and stake collectibles to boost your earnings</p>
-              <div class="preview-rate">~ 0.5 - 1500 PXJ/hour</div>
+              <div class="preview-rate">~+ 0.5 - 1500 PXJ/hour</div>
             </div>
           </div>
         </div>
@@ -1725,7 +1888,7 @@
           <div class="benefits-grid">
             <div class="benefit-item">
               <div class="benefit-icon">💰</div>
-              <div class="benefit-text">Earn passive journey bonus income in PXJ and WUF tokens</div>
+              <div class="benefit-text">Earn passive bonus journey income in PXJ and WUF tokens</div>
             </div>
             <div class="benefit-item">
               <div class="benefit-icon">🔒</div>
@@ -1737,7 +1900,7 @@
             </div>
             <div class="benefit-item">
               <div class="benefit-icon">🎮</div>
-              <div class="benefit-text">Support the Pixel Journey ecosystem</div>
+              <div class="benefit-text">Support the Pixel Journey ecosystem!</div>
             </div>
           </div>
         </div>
@@ -1777,11 +1940,28 @@
                   
                   <div class="route-option">
                     <h4>Route B: Buy Directly on Secondary Markets</h4>
-                    <ul class="marketplace-links">
-                      <li><a href="https://nfthive.io/collection/pixeljourney?tab=open_market&schema=ingredients&verified=all&order_by=offer_asc" target="_blank" class="marketplace-link nfthive">NFTHive</a></li>
-                      <li><a href="https://atomichub.io/market?blockchain=wax-mainnet&collection_name=pixeljourney&order=asc&primary_chain=wax-mainnet&schema_name=ingredients&sort=price&symbol=WAX#sales" target="_blank" class="marketplace-link atomichub">Atomihub</a></li>
-                      <li><a href="https://neftyblocks.com/marketplace/listing?collection_name=pixeljourney&page=1&schema_name=ingredients" target="_blank" class="marketplace-link neftyblocks">NeftyBlocks</a></li>
-                    </ul>
+                    <div class="marketplace-links-container">
+                      <a href="https://nfthive.io/collection/pixeljourney?tab=open_market&schema=ingredients&verified=all&order_by=offer_asc" target="_blank" class="marketplace-link-card nfthive">
+                        <div class="marketplace-logo">
+                          <img src="https://nfthive.io/favicon.ico" alt="NFTHive Logo">
+                        </div>
+                        <div class="marketplace-name">NFTHive</div>
+                      </a>
+                      
+                      <a href="https://atomichub.io/market?blockchain=wax-mainnet&collection_name=pixeljourney&order=asc&primary_chain=wax-mainnet&schema_name=ingredients&sort=price&symbol=WAX#sales" target="_blank" class="marketplace-link-card atomichub">
+                        <div class="marketplace-logo">
+                          <img src="https://atomichub.io/favicon.ico" alt="Atomichub Logo">
+                        </div>
+                        <div class="marketplace-name">Atomichub</div>
+                      </a>
+                      
+                      <a href="https://neftyblocks.com/marketplace/listing?collection_name=pixeljourney&page=1&schema_name=ingredients" target="_blank" class="marketplace-link-card neftyblocks">
+                        <div class="marketplace-logo">
+                          <img src="https://neftyblocks.com/favicon.ico" alt="NeftyBlocks Logo">
+                        </div>
+                        <div class="marketplace-name">NeftyBlocks</div>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2081,6 +2261,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://notify.waxsweden.org/static/assets/waxjs.js"></script>
   <script>
+
+    
     // Template data
     const templates = [
       { id: 781515, pxj: 0.25, wuf: 5.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
@@ -2135,6 +2317,9 @@
       const templateTypesEl = document.getElementById('templateTypes');
       const templateCard = document.getElementById('templateCard');
       const darkModeToggle = document.getElementById('darkModeToggle');
+      
+  const connectionLoadingOverlay = document.getElementById('connectionLoadingOverlay');
+  const connectionLoadingStatus = document.querySelector('.connection-loading-status');
 
       // Bootstrap modals
       const assetModal = new bootstrap.Modal(document.getElementById('assetModal'));
@@ -2150,6 +2335,11 @@
       confirmUnstakeBtn.addEventListener('click', () => unstakeAssets(selectedUnstakeAssets));
       darkModeToggle.addEventListener('click', toggleDarkMode);
       
+  // Show loading when login button is clicked
+  document.getElementById('loginButton').addEventListener('click', function() {
+    showConnectionLoading('Connecting to WAX Blockchain...');
+  });
+
     document.getElementById('claimButton').addEventListener('click', claimRewards);
 
       // Check if user is already logged in
@@ -2162,6 +2352,17 @@
           el.classList.toggle('light-mode');
         });
       }
+
+            // Function to show loading overlay with custom message
+  function showConnectionLoading(statusMessage) {
+    connectionLoadingStatus.textContent = statusMessage;
+    connectionLoadingOverlay.style.display = 'flex';
+  }
+  
+  // Function to hide loading overlay
+  function hideConnectionLoading() {
+    connectionLoadingOverlay.style.display = 'none';
+  }
 
       // Set up the earnings info button
       const totalPowerCardBtn = document.getElementById('totalPowerCard');
@@ -2177,6 +2378,7 @@
       // Login function
       async function login() {
         try {
+          showConnectionLoading('Connecting to WAX Blockchain...');
           userAccount = await wax.login();
           accountName.textContent = userAccount;
           accountInfo.style.display = 'block';
@@ -2190,13 +2392,17 @@
           document.querySelector('.rewards-section').style.display = 'block'; // Show rewards section
 
           // Load data
+          showConnectionLoading('Fetching your NFT data...');
           await fetchStakedAssets();
+          showConnectionLoading('Loading your staked assets...');
           await loadUserAssets();
           updateTemplateGrid();
           updateStats();
           fetchClaimableRewards();
+          hideConnectionLoading();
         } catch (error) {
           console.error('Login error:', error);
+          hideConnectionLoading();
           showErrorMessage('Failed to login. Please try again.');
         }
       }
@@ -2206,6 +2412,7 @@
         try {
           const isAutoLoginAvailable = await wax.isAutoLoginAvailable();
           if (isAutoLoginAvailable) {
+            showConnectionLoading('Checking for existing session...');
             userAccount = wax.userAccount;
             accountName.textContent = userAccount;
             accountInfo.style.display = 'block';
@@ -2984,6 +3191,7 @@
       document.getElementById('pxjPerYear').textContent = pxjPerYear;
       document.getElementById('wufPerYear').textContent = wufPerYear;
     }
+
 
 
   </script>
