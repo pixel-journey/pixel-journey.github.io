@@ -818,6 +818,716 @@
       background: var(--accent-dark) url('https://pixeljourney.xyz/img/loading.gif') center no-repeat;
       background-size: 32px;
     }
+
+       /* Add loading state for videos */
+       .asset-item video.loading {
+      min-height: 100px;
+      background: var(--accent-dark) url('https://pixeljourney.xyz/img/loading.gif') center no-repeat;
+      background-size: 32px;
+    }
+    
+    /* Preview Section Styling */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .preview-card {
+      background: linear-gradient(135deg, rgba(16, 163, 127, 0.1), rgba(16, 163, 127, 0.2));
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-dark);
+      border: 1px solid rgba(16, 163, 127, 0.3);
+    }
+    
+    .light-mode .preview-card {
+      background: linear-gradient(135deg, rgba(16, 163, 127, 0.05), rgba(16, 163, 127, 0.1));
+      border: 1px solid rgba(16, 163, 127, 0.2);
+      box-shadow: var(--shadow-light);
+    }
+    
+    .preview-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: var(--primary-color);
+    }
+    
+    .preview-image {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+    
+    .light-mode .preview-image {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .preview-image img {
+      max-height: 120px;
+      max-width: 120px;
+      object-fit: contain;
+      transition: transform var(--transition-fast);
+    }
+    
+    .preview-card:hover .preview-image img {
+      transform: scale(1.1);
+    }
+    
+    .preview-info {
+      padding: 15px;
+    }
+    
+    .preview-info h4 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      color: var(--primary-color);
+    }
+    
+    .preview-info p {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    
+    .preview-rate {
+      font-weight: 600;
+      color: var(--primary-light);
+      font-size: 16px;
+      padding: 5px 10px;
+      background: rgba(16, 163, 127, 0.1);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+    }
+    
+    /* Benefits Section */
+    .benefits-section {
+      padding-top: 20px;
+      border-top: 1px solid var(--border-dark);
+    }
+    
+    .light-mode .benefits-section {
+      border-top: 1px solid var(--border-light);
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: rgba(16, 163, 127, 0.05);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    
+    .benefit-item:hover {
+      background: rgba(16, 163, 127, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .benefit-icon {
+      font-size: 24px;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+    }
+    
+    .benefit-text {
+      font-size: 14px;
+    }
+    
+    /* Lead text styling */
+    .lead {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+  .preview-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .lead {
+    font-size: 16px;
+  }
+}
+
+/* Add these styles for the pixel ingredients preview section */
+.preview-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dark);
+  aspect-ratio: 1 / 1;
+}
+
+.preview-item img, 
+.preview-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.preview-item:hover img,
+.preview-item:hover video {
+  transform: scale(1.05);
+}
+
+/* Life Cycle of Journey Crafting Economy Section */
+.section-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+}
+
+.journey-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 30px 0;
+}
+
+.journey-step {
+  position: relative;
+  background: rgba(16, 163, 127, 0.05);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-dark);
+}
+
+.light-mode .journey-step {
+  background: rgba(16, 163, 127, 0.03);
+  box-shadow: var(--shadow-light);
+}
+
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: 30px;
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(16, 163, 127, 0.3);
+}
+
+.journey-step h3 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.route-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .route-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.route-option {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  transition: all var(--transition-fast);
+}
+
+.light-mode .route-option {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(16, 163, 127, 0.1);
+}
+
+.route-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.route-option h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: var(--primary-light);
+}
+
+.route-steps {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.route-steps li {
+  margin-bottom: 10px;
+}
+
+.route-link, .marketplace-link, .craft-link, .waxdao-link {
+  display: inline-block;
+  background: rgba(16, 163, 127, 0.1);
+  color: var(--primary-color);
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.route-link:hover, .marketplace-link:hover, .craft-link:hover, .waxdao-link:hover {
+  background: rgba(16, 163, 127, 0.2);
+  transform: translateY(-2px);
+  color: var(--primary-light);
+  text-decoration: none;
+}
+
+.marketplace-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.marketplace-link {
+  padding: 8px 15px;
+  font-weight: 500;
+}
+
+.marketplace-link.nfthive {
+  background: rgba(255, 99, 71, 0.1);
+  color: tomato;
+}
+
+.marketplace-link.atomichub {
+  background: rgba(65, 105, 225, 0.1);
+  color: royalblue;
+}
+
+.marketplace-link.neftyblocks {
+  background: rgba(138, 43, 226, 0.1);
+  color: blueviolet;
+}
+
+.marketplace-link.nfthive:hover {
+  background: rgba(255, 99, 71, 0.2);
+  color: tomato;
+}
+
+.marketplace-link.atomichub:hover {
+  background: rgba(65, 105, 225, 0.2);
+  color: royalblue;
+}
+
+.marketplace-link.neftyblocks:hover {
+  background: rgba(138, 43, 226, 0.2);
+  color: blueviolet;
+}
+
+.info-box {
+  background: rgba(16, 163, 127, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 15px;
+  margin-top: 15px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.light-mode .info-box {
+  background: rgba(16, 163, 127, 0.03);
+}
+
+.upgrade-paths {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.upgrade-path {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  transition: all var(--transition-fast);
+}
+
+.light-mode .upgrade-path {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(16, 163, 127, 0.1);
+}
+
+.upgrade-path:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.upgrade-path.rare {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3));
+  border: 1px dashed gold;
+}
+
+.light-mode .upgrade-path.rare {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.1));
+  border: 1px dashed gold;
+}
+
+.upgrade-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ingredient {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.ingredient {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.ingredient:hover {
+  transform: scale(1.1);
+  z-index: 5;
+}
+
+.ingredient video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upgrade-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.plus-sign, .equals-sign {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.pxj-cost {
+  background: rgba(16, 163, 127, 0.1);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.craft-label {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* Stacked ingredients for the rare black pixel craft */
+.ingredient-group {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.ingredient-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ingredient.front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.ingredient.middle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.ingredient.back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
+.more-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 10px;
+  z-index: 4;
+}
+
+/* Specific styling for different ingredient tiers */
+.ingredient.primary {
+  border: 2px solid #AE2404;
+}
+
+.ingredient.secondary {
+  border: 2px solid #9F34A7;
+}
+
+.ingredient.tertiary {
+  border: 2px solid #B4A4F7;
+}
+
+.ingredient.black {
+  border: 2px solid #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.plus-sign, .equals-sign {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.pxj-cost {
+  background: rgba(16, 163, 127, 0.1);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.rare-note {
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+  font-size: 14px;
+  color: gold;
+}
+
+.craft-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.craft-link {
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+.or-divider {
+  color: var(--text-dark);
+  opacity: 0.6;
+}
+
+.light-mode .or-divider {
+  color: var(--text-light);
+}
+
+.waxdao-link {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.2), rgba(16, 163, 127, 0.3));
+  color: white;
+  padding: 10px 25px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.waxdao-link:hover {
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.3), rgba(16, 163, 127, 0.4));
+  color: white;
+}
+
+.staking-benefits, .expansion-benefits {
+  background: rgba(16, 163, 127, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 15px 20px;
+  margin-top: 20px;
+}
+
+.light-mode .staking-benefits, 
+.light-mode .expansion-benefits {
+  background: rgba(16, 163, 127, 0.03);
+}
+
+.staking-benefits h4, .expansion-benefits h4 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.staking-benefits ul, .expansion-benefits ul {
+  padding-left: 20px;
+  margin-bottom: 0;
+}
+
+.staking-benefits li, .expansion-benefits li {
+  margin-bottom: 8px;
+}
+
+/* Info Box Container */
+.info-box-container {
+  margin-top: 40px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-dark);
+}
+
+.light-mode .info-box-container {
+  box-shadow: var(--shadow-light);
+}
+
+.info-box-header {
+  background: var(--gradient-primary);
+  padding: 15px 20px;
+}
+
+.info-box-header h3 {
+  color: white;
+  margin: 0;
+  font-size: 20px;
+}
+
+.info-box-content {
+  background: rgba(16, 163, 127, 0.05);
+  padding: 20px;
+}
+
+.light-mode .info-box-content {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.info-point {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.info-point:last-child {
+  margin-bottom: 0;
+}
+
+.info-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  background: rgba(16, 163, 127, 0.1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info-text {
+  flex: 1;
+}
+
+.info-text strong {
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .journey-step {
+    padding: 25px 15px;
+  }
+  
+  .upgrade-visual {
+    flex-direction: column;
+  }
+  
+  .ingredient {
+    width: 60px;
+    height: 60px;
+    font-size: 12px;
+  }
+  
+  .info-point {
+    flex-direction: column;
+  }
+  
+  .info-icon {
+    margin-bottom: 10px;
+  }  
+  
+  .ingredient-group {
+    margin-bottom: 20px;
+  }
+}
   </style>
 </head>
 
@@ -963,6 +1673,347 @@
         </div>
       </div>
     </div>
+
+
+    <!-- Preview Section (New) -->
+    <div class="card mb-4" id="previewSection">
+      <div class="card-body">
+        <h3 class="mb-4">Stake Your Pixel Journey NFTs</h3>
+        <p class="lead mb-4">Connect your wallet to start earning PXJ and WUF tokens by staking your Pixel Journey NFTs!</p>
+        
+        <div class="preview-grid">
+          <!-- Preview Cards -->
+          <div class="preview-card">
+            <div class="preview-item">
+              <img src="https://pixeljourney.xyz/img/toppixals/20.webp" alt="Pixel Dust">
+            </div>
+            <div class="preview-info">
+              <h4>Pixal PFPs</h4>
+              <p>Stake Pixals to earn PXJ tokens</p>
+              <div class="preview-rate">+0.5 PXJ/hour</div>
+            </div>
+          </div>
+          
+          <div class="preview-card">
+            <div class="preview-item">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Blue_vid_25fps_300px.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="preview-info">
+              <h4>Pixel Ingredients</h4>
+              <p>Stake PFPs to earn PXJ and WUF</p>
+              <div class="preview-rate">+~ 0.2 - 120 PXJ/hour</div>
+            </div>
+          </div>
+          
+          <div class="preview-card">
+            <div class="preview-item">
+              <img src="https://pixeljourney.xyz/img/SUNSET-PIXEL.png" alt="Pixel Land">
+            </div>
+            <div class="preview-info">
+              <h4>Pixel Collectibles</h4>
+              <p>Craft and stake collectibles to boost your earnings</p>
+              <div class="preview-rate">~ 0.5 - 1500 PXJ/hour</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefits-section mt-4">
+          <h4>Benefits of Staking</h4>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <div class="benefit-icon">💰</div>
+              <div class="benefit-text">Earn passive journey bonus income in PXJ and WUF tokens</div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">🔒</div>
+              <div class="benefit-text">Keep your NFTs safe in your wallet while (non-custodially) staking </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">🚀</div>
+              <div class="benefit-text">Boost your earnings by progressing & growing your pixel collection</div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">🎮</div>
+              <div class="benefit-text">Support the Pixel Journey ecosystem</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Life Cycle of Our Journey Crafting Economy Section -->
+        <div class="card mb-4" id="craftingEconomySection">
+          <div class="card-body">
+            <h2 class="section-title">The Life Cycle of Our Journey Crafting Economy</h2>
+            <p class="lead mb-4">Discover how our crafting economy works and how you can participate in the Pixel Journey ecosystem.</p>
+            
+            <div class="journey-steps">
+              <!-- Step 1: Get Ingredients -->
+              <div class="journey-step">
+                <div class="step-number">Step 1</div>
+                <h3>Getting Ingredients</h3>
+                
+                <div class="route-options">
+                  <div class="route-option">
+                    <h4>Route A: Recycle Pixal PFPs</h4>
+                    <ol class="route-steps">
+                      <li>Find a Pixal PFP - <a href="https://www.pfpwizard.xyz/pfp/pixals/buy/" target="_blank" class="route-link">Buy them here</a></li>
+                      <li>Recycle to a Pixel Ingredients Pack - <a href="https://neftyblocks.com/collection/pixeljourney/blends/blend.nefty/37700" target="_blank" class="route-link">Recycle here</a></li>
+                      <li>Unpack your packs - <a href="https://neftyblocks.com/collection/pixeljourney/packs/neftyblocksp/2349" target="_blank" class="route-link">Open packs here</a></li>
+                    </ol>
+                    <div class="info-box">
+                      <p>Each pack gives you 10 random Pixel Ingredients:</p>
+                      <ul>
+                        <li>~33% Red Primary Ingredients</li>
+                        <li>~33% Blue Primary Ingredients</li>
+                        <li>~33% Yellow Primary Ingredients</li>
+                        <li>0.1% chance for a Black Pixel Ingredient (worth 87x more than a Primary!)</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="route-option">
+                    <h4>Route B: Buy Directly on Secondary Markets</h4>
+                    <ul class="marketplace-links">
+                      <li><a href="https://nfthive.io/collection/pixeljourney?tab=open_market&schema=ingredients&verified=all&order_by=offer_asc" target="_blank" class="marketplace-link nfthive">NFTHive</a></li>
+                      <li><a href="https://atomichub.io/market?blockchain=wax-mainnet&collection_name=pixeljourney&order=asc&primary_chain=wax-mainnet&schema_name=ingredients&sort=price&symbol=WAX#sales" target="_blank" class="marketplace-link atomichub">Atomihub</a></li>
+                      <li><a href="https://neftyblocks.com/marketplace/listing?collection_name=pixeljourney&page=1&schema_name=ingredients" target="_blank" class="marketplace-link neftyblocks">NeftyBlocks</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Step 2: Upgrading Ingredients -->
+<div class="journey-step">
+  <div class="step-number">Step 2</div>
+  <h3>Upgrading Your Pixel Ingredients</h3>
+  <p>Check out the latest APRs for each on our <a href="https://lb.pixeljourney.xyz/" target="_blank">Leaderboards</a></p>
+  
+  <div class="upgrade-paths">
+    <div class="upgrade-path">
+      <div class="upgrade-visual">
+        <div class="ingredient primary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Red_vid_25fps_300px.mp4" type="video/mp4">
+            Primary (Red)
+          </video>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="ingredient primary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Blue_vid_25fps_300px.mp4" type="video/mp4">
+            Primary (Blue)
+          </video>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="pxj-cost">25,000 PXJ</div>
+        <div class="equals-sign">=</div>
+        <div class="ingredient secondary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Purple_vid_25fps_300px.mp4" type="video/mp4">
+            Secondary (Purple)
+          </video>
+        </div>
+      </div>
+      <div class="craft-label">Primary + Primary = Secondary</div>
+    </div>
+    
+    <div class="upgrade-path">
+      <div class="upgrade-visual">
+        <div class="ingredient secondary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Purple_vid_25fps_300px.mp4" type="video/mp4">
+            Secondary (Purple)
+          </video>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="ingredient primary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Blue_vid_25fps_300px.mp4" type="video/mp4">
+            Primary (Blue)
+          </video>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="pxj-cost">125,000 PXJ</div>
+        <div class="equals-sign">=</div>
+        <div class="ingredient tertiary">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Violet_vid_25fps_300px.mp4" type="video/mp4">
+            Tertiary (Violet)
+          </video>
+        </div>
+      </div>
+      <div class="craft-label">Secondary + Primary = Tertiary</div>
+    </div>
+    
+    <div class="upgrade-path rare">
+      <div class="upgrade-visual">
+        <div class="ingredient-group primary-group">
+          <div class="ingredient-stack">
+            <div class="ingredient primary front">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Red_vid_25fps_300px.mp4" type="video/mp4">
+                Primary (Red)
+              </video>
+            </div>
+            <div class="ingredient primary middle">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Blue_vid_25fps_300px.mp4" type="video/mp4">
+                Primary (Blue)
+              </video>
+            </div>
+            <div class="ingredient primary back">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Yellow_vid_25fps_300px.mp4" type="video/mp4">
+                Primary (Yellow)
+              </video>
+            </div>
+            <div class="more-indicator">+1</div>
+          </div>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="ingredient-group secondary-group">
+          <div class="ingredient-stack">
+            <div class="ingredient secondary front">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Purple_vid_25fps_300px.mp4" type="video/mp4">
+                Secondary
+              </video>
+            </div>
+            <div class="ingredient secondary middle">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Green_vid_25fps_300px.mp4" type="video/mp4">
+                Secondary
+              </video>
+            </div>
+            <div class="ingredient secondary back">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Orange_vid_25fps_300px.mp4" type="video/mp4">
+                Secondary
+              </video>
+            </div>
+            <div class="more-indicator">+1</div>
+          </div>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="ingredient-group tertiary-group">
+          <div class="ingredient-stack">
+            <div class="ingredient tertiary front">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Violet_vid_25fps_300px.mp4" type="video/mp4">
+                Tertiary
+              </video>
+            </div>
+            <div class="ingredient tertiary middle">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Teal_vid_25fps_300px.mp4" type="video/mp4">
+                Tertiary
+              </video>
+            </div>
+            <div class="ingredient tertiary back">
+              <video autoplay loop muted playsinline>
+                <source src="https://pixeljourney.xyz/ingredients/Pixel_Amber_vid_25fps_300px.mp4" type="video/mp4">
+                Tertiary
+              </video>
+            </div>
+            <div class="more-indicator">+3</div>
+          </div>
+        </div>
+        <div class="plus-sign">+</div>
+        <div class="pxj-cost">500,000+ PXJ</div>
+        <div class="equals-sign">=</div>
+        <div class="ingredient black">
+          <video autoplay loop muted playsinline>
+            <source src="https://pixeljourney.xyz/ingredients/Pixel_Black_White_vid_25fps_300px.mp4" type="video/mp4">
+            Black
+          </video>
+        </div>
+      </div>
+      <div class="craft-label">One of every Primary/Secondary/Tertiary Ingredient (12 total)</div>
+      <div class="rare-note">*Cost rises per supply appearance</div>
+    </div>
+  </div>
+  
+  <div class="craft-links">
+    <p>Find crafts on:</p>
+    <a href="https://nfthive.io/crafts?collection=pixeljourney" target="_blank" class="craft-link">NFTHive</a>
+    <span class="or-divider">or</span>
+    <a href="https://neftyblocks.com/collection/pixeljourney/blends?category=Pixel+Ingredient+Blends" target="_blank" class="craft-link">NeftyBlocks</a>
+  </div>
+</div>
+              
+              <!-- Step 3: Staking -->
+              <div class="journey-step">
+                <div class="step-number">Step 3</div>
+                <h3>Stake Your Ingredients</h3>
+                <p>Stake them to our PixelJourney WaxDAO Farm via this portal or directly on:</p>
+                <a href="https://waxdao.io/v2/farm/pixeljourney" target="_blank" class="waxdao-link">WaxDAO</a>
+                
+                <div class="staking-benefits">
+                  <h4>Staking Benefits:</h4>
+                  <ul>
+                    <li>Earn PXJ back along the way</li>
+                    <li>Receive your PXJ locked into ingredients or collectibles back across a ~2.5-3 year duration (or better!)</li>
+                    <li>Get increasingly bigger bonus rewards based on the amount of PXJ locked up</li>
+                    <li>Bigger crafts will yield even better rewards!</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Step 4: Expansion -->
+              <div class="journey-step">
+                <div class="step-number">Step 4</div>
+                <h3>Keep Expanding Your Collection</h3>
+                <p>Continue expanding on those Pixel Ingredients (for now) and journey collections (soon to come)!</p>
+                
+                <div class="expansion-benefits">
+                  <h4>Benefits of Expansion:</h4>
+                  <ul>
+                    <li>Be best prepared for continued crafts</li>
+                    <li>Let your pixels continue their journeys</li>
+                    <li>Ingredients and collectibles will continue to play roles in future journey dApps</li>
+                    <li>Get perks/utility and ever more uses in future mechanics to come!</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Info Box -->
+            <div class="info-box-container">
+              <div class="info-box-header">
+                <h3>Important Information About PXJ Economy</h3>
+              </div>
+              <div class="info-box-content">
+                <div class="info-point">
+                  <div class="info-icon">💡</div>
+                  <div class="info-text">
+                    <strong>Early Participation is Better:</strong> Locking PXJ up into NFTs along the Pixel Journey earlier is better, as it allows holders to stake/re-earn as much PXJ as possible from intermediary steps before they may need those ingredients (or other collectibles) in the future to continue crafting.
+                  </div>
+                </div>
+                
+                <div class="info-point">
+                  <div class="info-icon">🔒</div>
+                  <div class="info-text">
+                    <strong>Long-term Value:</strong> Locking PXJ into journey NFTs can be compared to a long-time PXJ lockup stake. While there isn't directly the option to unstake the PXJ before it is paid out via the farms, the NFTs remain holding value and can be traded/sold.
+                  </div>
+                </div>
+                
+                <div class="info-point">
+                  <div class="info-icon">🛡️</div>
+                  <div class="info-text">
+                    <strong>Protection from Impermanent Loss:</strong> Contrary to PXJ DeFi with LP Farms and positions, PXJ locked into our NFT crafts keeps that PXJ more safe from direct impermanent losses that could occur if PXJ is potentially bought away from owners staking in liquidity pools.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+
+
   </div>
 
   <!-- Asset Selection Modal -->
@@ -1024,6 +2075,8 @@
       </div>
     </div>
   </div>
+
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://notify.waxsweden.org/static/assets/waxjs.js"></script>
@@ -1370,10 +2423,10 @@
               // Special handling for specific template IDs
               if (template.id === 820134) {
                 // Pixelpacks template
-                imageUrl = './ingredients/pixelpacks.webp';
+                imageUrl = './ingredients/pixelpack.webp';
               } else if (template.id === 781515) {
                 // PixalPFPs template
-                imageUrl = './imng/pixelgrey-bluebg-spliteyes.png';
+                imageUrl = './img/pixelgrey-bluebg-spliteyes.png';
               } else
                 if (firstAsset && firstAsset.data && firstAsset.data.img) {
                   imageUrl = `https://ipfs.io/ipfs/${firstAsset.data.img}`;
