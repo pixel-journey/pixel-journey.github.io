@@ -2484,6 +2484,7 @@
     ];
 
     document.addEventListener('DOMContentLoaded', function () {
+      let wallet;
       let wax;
       let anchorLink;
       let anchorSession;
@@ -2919,15 +2920,23 @@
               console.warn('Anchor logout cleanup error:', e);
             }
           }
+          /* 
+                        // Wombat Wallet cleanup
+              if (wallet === 'wombat' && window.wombat) {
+                try {
+                  await window.wombat.logout();
+                } catch (e) {
+                  console.warn('Wombat logout cleanup error:', e);
+                }
+              } */
 
-
-    // Clear all references
-    wax = null;
-    anchorLink = null;
-    anchorSession = null;
-    userAccount = null;
-    stakedAssets = [];
-    userAssets = [];
+          // Clear all references
+          wax = null;
+          anchorLink = null;
+          anchorSession = null;
+          userAccount = null;
+          stakedAssets = [];
+          userAssets = [];
 
           // UI cleanup
           updateUIAfterLogout();
@@ -3473,14 +3482,14 @@
             // Anchor Wallet
             result = await anchorSession.transact({ action });
           } else if (wallet === 'wombat' && window.wombat) {
-      // Wombat Wallet
-      result = await window.wombat.api.transact({
-        actions: [action]
-      }, {
-        blocksBehind: 3,
-        expireSeconds: 90,
-      });
-    } else {
+            // Wombat Wallet
+            result = await window.wombat.api.transact({
+              actions: [action]
+            }, {
+              blocksBehind: 3,
+              expireSeconds: 90,
+            });
+          } else {
             throw new Error('No wallet connected');
           }
 
@@ -3504,6 +3513,7 @@
       }
 
       async function unstakeAssets(assetIds) {
+        console.log(userAccount + ' ' + assetIds.length)
         if (!userAccount || assetIds.length === 0) return;
 
         try {
@@ -3520,7 +3530,7 @@
             data: {
               user: userAccount,
               farmname: 'pixeljourney',
-              assets_to_unstake: assetIds
+              asset_ids: assetIds
             },
           };
 
@@ -3536,15 +3546,15 @@
           } else if (anchorLink && anchorSession) {
             // Anchor Wallet
             result = await anchorSession.transact({ action });
-          } else if (wallet === 'wombat' && window.wombat) {
-      // Wombat Wallet
-      result = await window.wombat.api.transact({
-        actions: [action]
-      }, {
-        blocksBehind: 3,
-        expireSeconds: 90,
-      });
-    } else {
+          } else if (window.wombat) {
+            // Wombat Wallet
+            result = await window.wombat.api.transact({
+              actions: [action]
+            }, {
+              blocksBehind: 3,
+              expireSeconds: 90,
+            });
+          } else {
             throw new Error('No wallet connected');
           }
 
