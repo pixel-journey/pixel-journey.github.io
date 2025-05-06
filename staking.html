@@ -2514,12 +2514,16 @@
             document.querySelector('.rewards-section').style.display = 'block'; // Show rewards section
 
             // Load data
+          showConnectionLoading('Fetching your NFT data...');
             await fetchStakedAssets();
+            showConnectionLoading('Loading your staked assets...');
             await loadUserAssets();
             updateTemplateGrid();
             updateStats();
+            hideConnectionLoading();
           }
         } catch (error) {
+          hideConnectionLoading();
           console.error('Auto login error:', error);
         }
       }
