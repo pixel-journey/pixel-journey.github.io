@@ -2636,6 +2636,11 @@
             anchorSession = identity.session;
             userAccount = identity.session.auth.toString().split('@')[0];
             wallet = 'anchor';
+          }
+          else if (walletChoice === 'wombat') {
+            showConnectionLoading('Connecting to Wombat Wallet...');
+            userAccount = await loginWithWombat();
+            wallet = 'wombat';
           } else {
             hideConnectionLoading();
             return; // User cancelled
@@ -2669,6 +2674,37 @@
         }
       }
 
+      async function loginWithWombat() {
+        return new Promise((resolve, reject) => {
+          // Check if Wombat is installed
+          if (!window.wombat) {
+            showErrorMessage('Wombat Wallet not detected. Please install it first.');
+            reject(new Error('Wombat Wallet not detected'));
+            return;
+          }
+
+          // Wombat login flow
+          window.wombat.getUserAccount().then(account => {
+            if (account) {
+              resolve(account);
+            } else {
+              // If no active session, request login
+              window.wombat.requestLogin().then(account => {
+                if (account) {
+                  resolve(account);
+                } else {
+                  reject(new Error('User cancelled login'));
+                }
+              }).catch(err => {
+                reject(err);
+              });
+            }
+          }).catch(err => {
+            reject(err);
+          });
+        });
+      }
+
       // Show wallet selection modal
       function showWalletSelection() {
         return new Promise((resolve) => {
@@ -2695,6 +2731,10 @@
           <img src="https://play-lh.googleusercontent.com/DVLJnVhhOe99bwJjZ-00lAeaw-rqPPj2HRmlXOC0cr-xAOcWkjy8NuLGjB0kMdMBlg" style="height: 24px; vertical-align: middle; margin-right: 10px;">
           Anchor Wallet
         </button>
+        <button id="wombatWalletBtn" style="margin: 10px; padding: 15px; width: 100%;" class="btn">
+          <img src="https://www.yadawallets.com/wp-content/uploads/2020/11/Wombat-wallet-logo.png" style="height: 24px; vertical-align: middle; margin-right: 10px;">
+          Wombat Wallet
+        </button>
         <button id="cancelWalletBtn" style="margin: 10px; padding: 15px; width: 100%;" class="btn btn-secondary">
           Cancel
         </button>
@@ -2711,6 +2751,11 @@
           document.getElementById('anchorWalletBtn').addEventListener('click', () => {
             document.body.removeChild(modal);
             resolve('anchor');
+          });
+
+          document.getElementById('wombatWalletBtn').addEventListener('click', () => {
+            document.body.removeChild(modal);
+            resolve('wombat');
           });
 
           document.getElementById('cancelWalletBtn').addEventListener('click', () => {
@@ -2773,8 +2818,8 @@
           // Try to restore session
           const session = await anchorLink.restoreSession('pixeljourney');
           if (session) {
-                      // If WAX auto-login not available, try Anchor Wallet
-          showConnectionLoading('Checking Anchor Wallet session...');
+            // If WAX auto-login not available, try Anchor Wallet
+            showConnectionLoading('Checking Anchor Wallet session...');
             anchorSession = session;
             userAccount = session.auth.toString().split('@')[0];
 
@@ -2797,11 +2842,43 @@
             updateStats();
             hideConnectionLoading();
           }
+
+          // Finally try Wombat Wallet
+          if (window.wombat) {
+            showConnectionLoading('Checking Wombat Wallet session...');
+            const account = await window.wombat.getUserAccount();
+            if (account) {
+              userAccount = account;
+              wallet = 'wombat';
+
+              accountName.textContent = userAccount;
+              accountInfo.style.display = 'block';
+              loginButton.textContent = 'Log Out';
+              loginButton.classList.remove('btn');
+              loginButton.classList.add('logout-btn');
+
+              totalPowerCard.style.display = 'block';
+              statsBar.style.display = 'flex';
+              templateCard.style.display = 'block';
+              document.querySelector('.rewards-section').style.display = 'block';
+
+              showConnectionLoading('Fetching your NFT data...');
+              await fetchStakedAssets();
+              showConnectionLoading('Loading your staked assets...');
+              await loadUserAssets();
+              updateTemplateGrid();
+              updateStats();
+              hideConnectionLoading();
+              return;
+            }
+          }
         } catch (error) {
           hideConnectionLoading();
           showErrorMessage('Auto login error:', error);
           // Don't show error message to user for auto-login failures
         }
+
+
       }
 
       // Modified logout function
@@ -2843,13 +2920,14 @@
             }
           }
 
-          // Clear all wallet references
-          wax = null;
-          anchorLink = null;
-          anchorSession = null;
-          userAccount = null;
-          stakedAssets = [];
-          userAssets = [];
+
+    // Clear all references
+    wax = null;
+    anchorLink = null;
+    anchorSession = null;
+    userAccount = null;
+    stakedAssets = [];
+    userAssets = [];
 
           // UI cleanup
           updateUIAfterLogout();
@@ -2886,12 +2964,13 @@
           rewardsDiv.innerHTML = 'Please log in to see rewards.';
           return;
         }
-        
+
         rewardsDiv.innerHTML = 'Loading rewards...';
-        
+
         try {
           // Query the stakers table to find the user's entry
-          const rpc = new eosjs_jsonrpc.JsonRpc('https://wax.greymass.com');
+
+          const rpc = wax.rpc;
           const response = await rpc.get_table_rows({
             json: true,
             code: 'farms.waxdao',    // Contract account
@@ -2903,14 +2982,14 @@
             reverse: false,
             show_payer: false
           });
-          
+
           // Find the user in the stakers table
           const userStake = response.rows.find(row => row.user === userAccount);
-          
+
           if (userStake && userStake.claimable_balances) {
             // Parse the claimable balances
             let waxBalance = '0.00000000';
-            
+
             // Extract WAX balance from claimable_balances array
             for (const balance of userStake.claimable_balances) {
               if (balance.contract === 'eosio.token') {
@@ -2918,7 +2997,7 @@
                 break;
               }
             }
-            
+
             // Format and display the rewards
             rewardsDiv.innerHTML = `PXJ: ${waxBalance}`;
           } else {
@@ -3014,16 +3093,6 @@
         } catch (error) {
           showErrorMessage('Failed to fetch staked assets.');
         }
-      }
-
-      // Helper function to get the appropriate API for transactions
-      function getTransactionAPI() {
-        if (wallet === 'anchor' && anchorSession) {
-          return anchorSession;
-        } else if (wax && wax.api) {
-          return wax.api;
-        }
-        throw new Error("No wallet is connected");
       }
 
       // Load user assets
@@ -3403,7 +3472,15 @@
           } else if (anchorLink && anchorSession) {
             // Anchor Wallet
             result = await anchorSession.transact({ action });
-          } else {
+          } else if (wallet === 'wombat' && window.wombat) {
+      // Wombat Wallet
+      result = await window.wombat.api.transact({
+        actions: [action]
+      }, {
+        blocksBehind: 3,
+        expireSeconds: 90,
+      });
+    } else {
             throw new Error('No wallet connected');
           }
 
@@ -3459,7 +3536,15 @@
           } else if (anchorLink && anchorSession) {
             // Anchor Wallet
             result = await anchorSession.transact({ action });
-          } else {
+          } else if (wallet === 'wombat' && window.wombat) {
+      // Wombat Wallet
+      result = await window.wombat.api.transact({
+        actions: [action]
+      }, {
+        blocksBehind: 3,
+        expireSeconds: 90,
+      });
+    } else {
             throw new Error('No wallet connected');
           }
 
