@@ -1598,9 +1598,9 @@
       }
 
       .more-indicator {
-    position: absolute;
-    bottom: -30px;
-    right: -45px;
+        position: absolute;
+        bottom: -30px;
+        right: -45px;
       }
     }
 
@@ -2722,86 +2722,86 @@
 
       // Check if user is already logged in
       async function checkAutoLogin() {
-  if (isLoggingOut) return;
-  
-  try {
-    // Check WAX Cloud Wallet first
-    wax = new waxjs.WaxJS({
-      rpcEndpoint: 'https://wax.greymass.com',
-      tryAutoLogin: true
-    });
+        if (isLoggingOut) return;
 
-    // First try WAX Cloud Wallet auto-login
-    const isWaxAutoLogin = await wax.isAutoLoginAvailable();
-    if (isWaxAutoLogin) {
-      showConnectionLoading('Checking for existing session...');
-      userAccount = wax.userAccount;
-      accountName.textContent = userAccount;
-      accountInfo.style.display = 'block';
-      loginButton.textContent = 'Log Out';
-      loginButton.classList.remove('btn');
-      loginButton.classList.add('logout-btn');
+        try {
+          // Check WAX Cloud Wallet first
+          wax = new waxjs.WaxJS({
+            rpcEndpoint: 'https://wax.greymass.com',
+            tryAutoLogin: true
+          });
 
-      totalPowerCard.style.display = 'block';
-      statsBar.style.display = 'flex';
-      templateCard.style.display = 'block';
-      document.querySelector('.rewards-section').style.display = 'block';
+          // First try WAX Cloud Wallet auto-login
+          const isWaxAutoLogin = await wax.isAutoLoginAvailable();
+          if (isWaxAutoLogin) {
+            showConnectionLoading('Checking for existing session...');
+            userAccount = wax.userAccount;
+            accountName.textContent = userAccount;
+            accountInfo.style.display = 'block';
+            loginButton.textContent = 'Log Out';
+            loginButton.classList.remove('btn');
+            loginButton.classList.add('logout-btn');
 
-      showConnectionLoading('Fetching your NFT data...');
-      await fetchStakedAssets();
-      showConnectionLoading('Loading your staked assets...');
-      await loadUserAssets();
-      updateTemplateGrid();
-      updateStats();
-      hideConnectionLoading();
-      return;
-    }
+            totalPowerCard.style.display = 'block';
+            statsBar.style.display = 'flex';
+            templateCard.style.display = 'block';
+            document.querySelector('.rewards-section').style.display = 'block';
 
-    // If WAX auto-login not available, try Anchor Wallet
-    showConnectionLoading('Checking Anchor Wallet session...');
-    
-    // Initialize AnchorLink if not already done
-    if (!anchorLink) {
-      anchorLink = new AnchorLink({
-        transport: new AnchorLinkBrowserTransport(),
-        chains: [{
-          chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-          nodeUrl: 'https://wax.greymass.com',
-        }],
-      });
-    }
+            showConnectionLoading('Fetching your NFT data...');
+            await fetchStakedAssets();
+            showConnectionLoading('Loading your staked assets...');
+            await loadUserAssets();
+            updateTemplateGrid();
+            updateStats();
+            hideConnectionLoading();
+            return;
+          }
 
-    // Try to restore session
-    const session = await anchorLink.restoreSession('pixeljourney');
-    if (session) {
-      anchorSession = session;
-      userAccount = session.auth.toString().split('@')[0];
-      
-      accountName.textContent = userAccount;
-      accountInfo.style.display = 'block';
-      loginButton.textContent = 'Log Out';
-      loginButton.classList.remove('btn');
-      loginButton.classList.add('logout-btn');
+          // If WAX auto-login not available, try Anchor Wallet
+          showConnectionLoading('Checking Anchor Wallet session...');
 
-      totalPowerCard.style.display = 'block';
-      statsBar.style.display = 'flex';
-      templateCard.style.display = 'block';
-      document.querySelector('.rewards-section').style.display = 'block';
+          // Initialize AnchorLink if not already done
+          if (!anchorLink) {
+            anchorLink = new AnchorLink({
+              transport: new AnchorLinkBrowserTransport(),
+              chains: [{
+                chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+                nodeUrl: 'https://wax.greymass.com',
+              }],
+            });
+          }
 
-      showConnectionLoading('Fetching your NFT data...');
-      await fetchStakedAssets();
-      showConnectionLoading('Loading your staked assets...');
-      await loadUserAssets();
-      updateTemplateGrid();
-      updateStats();
-      hideConnectionLoading();
-    }
-  } catch (error) {
-    hideConnectionLoading();
-    console.error('Auto login error:', error);
-    // Don't show error message to user for auto-login failures
-  }
-}
+          // Try to restore session
+          const session = await anchorLink.restoreSession('pixeljourney');
+          if (session) {
+            anchorSession = session;
+            userAccount = session.auth.toString().split('@')[0];
+
+            accountName.textContent = userAccount;
+            accountInfo.style.display = 'block';
+            loginButton.textContent = 'Log Out';
+            loginButton.classList.remove('btn');
+            loginButton.classList.add('logout-btn');
+
+            totalPowerCard.style.display = 'block';
+            statsBar.style.display = 'flex';
+            templateCard.style.display = 'block';
+            document.querySelector('.rewards-section').style.display = 'block';
+
+            showConnectionLoading('Fetching your NFT data...');
+            await fetchStakedAssets();
+            showConnectionLoading('Loading your staked assets...');
+            await loadUserAssets();
+            updateTemplateGrid();
+            updateStats();
+            hideConnectionLoading();
+          }
+        } catch (error) {
+          hideConnectionLoading();
+          showErrorMessage('Auto login error:', error);
+          // Don't show error message to user for auto-login failures
+        }
+      }
 
       // Modified logout function
       async function logout() {
@@ -2855,14 +2855,14 @@
           showSuccessMessage('Logged out successfully');
 
         } catch (error) {
-          console.error('Logout error:', error);
           showErrorMessage('Logout failed. Please try again.');
         } finally {
           // Small delay before allowing new logins
-          setTimeout(() => { isLoggingOut = false;
-            
-          hideConnectionLoading();
-           }, 3000);
+          setTimeout(() => {
+            isLoggingOut = false;
+
+            hideConnectionLoading();
+          }, 3000);
         }
       }
 
@@ -2915,11 +2915,10 @@
             // Anchor Wallet
             result = await anchorSession.transact({ action });
           } else {
-            throw new Error('No wallet connected');
+            throw new showErrorMessage('No wallet connected');
           }
 
-          console.log('Claim result:', result);
-          showSuccessMessage('Rewards claimed successfully!');
+          showSuccessMessage('Rewards claimed successfully!', result);
 
           const rewardsDiv = document.getElementById('claimableRewards');
           rewardsDiv.innerHTML = 'PXJ: 0.0 | WUF: 0.0';
@@ -2971,7 +2970,6 @@
             if (more) lower_bound = result.next_key;
           }
 
-          console.log('Staked assets:', stakedAssets);
         } catch (error) {
           showErrorMessage('Failed to fetch staked assets.');
         }
@@ -3006,7 +3004,6 @@
             page++;
           }
 
-          console.log('User assets:', userAssets);
         } catch (error) {
           showErrorMessage('Failed to load your assets.');
         }
@@ -3240,7 +3237,6 @@
             `;
             } else {
               imageUrl = `https://ipfs.io/ipfs/${asset.data.img}`;
-              console.log("No image or video found for asset:", asset);
             }
 
 
@@ -3370,8 +3366,6 @@
             throw new Error('No wallet connected');
           }
 
-          console.log('Stake success:', result);
-
           // Update local data
           assetIds.forEach(assetId => {
             stakedAssets.push({
@@ -3384,7 +3378,7 @@
           updateTemplateGrid();
           updateStats();
           hideGlobalLoading();
-          showSuccessMessage('Assets staked successfully!');
+          showSuccessMessage('Assets staked successfully!', result);
         } catch (error) {
           hideGlobalLoading();
           showErrorMessage(`Stake failed: ${error.message}`);
@@ -3428,11 +3422,10 @@
             throw new Error('No wallet connected');
           }
 
-          console.log('Unstake success:', result);
           updateTemplateGrid();
           updateStats();
           hideGlobalLoading();
-          showSuccessMessage('Assets unstaked successfully!');
+          showSuccessMessage('Assets unstaked successfully!', result);
         } catch (error) {
           hideGlobalLoading();
           showErrorMessage(`Unstake failed: ${error.message}`);
