@@ -1190,42 +1190,42 @@
 
     /* Marketplace specific styling */
     .marketplace-link-card.nfthive {
-      background: rgba(255, 99, 71, 0.1);
-      border: 1px solid rgba(255, 99, 71, 0.3);
+      background: rgba(255, 193, 0, 0.1);
+      border: 1px solid rgba(255, 193, 0, 0.3);
     }
 
     .marketplace-link-card.nfthive .marketplace-name {
-      color: tomato;
+      color: #FFC100;
     }
 
     .marketplace-link-card.nfthive:hover {
-      background: rgba(255, 99, 71, 0.2);
+      background: rgba(255, 193, 0, 0.2);
     }
 
     .marketplace-link-card.atomichub {
-      background: rgba(65, 105, 225, 0.1);
-      border: 1px solid rgba(65, 105, 225, 0.3);
+      background: rgba(247, 143, 32, 0.1);
+      border: 1px solid rgba(247, 143, 32, 0.3);
     }
 
     .marketplace-link-card.atomichub .marketplace-name {
-      color: royalblue;
+      color: #F78F20;
     }
 
     .marketplace-link-card.atomichub:hover {
-      background: rgba(65, 105, 225, 0.2);
+      background: rgba(247, 143, 32, 0.2);
     }
 
     .marketplace-link-card.neftyblocks {
-      background: rgba(138, 43, 226, 0.1);
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      background: rgba(33, 255, 255, 0.1);
+      border: 1px solid rgba(33, 255, 255, 0.3);
     }
 
     .marketplace-link-card.neftyblocks .marketplace-name {
-      color: blueviolet;
+      color: #21FFFF;
     }
 
     .marketplace-link-card.neftyblocks:hover {
-      background: rgba(138, 43, 226, 0.2);
+      background: rgba(33, 255, 255, 0.2);
     }
 
     .info-box {
@@ -1352,6 +1352,7 @@
       position: relative;
       width: 100px;
       height: 100px;
+      margin: 30px;
     }
 
     .ingredient-stack {
@@ -1369,15 +1370,15 @@
 
     .ingredient.middle {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 30px;
+      left: 30px;
       z-index: 2;
     }
 
     .ingredient.back {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 60px;
+      left: 60px;
       z-index: 1;
     }
 
@@ -1396,15 +1397,15 @@
 
     /* Specific styling for different ingredient tiers */
     .ingredient.primary {
-      border: 2px solid #AE2404;
+      border: 2px solid var(--primary-light);
     }
 
     .ingredient.secondary {
-      border: 2px solid #9F34A7;
+      border: 2px solid var(--primary-light);
     }
 
     .ingredient.tertiary {
-      border: 2px solid #B4A4F7;
+      border: 2px solid var(--primary-light);
     }
 
     .ingredient.black {
@@ -2231,7 +2232,6 @@
                           Primary (Yellow)
                         </video>
                       </div>
-                      <div class="more-indicator">+1</div>
                     </div>
                   </div>
                   <div class="plus-sign">+</div>
@@ -2241,24 +2241,23 @@
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Purple_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Secondary
+                          Purple
                         </video>
                       </div>
                       <div class="ingredient secondary middle">
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Green_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Secondary
+                          Orange
                         </video>
                       </div>
                       <div class="ingredient secondary back">
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Orange_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Secondary
+                          Green
                         </video>
                       </div>
-                      <div class="more-indicator">+1</div>
                     </div>
                   </div>
                   <div class="plus-sign">+</div>
@@ -2268,21 +2267,21 @@
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Violet_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Tertiary
+                          Violet
                         </video>
                       </div>
                       <div class="ingredient tertiary middle">
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Teal_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Tertiary
+                          Teal
                         </video>
                       </div>
                       <div class="ingredient tertiary back">
                         <video autoplay loop muted playsinline>
                           <source src="https://pixeljourney.xyz/ingredients/Pixel_Amber_vid_25fps_300px.mp4"
                             type="video/mp4">
-                          Tertiary
+                          Amber
                         </video>
                       </div>
                       <div class="more-indicator">+3</div>
@@ -2300,7 +2299,7 @@
                   </div>
                 </div>
                 <div class="craft-label">One of every Primary/Secondary/Tertiary Ingredient (12 total)</div>
-                <div class="rare-note">*Cost rises per supply appearance</div>
+                <div class="rare-note">* Additional PXJ cost rises per supply appearance for Black Ingredients!</div>
               </div>
             </div>
 
