@@ -103,7 +103,8 @@
       display: inline-block;
     }
 
-    header.light-mode {
+    .light-mode header {
+      background: var(--card-light);
       background-color: var(--card-light);
       box-shadow: var(--shadow-light);
     }
@@ -669,6 +670,10 @@
       background: rgba(16, 163, 127, 0.8);
     }
 
+    .template-image.img-asset-bg {
+      position: relative;
+      overflow: hidden;
+    }
 
 
     /* Add this to your existing CSS */
@@ -1822,6 +1827,161 @@
       background: var(--hover-light);
       color: var(--text-light);
     }
+
+        /* Improved Light Mode Readability */
+        .light-mode p {
+      color: #333333;
+      line-height: 1.7;
+    }
+    
+    .light-mode .benefit-text,
+    .light-mode .journey-step p {
+      color: #444444;
+      font-weight: 400;
+    }
+    
+    .light-mode .info-text {
+      color: #444444;
+      font-weight: 400;
+    }
+    
+    .light-mode .journey-step li {
+      color: #444444;
+      margin-bottom: 8px;
+    }
+    
+    .light-mode .template-info {
+      background: rgba(245, 247, 250, 0.95);
+      border: 1px solid rgba(229, 231, 235, 0.7);
+      color: #333333;
+      box-shadow: var(--shadow-light);
+    }
+    
+    header.light-mode {
+      background: linear-gradient(135deg, #f5f7fa, #e5e7eb);
+      box-shadow: var(--shadow-light);
+    }
+    
+    header.light-mode h1 {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .light-mode .stats-bar {
+      background: rgba(245, 247, 250, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.7);
+      box-shadow: var(--shadow-light);
+    }
+    
+    .light-mode .stat {
+      color: #333333;
+    }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .burger-bar {
+      width: 100%;
+      height: 3px;
+      background-color: var(--text-dark);
+      border-radius: 3px;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .light-mode .burger-bar {
+      background-color: var(--text-light);
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 250px;
+      height: 100vh;
+      background: var(--card-dark);
+      z-index: 1000;
+      padding: 60px 20px 20px;
+      transition: right 0.3s ease-in-out;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .light-mode .mobile-menu {
+      background: var(--card-light);
+    }
+    
+    .mobile-menu.active {
+      right: 0;
+    }
+    
+    .mobile-menu a, 
+    .mobile-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      transition: all var(--transition-fast);
+    }
+    
+    .mobile-menu a {
+      color: var(--text-dark);
+      text-decoration: none;
+      background: var(--accent-dark);
+    }
+    
+    .light-mode .mobile-menu a {
+      color: var(--text-light);
+      background: var(--accent-light);
+    }
+    
+    .mobile-menu a:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    @media (max-width: 768px) {
+      .header-buttons {
+        display: none !important;
+      }
+      
+      .burger-menu {
+        display: flex;
+      }
+    }
   </style>
 
 
@@ -1834,6 +1994,15 @@
   <header>
     <div class="container d-flex justify-content-between align-items-center">
       <h1>Pixel Journey Staking Dashboard</h1>
+      
+      <!-- Burger Menu Icon -->
+      <div class="burger-menu">
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+        <div class="burger-bar"></div>
+      </div>
+      
+      <!-- Desktop Menu -->
       <div class="d-flex header-buttons">
         <a href="index.html" class="btn btn-secondary me-2">Home</a>
         <button class="dark-mode-toggle" id="darkModeToggle">Toggle Theme</button>
@@ -1841,9 +2010,20 @@
           <i class="fas fa-trophy"></i>🏆 Leaderboards
         </a>
       </div>
-
     </div>
   </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+      <a href="index.html">Home</a>
+      <button class="dark-mode-toggle" id="mobileDarkModeToggle">Toggle Theme</button>
+      <a href="https://lb.pixeljourney.xyz" target="_blank">
+        <i class="fas fa-trophy"></i> Leaderboards
+      </a>
+    </div>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
 
   <!-- Add this loading overlay -->
   <div id="connectionLoadingOverlay" class="connection-loading-overlay" style="display: none;">
@@ -2462,6 +2642,36 @@
   <script src="https://notify.waxsweden.org/static/assets/waxjs.js"></script>
   <script>
 
+    // Burger menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const burgerMenu = document.querySelector('.burger-menu');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.overlay');
+      const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
+      
+      // Toggle mobile menu
+      burgerMenu.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+      
+      // Close menu when clicking overlay
+      overlay.addEventListener('click', function() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      // Make mobile dark mode toggle work the same as desktop
+      if (mobileDarkModeToggle && darkModeToggle) {
+        mobileDarkModeToggle.addEventListener('click', function() {
+          document.body.classList.toggle('light-mode');
+          localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+      }
+    });
+
     // Initialize wallet variables
 
     // Template data
@@ -2997,14 +3207,13 @@
 
           if (userStake && userStake.claimable_balances) {
             // Parse the claimable balances
-            let waxBalance = '0.00000000';
+            let waxBalance;;
 
             // Extract WAX balance from claimable_balances array
             for (const balance of userStake.claimable_balances) {
-              if (balance.contract === 'eosio.token') {
-                waxBalance = balance.quantity.split(' ')[0];
+              
+                waxBalance = userStake.claimable_balances;
                 break;
-              }
             }
 
             // Format and display the rewards
@@ -3481,7 +3690,7 @@
           } else if (anchorLink && anchorSession) {
             // Anchor Wallet
             result = await anchorSession.transact({ action });
-          } else if (wallet === 'wombat' && window.wombat) {
+          } else if (window.wombat) {
             // Wombat Wallet
             result = await window.wombat.api.transact({
               actions: [action]
