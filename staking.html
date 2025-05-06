@@ -2722,78 +2722,86 @@
 
       // Check if user is already logged in
       async function checkAutoLogin() {
-        if (isLoggingOut) return;
-        try {
-          // Check WAX Cloud Wallet first
-          wax = new waxjs.WaxJS({
-            rpcEndpoint: 'https://wax.greymass.com',
-            tryAutoLogin: true
-          });
+  if (isLoggingOut) return;
+  
+  try {
+    // Check WAX Cloud Wallet first
+    wax = new waxjs.WaxJS({
+      rpcEndpoint: 'https://wax.greymass.com',
+      tryAutoLogin: true
+    });
 
-          const isWaxAutoLogin = await wax.isAutoLoginAvailable();
-          if (isWaxAutoLogin) {
-            showConnectionLoading('Checking for existing session...');
-            userAccount = wax.userAccount;
-            accountName.textContent = userAccount;
-            accountInfo.style.display = 'block';
-            loginButton.textContent = 'Log Out';
-            loginButton.classList.remove('btn');
-            loginButton.classList.add('logout-btn');
+    // First try WAX Cloud Wallet auto-login
+    const isWaxAutoLogin = await wax.isAutoLoginAvailable();
+    if (isWaxAutoLogin) {
+      showConnectionLoading('Checking for existing session...');
+      userAccount = wax.userAccount;
+      accountName.textContent = userAccount;
+      accountInfo.style.display = 'block';
+      loginButton.textContent = 'Log Out';
+      loginButton.classList.remove('btn');
+      loginButton.classList.add('logout-btn');
 
-            totalPowerCard.style.display = 'block';
-            statsBar.style.display = 'flex';
-            templateCard.style.display = 'block';
-            document.querySelector('.rewards-section').style.display = 'block';
+      totalPowerCard.style.display = 'block';
+      statsBar.style.display = 'flex';
+      templateCard.style.display = 'block';
+      document.querySelector('.rewards-section').style.display = 'block';
 
-            showConnectionLoading('Fetching your NFT data...');
-            await fetchStakedAssets();
-            showConnectionLoading('Loading your staked assets...');
-            await loadUserAssets();
-            updateTemplateGrid();
-            updateStats();
-            hideConnectionLoading();
-            return;
-          }
+      showConnectionLoading('Fetching your NFT data...');
+      await fetchStakedAssets();
+      showConnectionLoading('Loading your staked assets...');
+      await loadUserAssets();
+      updateTemplateGrid();
+      updateStats();
+      hideConnectionLoading();
+      return;
+    }
 
-          /*    // Check Anchor Wallet session
-         const session = await anchorLink.restore('pixeljourney');
-             if (session) {
-               showConnectionLoading('Restoring Anchor session...');
-               anchorLink = new AnchorLink({
-                 transport,    
-                 chains: [
-                 {
-                     chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-                     nodeUrl: 'https://wax.greymass.com',
-                 },
-             ],   });
-               anchorSession = session;
-               userAccount = session.auth.toString().split('@')[0];
-         
-               accountName.textContent = userAccount;
-               accountInfo.style.display = 'block';
-               loginButton.textContent = 'Log Out';
-         loginButton.classList.remove('btn');
-         loginButton.classList.add('logout-btn');
-         
-               totalPowerCard.style.display = 'block';
-               statsBar.style.display = 'flex';
-               templateCard.style.display = 'block';
-               document.querySelector('.rewards-section').style.display = 'block';
-         
-               showConnectionLoading('Fetching your NFT data...');
-               await fetchStakedAssets();
-               showConnectionLoading('Loading your staked assets...');
-               await loadUserAssets();
-               updateTemplateGrid();
-               updateStats();
-               hideConnectionLoading();
-             } */
-        } catch (error) {
-          hideConnectionLoading();
-          showErrorMessage('Auto login error:', error);
-        }
-      }
+    // If WAX auto-login not available, try Anchor Wallet
+    showConnectionLoading('Checking Anchor Wallet session...');
+    
+    // Initialize AnchorLink if not already done
+    if (!anchorLink) {
+      anchorLink = new AnchorLink({
+        transport: new AnchorLinkBrowserTransport(),
+        chains: [{
+          chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+          nodeUrl: 'https://wax.greymass.com',
+        }],
+      });
+    }
+
+    // Try to restore session
+    const session = await anchorLink.restoreSession('pixeljourney');
+    if (session) {
+      anchorSession = session;
+      userAccount = session.auth.toString().split('@')[0];
+      
+      accountName.textContent = userAccount;
+      accountInfo.style.display = 'block';
+      loginButton.textContent = 'Log Out';
+      loginButton.classList.remove('btn');
+      loginButton.classList.add('logout-btn');
+
+      totalPowerCard.style.display = 'block';
+      statsBar.style.display = 'flex';
+      templateCard.style.display = 'block';
+      document.querySelector('.rewards-section').style.display = 'block';
+
+      showConnectionLoading('Fetching your NFT data...');
+      await fetchStakedAssets();
+      showConnectionLoading('Loading your staked assets...');
+      await loadUserAssets();
+      updateTemplateGrid();
+      updateStats();
+      hideConnectionLoading();
+    }
+  } catch (error) {
+    hideConnectionLoading();
+    console.error('Auto login error:', error);
+    // Don't show error message to user for auto-login failures
+  }
+}
 
       // Modified logout function
       async function logout() {
