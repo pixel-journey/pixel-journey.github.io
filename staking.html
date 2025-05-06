@@ -301,7 +301,7 @@
       background: var(--primary-color);
       color: white;
       border: none;
-      margin: 10px 15px;
+      margin: 10px 10px;
       margin-left: 0;
       border-radius: var(--radius-sm);
       cursor: pointer;
@@ -1669,6 +1669,84 @@
       0%, 100% { opacity: 0.3; transform: scale(0.8); }
       50% { opacity: 1; transform: scale(1); }
     }
+
+        /* Leaderboard button */
+        .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .leaderboard-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .leaderboard-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(16, 163, 127, 0.3);
+      background: var(--primary-light);
+      color: white;
+    }
+
+    /* Preview Card Links */
+.preview-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.preview-card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Keep the existing preview-card styling but adjust for link behavior */
+.preview-card-link .preview-card {
+  cursor: pointer;
+  position: relative;
+}
+
+    /* Add a subtle indicator that the card is clickable */
+.preview-card-link .preview-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: rgba(16, 163, 127, 0.8);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+}
+
+.preview-card-link:hover .preview-card::after {
+  opacity: 1;
+}
+
+/* Disable the link for collectibles that aren't ready yet */
+.preview-card-link.collectibles-link {
+  cursor: default;
+}
+
+.preview-card-link.collectibles-link .preview-card::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
+}
+
   </style>
 </head>
 
@@ -1676,10 +1754,14 @@
   <header>
     <div class="container d-flex justify-content-between align-items-center">
       <h1>Pixel Journey Staking Dashboard</h1>
-      <div class="d-flex">
+      <div class="d-flex header-buttons">
         <a href="index.html" class="btn btn-secondary me-2">Home</a>
         <button class="dark-mode-toggle" id="darkModeToggle">Toggle Theme</button>
+        <a href="https://lb.pixeljourney.xyz" class="btn btn-secondary leaderboard-btn" target="_blank">
+          <i class="fas fa-trophy"></i>🏆 Leaderboards
+        </a>
       </div>
+
     </div>
   </header>
 
@@ -1843,7 +1925,8 @@
         <h3 class="mb-4">Stake Your Pixel Journey NFTs</h3>
         <p class="lead mb-4">Connect your wallet to start earning PXJ and WUF tokens by staking your Pixel Journey NFTs!</p>
         
-        <div class="preview-grid">
+        <div class="preview-grid">  <!-- Make the entire card a clickable link -->
+          <a href="https://www.pfpwizard.xyz/pfp/pixals/buy/" target="_blank" class="preview-card-link">
           <!-- Preview Cards -->
           <div class="preview-card">
             <div class="preview-item">
@@ -1855,7 +1938,9 @@
               <div class="preview-rate">~+ 0.25 PXJ/hour</div>
             </div>
           </div>
+        </a>
           
+        <a href="https://nfthive.io/crafts?collection=pixeljourney" target="_blank" class="preview-card-link">
           <div class="preview-card">
             <div class="preview-item">
               <video autoplay loop muted playsinline>
@@ -1869,7 +1954,9 @@
               <div class="preview-rate">~+ 0.2 - 124 PXJ/hour</div>
             </div>
           </div>
+        </a>
           
+        <a href="#" class="preview-card-link collectibles-link">
           <div class="preview-card">
             <div class="preview-item">
               <img src="https://pixeljourney.xyz/img/SUNSET-PIXEL.png" alt="Pixel Land">
@@ -1882,6 +1969,7 @@
             </div>
           </div>
         </div>
+      </a>
         
         <div class="benefits-section mt-4">
           <h4>Benefits of Staking</h4>
@@ -2129,7 +2217,7 @@
               <div class="journey-step">
                 <div class="step-number">Step 3</div>
                 <h3>Stake Your Ingredients</h3>
-                <p>Stake them to our PixelJourney WaxDAO Farm via this portal or directly on:</p>
+                <p>Stake them to our PixelJourney WaxDAO Farm directly by logging in via this portal, or by visiting the original/official WaxDAO Farm UI on:</p>
                 <a href="https://waxdao.io/v2/farm/pixeljourney" target="_blank" class="waxdao-link">WaxDAO</a>
                 
                 <div class="staking-benefits">
