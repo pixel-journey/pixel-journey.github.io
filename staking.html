@@ -3009,6 +3009,7 @@
             await loadUserAssets();
             updateTemplateGrid();
             updateStats();
+            fetchClaimableRewards();
             hideConnectionLoading();
             return;
           }
@@ -3051,6 +3052,7 @@
             await loadUserAssets();
             updateTemplateGrid();
             updateStats();
+            fetchClaimableRewards();
             hideConnectionLoading();
           }
 
@@ -3079,6 +3081,7 @@
               await loadUserAssets();
               updateTemplateGrid();
               updateStats();
+              fetchClaimableRewards();
               hideConnectionLoading();
               return;
             }
@@ -3178,54 +3181,130 @@
       }
 
       async function fetchClaimableRewards() {
-        const rewardsDiv = document.getElementById('claimableRewards');
-        if (!userAccount) {
-          rewardsDiv.innerHTML = 'Please log in to see rewards.';
-          return;
+  const rewardsDiv = document.getElementById('claimableRewards');
+  if (!userAccount) {
+    rewardsDiv.innerHTML = 'Please log in to see rewards.';
+    return;
+  }
+
+  rewardsDiv.innerHTML = 'Loading rewards...';
+  console.log("Fetching rewards for account:", userAccount);
+
+  try {
+    // Create a new wax instance if needed (without login)
+    if (!wax) {
+      wax = new waxjs.WaxJS({
+        rpcEndpoint: 'https://wax.greymass.com',
+        tryAutoLogin: false
+      });
+    }
+
+    // Use the wax.rpc regardless of login method
+    const rpc = wax.rpc;
+    
+    // Initialize variables for pagination
+    let lower_bound = '';
+    let more = true;
+    let userStake = null;
+
+    // Loop through pages until we find the user or run out of results
+    while (more && !userStake) {
+      const response = await rpc.get_table_rows({
+        json: true,
+        code: 'farms.waxdao',    // Contract account
+        scope: 'farms.waxdao',   // Contract scope
+        table: 'stakers',        // Table name
+        lower_bound,
+        limit: 1000,             // Adjust limit as needed
+        reverse: false,
+        show_payer: false
+      });
+
+      console.log("Fetched page with", response.rows.length, "rows. More:", response.more);
+      
+      // Update pagination variables
+      more = response.more;
+      if (more) {
+        lower_bound = response.next_key;
+      }
+
+      // Find the user in the current page of results with the correct farmname
+      const matchingRows = response.rows.filter(row => row.user === userAccount);
+      console.log("Found", matchingRows.length, "rows matching user account");
+      
+      // Log all matching rows for debugging
+      matchingRows.forEach((row, index) => {
+        console.log(`Row ${index}:`, row);
+      });
+      
+      // Find the specific row for pixeljourney farm
+      userStake = matchingRows.find(row => row.farmname === 'pixeljourney');
+      
+      if (userStake) {
+        console.log("Found matching row for pixeljourney farm:", userStake);
+        break;
+      }
+    }
+
+    if (userStake && userStake.claimable_balances) {
+      // Parse the claimable balances
+      let balancesArray;
+      
+      try {
+        // If it's a string, parse it as JSON
+        if (typeof userStake.claimable_balances === 'string') {
+          balancesArray = JSON.parse(userStake.claimable_balances);
+        } else {
+          // If it's already an array, use it directly
+          balancesArray = userStake.claimable_balances;
         }
-
-        rewardsDiv.innerHTML = 'Loading rewards...';
-
-        try {
-          // Query the stakers table to find the user's entry
-
-          const rpc = wax.rpc;
-          const response = await rpc.get_table_rows({
-            json: true,
-            code: 'farms.waxdao',    // Contract account
-            scope: 'farms.waxdao',   // Contract scope
-            table: 'stakers',        // Table name
-            lower_bound: '',
-            upper_bound: '',
-            limit: 100,              // Adjust limit as needed
-            reverse: false,
-            show_payer: false
+        
+        // Format the rewards with at most 1 decimal place
+        if (balancesArray && balancesArray.length > 0) {
+          let formattedRewards = [];
+          
+          // Process each token balance
+          balancesArray.forEach(balance => {
+            // Extract token amount and symbol
+            const [amount, symbol] = balance.quantity.split(' ');
+            
+            // Format to at most 1 decimal place
+            const formattedAmount = parseFloat(amount).toFixed(1);
+            
+            // Add to formatted rewards array
+            formattedRewards.push(`${symbol}: ${formattedAmount}`);
+          });
+          
+          // Join with pipe separator
+          rewardsDiv.innerHTML = formattedRewards.join(' | ');
+          
+          // Enable claim button if any rewards are greater than zero
+          const hasClaimableTokens = balancesArray.some(balance => {
+            const [amount, symbol] = balance.quantity.split(' ');
+            return parseFloat(amount) > 0;
           });
 
-          // Find the user in the stakers table
-          const userStake = response.rows.find(row => row.user === userAccount);
-
-          if (userStake && userStake.claimable_balances) {
-            // Parse the claimable balances
-            let waxBalance;;
-
-            // Extract WAX balance from claimable_balances array
-            for (const balance of userStake.claimable_balances) {
-              
-                waxBalance = userStake.claimable_balances;
-                break;
-            }
-
-            // Format and display the rewards
-            rewardsDiv.innerHTML = `PXJ: ${waxBalance}`;
-          } else {
-            rewardsDiv.innerHTML = 'No claimable rewards found.';
-          }
-        } catch (error) {
-          console.error('Error fetching rewards:', error);
-          rewardsDiv.innerHTML = 'Error loading rewards. Please try again.';
+          // document.getElementById('claimButton').disabled = !hasClaimableTokens;
+        } else {
+          rewardsDiv.innerHTML = 'No claimable rewards found.';
+          document.getElementById('claimButton').disabled = true;
         }
+      } catch (parseError) {
+        console.error('Error parsing claimable balances:', parseError);
+        rewardsDiv.innerHTML = 'Error parsing rewards data.';
+        document.getElementById('claimButton').disabled = true;
       }
+    } else {
+      console.log("No matching stake found for user", userAccount, "in pixeljourney farm");
+      rewardsDiv.innerHTML = 'No claimable rewards found.';
+      document.getElementById('claimButton').disabled = true;
+    }
+  } catch (error) {
+    console.error('Error fetching rewards:', error);
+    rewardsDiv.innerHTML = 'Error loading rewards. Please try again.';
+    document.getElementById('claimButton').disabled = true;
+  }
+}
 
       async function claimRewards() {
         if (!userAccount) return showErrorMessage('Please log in first.');
