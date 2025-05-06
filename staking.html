@@ -2757,8 +2757,7 @@
             return;
           }
 
-          // If WAX auto-login not available, try Anchor Wallet
-          showConnectionLoading('Checking Anchor Wallet session...');
+
 
           // Initialize AnchorLink if not already done
           if (!anchorLink) {
@@ -2774,6 +2773,8 @@
           // Try to restore session
           const session = await anchorLink.restoreSession('pixeljourney');
           if (session) {
+                      // If WAX auto-login not available, try Anchor Wallet
+          showConnectionLoading('Checking Anchor Wallet session...');
             anchorSession = session;
             userAccount = session.auth.toString().split('@')[0];
 
@@ -2885,8 +2886,48 @@
           rewardsDiv.innerHTML = 'Please log in to see rewards.';
           return;
         }
+        
         rewardsDiv.innerHTML = 'Loading rewards...';
-        rewardsDiv.innerHTML = 'PXJ: ??? | WUF: ???';
+        
+        try {
+          // Query the stakers table to find the user's entry
+          const rpc = new eosjs_jsonrpc.JsonRpc('https://wax.greymass.com');
+          const response = await rpc.get_table_rows({
+            json: true,
+            code: 'farms.waxdao',    // Contract account
+            scope: 'farms.waxdao',   // Contract scope
+            table: 'stakers',        // Table name
+            lower_bound: '',
+            upper_bound: '',
+            limit: 100,              // Adjust limit as needed
+            reverse: false,
+            show_payer: false
+          });
+          
+          // Find the user in the stakers table
+          const userStake = response.rows.find(row => row.user === userAccount);
+          
+          if (userStake && userStake.claimable_balances) {
+            // Parse the claimable balances
+            let waxBalance = '0.00000000';
+            
+            // Extract WAX balance from claimable_balances array
+            for (const balance of userStake.claimable_balances) {
+              if (balance.contract === 'eosio.token') {
+                waxBalance = balance.quantity.split(' ')[0];
+                break;
+              }
+            }
+            
+            // Format and display the rewards
+            rewardsDiv.innerHTML = `PXJ: ${waxBalance}`;
+          } else {
+            rewardsDiv.innerHTML = 'No claimable rewards found.';
+          }
+        } catch (error) {
+          console.error('Error fetching rewards:', error);
+          rewardsDiv.innerHTML = 'Error loading rewards. Please try again.';
+        }
       }
 
       async function claimRewards() {
