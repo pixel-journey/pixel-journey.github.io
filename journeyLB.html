@@ -2087,13 +2087,40 @@ function applyTheme(isLight) {
         });
 
         // Fetch PXJ token supply data
-async function fetchPxjSupplyData() {
+        async function fetchPxjSupplyData() {
     try {
-        // These would be actual API calls in production
-        // For now, using placeholder values
+        // Constants
         const totalSupply = 10000000000; // 10 billion total supply
-        const circulatingSupply = 1900000000; // 1.9 billion circulating
-        const projectAccounts = 1203000000; // 1163 million in yet to be distributed accounts
+        
+        // Project accounts to exclude (these are allocated but not yet distributed)
+        const projectAccountsList = [
+            "farms.waxdao", "pxj", "dao.pxj", "reward.alcor", "nfthivecraft", 
+            "promo.pxj", "council.pxj", "pixals.pxj", "blend.nefty", "tf.waxdao",
+            "eosio.null", "waxdaomarket", "team.pxj", "dev.pxj", "wallet.taco"
+        ];
+        
+        // Fetch token holders data from API
+        const response = await fetch('https://www.api.bloks.io/wax/tokens?type=topHolders&chain=wax&contract=pixeljourney&symbol=PXJ&limit=1000');
+        const holdersData = await response.json();
+        
+        // Calculate circulating supply (sum of all holders)
+        let circulatingSupply = 0;
+        let projectAccounts = 0;
+        
+        // Process holders data
+        holdersData.forEach(holder => {
+            const account = holder[0];
+            const balance = parseFloat(holder[1]);
+            
+            circulatingSupply += balance;
+            
+            // Check if this is a project account
+            if (projectAccountsList.includes(account)) {
+                projectAccounts += balance;
+            }
+        });
+        
+        // Calculate distributed supply
         const distributedSupply = circulatingSupply - projectAccounts;
         
         // Get locked PXJ from leaderboard total
@@ -2102,14 +2129,32 @@ async function fetchPxjSupplyData() {
         
         // Update the UI
         document.getElementById('totalSupply').textContent = totalSupply.toLocaleString() + ' PXJ';
-        document.getElementById('circulatingSupply').textContent = circulatingSupply.toLocaleString() + ' PXJ';
-        document.getElementById('distributedSupply').textContent = distributedSupply.toLocaleString() + ' PXJ';
+        document.getElementById('circulatingSupply').textContent = Math.round(circulatingSupply).toLocaleString() + ' PXJ';
+        document.getElementById('distributedSupply').textContent = Math.round(distributedSupply).toLocaleString() + ' PXJ';
         document.getElementById('lockedSupply').textContent = lockedSupply.toLocaleString() + ' PXJ';
         
         // Create the chart
         createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply);
     } catch (error) {
         console.error('Error fetching PXJ supply data:', error);
+        // Fallback to hardcoded values in case of API failure
+        const totalSupply = 10000000000;
+        const circulatingSupply = 1900000000;
+        const projectAccounts = 1193000000;
+        const distributedSupply = circulatingSupply - projectAccounts;
+        
+        // Get locked PXJ from leaderboard total (same as above)
+        const lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
+            parseInt(document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong').textContent.replace(/[^0-9]/g, '')) : 0;
+        
+        // Update UI with fallback values
+        document.getElementById('totalSupply').textContent = totalSupply.toLocaleString() + ' PXJ';
+        document.getElementById('circulatingSupply').textContent = circulatingSupply.toLocaleString() + ' PXJ';
+        document.getElementById('distributedSupply').textContent = distributedSupply.toLocaleString() + ' PXJ';
+        document.getElementById('lockedSupply').textContent = lockedSupply.toLocaleString() + ' PXJ';
+        
+        // Create chart with fallback values
+        createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply);
     }
 }
 
