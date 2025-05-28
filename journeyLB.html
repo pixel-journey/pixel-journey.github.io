@@ -1386,7 +1386,7 @@
             <div class="supply-value" id="distributedSupply">Calculating...</div>
         </div>
         <div class="supply-item">
-            <div class="supply-label">Cycled into Crafts:</div>
+            <div class="supply-label">PXJ Reycled into Crafts:</div>
             <div class="supply-value" id="lockedSupply">Calculating...</div>
         </div>
     </div>
@@ -2131,7 +2131,7 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Unminted Supply', 'Minted Supply', 'Circulating Supply', 'Cycled into Crafts'],
+                labels: ['Unminted Supply', 'Minted Supply', 'Circulating Supply', 'PXJ Reycled into Crafts'],
                 datasets: [{
                     data: [
                         totalSupply - circulatingSupply,
