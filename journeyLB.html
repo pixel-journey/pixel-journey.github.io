@@ -1134,7 +1134,64 @@
     font-weight: 500;
 }
 
+/* PXJ Supply Visualization */
+#pxj-supply-visualization {
+    background: var(--gradient-secondary);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: var(--shadow-dark);
+    color: white;
+}
 
+.supply-title {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.supply-chart-container {
+    height: 300px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.supply-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.supply-item {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    min-width: 200px;
+}
+
+.supply-label {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.supply-value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .supply-details {
+        flex-direction: column;
+    }
+    
+    .supply-item {
+        width: 100%;
+    }
+}
 
 
         /* Add Google Font */
@@ -1156,7 +1213,7 @@
         <div class="stat" id="pxjPrice">PXJ: $0.00</div>
         <div class="stat" id="wpixalPrice">WPIXAL: $0.00</div>
 
-        <div class="dropdown d-inline-block">
+        <!-- <div class="dropdown d-inline-block">
             <button class="dashboard-btn dropdown-toggle" type="button" id="leaderboardsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 🏆 Leaderboards <i class="dropdown-arrow">▼</i>
             </button>
@@ -1166,7 +1223,7 @@
                 <li><a class="dropdown-item leaderboard-item" href="#">PX-dApp Rankings</a></li>
                 <li><a class="dropdown-item leaderboard-item" href="#">Discord Community Level Rankings</a></li>
             </ul>
-        </div>
+        </div> -->
 
             <button class="dashboard-btn" id="dashboardBtn">👾🧑‍🌾 Staking</button>
     <button class="dark-mode-toggle" id="darkModeToggle">Light Mode</button>
@@ -1308,6 +1365,32 @@
         </div>
         </div>
     </div>
+
+<!-- PXJ Supply Visualization Section -->
+<div id="pxj-supply-visualization" class="text-center p-4 mt-4 mb-4">
+    <h2 class="supply-title">PXJ Token Supply Distribution</h2>
+    <div class="supply-chart-container">
+        <canvas id="pxjSupplyChart"></canvas>
+    </div>
+    <div class="supply-details mt-3">
+        <div class="supply-item">
+            <div class="supply-label">Total Supply:</div>
+            <div class="supply-value" id="totalSupply">Calculating...</div>
+        </div>
+        <div class="supply-item">
+            <div class="supply-label">Minted Supply:</div>
+            <div class="supply-value" id="circulatingSupply">Calculating...</div>
+        </div>
+        <div class="supply-item">
+            <div class="supply-label">Distributed PXJ:</div>
+            <div class="supply-value" id="distributedSupply">Calculating...</div>
+        </div>
+        <div class="supply-item">
+            <div class="supply-label">Locked into Crafts:</div>
+            <div class="supply-value" id="lockedSupply">Calculating...</div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Collapsible Info Box -->
@@ -1704,6 +1787,8 @@
     // Add the total row at the bottom as well
     tbody.appendChild(totalRow);
 
+    fetchPxjSupplyData();
+
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
@@ -2000,6 +2085,102 @@ function applyTheme(isLight) {
                 calculateCombinedAPR();
             }, 2000); // Check every 2 seconds until prices are loaded
         });
+
+        // Fetch PXJ token supply data
+async function fetchPxjSupplyData() {
+    try {
+        // These would be actual API calls in production
+        // For now, using placeholder values
+        const totalSupply = 10000000000; // 10 billion total supply
+        const circulatingSupply = 1900000000; // 1.9 billion circulating
+        const projectAccounts = 1163000000; // 1163 million in yet to be distributed accounts
+        const distributedSupply = circulatingSupply - projectAccounts;
+        
+        // Get locked PXJ from leaderboard total
+        const lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
+            parseInt(document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong').textContent.replace(/[^0-9]/g, '')) : 0;
+        
+        // Update the UI
+        document.getElementById('totalSupply').textContent = totalSupply.toLocaleString() + ' PXJ';
+        document.getElementById('circulatingSupply').textContent = circulatingSupply.toLocaleString() + ' PXJ';
+        document.getElementById('distributedSupply').textContent = distributedSupply.toLocaleString() + ' PXJ';
+        document.getElementById('lockedSupply').textContent = lockedSupply.toLocaleString() + ' PXJ';
+        
+        // Create the chart
+        createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply);
+    } catch (error) {
+        console.error('Error fetching PXJ supply data:', error);
+    }
+}
+
+// Create PXJ supply chart
+function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply) {
+    const ctx = document.getElementById('pxjSupplyChart').getContext('2d');
+    
+    // Load Chart.js from CDN if not already loaded
+    if (typeof Chart === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = () => createChart();
+        document.head.appendChild(script);
+    } else {
+        createChart();
+    }
+    
+    function createChart() {
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Unminted Supply', 'Minted Supply', 'Distributed Supply', 'Locked into Crafts'],
+                datasets: [{
+                    data: [
+                        totalSupply - circulatingSupply,
+                        circulatingSupply - distributedSupply,
+                        distributedSupply - lockedSupply,
+                        lockedSupply
+                    ],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'white',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const percentage = ((value / totalSupply) * 100).toFixed(2);
+                                return `${context.label}: ${value.toLocaleString()} PXJ (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
 
         // Add particle effects on hover
 document.querySelectorAll('.apr-card').forEach(card => {
