@@ -730,7 +730,7 @@ p {
 }
 
 .progress .progress-bar {
-  width: 95%;
+  width: 100%;
   -webkit-transition: width 2s ease-in-out;
   transition: width 2s ease-in-out;
 }
@@ -1190,4 +1190,21 @@ textarea.form-control {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-/*# sourceMappingURL=style.css.map */
+/* Cat-themed elements */
+.purr-gradient {
+  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+}
+
+.catnip-gradient {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+}
+
+/* Subtle paw animation for token displays */
+@keyframes paw-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.purr-token:hover, .catnip-token:hover {
+  animation: paw-bounce 1s infinite;
+}

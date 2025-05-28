@@ -3,6 +3,8 @@
 
 // Define the API endpoints
 const apiUrlYEET = "https://alcor.exchange/api/v2/tokens/yeet-token.yeet";
+const apiUrlPURR = "https://alcor.exchange/api/v2/tokens/purr-token.yeet";
+const apiUrlCATNIP = "https://alcor.exchange/api/v2/tokens/catnip-token.yeet";
 const apiUrlPXJ = "https://alcor.exchange/api/v2/tokens/pxj-pixeljourney";
 const apiUrlWAX = "https://alcor.exchange/api/v2/tokens/wax-eosio.token";
 const apiUrlLSWAX = "https://alcor.exchange/api/v2/tokens/lswax-token.fusion";
@@ -43,8 +45,10 @@ const apiUrlHolders = 'https://wax.light-api.net/api/holdercount/wax/token.yeet/
 async function fetchAndUpdatePrice() {
   try {
     // Run all fetch requests concurrently using Promise.all
-    const [responseYEET, responsePXJ, responseWAX, responseLSWAX, responseLSW, responseTOOLS] = await Promise.all([
+    const [responseYEET, responsePURR, responseCATNIP, responsePXJ, responseWAX, responseLSWAX, responseLSW, responseTOOLS] = await Promise.all([
       fetch(apiUrlYEET),
+      fetch(apiUrlPURR),
+      fetch(apiUrlCATNIP),
       fetch(apiUrlPXJ),
       fetch(apiUrlWAX),
       fetch(apiUrlLSWAX),
@@ -53,13 +57,15 @@ async function fetchAndUpdatePrice() {
     ]);
 
     // Check if responses are OK
-    if (!responseYEET.ok || !responsePXJ.ok || !responseWAX.ok || !responseLSWAX.ok || !responseLSW.ok || !responseTOOLS.ok) {
+    if (!responseYEET.ok || !responsePURR.ok || !responseCATNIP.ok || !responsePXJ.ok || !responseWAX.ok || !responseLSWAX.ok || !responseLSW.ok || !responseTOOLS.ok) {
       throw new Error('An error occurred while fetching the token prices');
     }
 
     // Parse JSON responses concurrently
-    const [dataYEET, dataPXJ, dataWAX, dataLSWAX, dataLSW, dataTOOLS] = await Promise.all([
+    const [dataYEET, dataPURR, dataCATNIP, dataPXJ, dataWAX, dataLSWAX, dataLSW, dataTOOLS] = await Promise.all([
       responseYEET.json(),
+      responsePURR.json(),
+      responseCATNIP.json(),
       responsePXJ.json(),
       responseWAX.json(),
       responseLSWAX.json(),
@@ -67,6 +73,8 @@ async function fetchAndUpdatePrice() {
       responseTOOLS.json()
     ]);
 
+    // Calculate token ratios
+    const YEETPURR = dataPURR.system_price/dataYEET.system_price;
     const YEETPXJ = dataPXJ.system_price/dataYEET.system_price;
     const YEETLSW = dataLSW.system_price/dataYEET.system_price;
     const YEETLSWAX = dataLSWAX.system_price/dataYEET.system_price;
@@ -93,7 +101,12 @@ async function fetchAndUpdatePrice() {
     // Update HTML with TOOLS prices
     document.getElementById('tools-yeet-price').textContent = YEETTOOLS.toFixed(2);
 
-
+    // Update HTML with PURR prices
+    document.getElementById('purr-usd-price').textContent = dataPURR.usd_price.toFixed(6);
+    document.getElementById('purr-yeet-price').textContent = YEETPURR.toFixed(2);
+    
+    // Update HTML with CATNIP prices
+    document.getElementById('catnip-usd-price').textContent = dataCATNIP.usd_price.toFixed(6);
 
             getTokenHolders();
 
