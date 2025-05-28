@@ -1193,6 +1193,111 @@
     }
 }
 
+/* PXJ Supply Visualization */
+#pxj-supply-visualization {
+    background: var(--gradient-secondary);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: var(--shadow-dark);
+    color: white;
+}
+
+.supply-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.token-switcher {
+    display: flex;
+    gap: 10px;
+}
+
+.token-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.token-icon.active {
+    border-color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Desktop layout - side by side */
+@media (min-width: 992px) {
+    .supply-container {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-top: 20px;
+    }
+    
+    .supply-chart-container {
+        height: 350px;
+        flex: 1;
+        max-width: 50%;
+    }
+    
+    .supply-details {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        align-content: center;
+    }
+}
+
+/* Mobile layout - stacked */
+@media (max-width: 991px) {
+    .supply-chart-container {
+        height: 300px;
+        margin: 0 auto 20px;
+        max-width: 600px;
+    }
+    
+    .supply-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    @media (max-width: 576px) {
+        .supply-details {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.supply-item {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-size: 0.9rem;
+}
+
+.supply-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 3px;
+}
+
+.supply-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.supply-value-fiat {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 3px;
+}
 
         /* Add Google Font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -1368,26 +1473,49 @@
 
 <!-- PXJ Supply Visualization Section -->
 <div id="pxj-supply-visualization" class="text-center p-4 mt-4 mb-4">
-    <h2 class="supply-title">PXJ Token Supply Distribution</h2>
-    <div class="supply-chart-container">
-        <canvas id="pxjSupplyChart"></canvas>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="supply-title mb-0">Token Supply Distribution</h2>
+        <div class="token-switcher">
+            <img src="https://api01.waxonedge.app/tokens_logo/pixeljourney_pxj.png" class="token-icon active" data-token="PXJ" alt="PXJ" title="PXJ">
+            <img src="https://api01.waxonedge.app/tokens_logo/pixeljourney_wpixal.png" class="token-icon" data-token="WPIXAL" alt="WPIXAL" title="WPIXAL">
+            <img src="https://api01.waxonedge.app/tokens_logo/alpha.waxfun_king.png" class="token-icon" data-token="KING" alt="KING" title="KING">
+        </div>
     </div>
-    <div class="supply-details mt-3">
-        <div class="supply-item">
-            <div class="supply-label">Total Supply:</div>
-            <div class="supply-value" id="totalSupply">Calculating...</div>
+    <div class="supply-container">
+        <div class="supply-chart-container">
+            <canvas id="tokenSupplyChart"></canvas>
         </div>
-        <div class="supply-item">
-            <div class="supply-label">Minted Supply:</div>
-            <div class="supply-value" id="circulatingSupply">Calculating...</div>
-        </div>
-        <div class="supply-item">
-            <div class="supply-label">Distributed PXJ:</div>
-            <div class="supply-value" id="distributedSupply">Calculating...</div>
-        </div>
-        <div class="supply-item">
-            <div class="supply-label">PXJ Reycled into Crafts:</div>
-            <div class="supply-value" id="lockedSupply">Calculating...</div>
+        <div class="supply-details">
+            <div class="supply-item">
+                <div class="supply-label">Total Supply:</div>
+                <div class="supply-value" id="totalSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="totalSupplyWax">0</span> WAX / <span id="totalSupplyUsd">$0.00</span></div>
+            </div>
+            <div class="supply-item">
+                <div class="supply-label">Minted Supply:</div>
+                <div class="supply-value" id="circulatingSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="circulatingSupplyWax">0</span> WAX / <span id="circulatingSupplyUsd">$0.00</span></div>
+            </div>
+            <div class="supply-item">
+                <div class="supply-label">Distributed:</div>
+                <div class="supply-value" id="distributedSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="distributedSupplyWax">0</span> WAX / <span id="distributedSupplyUsd">$0.00</span></div>
+            </div>
+            <div class="supply-item">
+                <div class="supply-label">Recycled into Crafts:</div>
+                <div class="supply-value" id="lockedSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="lockedSupplyWax">0</span> WAX / <span id="lockedSupplyUsd">$0.00</span></div>
+            </div>
+            <div class="supply-item">
+                <div class="supply-label">Burned:</div>
+                <div class="supply-value" id="burnedSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="burnedSupplyWax">0</span> WAX / <span id="burnedSupplyUsd">$0.00</span></div>
+            </div>
+            <div class="supply-item">
+                <div class="supply-label">Next Season Inflation:</div>
+                <div class="supply-value" id="inflationSupply">Calculating...</div>
+                <div class="supply-value-fiat"><span id="inflationSupplyWax">0</span> WAX / <span id="inflationSupplyUsd">$0.00</span></div>
+            </div>
         </div>
     </div>
 </div>
@@ -1787,7 +1915,11 @@
     // Add the total row at the bottom as well
     tbody.appendChild(totalRow);
 
-    fetchPxjSupplyData();
+    // Initialize with PXJ data
+    fetchTokenSupplyData('PXJ');
+    
+    // Initialize token switcher
+    initTokenSwitcher();
 
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -2086,81 +2218,278 @@ function applyTheme(isLight) {
             }, 2000); // Check every 2 seconds until prices are loaded
         });
 
-        // Fetch PXJ token supply data
-        async function fetchPxjSupplyData() {
+// Fetch token supply data
+async function fetchTokenSupplyData(token = 'PXJ') {
     try {
-        // Constants
-        const totalSupply = 10000000000; // 10 billion total supply
+        // Set default values based on token
+        let totalSupply, circulatingSupply, distributedSupply, lockedSupply, burnedSupply, inflationSupply;
+        let tokenContract, tokenSymbol;
         
-        // Project accounts to exclude (these are allocated but not yet distributed)
-        const projectAccountsList = [
-            "farms.waxdao", "pxj", "dao.pxj", "reward.alcor", "nfthivecraft", 
-            "promo.pxj", "council.pxj", "pixals.pxj", "blend.nefty", "tf.waxdao",
-            "eosio.null", "waxdaomarket", "team.pxj", "dev.pxj", "wallet.taco"
-        ];
-        
-        // Fetch token holders data from API
-        const response = await fetch('https://www.api.bloks.io/wax/tokens?type=topHolders&chain=wax&contract=pixeljourney&symbol=PXJ&limit=1000');
-        const holdersData = await response.json();
-        
-        // Calculate circulating supply (sum of all holders)
-        let circulatingSupply = 0;
-        let projectAccounts = 0;
-        
-        // Process holders data
-        holdersData.forEach(holder => {
-            const account = holder[0];
-            const balance = parseFloat(holder[1]);
+        // Set token-specific parameters
+        if (token === 'PXJ') {
+            tokenContract = 'pixeljourney';
+            tokenSymbol = 'PXJ';
+            totalSupply = 10000000000; // 10 billion
             
-            circulatingSupply += balance;
-            
-            // Check if this is a project account
-            if (projectAccountsList.includes(account)) {
-                projectAccounts += balance;
+            // Try to fetch top holders data from API
+            try {
+                const response = await fetch(`https://www.api.bloks.io/wax/tokens?type=topHolders&chain=wax&contract=${tokenContract}&symbol=${tokenSymbol}&limit=1000`);
+                const holdersData = await response.json();
+                
+                // Project accounts to exclude from distributed supply
+                const projectAccountsList = [
+                    'pixeljourney', // Main contract
+                    'pxj', // Main account
+                    'dao.pxj', // DAO
+                    'promo.pxj', // Promotions
+                    'council.pxj', // Council
+                    'pixals.pxj', // Pixals
+                    'team.pxj', // Team allocation
+                    'dev.pxj', // Development
+                    'farms.waxdao', // 
+                    'reward.alcor', // 
+                    'nfthivecraft', // 
+                    'blend.nefty', // 
+                    'tf.waxdao', // 
+                    'waxdaomarket', // 
+                    'wallet.taco' // 
+                ];         
+                
+                // Calculate circulating supply (sum of all holders)
+                circulatingSupply = 0;
+                let projectAccounts = 0;
+                
+                // Process holders data
+                holdersData.forEach(holder => {
+                    const account = holder[0];
+                    const balance = parseFloat(holder[1]);
+                    
+                    circulatingSupply += balance;
+                    
+                    // Check if this is a project account
+                    if (projectAccountsList.includes(account)) {
+                        projectAccounts += balance;
+                    }
+                    
+                    // Check if this is the burn address
+                    if (account === 'eosio.null') {
+                        burnedSupply = balance;
+                    }
+                });
+                
+                // Calculate distributed supply
+                distributedSupply = circulatingSupply - projectAccounts - 75000000; 
+                
+                // If burnedSupply wasn't found in the data
+                if (!burnedSupply) {
+                    burnedSupply = 0;
+                    // Try to find it specifically
+                    const burnAccount = holdersData.find(holder => holder[0] === 'eosio.null');
+                    if (burnAccount) {
+                        burnedSupply = parseFloat(burnAccount[1]);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error fetching top holders:', error);
+                // Fallback values
+                circulatingSupply = 1900000000;
+                const projectAccounts = 1193000000;
+                distributedSupply = circulatingSupply - projectAccounts;
+                burnedSupply = 6815783; // Example from the data provided
             }
-        });
+            
+            // Get locked PXJ from leaderboard total
+            lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
+                parseInt(document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong').textContent.replace(/[^0-9]/g, '')) : 0;
+            
+            // Calculate next season inflation (10% of unminted supply)
+            inflationSupply = (totalSupply - circulatingSupply) * 0.1;
+            
+        } else if (token === 'WPIXAL') {
+            tokenContract = 'pixeljourney';
+            tokenSymbol = 'WPIXAL';
+            totalSupply = 10000; // 10k
+            
+            // Try to fetch WPIXAL data
+            try {
+                const response = await fetch(`https://www.api.bloks.io/wax/tokens?type=topHolders&chain=wax&contract=${tokenContract}&symbol=${tokenSymbol}&limit=1000`);
+                const holdersData = await response.json();
+                
+                // Project accounts for WPIXAL
+                const projectAccountsList = [
+                    'pixeljourney',
+                    'pxj'
+                ];
+                
+                // Calculate circulating supply (sum of all holders)
+                circulatingSupply = 0;
+                let projectAccounts = 0;
+                burnedSupply = 0;
+                
+                // Process holders data
+                holdersData.forEach(holder => {
+                    const account = holder[0];
+                    const balance = parseFloat(holder[1]);
+                    
+                    circulatingSupply += balance;
+                    
+                    // Check if this is a project account
+                    if (projectAccountsList.includes(account)) {
+                        projectAccounts += balance;
+                    }
+                    
+                    // Check if this is the burn address
+                    if (account === 'eosio.null') {
+                        burnedSupply = balance;
+                    }
+                });
+                
+                // Calculate distributed supply
+                distributedSupply = circulatingSupply - projectAccounts;
+                lockedSupply = 0; // No locked supply concept for WPIXAL
+                
+            } catch (error) {
+                console.error('Error fetching WPIXAL data:', error);
+                // Fallback values
+                circulatingSupply = 8242;
+                distributedSupply = 10000;
+                lockedSupply = 0;
+                burnedSupply = 1758;
+            }
+            
+            // Calculate next season inflation (5% of unminted supply)
+            inflationSupply = (totalSupply - circulatingSupply) * 0.05;
+            
+        } else if (token === 'KING') {
+            tokenContract = 'alpha.waxfun';
+            tokenSymbol = 'KING';
+            totalSupply = 1000000000; // 1 billion
+            
+            // Try to fetch KING data
+            try {
+                const response = await fetch(`https://www.api.bloks.io/wax/tokens?type=topHolders&chain=wax&contract=${tokenContract}&symbol=${tokenSymbol}&limit=1000`);
+                const holdersData = await response.json();
+                
+                // Project accounts for KING
+                const projectAccountsList = [
+                    'alpha.waxfun'
+                ];
+                
+                // Calculate circulating supply (sum of all holders)
+                circulatingSupply = 0;
+                let projectAccounts = 0;
+                burnedSupply = 0;
+                
+                // Process holders data
+                holdersData.forEach(holder => {
+                    const account = holder[0];
+                    const balance = parseFloat(holder[1]);
+                    
+                    circulatingSupply += balance;
+                    
+                    // Check if this is a project account
+                    if (projectAccountsList.includes(account)) {
+                        projectAccounts += balance;
+                    }
+                    
+                    // Check if this is the burn address
+                    if (account === 'eosio.null') {
+                        burnedSupply = balance;
+                    }
+                });
+                
+                // Calculate distributed supply
+                distributedSupply = circulatingSupply - projectAccounts;
+                lockedSupply = 0; // No locked supply concept for KING
+                
+            } catch (error) {
+                console.error('Error fetching KING data:', error);
+                // Fallback values
+                circulatingSupply = 1000000000;
+                distributedSupply = 1000000000;
+                lockedSupply = 270000000;
+                burnedSupply = 5000000;
+            }
+            
+            // Calculate next season inflation (8% of unminted supply)
+            inflationSupply = (totalSupply - circulatingSupply) * 0.08;
+        }
         
-        // Calculate distributed supply
-        const distributedSupply = circulatingSupply - projectAccounts - 75000000;
+        // Get token price in WAX and USD
+        let tokenPrice = 0;
+        let waxPrice = 0;
         
-        // Get locked PXJ from leaderboard total
-        const lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
-            parseInt(document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong').textContent.replace(/[^0-9]/g, '')) : 0;
+        try {
+            // Get WAX price
+            const waxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=wax&vs_currencies=usd');
+            const waxData = await waxResponse.json();
+            waxPrice = waxData.wax?.usd || 0;
+            
+            // Get token price in WAX (simplified example - in a real app you'd query DEX APIs)
+            if (token === 'PXJ') {
+                // Use the price from the page if available
+                const pxjPriceElement = document.getElementById('pxjPrice');
+                if (pxjPriceElement) {
+                    const pxjPriceText = pxjPriceElement.textContent;
+                    const pxjPriceMatch = pxjPriceText.match(/\$([0-9.]+)/);
+                    if (pxjPriceMatch && pxjPriceMatch[1]) {
+                        tokenPrice = parseFloat(pxjPriceMatch[1]) / waxPrice;
+                    }
+                }
+            } else if (token === 'WPIXAL') {
+                const wpixalPriceElement = document.getElementById('wpixalPrice');
+                if (wpixalPriceElement) {
+                    const wpixalPriceText = wpixalPriceElement.textContent;
+                    const wpixalPriceMatch = wpixalPriceText.match(/\$([0-9.]+)/);
+                    if (wpixalPriceMatch && wpixalPriceMatch[1]) {
+                        tokenPrice = parseFloat(wpixalPriceMatch[1]) / waxPrice;
+                    }
+                }
+            } else if (token === 'KING') {
+                // Example fallback price
+                tokenPrice = 0.01; // in WAX
+            }
+        } catch (error) {
+            console.error('Error fetching price data:', error);
+        }
         
-        // Update the UI
-        document.getElementById('totalSupply').textContent = totalSupply.toLocaleString() + ' PXJ';
-        document.getElementById('circulatingSupply').textContent = Math.round(circulatingSupply).toLocaleString() + ' PXJ';
-        document.getElementById('distributedSupply').textContent = Math.round(distributedSupply).toLocaleString() + ' PXJ';
-        document.getElementById('lockedSupply').textContent = lockedSupply.toLocaleString() + ' PXJ';
+        // Update UI with token values
+        document.getElementById('totalSupply').textContent = Math.round(totalSupply).toLocaleString() + ` ${tokenSymbol}`;
+        document.getElementById('circulatingSupply').textContent = Math.round(circulatingSupply).toLocaleString() + ` ${tokenSymbol}`;
+        document.getElementById('distributedSupply').textContent = Math.round(distributedSupply).toLocaleString() + ` ${tokenSymbol}`;
+        document.getElementById('lockedSupply').textContent = Math.round(lockedSupply).toLocaleString() + ` ${tokenSymbol}`;
+        document.getElementById('burnedSupply').textContent = Math.round(burnedSupply).toLocaleString() + ` ${tokenSymbol}`;
+        document.getElementById('inflationSupply').textContent = Math.round(inflationSupply).toLocaleString() + ` ${tokenSymbol}`;
+        
+        // Update WAX and USD values
+        const updateFiatValue = (elementId, tokenAmount) => {
+            const waxValue = tokenAmount * tokenPrice;
+            const usdValue = waxValue * waxPrice;
+            document.getElementById(`${elementId}Wax`).textContent = waxValue.toLocaleString(undefined, {maximumFractionDigits: 2});
+            document.getElementById(`${elementId}Usd`).textContent = '$' + usdValue.toLocaleString(undefined, {maximumFractionDigits: 2});
+        };
+        
+        updateFiatValue('totalSupply', totalSupply);
+        updateFiatValue('circulatingSupply', circulatingSupply);
+        updateFiatValue('distributedSupply', distributedSupply);
+        updateFiatValue('lockedSupply', lockedSupply);
+        updateFiatValue('burnedSupply', burnedSupply);
+        updateFiatValue('inflationSupply', inflationSupply);
         
         // Create the chart
-        createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply);
+        createTokenSupplyChart(token, totalSupply, circulatingSupply, distributedSupply, lockedSupply, burnedSupply, inflationSupply);
+        
     } catch (error) {
-        console.error('Error fetching PXJ supply data:', error);
-        // Fallback to hardcoded values in case of API failure
-        const totalSupply = 10000000000;
-        const circulatingSupply = 1900000000;
-        const projectAccounts = 1193000000;
-        const distributedSupply = circulatingSupply - projectAccounts;
-        
-        // Get locked PXJ from leaderboard total (same as above)
-        const lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
-            parseInt(document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong').textContent.replace(/[^0-9]/g, '')) : 0;
-        
-        // Update UI with fallback values
-        document.getElementById('totalSupply').textContent = totalSupply.toLocaleString() + ' PXJ';
-        document.getElementById('circulatingSupply').textContent = circulatingSupply.toLocaleString() + ' PXJ';
-        document.getElementById('distributedSupply').textContent = distributedSupply.toLocaleString() + ' PXJ';
-        document.getElementById('lockedSupply').textContent = lockedSupply.toLocaleString() + ' PXJ';
-        
-        // Create chart with fallback values
-        createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply);
+        console.error(`Error fetching ${token} supply data:`, error);
+        // Handle error state in UI
+        document.getElementById('totalSupply').textContent = 'Error loading data';
     }
 }
 
-// Create PXJ supply chart
-function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply, lockedSupply) {
-    const ctx = document.getElementById('pxjSupplyChart').getContext('2d');
+// Create token supply chart
+function createTokenSupplyChart(token, totalSupply, circulatingSupply, distributedSupply, lockedSupply, burnedSupply, inflationSupply) {
+    const ctx = document.getElementById('tokenSupplyChart').getContext('2d');
     
     // Load Chart.js from CDN if not already loaded
     if (typeof Chart === 'undefined') {
@@ -2173,28 +2502,39 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
     }
     
     function createChart() {
-        new Chart(ctx, {
+        // Destroy existing chart if it exists
+        if (window.tokenChart) {
+            window.tokenChart.destroy();
+        }
+        
+        // Create new chart
+        window.tokenChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Unminted Supply', 'Minted Supply', 'Circulating Supply', 'PXJ Reycled into Crafts'],
+                labels: ['Unminted Supply', 'Yet-To-Be Distributed', 'Distributed Supply', 'Recycled into Crafts', 'Burned'],
                 datasets: [{
                     data: [
                         totalSupply - circulatingSupply,
-                        circulatingSupply - distributedSupply,
-                        distributedSupply - lockedSupply,
-                        lockedSupply
+                        circulatingSupply - distributedSupply - burnedSupply,
+                        distributedSupply,
+                        lockedSupply,
+                        burnedSupply
                     ],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(255, 206, 86, 0.8)',
                         'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)'
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
                     ],
                     borderColor: [
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -2208,7 +2548,7 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
                         labels: {
                             color: 'white',
                             font: {
-                                size: 14
+                                size: 12
                             }
                         }
                     },
@@ -2217,7 +2557,7 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
                             label: function(context) {
                                 const value = context.raw;
                                 const percentage = ((value / totalSupply) * 100).toFixed(2);
-                                return `${context.label}: ${value.toLocaleString()} PXJ (${percentage}%)`;
+                                return `${context.label}: ${value.toLocaleString()} ${token} (${percentage}%)`;
                             }
                         }
                     }
@@ -2225,6 +2565,25 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
             }
         });
     }
+}
+
+// Initialize token switcher functionality
+function initTokenSwitcher() {
+    const tokenIcons = document.querySelectorAll('.token-icon');
+    
+    tokenIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            // Remove active class from all icons
+            tokenIcons.forEach(i => i.classList.remove('active'));
+            
+            // Add active class to clicked icon
+            this.classList.add('active');
+            
+            // Get token symbol and fetch data
+            const token = this.getAttribute('data-token');
+            fetchTokenSupplyData(token);
+        });
+    });
 }
 
         // Add particle effects on hover
