@@ -2131,7 +2131,7 @@ function createPxjSupplyChart(totalSupply, circulatingSupply, distributedSupply,
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Unminted Supply', 'Minted Supply', 'Distributed Supply', 'Cycled into Crafts'],
+                labels: ['Unminted Supply', 'Minted Supply', 'Circulating Supply', 'Cycled into Crafts'],
                 datasets: [{
                     data: [
                         totalSupply - circulatingSupply,
