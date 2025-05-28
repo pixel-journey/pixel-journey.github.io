@@ -2121,7 +2121,7 @@ function applyTheme(isLight) {
         });
         
         // Calculate distributed supply
-        const distributedSupply = circulatingSupply - projectAccounts;
+        const distributedSupply = circulatingSupply - projectAccounts - 75000000;
         
         // Get locked PXJ from leaderboard total
         const lockedSupply = document.querySelector('#leaderboard > tbody > tr:nth-child(1) > td:nth-child(3) > strong') ? 
