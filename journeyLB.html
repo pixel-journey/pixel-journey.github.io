@@ -1750,7 +1750,7 @@
         }
 
         async function fetchTemplateHolders(template) {
-            const apiUrl = `https://wax.api.atomicassets.io/atomicassets/v1/accounts?template_id=${template.id}&burned=false&page=1&limit=1000&order=desc`;
+            const apiUrl = `https://atomic-wax.a-dex.xyz/atomicassets/v1/accounts?template_id=${template.id}&burned=false&page=1&limit=1000&order=desc`;
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
