@@ -3401,7 +3401,7 @@
           let page = 1;
 
           while (true) {
-            const response = await fetch(`https://wax.api.atomicassets.io/atomicassets/v1/assets?owner=${userAccount}&collection_name=pixeljourney&limit=1000&page=${page}`);
+            const response = await fetch(`https://atomic-wax.a-dex.xyz/atomicassets/v1/assets?owner=${userAccount}&collection_name=pixeljourney&limit=1000&page=${page}`);
             const data = await response.json();
             const pageAssets = data.data;
 
