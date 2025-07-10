@@ -364,11 +364,6 @@ body {
     display: block;
   }
   
-  /* Adjust main content for mobile */
-  .titleOT {
-    margin-left: 0;
-    margin-right: 0;
-  }
   
   #navigation {
     padding-left: 50px;
