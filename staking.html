@@ -3191,80 +3191,88 @@
   console.log("Fetching rewards for account:", userAccount);
 
   try {
-    // Create a new wax instance if needed (without login)
-    if (!wax) {
-      wax = new waxjs.WaxJS({
-        rpcEndpoint: 'https://wax.greymass.com',
-        tryAutoLogin: false
-      });
-    }
-
-    // Use the wax.rpc regardless of login method
-    const rpc = wax.rpc;
+    const url = "https://api.hivebp.io/v1/chain/get_table_rows";
     
-    // Initialize variables for pagination
-    let lower_bound = '';
-    let more = true;
-    let userStake = null;
+    const payload = {
+      table: "stakers",
+      scope: "farms.waxdao",
+      code: "farms.waxdao",
+      limit: 1000,
+      key_type: "name",
+      index_position: 3,
+      lower_bound: userAccount,
+      upper_bound: userAccount,
+      json: true
+    };
 
-    // Loop through pages until we find the user or run out of results
-    while (more && !userStake) {
-      const response = await rpc.get_table_rows({
-        json: true,
-        code: 'farms.waxdao',    // Contract account
-        scope: 'farms.waxdao',   // Contract scope
-        table: 'stakers',        // Table name
-        lower_bound,
-        limit: 1000,             // Adjust limit as needed
-        reverse: false,
-        show_payer: false
-      });
+    let allRows = [];
+    let nextKey = "";
 
-      console.log("Fetched page with", response.rows.length, "rows. More:", response.more);
-      
-      // Update pagination variables
-      more = response.more;
-      if (more) {
-        lower_bound = response.next_key;
+    // Fetch all pages of results
+    while (true) {
+      if (nextKey) {
+        payload.lower_bound = nextKey;
       }
 
-      // Find the user in the current page of results with the correct farmname
-      const matchingRows = response.rows.filter(row => row.user === userAccount);
-      console.log("Found", matchingRows.length, "rows matching user account");
-      
-      // Log all matching rows for debugging
-      matchingRows.forEach((row, index) => {
-        console.log(`Row ${index}:`, row);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
       });
-      
-      // Find the specific row for pixeljourney farm
-      userStake = matchingRows.find(row => row.farmname === 'pixeljourney');
-      
-      if (userStake) {
-        console.log("Found matching row for pixeljourney farm:", userStake);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      allRows = [...allRows, ...data.rows];
+
+      if (data.more) {
+        nextKey = data.next_key;
+      } else {
         break;
       }
     }
 
-    if (userStake && userStake.claimable_balances) {
-      // Parse the claimable balances
-      let balancesArray;
+    console.log("Fetched", allRows.length, "rows for user", userAccount);
+    
+    // Find the pixeljourney farm for this user
+    const pixeljourneyFarm = allRows.find(row => row.farmname === "pixeljourney");
+
+    if (pixeljourneyFarm) {
+      console.log("Found pixeljourney farm data:", pixeljourneyFarm);
       
-      try {
-        // If it's a string, parse it as JSON
-        if (typeof userStake.claimable_balances === 'string') {
-          balancesArray = JSON.parse(userStake.claimable_balances);
-        } else {
-          // If it's already an array, use it directly
-          balancesArray = userStake.claimable_balances;
-        }
+      // Calculate claimable rewards based on rates and elapsed time
+      const now = Math.floor(Date.now() / 1000);
+      const elapsedSeconds = now - pixeljourneyFarm.last_state_change;
+      const elapsedHours = elapsedSeconds / 3600;
+      
+      console.log("Time since last claim:", elapsedHours.toFixed(2), "hours");
+
+      // Check if the farm has rates_per_hour defined
+      if (pixeljourneyFarm.rates_per_hour && pixeljourneyFarm.rates_per_hour.length > 0) {
+        const claimableBalances = pixeljourneyFarm.rates_per_hour.map(rate => {
+          const [amountStr, symbol] = rate.quantity.split(" ");
+          const rateNum = parseFloat(amountStr);
+          const precision = amountStr.split(".")[1]?.length || 0;
+          const earned = (rateNum * elapsedHours).toFixed(precision);
+          
+          return {
+            quantity: `${earned} ${symbol}`,
+            contract: rate.contract
+          };
+        });
+
+        console.log("Calculated claimable balances:", claimableBalances);
         
-        // Format the rewards with at most 1 decimal place
-        if (balancesArray && balancesArray.length > 0) {
+        // Format and display the rewards
+        if (claimableBalances && claimableBalances.length > 0) {
           let formattedRewards = [];
           
           // Process each token balance
-          balancesArray.forEach(balance => {
+          claimableBalances.forEach(balance => {
             // Extract token amount and symbol
             const [amount, symbol] = balance.quantity.split(' ');
             
@@ -3279,7 +3287,7 @@
           rewardsDiv.innerHTML = formattedRewards.join(' | ');
           
           // Enable claim button if any rewards are greater than zero
-          const hasClaimableTokens = balancesArray.some(balance => {
+          const hasClaimableTokens = claimableBalances.some(balance => {
             const [amount, symbol] = balance.quantity.split(' ');
             return parseFloat(amount) > 0;
           });
@@ -3289,14 +3297,14 @@
           rewardsDiv.innerHTML = 'No claimable rewards found.';
           document.getElementById('claimButton').disabled = true;
         }
-      } catch (parseError) {
-        console.error('Error parsing claimable balances:', parseError);
-        rewardsDiv.innerHTML = 'Error parsing rewards data.';
+      } else {
+        console.log("No rates_per_hour found for farm");
+        rewardsDiv.innerHTML = 'No reward rates configured for this farm.';
         document.getElementById('claimButton').disabled = true;
       }
     } else {
       console.log("No matching stake found for user", userAccount, "in pixeljourney farm");
-      rewardsDiv.innerHTML = 'No claimable rewards found.';
+      rewardsDiv.innerHTML = 'No staking position found.';
       document.getElementById('claimButton').disabled = true;
     }
   } catch (error) {

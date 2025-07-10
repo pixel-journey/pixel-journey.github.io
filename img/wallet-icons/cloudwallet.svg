@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="cloud_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4da6ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2979ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="url(#cloud_gradient)" />
+  
+  <!-- Cloud shape -->
+  <path d="M75,55 C75,47.5 68.5,40 60,40 C55,30 40,30 35,40 C25,40 20,47.5 25,55 C20,60 25,70 35,70 L65,70 C75,70 80,60 75,55 Z" fill="white" />
+  
+  <!-- Wallet symbol -->
+  <rect x="35" y="50" width="30" height="20" rx="3" fill="#2979ff" stroke="white" stroke-width="2" />
+  <rect x="40" y="45" width="20" height="5" rx="2" fill="#2979ff" stroke="white" stroke-width="2" />
+</svg>

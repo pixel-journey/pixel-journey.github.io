@@ -12,7 +12,23 @@ $(function() {
 
         // init animation
         $(initAnim);
+        
+        // Initialize mobile menu functionality
+        initMobileMenu();
     });
+    
+    // Mobile menu functionality
+    function initMobileMenu() {
+        $(".burger-menu").on("click", function() {
+            $(this).toggleClass("active");
+            $(".mobile-menu").toggleClass("active");
+        });
+        
+        $(".mobile-menu-close").on("click", function() {
+            $(".burger-menu").removeClass("active");
+            $(".mobile-menu").removeClass("active");
+        });
+    }
 
     // init elements and borders
     $(initFadeInText);
@@ -33,6 +49,9 @@ $(function() {
             $("nav a").removeClass("active");
             $("#overlay").fadeOut(1600, "easeInOutQuad");
             $(".panel-left-overlay").fadeOut(1200, "easeInOutQuad");
+            // Show sidebars when DYOR menu is closed
+            $(".sidebar-left").css("transform", "translateX(0)");
+            $(".sidebar-right").css("transform", "translateX(0)");
         } else {
             $(".panel-left, .panel-right").removeClass("close");
             $(".panel-left, .panel-right").addClass("open");
@@ -41,6 +60,9 @@ $(function() {
             $("nav a").addClass("active");
             $("#overlay").fadeIn(1600, "easeInOutQuad");
             $(".panel-left-overlay").fadeIn(2400, "easeInOutQuad");
+            // Hide sidebars when DYOR menu is opened
+            $(".sidebar-left").css("transform", "translateX(-100%)");
+            $(".sidebar-right").css("transform", "translateX(100%)");
         }
     });
 
@@ -328,9 +350,18 @@ window.addEvent("domready", function() {
         ]],
         ["img/toppixals/37.webp", [
             ["img/toppixals/37.webp"]
+        ]],
+        ["img/toppixals/38.webp", [
+            ["img/toppixals/38.webp"]
+        ]],
+        ["img/toppixals/39.webp", [
+            ["img/toppixals/39.webp"]
+        ]],
+        ["img/toppixals/40.webp", [
+            ["img/toppixals/40.webp"]
         ]]
     ];
-    var maxLength = 32;
+    var maxLength = 39;
     var wallFluid = new Wall("wall", {
         "draggable": true,
 		"slideshow": true, // options: true, false
