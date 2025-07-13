@@ -98,6 +98,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      margin-right: 10px;
     }
     
     .token-balance {
@@ -393,14 +394,17 @@
       background: var(--primary-color);
       color: white;
       border: none;
-      margin: 10px 10px;
-      margin-left: 0;
+      padding: 10px 15px;
+      margin: 0;
+      margin-right: 10px;
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: all var(--transition-fast);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      height: 38px; /* Match the height of other nav buttons */
     }
 
     .dark-mode-toggle:hover {
@@ -2143,8 +2147,26 @@
       color: #333333;
     }
 
-        /* Burger Menu Styles */
-        .burger-menu {
+        /* Mobile Header Account Styles */
+    .mobile-header-account {
+      display: none;
+      margin-right: 15px;
+    }
+    
+    .mobile-account-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+    
+    .mobile-token-balance {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+    }
+    
+    /* Burger Menu Styles */
+    .burger-menu {
       display: none;
       flex-direction: column;
       justify-content: space-between;
@@ -2261,6 +2283,14 @@
         <h1>Pixel Staking Portal</h1>
       </a>
       
+      <!-- Mobile Account Info -->
+      <div class="mobile-header-account" id="mobileHeaderAccount" style="display: none;">
+        <div class="mobile-account-info">
+          <span id="mobileHeaderAccountName" class="fw-bold"></span>
+          <div class="mobile-token-balance"><span id="mobileHeaderPxjBalance">0.0</span> PXJ</div>
+        </div>
+      </div>
+      
       <!-- Burger Menu Icon -->
       <div class="burger-menu">
         <div class="burger-bar"></div>
@@ -2271,10 +2301,10 @@
       <!-- Desktop Menu with Connection Status -->
       <div class="d-flex header-buttons align-items-center">
         <a href="index.html" class="btn btn-secondary me-2">Home</a>
-        <button class="dark-mode-toggle" id="darkModeToggle">🌞</button>
         <a href="https://lb.pixeljourney.xyz" class="btn btn-secondary leaderboard-btn me-2" target="_blank">
           <i class="fas fa-trophy"></i>🏆 Leaderboards
         </a>
+        <button class="dark-mode-toggle btn btn-secondary me-2" id="darkModeToggle">🌞</button>
         <!-- Connection Status for Desktop -->
         <div class="header-connection" id="headerConnection">
           <button class="btn" id="headerLoginButton">Connect Wallet</button>
@@ -2293,10 +2323,10 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu">
       <a href="index.html">Home</a>
-      <button class="dark-mode-toggle" id="mobileDarkModeToggle">🌞</button>
       <a href="https://lb.pixeljourney.xyz" target="_blank">
         <i class="fas fa-trophy"></i> Leaderboards
       </a>
+      <button class="dark-mode-toggle btn btn-secondary" id="mobileDarkModeToggle">🌞</button>
       <!-- Connection Status for Mobile -->
       <div class="mobile-connection">
         <button class="btn" id="mobileLoginButton">Connect Wallet</button>
@@ -3001,20 +3031,22 @@
       { id: 859273, pxj: 13.5, wuf: 46.0, pxjUpgrade: 150000, name: "Magenta", type: "tertiary ingredient" }
     ];
 
+    // Global variables
+    let wallet;
+    let wax;
+    let anchorLink;
+    let anchorSession;
+    let userAccount = null;
+    let stakedAssets = [];
+    let userAssets = [];
+    let selectedAssets = [];
+    let selectedUnstakeAssets = [];
+    let isLoggingOut = false;
+    let autoLoginInterval = null;
+    let loginAttempts = 0;
+    const MAX_LOGIN_ATTEMPTS = 2;
+    
     document.addEventListener('DOMContentLoaded', function () {
-      let wallet;
-      let wax;
-      let anchorLink;
-      let anchorSession;
-      let userAccount = null;
-      let stakedAssets = [];
-      let userAssets = [];
-      let selectedAssets = [];
-      let selectedUnstakeAssets = [];
-      let isLoggingOut = false;
-      let autoLoginInterval = null;
-      let loginAttempts = 0;
-      const MAX_LOGIN_ATTEMPTS = 2;
 
       // DOM elements
       const loginButton = document.getElementById('loginButton');
@@ -3301,6 +3333,9 @@
           headerAccountName.textContent = userAccount;
           mobileAccountName.textContent = userAccount;
           
+          // Update PXJ balance and start refresh interval
+          startBalanceRefresh();
+          
           // Show account info sections
           accountInfo.style.display = 'block';
           headerAccountInfo.style.display = 'flex';
@@ -3479,6 +3514,9 @@
             mobileLoginButton.style.display = 'none';
             loginButton.classList.remove('btn');
             loginButton.classList.add('logout-btn');
+            
+            // Update PXJ balance and start refresh interval
+            startBalanceRefresh();
 
             // Don't show dashboard row until inventory is loaded
             dashboardRow.style.display = 'none';
@@ -3612,6 +3650,9 @@
               mobileLoginButton.style.display = 'none';
               loginButton.classList.remove('btn');
               loginButton.classList.add('logout-btn');
+              
+              // Update PXJ balance and start refresh interval
+              startBalanceRefresh();
 
               // Update loading progress to inventory step
               updateLoadingProgress(2, 'Loading NFT inventory...');
@@ -3710,6 +3751,12 @@
           userAccount = null;
           stakedAssets = [];
           userAssets = [];
+          
+          // Clear balance refresh interval
+          if (balanceRefreshInterval) {
+            clearInterval(balanceRefreshInterval);
+            balanceRefreshInterval = null;
+          }
 
           // UI cleanup
           updateUIAfterLogout();
@@ -3741,6 +3788,12 @@
         mobileLoginButton.style.display = 'block';
         loginButton.classList.remove('logout-btn');
         loginButton.classList.add('btn');
+        
+        // Reset PXJ balance display
+        const pxjBalanceElement = document.getElementById('pxjBalance');
+        if (pxjBalanceElement) {
+          pxjBalanceElement.textContent = '0.0000';
+        }
         
         // Hide UI elements
         totalPowerCard.style.display = 'none';
@@ -3946,6 +3999,11 @@
 
           const rewardsDiv = document.getElementById('claimableRewards');
           rewardsDiv.innerHTML = 'PXJ: 0.0 | WUF: 0.0';
+          
+          // Update the PXJ balance display after claiming
+          setTimeout(() => {
+            updateBalanceDisplay();
+          }, 50); // delay to allow blockchain to update
         } catch (error) {
           showErrorMessage('Failed to claim rewards. Please try again.');
         }
@@ -5085,6 +5143,83 @@
       document.getElementById('pxjPerYear').textContent = pxjPerYear;
       document.getElementById('wufPerYear').textContent = wufPerYear;
     }
+    
+    // Function to fetch PXJ token balance
+    async function fetchPXJBalance(account, contract = 'pixeljourney', symbol = 'PXJ') { 
+      try { 
+        const response = await fetch('https://api.waxsweden.org/v1/chain/get_currency_balance', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ 
+            code: contract, 
+            account: account, 
+            symbol: symbol 
+          }) 
+        }); 
+        const data = await response.json(); 
+        if (data.length === 0) return 0; 
+        const balanceStr = data[0].split(' ')[0]; 
+        return parseFloat(balanceStr); 
+      } catch (error) { 
+        console.error(`Error fetching PXJ balance for ${account}:`, error); 
+        return 0; 
+      } 
+    } 
+
+    // Function to update the PXJ balance display with formatted numbers
+    async function updateBalanceDisplay() { 
+      const balanceSpan = document.getElementById('pxjBalance'); 
+      if (!balanceSpan) return; 
+      
+      if (!userAccount) {
+        balanceSpan.textContent = '0.0';
+        return;
+      }
+      
+      try {
+        const balance = await fetchPXJBalance(userAccount); 
+        
+        // Format the balance with K/M suffixes for large numbers
+        let formattedBalance;
+        if (balance >= 1000000) {
+          formattedBalance = (balance / 1000000).toFixed(1) + 'M';
+        } else if (balance >= 1000) {
+          formattedBalance = (balance / 1000).toFixed(1) + 'K';
+        } else {
+          formattedBalance = balance.toFixed(1);
+        }
+        
+        balanceSpan.textContent = formattedBalance;
+      } catch (error) {
+        console.error('Error updating PXJ balance:', error);
+      }
+    }
+    
+    // Set up periodic balance refresh
+    let balanceRefreshInterval = null;
+    
+    function startBalanceRefresh() {
+      // Clear any existing interval
+      if (balanceRefreshInterval) {
+        clearInterval(balanceRefreshInterval);
+      }
+      
+      // Update immediately
+      updateBalanceDisplay();
+      
+      // Then refresh every 60 seconds
+      balanceRefreshInterval = setInterval(() => {
+        if (userAccount) {
+          updateBalanceDisplay();
+        } else {
+          // Stop refreshing if logged out
+          clearInterval(balanceRefreshInterval);
+          balanceRefreshInterval = null;
+        }
+      }, 60000); // 60 seconds
+    } 
+
+    // We'll handle the initial balance check in the main DOMContentLoaded event listener
   </script>
   
   <!-- Footer -->
