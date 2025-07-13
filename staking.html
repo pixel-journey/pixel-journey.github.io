@@ -2256,7 +2256,7 @@
 <body>
   <header>
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="https://pixeljourney.xyz" class="header-logo">
+      <a href="https://stake.pixeljourney.xyz" class="header-logo">
         <img src="https://pixeljourney.xyz/img/logo.png" alt="Pixel Journey Logo" class="logo-img">
         <h1>Pixel Staking Portal</h1>
       </a>
@@ -3502,12 +3502,13 @@
             totalPowerCard.style.display = 'block';
             templateCard.style.display = 'block';
             
-            // Load user inventory automatically
-            await loadUserInventory();
             
             // Show all templates in greyed out form
             updateTemplateGridWithAllTemplates();
             
+            // Load user inventory automatically
+            await loadUserInventory();
+
             // Complete loading process
             hideConnectionLoading();
             return;
@@ -3576,11 +3577,12 @@
             await fetchStakedAssets();
             await fetchClaimableRewards();
             
-            // Load user inventory automatically
-            await loadUserInventory();
             
             // Show all templates in greyed out form
             updateTemplateGridWithAllTemplates();
+
+            // Load user inventory automatically
+            await loadUserInventory();
             
             // Complete loading process
             hideConnectionLoading();
@@ -3633,11 +3635,11 @@
               totalPowerCard.style.display = 'block';
               templateCard.style.display = 'block';
               
-              // Load user inventory automatically
-              await loadUserInventory();
               
               // Show all templates in greyed out form
               updateTemplateGridWithAllTemplates();
+              // Load user inventory automatically
+              await loadUserInventory();
               
               // Complete loading process
               hideConnectionLoading();
@@ -4078,7 +4080,7 @@
                 if (loadingContainer) {
                   loadingContainer.parentNode.remove();
                 }
-              }, 1000);
+              }, 300);
             }
           }
 
