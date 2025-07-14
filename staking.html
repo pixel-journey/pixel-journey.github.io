@@ -1506,6 +1506,12 @@
       font-size: 14px;
       margin-top: 10px;
       opacity: 0.8;
+      color: var(--text-dark);
+    }
+    
+    .light-mode .craft-label {
+      color: var(--text-light);
+      opacity: 0.9;
     }
 
     /* Stacked ingredients for the rare black pixel craft */
@@ -1595,6 +1601,12 @@
       margin-top: 10px;
       font-size: 14px;
       color: gold;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .light-mode .rare-note {
+      color: #b8860b; /* Darker gold for better contrast on light background */
+      text-shadow: none;
     }
 
     .craft-links {
@@ -2154,10 +2166,17 @@
     }
     
     .mobile-account-info {
-      display: flex;
+      display: none; /* Hide by default */
       flex-direction: column;
       align-items: flex-end;
       text-align: right;
+    }
+    
+    /* Only show mobile-account-info on mobile */
+    @media (max-width: 768px) {
+      .mobile-account-info {
+        display: flex;
+      }
     }
     
     .mobile-token-balance {
@@ -3165,8 +3184,11 @@
 
       // Dark mode toggle
       function toggleDarkMode() {
+        // Toggle light-mode class on body
         document.body.classList.toggle('light-mode');
-        document.querySelectorAll('.card, .stats-bar, header, .modal-content').forEach(el => {
+        
+        // Toggle light-mode class on specific elements
+        document.querySelectorAll('.card, .stats-bar, header, .modal-content, .template-info, .template-card, .footer, .apr-card').forEach(el => {
           el.classList.toggle('light-mode');
         });
         
@@ -3174,7 +3196,18 @@
         const isDarkMode = !document.body.classList.contains('light-mode');
         document.getElementById('darkModeToggle').textContent = isDarkMode ? '🌞' : '🌛';
         document.getElementById('mobileDarkModeToggle').textContent = isDarkMode ? '🌞' : '🌛';
+        
+        // Store the preference in localStorage
+        localStorage.setItem('darkMode', isDarkMode ? 'true' : 'false');
       }
+      
+      // Apply saved dark mode preference on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'false') {
+          toggleDarkMode(); // Switch to light mode if that was the saved preference
+        }
+      });
 
       // Loading progress tracking
       let currentLoadingStep = 0;
@@ -3332,6 +3365,16 @@
           accountName.textContent = userAccount;
           headerAccountName.textContent = userAccount;
           mobileAccountName.textContent = userAccount;
+          mobileHeaderAccountName.textContent = userAccount;
+          
+          // Show account info sections
+          accountInfo.style.display = 'block';
+          headerAccountInfo.style.display = 'flex';
+          mobileAccountInfo.style.display = 'block';
+          mobileHeaderAccount.style.display = 'flex';
+          
+          // Hide mobile connection card as it's no longer needed after login
+          document.getElementById('mobileConnectionCard').style.display = 'none';
           
           // Update PXJ balance and start refresh interval
           startBalanceRefresh();
@@ -3502,11 +3545,13 @@
             accountName.textContent = userAccount;
             headerAccountName.textContent = userAccount;
             mobileAccountName.textContent = userAccount;
+            mobileHeaderAccountName.textContent = userAccount;
             
             // Show account info sections
             accountInfo.style.display = 'block';
             headerAccountInfo.style.display = 'flex';
             mobileAccountInfo.style.display = 'block';
+            mobileHeaderAccount.style.display = 'flex';
             
             // Update login buttons
             loginButton.textContent = 'Log Out';
@@ -3581,11 +3626,13 @@
             accountName.textContent = userAccount;
             headerAccountName.textContent = userAccount;
             mobileAccountName.textContent = userAccount;
+            mobileHeaderAccountName.textContent = userAccount;
             
             // Show account info sections
             accountInfo.style.display = 'block';
             headerAccountInfo.style.display = 'flex';
             mobileAccountInfo.style.display = 'block';
+            mobileHeaderAccount.style.display = 'flex';
             
             // Update login buttons
             loginButton.textContent = 'Log Out';
@@ -3638,11 +3685,13 @@
               accountName.textContent = userAccount;
               headerAccountName.textContent = userAccount;
               mobileAccountName.textContent = userAccount;
+              mobileHeaderAccountName.textContent = userAccount;
               
               // Show account info sections
               accountInfo.style.display = 'block';
               headerAccountInfo.style.display = 'flex';
               mobileAccountInfo.style.display = 'block';
+              mobileHeaderAccount.style.display = 'flex';
               
               // Update login buttons
               loginButton.textContent = 'Log Out';
@@ -3779,6 +3828,10 @@
         accountInfo.style.display = 'none';
         headerAccountInfo.style.display = 'none';
         mobileAccountInfo.style.display = 'none';
+        document.getElementById('mobileHeaderAccount').style.display = 'none';
+        
+        // Show mobile connection card again
+        document.getElementById('mobileConnectionCard').style.display = 'block';
         
         // Reset login buttons
         loginButton.textContent = 'Connect Wallet';
@@ -3792,7 +3845,13 @@
         // Reset PXJ balance display
         const pxjBalanceElement = document.getElementById('pxjBalance');
         if (pxjBalanceElement) {
-          pxjBalanceElement.textContent = '0.0000';
+          pxjBalanceElement.textContent = '0.0';
+        }
+        
+        // Reset mobile header PXJ balance
+        const mobileHeaderPxjBalance = document.getElementById('mobileHeaderPxjBalance');
+        if (mobileHeaderPxjBalance) {
+          mobileHeaderPxjBalance.textContent = '0.0';
         }
         
         // Hide UI elements
@@ -3889,7 +3948,12 @@
 
       // Check if the farm has rates_per_hour defined
       if (pixeljourneyFarm.rates_per_hour && pixeljourneyFarm.rates_per_hour.length > 0) {
-        const claimableBalances = pixeljourneyFarm.rates_per_hour.map(rate => {
+        // Get API-returned claimable balances if available
+        const apiClaimableBalances = pixeljourneyFarm.claimable_balance || [];
+        console.log("API-returned claimable balances:", apiClaimableBalances);
+        
+        // Calculate our own claimable balances based on rates and elapsed time
+        const calculatedClaimableBalances = pixeljourneyFarm.rates_per_hour.map(rate => {
           const [amountStr, symbol] = rate.quantity.split(" ");
           const rateNum = parseFloat(amountStr);
           const precision = amountStr.split(".")[1]?.length || 0;
@@ -3899,6 +3963,34 @@
             quantity: `${earned} ${symbol}`,
             contract: rate.contract
           };
+        });
+        
+        console.log("Calculated claimable balances:", calculatedClaimableBalances);
+        
+        // Compare API-returned balances with calculated balances and use the greater value
+        const claimableBalances = calculatedClaimableBalances.map(calcBalance => {
+          const [calcAmount, calcSymbol] = calcBalance.quantity.split(' ');
+          
+          // Find matching token in API-returned balances
+          const apiBalance = apiClaimableBalances.find(apiBalance => {
+            const [, apiSymbol] = apiBalance.quantity.split(' ');
+            return apiSymbol === calcSymbol;
+          });
+          
+          if (apiBalance) {
+            const [apiAmount, apiSymbol] = apiBalance.quantity.split(' ');
+            const apiAmountFloat = parseFloat(apiAmount);
+            const calcAmountFloat = parseFloat(calcAmount);
+            
+            // Use the greater of the two values
+            if (apiAmountFloat > calcAmountFloat) {
+              console.log(`Using API value for ${apiSymbol}: ${apiAmount} (calculated: ${calcAmount})`);
+              return apiBalance;
+            }
+          }
+          
+          // Default to calculated balance if API balance is not available or smaller
+          return calcBalance;
         });
 
         console.log("Calculated claimable balances:", claimableBalances);
@@ -5168,11 +5260,13 @@
 
     // Function to update the PXJ balance display with formatted numbers
     async function updateBalanceDisplay() { 
-      const balanceSpan = document.getElementById('pxjBalance'); 
+      const balanceSpan = document.getElementById('pxjBalance');
+      const mobileHeaderBalanceSpan = document.getElementById('mobileHeaderPxjBalance');
       if (!balanceSpan) return; 
       
       if (!userAccount) {
         balanceSpan.textContent = '0.0';
+        if (mobileHeaderBalanceSpan) mobileHeaderBalanceSpan.textContent = '0.0';
         return;
       }
       
@@ -5190,6 +5284,7 @@
         }
         
         balanceSpan.textContent = formattedBalance;
+        if (mobileHeaderBalanceSpan) mobileHeaderBalanceSpan.textContent = formattedBalance;
       } catch (error) {
         console.error('Error updating PXJ balance:', error);
       }
@@ -5220,6 +5315,254 @@
     } 
 
     // We'll handle the initial balance check in the main DOMContentLoaded event listener
+  </script>
+  
+  <!-- APR Stats Section -->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Current Staking APRs</h2>
+        <div class="token-prices mb-3">
+          <span id="waxPrice">WAX: $0.00000000</span> | 
+          <span id="pxjPrice">PXJ: $0.00000000</span> | 
+          <span id="wufPrice">WUF: $0.00000000</span> | 
+          <span id="wpixalPrice">WPIXAL: $0.00000000</span>
+        </div>
+        <div class="apr-cards">
+          <div class="apr-card black-card mb-3">
+            <h5>Black Ingredients</h5>
+            <div class="apr-value" id="blackApr">Loading...</div>
+          </div>
+          <div class="apr-card primary-card mb-3">
+            <h5>Primary Ingredients</h5>
+            <div class="apr-value" id="primaryApr">Loading...</div>
+          </div>
+          <div class="apr-card secondary-card mb-3">
+            <h5>Secondary Ingredients</h5>
+            <div class="apr-value" id="secondaryApr">Loading...</div>
+          </div>
+          <div class="apr-card tertiary-card mb-3">
+            <h5>Tertiary Ingredients</h5>
+            <div class="apr-value" id="tertiaryApr">Loading...</div>
+          </div>
+        </div>
+        <p class="text-center mt-3"><small>APRs are calculated based on current token prices and estimated NFT values</small></p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Leaderboard Card -->
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Pixel Journey Leaderboards</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-4">
+              <h4>Monthly Crafting Raffle</h4>
+              <p>Every 25,000 PXJ locked up into collectibles grants you an entry into our monthly end-of-month airdrop raffle!</p>
+              <p>Check out our <a href="https://lb.pixeljourney.xyz/" target="_blank">Leaderboards</a> to see:</p>
+              <ul>
+                <li>Latest distribution status and statistics</li>
+                <li>Live staking APRs for all stakable assets</li>
+                <li>PXJ locked up in Ingredient Blends and crafts</li>
+                <li>Real-time rewards per second/minute/hour/day/week/month/year</li>
+                <li>Detailed NFT asset holdings for all users</li>
+              </ul>
+              <p class="mt-3"><strong>This is just the first of many leaderboards to come!</strong></p>
+              <a href="https://lb.pixeljourney.xyz/" target="_blank" class="btn btn-primary mt-2">Visit Leaderboards</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* APR Card Styles */
+    .token-prices {
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    
+    .apr-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .apr-card {
+      background: var(--card-dark);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .light-mode .apr-card {
+      background: var(--card-light);
+      border: 1px solid var(--border-light);
+    }
+    
+    .apr-card h5 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    
+    .apr-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    .apr-breakdown {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .black-card .apr-value {
+      color: #34495e;
+    }
+    
+    .light-mode .black-card .apr-value {
+      color: #2c3e50;
+    }
+    
+    .primary-card .apr-value {
+      color: #3498db;
+    }
+    
+    .secondary-card .apr-value {
+      color: #9b59b6;
+    }
+    
+    .tertiary-card .apr-value {
+      color: #e74c3c;
+    }
+    
+    @media (min-width: 768px) {
+      .apr-cards {
+        flex-direction: row;
+      }
+      
+      .apr-card {
+        flex: 1;
+      }
+    }
+  </style>
+
+  <script>
+    // APR Calculation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Global variables for token prices
+      let pxjPriceUSD = 0.0005;
+      let wufPriceUSD = 0.0001;
+      let waxPriceUSD = 0.05;
+      let wpixalPriceUSD = 0.05;
+      
+      // Function to fetch token prices from Alcor Exchange
+      async function fetchPrices() {
+        const apiUrlPXJ = "https://alcor.exchange/api/v2/tokens/pxj-pixeljourney";
+        const apiUrlWUF = "https://alcor.exchange/api/v2/tokens/wuf-wuffi";
+        const apiUrlWAX = "https://alcor.exchange/api/v2/tokens/wax-eosio.token";
+        const apiUrlWPIXAL = "https://alcor.exchange/api/v2/tokens/wpixal-pixeljourney";
+
+        try {
+          const pxjResponse = await fetch(apiUrlPXJ);
+          const wufResponse = await fetch(apiUrlWUF);
+          const waxResponse = await fetch(apiUrlWAX);
+          const wpixalResponse = await fetch(apiUrlWPIXAL);
+
+          if (!pxjResponse.ok || !wufResponse.ok || !waxResponse.ok || !wpixalResponse.ok) {
+            throw new Error("Failed to fetch token prices.");
+          }
+
+          const pxjData = await pxjResponse.json();
+          const wufData = await wufResponse.json();
+          const waxData = await waxResponse.json();
+          const wpixalData = await wpixalResponse.json();
+
+          pxjPriceUSD = pxjData.usd_price;
+          wufPriceUSD = wufData.usd_price;
+          waxPriceUSD = waxData.usd_price;
+          wpixalPriceUSD = wpixalData.usd_price;
+
+          document.getElementById("waxPrice").textContent = `WAX: $${waxPriceUSD.toFixed(8)}`;
+          document.getElementById("pxjPrice").textContent = `PXJ: $${pxjPriceUSD.toFixed(8)}`;
+          document.getElementById("wufPrice").textContent = `WUF: $${wufPriceUSD.toFixed(8)}`;
+          document.getElementById("wpixalPrice").textContent = `WPIXAL: $${wpixalPriceUSD.toFixed(8)}`;
+          
+          return true;
+        } catch (error) {
+          console.error("Error fetching token prices:", error);
+          return false;
+        }
+      }
+      
+      // Function to calculate APRs
+      async function calculateAPRs() {
+        try {
+          // Fetch prices first
+          const pricesFetched = await fetchPrices();
+          
+          if (!pricesFetched) {
+            setTimeout(calculateAPRs, 5000); // Retry after 5 seconds
+            return;
+          }
+          
+          // Black - 124 WUF and 124 PXJ per hour
+          const blackWufValue = 124 * 24 * 365 * wufPriceUSD; // Annual WUF value in USD
+          const blackPxjValue = 124 * 24 * 365 * pxjPriceUSD; // Annual PXJ value in USD
+          const blackTotalValue = blackWufValue + blackPxjValue;
+          const blackNftValue = (wpixalPriceUSD * 2.7 + 1500000) * pxjPriceUSD; // Estimated NFT value in USD
+          const blackApr = (blackTotalValue / blackNftValue) * 100;
+          
+          // Primary - 2 WUF and 0.2 PXJ per hour
+          const primaryWufValue = 2 * 24 * 365 * wufPriceUSD; // Annual WUF value in USD
+          const primaryPxjValue = 0.2 * 24 * 365 * pxjPriceUSD; // Annual PXJ value in USD
+          const primaryTotalValue = primaryWufValue + primaryPxjValue;
+          const primaryNftValue = (wpixalPriceUSD / 10); // Estimated NFT value in USD
+          const primaryApr = (primaryTotalValue / primaryNftValue) * 100;
+
+          // Secondary - 9 WUF and 2.5 PXJ per hour
+          const secondaryWufValue = 9 * 24 * 365 * wufPriceUSD;
+          const secondaryPxjValue = 2.5 * 24 * 365 * pxjPriceUSD;
+          const secondaryTotalValue = secondaryWufValue + secondaryPxjValue;
+          const secondaryNftValue = (wpixalPriceUSD / 5 + 25000) * pxjPriceUSD; // Estimated NFT value in USD
+          const secondaryApr = (secondaryTotalValue / secondaryNftValue) * 100;
+
+          // Tertiary - 46 WUF and 13.5 PXJ per hour
+          const tertiaryWufValue = 46 * 24 * 365 * wufPriceUSD;
+          const tertiaryPxjValue = 13.5 * 24 * 365 * pxjPriceUSD;
+          const tertiaryTotalValue = tertiaryWufValue + tertiaryPxjValue;
+          const tertiaryNftValue = (wpixalPriceUSD * 0.3 + 150000) * pxjPriceUSD; // Estimated NFT value in USD
+          const tertiaryApr = (tertiaryTotalValue / tertiaryNftValue) * 100;
+
+          // Update the UI with calculated values
+          document.getElementById('blackApr').textContent = blackApr.toFixed(2) + '%';
+          document.getElementById('primaryApr').textContent = primaryApr.toFixed(2) + '%';
+          document.getElementById('secondaryApr').textContent = secondaryApr.toFixed(2) + '%';
+          document.getElementById('tertiaryApr').textContent = tertiaryApr.toFixed(2) + '%';
+        } catch (error) {
+          console.error('Error calculating APRs:', error);
+          setTimeout(calculateAPRs, 5000); // Retry after 5 seconds
+        }
+      }
+      
+      // Calculate APRs on page load
+      calculateAPRs();
+      
+      // Recalculate every 5 minutes
+      setInterval(calculateAPRs, 300000);
+    });
   </script>
   
   <!-- Footer -->
