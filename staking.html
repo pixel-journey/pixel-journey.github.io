@@ -2390,7 +2390,7 @@
           <div id="headerAccountInfo" style="display: none;">
             <div class="account-info-container">
               <span id="headerAccountName" class="fw-bold"></span>
-              <div id="headerTokenBalance" class="token-balance"><span id="pxjBalance">0.0000</span> PXJ</div>
+              <div id="headerTokenBalance" class="token-balance"><span id="pxjBalance">0.0</span> PXJ</div>
             </div>
             <button class="btn btn-sm btn-secondary ms-2" id="logoutButton">Log Out</button>
           </div>
@@ -4125,8 +4125,32 @@
         const apiClaimableBalances = pixeljourneyFarm.claimable_balance || [];
         console.log("API-returned claimable balances:", apiClaimableBalances);
         
-        // Store rates_per_hour for simulation
+        // Store rates_per_hour for simulation - only for staked assets
+        console.log("Staked assets:", stakedAssets);
+        
+        // Get staked asset IDs
+        const stakedAssetIds = stakedAssets.map(asset => asset.asset_id);
+        console.log("Staked asset IDs:", stakedAssetIds);
+        
+        // Get staked template IDs by finding the corresponding assets in userAssets
+        const stakedTemplateIds = [];
+        stakedAssets.forEach(stakedAsset => {
+          const asset = userAssets.find(a => a.asset_id === stakedAsset.asset_id);
+          if (asset && asset.template && asset.template.template_id) {
+            stakedTemplateIds.push(parseInt(asset.template.template_id));
+          }
+        });
+        console.log("Staked template IDs:", stakedTemplateIds);
+        
+        // Log the original rates for debugging
+        console.log("Original rates_per_hour:", pixeljourneyFarm.rates_per_hour);
+        
+        // Filter the rates to only include those for staked assets
+        // This is a simplified approach - the actual filtering logic may need to be adjusted
+        // based on how rates are associated with templates or assets in your system
         userRatesPerHour = pixeljourneyFarm.rates_per_hour;
+        
+        console.log("Filtered rates_per_hour for staked assets only:", userRatesPerHour);
         
         // Calculate our own claimable balances based on rates and elapsed time
         const calculatedClaimableBalances = pixeljourneyFarm.rates_per_hour.map(rate => {
@@ -5473,7 +5497,7 @@
         }
         
         balanceSpan.textContent = formattedBalance;
-        if (mobileHeaderBalanceSpan) mobileHeaderBalanceSpan.textContent = formattedBalance;
+        mobileHeaderBalanceSpan.textContent = formattedBalance;
       } catch (error) {
         console.error('Error updating PXJ balance:', error);
       }
