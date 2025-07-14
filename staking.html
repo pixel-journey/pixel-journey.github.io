@@ -230,6 +230,66 @@
     .rewards-section h3 {
       margin-bottom: 15px;
       color: var(--primary-color);
+      margin-top: 0;
+    }
+    
+    .rewards-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .simulation-toggle {
+      cursor: pointer;
+      position: relative;
+      width: 50px;
+      height: 24px;
+      background-color: #ccc;
+      border-radius: 12px;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+    }
+    
+    .simulation-toggle::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: white;
+      left: 2px;
+      transition: transform 0.3s;
+    }
+    
+    .simulation-toggle.active {
+      background-color: var(--primary-color);
+    }
+    
+    .simulation-toggle.active::before {
+      transform: translateX(26px);
+    }
+    
+    .simulation-toggle:hover {
+      opacity: 0.9;
+    }
+    
+    .simulation-toggle.active {
+      background: #e74c3c;
+      opacity: 1;
+    }
+    
+    .simulation-status {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      text-align: center;
+      color: var(--primary-color);
+      font-weight: bold;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: rgba(16, 163, 127, 0.1);
     }
 
     #claimableRewards {
@@ -2417,9 +2477,12 @@
     <div class="dashboard-row" id="dashboardRow" style="display: none;">
       <!-- Rewards Section (Inside Dashboard Row) -->
       <div class="rewards-section" id="rewardsSection" style="display: none;">
-        <h3>Claimable Rewards</h3>
+        <div class="rewards-header">
+          <h3>Claimable Rewards</h3>
+        </div>
         <div id="claimableRewards">Loading rewards...</div>
         <button class="claim-btn" id="claimButton">Claim Rewards</button>
+        <div class="simulation-status" id="simulationStatus" style="display: none;"></div>
       </div>
       <!-- Total Staking Power -->
       <div class="total-power" id="totalPowerCard">
@@ -3203,6 +3266,7 @@
       
       // Apply saved dark mode preference on page load
       document.addEventListener('DOMContentLoaded', function() {
+
         const savedDarkMode = localStorage.getItem('darkMode');
         if (savedDarkMode === 'false') {
           toggleDarkMode(); // Switch to light mode if that was the saved preference
@@ -3864,6 +3928,115 @@
         hideConnectionLoading();
       }
 
+      // Global variables for simulation
+      let simulationInterval = null;
+      let userRatesPerHour = [];
+      let lastFetchedRewards = [];
+      let simulationStartTime = null;
+      
+      // Function to start simulation
+      function startSimulation() {
+        if (!userRatesPerHour || userRatesPerHour.length === 0) {
+          return;
+        }
+        
+        // Clear any existing interval
+        if (simulationInterval) {
+          clearInterval(simulationInterval);
+        }
+        
+        simulationStartTime = Date.now();
+        
+        // Start the simulation interval (update every second)
+        simulationInterval = setInterval(updateSimulatedRewards, 1000);
+        
+        // Run once immediately
+        updateSimulatedRewards();
+      }
+      
+      
+      // Function to update simulated rewards
+      function updateSimulatedRewards() {
+        if (!simulationStartTime || !userRatesPerHour || userRatesPerHour.length === 0) {
+          return;
+        }
+        
+        const rewardsDiv = document.getElementById('claimableRewards');
+        const elapsedSeconds = (Date.now() - simulationStartTime) / 1000;
+        const elapsedHours = elapsedSeconds / 3600;
+        
+        let simulatedRewards;
+        
+        // If lastFetchedRewards is empty (after claiming), calculate from zero
+        if (!lastFetchedRewards || lastFetchedRewards.length === 0) {
+          simulatedRewards = userRatesPerHour.map(rate => {
+            const [amountStr, symbol] = rate.quantity.split(" ");
+            const rateNum = parseFloat(amountStr);
+            const precision = amountStr.split(".")[1]?.length || 0;
+            
+            // Calculate earned amount based on elapsed time
+            const earned = (rateNum * elapsedHours).toFixed(precision);
+            
+            return {
+              quantity: `${earned} ${symbol}`,
+              contract: rate.contract
+            };
+          });
+        } else {
+          // Calculate simulated rewards based on rates per hour and initial rewards
+          simulatedRewards = lastFetchedRewards.map(initialReward => {
+          const [initialAmount, symbol] = initialReward.quantity.split(' ');
+          const initialAmountFloat = parseFloat(initialAmount);
+          
+          // Find matching rate for this token
+          const matchingRate = userRatesPerHour.find(rate => {
+            const [, rateSymbol] = rate.quantity.split(' ');
+            return rateSymbol === symbol;
+          });
+          
+          if (matchingRate) {
+            const [rateAmountStr, ] = matchingRate.quantity.split(' ');
+            const rateNum = parseFloat(rateAmountStr);
+            const precision = initialAmount.split(".")[1]?.length || 0;
+            
+            // Calculate additional earned amount based on elapsed time
+            const additionalEarned = rateNum * elapsedHours;
+            
+            // Add to initial amount
+            const totalAmount = (initialAmountFloat + additionalEarned).toFixed(precision);
+            
+            return {
+              quantity: `${totalAmount} ${symbol}`,
+              contract: initialReward.contract
+            };
+          }
+          
+          return initialReward;
+        });
+      }
+        
+        // Format and display the simulated rewards
+        if (simulatedRewards && simulatedRewards.length > 0) {
+          let formattedRewards = [];
+          
+          // Process each token balance
+          simulatedRewards.forEach(balance => {
+            // Extract token amount and symbol
+            const [amount, symbol] = balance.quantity.split(' ');
+            
+            // Format to at most 1 decimal place
+            const formattedAmount = parseFloat(amount).toFixed(1);
+            
+            // Add to formatted rewards array
+            formattedRewards.push(`${symbol}: ${formattedAmount}`);
+          });
+          
+          // Join with pipe separator
+          const rewardsText = formattedRewards.join(' | ');
+          rewardsDiv.innerHTML = rewardsText;
+        }
+      }
+      
       async function fetchClaimableRewards() {
   const rewardsDiv = document.getElementById('claimableRewards');
   const quickClaimSection = document.getElementById('quickClaimSection');
@@ -3952,6 +4125,9 @@
         const apiClaimableBalances = pixeljourneyFarm.claimable_balance || [];
         console.log("API-returned claimable balances:", apiClaimableBalances);
         
+        // Store rates_per_hour for simulation
+        userRatesPerHour = pixeljourneyFarm.rates_per_hour;
+        
         // Calculate our own claimable balances based on rates and elapsed time
         const calculatedClaimableBalances = pixeljourneyFarm.rates_per_hour.map(rate => {
           const [amountStr, symbol] = rate.quantity.split(" ");
@@ -3995,6 +4171,9 @@
 
         console.log("Calculated claimable balances:", claimableBalances);
         
+        // Store the last fetched rewards for simulation
+        lastFetchedRewards = [...claimableBalances];
+        
         // Format and display the rewards
           if (claimableBalances && claimableBalances.length > 0) {
             let formattedRewards = [];
@@ -4020,6 +4199,9 @@
               const [amount, symbol] = balance.quantity.split(' ');
               return parseFloat(amount) > 0;
             });
+            
+              startSimulation();
+        
 
             // document.getElementById('claimButton').disabled = !hasClaimableTokens;
             if (document.getElementById('quickClaimButton')) {
@@ -4092,9 +4274,16 @@
           const rewardsDiv = document.getElementById('claimableRewards');
           rewardsDiv.innerHTML = 'PXJ: 0.0 | WUF: 0.0';
           
+          
+          // Reset last fetched rewards
+          lastFetchedRewards = [];
+          
           // Update the PXJ balance display after claiming
           setTimeout(() => {
             updateBalanceDisplay();
+            // Restart simulation after claiming
+            simulationStartTime = Date.now();
+            startSimulation();
           }, 50); // delay to allow blockchain to update
         } catch (error) {
           showErrorMessage('Failed to claim rewards. Please try again.');
@@ -5362,7 +5551,7 @@
               <h4>Monthly Crafting Raffle</h4>
               <p>Every 25,000 PXJ locked up into collectibles grants you an entry into our monthly end-of-month airdrop raffle!</p>
               <p>Check out our <a href="https://lb.pixeljourney.xyz/" target="_blank">Leaderboards</a> to see:</p>
-              <ul>
+              <ul class="leaderboard-list">
                 <li>Latest distribution status and statistics</li>
                 <li>Live staking APRs for all stakable assets</li>
                 <li>PXJ locked up in Ingredient Blends and crafts</li>
@@ -5385,6 +5574,21 @@
       font-size: 0.9rem;
       opacity: 0.8;
       margin-bottom: 20px;
+    }
+    
+    /* Leaderboard List Styles */
+    .leaderboard-list {
+      color: var(--text-dark);
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+    
+    .light-mode .leaderboard-list {
+      color: var(--text-light);
+    }
+    
+    .light-mode .leaderboard-list {
+      color: var(--text-light);
     }
     
     .apr-cards {
@@ -5463,10 +5667,10 @@
     // APR Calculation
     document.addEventListener('DOMContentLoaded', function() {
       // Global variables for token prices
-      let pxjPriceUSD = 0.0005;
-      let wufPriceUSD = 0.0001;
-      let waxPriceUSD = 0.05;
-      let wpixalPriceUSD = 0.05;
+      let pxjPriceUSD;
+      let wufPriceUSD;
+      let waxPriceUSD;
+      let wpixalPriceUSD;
       
       // Function to fetch token prices from Alcor Exchange
       async function fetchPrices() {
