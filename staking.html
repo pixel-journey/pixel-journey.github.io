@@ -3705,6 +3705,9 @@
             loginButton.classList.remove('btn');
             loginButton.classList.add('logout-btn');
 
+                  // Update immediately
+      updateBalanceDisplay();
+
             // Update loading progress to inventory step
             updateLoadingProgress(2, 'Loading NFT inventory...');
             
