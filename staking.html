@@ -3947,9 +3947,9 @@
         if (simulationInterval) {
           clearInterval(simulationInterval);
         }
-        
-        simulationStartTime = Date.now();
-        
+        const HOUR_IN_MS = 60 * 60 * 1000; // 1 hour in milliseconds
+        simulationStartTime = Math.floor(Date.now() / HOUR_IN_MS) * HOUR_IN_MS;
+                
         // Start the simulation interval (update every second)
         simulationInterval = setInterval(updateSimulatedRewards, 1000);
         
