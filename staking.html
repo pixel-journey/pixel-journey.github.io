@@ -4157,7 +4157,7 @@
           const [amountStr, symbol] = rate.quantity.split(" ");
           const rateNum = parseFloat(amountStr);
           const precision = amountStr.split(".")[1]?.length || 0;
-          const earned = (rateNum * elapsedHours).toFixed(precision);
+          const earned = (rateNum * Math.ceil(elapsedHours)).toFixed(precision);
           
           return {
             quantity: `${earned} ${symbol}`,
