@@ -3168,6 +3168,9 @@
 
       const connectionLoadingOverlay = document.getElementById('connectionLoadingOverlay');
       const connectionLoadingStatus = document.querySelector('.connection-loading-status');
+      
+  const rewardsDiv = document.getElementById('claimableRewards');
+  const quickClaimSection = document.getElementById('quickClaimSection');
 
       // Bootstrap modals
       const assetModal = new bootstrap.Modal(document.getElementById('assetModal'));
@@ -3431,6 +3434,10 @@
           mobileAccountName.textContent = userAccount;
           mobileHeaderAccountName.textContent = userAccount;
           
+          
+  // Show quick claim section after wallet connection
+  quickClaimSection.style.display = 'block';
+
           // Show account info sections
           accountInfo.style.display = 'block';
           headerAccountInfo.style.display = 'flex';
@@ -3616,6 +3623,10 @@
             headerAccountInfo.style.display = 'flex';
             mobileAccountInfo.style.display = 'block';
             mobileHeaderAccount.style.display = 'flex';
+
+            
+  // Show quick claim section after wallet connection
+  quickClaimSection.style.display = 'block';
             
             // Update login buttons
             loginButton.textContent = 'Log Out';
@@ -3759,6 +3770,10 @@
               headerAccountInfo.style.display = 'flex';
               mobileAccountInfo.style.display = 'block';
               mobileHeaderAccount.style.display = 'flex';
+
+              
+  // Show quick claim section after wallet connection
+  quickClaimSection.style.display = 'block';
               
               // Update login buttons
               loginButton.textContent = 'Log Out';
@@ -3964,9 +3979,11 @@
           return;
         }
         
-        const rewardsDiv = document.getElementById('claimableRewards');
         const elapsedSeconds = (Date.now() - simulationStartTime) / 1000;
         const elapsedHours = elapsedSeconds / 3600;
+        
+        // Check if less than 1 hour has passed since last claim
+        const isLessThanOneHour = elapsedHours < 1;
         
         let simulatedRewards;
         
@@ -4036,13 +4053,53 @@
           
           // Join with pipe separator
           const rewardsText = formattedRewards.join(' | ');
-          rewardsDiv.innerHTML = rewardsText;
+          
+          // Check if rewards are below hourly rate and less than 1 hour has passed
+          let belowHourlyRate = false;
+          if (isLessThanOneHour) {
+            belowHourlyRate = simulatedRewards.every((reward, index) => {
+              const [amount, symbol] = reward.quantity.split(' ');
+              const rewardAmount = parseFloat(amount);
+              
+              // Find matching rate for this token
+              const matchingRate = userRatesPerHour.find(rate => {
+                const [, rateSymbol] = rate.quantity.split(' ');
+                return rateSymbol === symbol;
+              });
+              
+              if (matchingRate) {
+                const [rateAmount, ] = matchingRate.quantity.split(' ');
+                const hourlyRate = parseFloat(rateAmount);
+                return rewardAmount < hourlyRate;
+              }
+              return false;
+            });
+          }
+          
+          // Display countdown if needed
+          if (isLessThanOneHour && belowHourlyRate) {
+            // Calculate time until next hour
+            const nextHourMs = Math.ceil(Date.now() / (60 * 60 * 1000)) * (60 * 60 * 1000);
+            const timeUntilNextHour = nextHourMs - Date.now();
+            const minutesRemaining = Math.floor(timeUntilNextHour / (60 * 1000));
+            const secondsRemaining = Math.floor((timeUntilNextHour % (60 * 1000)) / 1000);
+            
+            // Format countdown
+            const countdownText = `${minutesRemaining}m ${secondsRemaining}s until next reward`;
+            rewardsDiv.innerHTML = `${rewardsText}<br><span class="countdown">${countdownText}</span>`;
+            
+            // Disable claim buttons
+            document.getElementById('claimButton').disabled = true;
+            if (document.getElementById('quickClaimButton')) {
+              document.getElementById('quickClaimButton').disabled = true;
+            }
+          } else {
+            rewardsDiv.innerHTML = rewardsText;
+          }
         }
       }
       
       async function fetchClaimableRewards() {
-  const rewardsDiv = document.getElementById('claimableRewards');
-  const quickClaimSection = document.getElementById('quickClaimSection');
   
   if (!userAccount) {
     rewardsDiv.innerHTML = 'Please log in to see rewards.';
@@ -4057,10 +4114,7 @@
   if (connectionLoadingOverlay && connectionLoadingOverlay.style.display === 'flex') {
     updateLoadingProgress(3, 'Calculating claimable rewards...');
   }
-  
-  // Show quick claim section after wallet connection
-  quickClaimSection.style.display = 'block';
-
+    
   try {
     const url = "https://api.hivebp.io/v1/chain/get_table_rows";
     
@@ -4160,12 +4214,8 @@
           const [amountStr, symbol] = rate.quantity.split(" ");
           const rateNum = parseFloat(amountStr);
           const precision = amountStr.split(".")[1]?.length || 0;
-          let earned = 0;
-
-          if(elapsedHours > 1){
-            earned = (rateNum * Math.round(elapsedHours)).toFixed(precision);
-          } 
-
+          let earned = (rateNum * Math.floor(elapsedHours)).toFixed(precision);
+          
           return {
             quantity: `${earned} ${symbol}`,
             contract: rate.contract
@@ -4231,7 +4281,7 @@
               return parseFloat(amount) > 0;
             });
             
-              startSimulation();
+             // startSimulation();
         
 
             // document.getElementById('claimButton').disabled = !hasClaimableTokens;
@@ -4302,7 +4352,6 @@
 
           showSuccessMessage('Rewards claimed successfully!', result);
 
-          const rewardsDiv = document.getElementById('claimableRewards');
           rewardsDiv.innerHTML = 'PXJ: 0.0 | WUF: 0.0';
           
           
@@ -4314,7 +4363,7 @@
             updateBalanceDisplay();
             // Restart simulation after claiming
             simulationStartTime = Date.now();
-            startSimulation();
+           // startSimulation();
           }, 50); // delay to allow blockchain to update
         } catch (error) {
           showErrorMessage('Failed to claim rewards. Please try again.');
