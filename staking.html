@@ -3096,21 +3096,21 @@
 
     // Template data
     const templates = [
-      { id: 781515, pxj: 0.5, wuf: 22.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
+      { id: 781515, pxj: 1, wuf: 22.0, pxjUpgrade: 0, name: "Pixal PFP", type: "pixals" },
       { id: 820134, pxj: 5, wuf: 22.0, pxjUpgrade: 0, name: "Pixel Ingredient Pack", type: "pixelpack" },
       { id: 858568, pxj: 222.0, wuf: 222.0, pxjUpgrade: 0, name: "Black", type: "primary ingredient" },
-      { id: 858569, pxj: 0.5, wuf: 2.0, pxjUpgrade: 0, name: "Blue", type: "primary ingredient" },
-      { id: 858570, pxj: 0.5, wuf: 2.0, pxjUpgrade: 0, name: "Red", type: "primary ingredient" },
-      { id: 858571, pxj: 0.5, wuf: 2.0, pxjUpgrade: 0, name: "Yellow", type: "primary ingredient" },
-      { id: 858572, pxj: 5, wuf: 2.0, pxjUpgrade: 25000, name: "Green", type: "secondary ingredient" },
-      { id: 858573, pxj: 5, wuf: 2.0, pxjUpgrade: 25000, name: "Orange", type: "secondary ingredient" },
-      { id: 858574, pxj: 5, wuf: 2.0, pxjUpgrade: 25000, name: "Purple", type: "secondary ingredient" },
-      { id: 858575, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Amber", type: "tertiary ingredient" },
-      { id: 858576, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Chartreuse", type: "tertiary ingredient" },
-      { id: 858577, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Violet", type: "tertiary ingredient" },
-      { id: 858578, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Teal", type: "tertiary ingredient" },
-      { id: 858580, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Vermillion", type: "tertiary ingredient" },
-      { id: 859273, pxj: 27, wuf: 22.0, pxjUpgrade: 150000, name: "Magenta", type: "tertiary ingredient" }
+      { id: 858569, pxj: 0.65, wuf: 2.0, pxjUpgrade: 0, name: "Blue", type: "primary ingredient" },
+      { id: 858570, pxj: 0.65, wuf: 2.0, pxjUpgrade: 0, name: "Red", type: "primary ingredient" },
+      { id: 858571, pxj: 0.65, wuf: 2.0, pxjUpgrade: 0, name: "Yellow", type: "primary ingredient" },
+      { id: 858572, pxj: 3.6, wuf: 2.0, pxjUpgrade: 25000, name: "Green", type: "secondary ingredient" },
+      { id: 858573, pxj: 3.6, wuf: 2.0, pxjUpgrade: 25000, name: "Orange", type: "secondary ingredient" },
+      { id: 858574, pxj: 3.6, wuf: 2.0, pxjUpgrade: 25000, name: "Purple", type: "secondary ingredient" },
+      { id: 858575, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Amber", type: "tertiary ingredient" },
+      { id: 858576, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Chartreuse", type: "tertiary ingredient" },
+      { id: 858577, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Violet", type: "tertiary ingredient" },
+      { id: 858578, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Teal", type: "tertiary ingredient" },
+      { id: 858580, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Vermillion", type: "tertiary ingredient" },
+      { id: 859273, pxj: 22, wuf: 22.0, pxjUpgrade: 150000, name: "Magenta", type: "tertiary ingredient" }
     ];
 
 
@@ -5810,23 +5810,23 @@
           const blackNftValue = (wpixalPriceUSD * 2.7 + 1500000) * pxjPriceUSD; // Estimated NFT value in USD
           const blackApr = (blackTotalValue / blackNftValue) * 100;
 
-          // Primary - 2 WUF and 0.5 PXJ per hour
+          // Primary - 2 WUF and 0.65 PXJ per hour
           const primaryWufValue = 2 * 24 * 365 * wufPriceUSD; // Annual WUF value in USD
-          const primaryPxjValue = 0.5 * 24 * 365 * pxjPriceUSD; // Annual PXJ value in USD
+          const primaryPxjValue = 0.65 * 24 * 365 * pxjPriceUSD; // Annual PXJ value in USD
           const primaryTotalValue = primaryWufValue + primaryPxjValue;
           const primaryNftValue = (wpixalPriceUSD / 10); // Estimated NFT value in USD
           const primaryApr = (primaryTotalValue / primaryNftValue) * 100;
 
-          // Secondary - 2 WUF and 5 PXJ per hour
-          const secondaryWufValue = 9 * 24 * 365 * wufPriceUSD;
-          const secondaryPxjValue = 5 * 24 * 365 * pxjPriceUSD;
+          // Secondary - 2 WUF and 3.6 PXJ per hour
+          const secondaryWufValue = 2 * 24 * 365 * wufPriceUSD;
+          const secondaryPxjValue = 3.6 * 24 * 365 * pxjPriceUSD;
           const secondaryTotalValue = secondaryWufValue + secondaryPxjValue;
           const secondaryNftValue = (wpixalPriceUSD / 5 + 25000) * pxjPriceUSD; // Estimated NFT value in USD
           const secondaryApr = (secondaryTotalValue / secondaryNftValue) * 100;
 
-          // Tertiary - 22 WUF and 27 PXJ per hour
+          // Tertiary - 22 WUF and 22 PXJ per hour
           const tertiaryWufValue = 22 * 24 * 365 * wufPriceUSD;
-          const tertiaryPxjValue = 27 * 24 * 365 * pxjPriceUSD;
+          const tertiaryPxjValue = 22 * 24 * 365 * pxjPriceUSD;
           const tertiaryTotalValue = tertiaryWufValue + tertiaryPxjValue;
           const tertiaryNftValue = (wpixalPriceUSD * 0.3 + 150000) * pxjPriceUSD; // Estimated NFT value in USD
           const tertiaryApr = (tertiaryTotalValue / tertiaryNftValue) * 100;
