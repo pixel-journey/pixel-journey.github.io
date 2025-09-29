@@ -2,29 +2,29 @@
   "name": "PxMarket - NFT Marketplace",
   "short_name": "PxMarket",
   "description": "A comprehensive NFT marketplace for WAX blockchain assets",
-  "start_url": "/",
+  "start_url": "/market-alphatest/",
   "display": "standalone",
   "background_color": "#1a1a1a",
   "theme_color": "#3b82f6",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/market-alphatest/",
   "lang": "en",
   "categories": ["shopping", "finance", "entertainment"],
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/market-alphatest/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/img/icon-192.svg",
+      "src": "/market-alphatest/img/icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/img/icon-512.svg",
+      "src": "/market-alphatest/img/icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
@@ -36,10 +36,10 @@
       "name": "Marketplace",
       "short_name": "Market",
       "description": "Browse NFT marketplace",
-      "url": "/marketplace",
+      "url": "/market-alphatest/marketplace",
       "icons": [
         {
-          "src": "/favicon.svg",
+          "src": "/market-alphatest/favicon.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }
@@ -49,7 +49,7 @@
       "name": "My Inventory",
       "short_name": "Inventory",
       "description": "View your NFT collection",
-      "url": "/inventory",
+      "url": "/market-alphatest/inventory",
       "icons": [
         {
           "src": "/favicon.svg",
@@ -62,7 +62,7 @@
       "name": "Watchlist",
       "short_name": "Watchlist",
       "description": "View your watchlist",
-      "url": "/watchlist",
+      "url": "/market-alphatest/watchlist",
       "icons": [
         {
           "src": "/favicon.svg",
