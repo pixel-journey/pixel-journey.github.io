@@ -1,0 +1,52 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="22" fill="#3b82f6"/>
+  <rect x="14" y="14" width="152" height="152" rx="15" fill="#1e40af"/>
+  
+  <!-- Pixel Art Style P -->
+  <rect x="38" y="45" width="7" height="7" fill="#ffffff"/>
+  <rect x="45" y="45" width="7" height="7" fill="#ffffff"/>
+  <rect x="52" y="45" width="7" height="7" fill="#ffffff"/>
+  <rect x="59" y="45" width="7" height="7" fill="#ffffff"/>
+  <rect x="66" y="45" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="52" width="7" height="7" fill="#ffffff"/>
+  <rect x="66" y="52" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="59" width="7" height="7" fill="#ffffff"/>
+  <rect x="66" y="59" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="66" width="7" height="7" fill="#ffffff"/>
+  <rect x="45" y="66" width="7" height="7" fill="#ffffff"/>
+  <rect x="52" y="66" width="7" height="7" fill="#ffffff"/>
+  <rect x="59" y="66" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="73" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="80" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="38" y="87" width="7" height="7" fill="#ffffff"/>
+  
+  <!-- Pixel Art Style X -->
+  <rect x="90" y="45" width="7" height="7" fill="#ffffff"/>
+  <rect x="118" y="45" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="97" y="52" width="7" height="7" fill="#ffffff"/>
+  <rect x="111" y="52" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="104" y="59" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="97" y="66" width="7" height="7" fill="#ffffff"/>
+  <rect x="111" y="66" width="7" height="7" fill="#ffffff"/>
+  
+  <rect x="90" y="73" width="7" height="7" fill="#ffffff"/>
+  <rect x="118" y="73" width="7" height="7" fill="#ffffff"/>
+  
+  <!-- Market text -->
+  <text x="90" y="118" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffff">MARKET</text>
+  
+  <!-- Decorative pixels -->
+  <rect x="45" y="111" width="4" height="4" fill="#60a5fa"/>
+  <rect x="52" y="115" width="4" height="4" fill="#60a5fa"/>
+  <rect x="59" y="111" width="4" height="4" fill="#60a5fa"/>
+  <rect x="66" y="115" width="4" height="4" fill="#60a5fa"/>
+</svg>

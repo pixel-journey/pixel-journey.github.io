@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="background-color" content="#1a1a1a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PxMarket" />
+    <meta name="msapplication-TileColor" content="#3b82f6" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/icon-152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icon-180.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/img/icon-167.png" />
+    
+    <!-- Primary Meta Tags -->
+    <title>PxMarket || Pixel Journey WAX NFT Marketplace</title>
+    <meta name="title" content="PxMarket || Pixel Journey WAX NFT Marketplace" />
+    <meta name="description" content="Discover, trade, and collect WAX NFTs on PxMarket - the official Pixel Journey marketplace. Browse collections, make offers, and join the pixel-powered Web3 ecosystem on WAX blockchain." />
+    <meta name="keywords" content="WAX NFT, NFT marketplace, Pixel Journey, PxMarket, blockchain gaming, WAX blockchain, NFT trading, digital collectibles" />
+    <meta name="author" content="Pixel Journey" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://market.pixeljourney.xyz/" />
+    <meta property="og:title" content="PxMarket || Pixel Journey WAX NFT Marketplace" />
+    <meta property="og:description" content="Discover, trade, and collect WAX NFTs on PxMarket - the official Pixel Journey marketplace. Browse collections, make offers, and join the pixel-powered Web3 ecosystem on WAX blockchain." />
+    <meta property="og:image" content="https://pixeljourney.xyz/img/pixelgrey-bluebg-spliteyes.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://market.pixeljourney.xyz/" />
+    <meta property="twitter:title" content="PxMarket || Pixel Journey WAX NFT Marketplace" />
+    <meta property="twitter:description" content="Discover, trade, and collect WAX NFTs on PxMarket - the official Pixel Journey marketplace. Browse collections, make offers, and join the pixel-powered Web3 ecosystem on WAX blockchain." />
+    <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelgrey-bluebg-spliteyes.png" />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <link rel="canonical" href="https://market.pixeljourney.xyz/" />
+    <script type="module" crossorigin src="/assets/index-RDAk_-Z_.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-M91y7A-R.js">
+    <link rel="modulepreload" crossorigin href="/assets/wharfkit-DegL5BAe.js">
+    <link rel="modulepreload" crossorigin href="/assets/wallets-CVbRd5Zw.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CYxSUaA4.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Service Worker Registration - Environment Specific -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // Skip service worker registration for file:// protocol
+          if (location.protocol === 'file:') {
+            console.log('Service Worker registration skipped for file:// protocol');
+            return;
+          }
+          
+          // Detect environment based on hostname and protocol
+          const isDevelopment = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'http:';
+          const swFile = isDevelopment ? '/sw-dev.js' : '/sw.js';
+          const envName = isDevelopment ? 'development' : 'production';
+          
+          navigator.serviceWorker.register(swFile)
+            .then((registration) => {
+              console.log(`SW registered for ${envName}:`, registration);
+              
+              // Handle updates (production only)
+              if (!isDevelopment) {
+                registration.addEventListener('updatefound', () => {
+                  const newWorker = registration.installing;
+                  if (newWorker) {
+                    newWorker.addEventListener('statechange', () => {
+                      if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // New content available, prompt user to refresh
+                        if (confirm('New version available! Refresh to update?')) {
+                          newWorker.postMessage({ type: 'SKIP_WAITING' });
+                          window.location.reload();
+                        }
+                      }
+                    });
+                  }
+                });
+              }
+            })
+            .catch((registrationError) => {
+              console.log(`SW registration failed for ${envName}:`, registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

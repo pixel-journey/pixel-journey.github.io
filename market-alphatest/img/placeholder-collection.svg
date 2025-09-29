@@ -1,0 +1,8 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#f3f4f6"/>
+  <circle cx="100" cy="80" r="20" fill="#9ca3af"/>
+  <rect x="70" y="120" width="15" height="15" fill="#9ca3af"/>
+  <rect x="100" y="120" width="15" height="15" fill="#9ca3af"/>
+  <rect x="130" y="120" width="15" height="15" fill="#9ca3af"/>
+  <text x="100" y="170" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="12">Collection</text>
+</svg>
