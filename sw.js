@@ -4,10 +4,10 @@ const DYNAMIC_CACHE_NAME = 'pxmarket-dynamic-v1.0.0'
 
 // Assets to cache on install
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg',
+  '/market-alphatest/',
+  '/market-alphatest/index.html',
+  '/market-alphatest/manifest.json',
+  '/market-alphatest/favicon.svg',
   // Add other critical static assets
 ]
 
@@ -112,8 +112,8 @@ async function networkFirstStrategy(request) {
   try {
     const networkResponse = await fetch(request)
     
-    if (networkResponse.ok) {
-      // Cache successful responses
+    if (networkResponse.ok && networkResponse.status < 300 && networkResponse.status !== 206) {
+      // Cache successful responses (but not partial responses or redirects)
       const cache = await caches.open(DYNAMIC_CACHE_NAME)
       cache.put(request, networkResponse.clone())
     }
@@ -128,12 +128,12 @@ async function networkFirstStrategy(request) {
     }
     
     // Return offline page for navigation requests
-    if (request.destination === 'document') {
-      return caches.match('/offline.html') || new Response(
-        '<h1>Offline</h1><p>You are currently offline. Please check your internet connection.</p>',
-        { headers: { 'Content-Type': 'text/html' } }
-      )
-    }
+      if (request.destination === 'document') {
+        return caches.match('/market-alphatest/offline.html') || new Response(
+          '<h1>Offline</h1><p>You are currently offline. Please check your internet connection.</p>',
+          { headers: { 'Content-Type': 'text/html' } }
+        )
+      }
     
     throw error
   }
@@ -150,7 +150,7 @@ async function cacheFirstStrategy(request) {
   try {
     const networkResponse = await fetch(request)
     
-    if (networkResponse.ok) {
+    if (networkResponse.ok && networkResponse.status < 300 && networkResponse.status !== 206) {
       const cache = await caches.open(DYNAMIC_CACHE_NAME)
       cache.put(request, networkResponse.clone())
     }
@@ -174,7 +174,7 @@ async function networkFirstWithTimeout(request, timeout = 3000) {
     
     clearTimeout(timeoutId)
     
-    if (networkResponse.ok) {
+    if (networkResponse.ok && networkResponse.status < 300 && networkResponse.status !== 206) {
       const cache = await caches.open(DYNAMIC_CACHE_NAME)
       cache.put(request, networkResponse.clone())
     }
@@ -429,8 +429,8 @@ self.addEventListener('push', (event) => {
   const data = event.data.json()
   const options = {
     body: data.body,
-    icon: '/favicon.svg',
-    badge: '/favicon.svg',
+    icon: '/market-alphatest/favicon.svg',
+    badge: '/market-alphatest/favicon.svg',
     tag: data.tag || 'default',
     data: data.data || {},
     actions: data.actions || [],
@@ -449,7 +449,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close()
   
   const data = event.notification.data
-  let url = '/'
+  let url = '/market-alphatest/'
   
   if (data && data.url) {
     url = data.url
