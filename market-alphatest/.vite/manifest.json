@@ -1,48 +1,48 @@
 {
-  "_vendor-WE9EuH_2.js": {
-    "file": "assets/js/vendor-WE9EuH_2.js",
+  "_vendor-18oYYS7b.js": {
+    "file": "assets/js/vendor-18oYYS7b.js",
     "name": "vendor"
   },
-  "_wallets-Dpi4wZtH.js": {
-    "file": "assets/js/wallets-Dpi4wZtH.js",
+  "_wallets-4z7hQ1Rq.js": {
+    "file": "assets/js/wallets-4z7hQ1Rq.js",
     "name": "wallets",
     "imports": [
-      "_vendor-WE9EuH_2.js",
-      "_wharfkit-CpEkzKdn.js"
+      "_vendor-18oYYS7b.js",
+      "_wharfkit-CLpwvJ3D.js"
     ],
     "dynamicImports": [
       "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js"
     ]
   },
-  "_wharfkit-CpEkzKdn.js": {
-    "file": "assets/js/wharfkit-CpEkzKdn.js",
+  "_wharfkit-CLpwvJ3D.js": {
+    "file": "assets/js/wharfkit-CLpwvJ3D.js",
     "name": "wharfkit",
     "imports": [
-      "_vendor-WE9EuH_2.js"
+      "_vendor-18oYYS7b.js"
     ]
   },
   "index.html": {
-    "file": "assets/js/index-Dm1TZNzq.js",
+    "file": "assets/js/index-B-aLfoiO.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_vendor-WE9EuH_2.js",
-      "_wallets-Dpi4wZtH.js",
-      "_wharfkit-CpEkzKdn.js"
+      "_vendor-18oYYS7b.js",
+      "_wallets-4z7hQ1Rq.js",
+      "_wharfkit-CLpwvJ3D.js"
     ],
     "css": [
       "assets/css/index-DY1c8ND4.css"
     ]
   },
   "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js": {
-    "file": "assets/js/protocol-scatter.m-DMkKft5o.js",
+    "file": "assets/js/protocol-scatter.m-DKKrwVLT.js",
     "name": "protocol-scatter.m",
     "src": "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js",
     "isDynamicEntry": true,
     "imports": [
-      "_wharfkit-CpEkzKdn.js",
-      "_vendor-WE9EuH_2.js"
+      "_wharfkit-CLpwvJ3D.js",
+      "_vendor-18oYYS7b.js"
     ]
   }
 }
