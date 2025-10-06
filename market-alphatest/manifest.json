@@ -12,21 +12,21 @@
   "categories": ["shopping", "finance", "entertainment"],
   "icons": [
     {
-      "src": "/market-alphatest/favicon.svg",
+      "src": "/market-alphatest/logo.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/market-alphatest/img/icon-192.svg",
+      "src": "/market-alphatest/logo.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/market-alphatest/img/icon-512.svg",
+      "src": "/market-alphatest/logo.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     }
   ],
@@ -39,9 +39,9 @@
       "url": "/market-alphatest/marketplace",
       "icons": [
         {
-          "src": "/market-alphatest/favicon.svg",
+          "src": "/market-alphatest/logo.png",
           "sizes": "any",
-          "type": "image/svg+xml"
+          "type": "image/png"
         }
       ]
     },
@@ -52,9 +52,9 @@
       "url": "/market-alphatest/inventory",
       "icons": [
         {
-          "src": "/favicon.svg",
+          "src": "/logo.png",
           "sizes": "any",
-          "type": "image/svg+xml"
+          "type": "image/png"
         }
       ]
     },
@@ -65,9 +65,9 @@
       "url": "/market-alphatest/watchlist",
       "icons": [
         {
-          "src": "/favicon.svg",
+          "src": "/logo.png",
           "sizes": "any",
-          "type": "image/svg+xml"
+          "type": "image/png"
         }
       ]
     }

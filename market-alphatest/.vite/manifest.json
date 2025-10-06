@@ -1,0 +1,48 @@
+{
+  "_vendor-WE9EuH_2.js": {
+    "file": "assets/js/vendor-WE9EuH_2.js",
+    "name": "vendor"
+  },
+  "_wallets-Dpi4wZtH.js": {
+    "file": "assets/js/wallets-Dpi4wZtH.js",
+    "name": "wallets",
+    "imports": [
+      "_vendor-WE9EuH_2.js",
+      "_wharfkit-CpEkzKdn.js"
+    ],
+    "dynamicImports": [
+      "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js"
+    ]
+  },
+  "_wharfkit-CpEkzKdn.js": {
+    "file": "assets/js/wharfkit-CpEkzKdn.js",
+    "name": "wharfkit",
+    "imports": [
+      "_vendor-WE9EuH_2.js"
+    ]
+  },
+  "index.html": {
+    "file": "assets/js/index-P5Wwciwz.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor-WE9EuH_2.js",
+      "_wallets-Dpi4wZtH.js",
+      "_wharfkit-CpEkzKdn.js"
+    ],
+    "css": [
+      "assets/css/index-DY1c8ND4.css"
+    ]
+  },
+  "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js": {
+    "file": "assets/js/protocol-scatter.m-DMkKft5o.js",
+    "name": "protocol-scatter.m",
+    "src": "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_wharfkit-CpEkzKdn.js",
+      "_vendor-WE9EuH_2.js"
+    ]
+  }
+}
