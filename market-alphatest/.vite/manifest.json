@@ -22,7 +22,7 @@
     ]
   },
   "index.html": {
-    "file": "assets/js/index-BKJcCwFi.js",
+    "file": "assets/js/index-vMfaXujy.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -32,7 +32,7 @@
       "_wharfkit-CLpwvJ3D.js"
     ],
     "css": [
-      "assets/css/index-B5VaPJtE.css"
+      "assets/css/index-B2cnXWBi.css"
     ]
   },
   "node_modules/@wharfkit/protocol-scatter/lib/protocol-scatter.m.js": {
