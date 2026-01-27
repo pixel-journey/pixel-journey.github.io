@@ -1715,10 +1715,10 @@
         let wpixalPriceUSD = 0;
 
         async function fetchPrices() {
-            const apiUrlPXJ = "https://alcor.exchange/api/v2/tokens/pxj-pixeljourney";
-            const apiUrlWUF = "https://alcor.exchange/api/v2/tokens/wuf-wuffi";
-            const apiUrlWAX = "https://alcor.exchange/api/v2/tokens/wax-eosio.token";
-            const apiUrlWPIXAL = "https://alcor.exchange/api/v2/tokens/wpixal-pixeljourney";
+            const apiUrlPXJ = "https://wax.alcor.exchange/api/v2/tokens/pxj-pixeljourney";
+            const apiUrlWUF = "https://wax.alcor.exchange/api/v2/tokens/wuf-wuffi";
+            const apiUrlWAX = "https://wax.alcor.exchange/api/v2/tokens/wax-eosio.token";
+            const apiUrlWPIXAL = "https://wax.alcor.exchange/api/v2/tokens/wpixal-pixeljourney";
 
             try {
                 const pxjResponse = await fetch(apiUrlPXJ);
@@ -2752,4 +2752,5 @@ document.querySelectorAll('.lbd-menu .lbd-item').forEach(item => {
 </body>
 
 </html>
+
 
