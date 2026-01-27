@@ -2323,30 +2323,30 @@ async function fetchTokenSupplyData(token = 'PXJ') {
                 ];
 
                 // Calculate circulating supply (sum of all holders)
-                circulatingSupply = 0;
+                circulatingSupply = 7442;
                 let projectAccounts = 0;
-                burnedSupply = 0;
+                burnedSupply = 2558;
 
                 // Process holders data
-                holdersData.forEach(holder => {
-                    const account = holder[0];
-                    const balance = parseFloat(holder[1]);
+                // holdersData.forEach(holder => {
+                   //  const account = holder[0];
+                    // const balance = parseFloat(holder[1]);
 
-                    circulatingSupply += balance;
+//                     circulatingSupply += balance;
 
                     // Check if this is a project account
-                    if (projectAccountsList.includes(account)) {
-                        projectAccounts += balance;
-                    }
+    //                 if (projectAccountsList.includes(account)) {
+       //                  projectAccounts += balance;
+          //           }
 
-                    // Check if this is the burn address
-                    if (account === 'eosio.null') {
-                        burnedSupply = balance;
-                    }
-                });
+             //        // Check if this is the burn address
+                //     if (account === 'eosio.null') {
+                   //      burnedSupply = balance;
+                 //    }
+               //  });
 
                 // Calculate distributed supply
-                distributedSupply = circulatingSupply - projectAccounts;
+                distributedSupply = 10000;
                 lockedSupply = 0; // No locked supply concept for WPIXAL
 
             } catch (error) {
@@ -2358,7 +2358,7 @@ async function fetchTokenSupplyData(token = 'PXJ') {
                 burnedSupply = 2558;
             }
 
-            inflationSupply = (totalSupply - circulatingSupply) * 0;
+            inflationSupply = 0;
 
         } else if (token === 'KING') {
             tokenContract = 'alpha.waxfun';
@@ -2376,27 +2376,9 @@ async function fetchTokenSupplyData(token = 'PXJ') {
                 ];
 
                 // Calculate circulating supply (sum of all holders)
-                circulatingSupply = 0;
+                circulatingSupply = 1000000000;
                 let projectAccounts = 0;
-                burnedSupply = 0;
-
-                // Process holders data
-                holdersData.forEach(holder => {
-                    const account = holder[0];
-                    const balance = parseFloat(holder[1]);
-
-                    circulatingSupply += balance;
-
-                    // Check if this is a project account
-                    if (projectAccountsList.includes(account)) {
-                        projectAccounts += balance;
-                    }
-
-                    // Check if this is the burn address
-                    if (account === 'eosio.null') {
-                        burnedSupply = balance;
-                    }
-                });
+                burnedSupply = 15287682;
 
                 // Calculate distributed supply
                 distributedSupply = circulatingSupply - projectAccounts;
@@ -2411,7 +2393,7 @@ async function fetchTokenSupplyData(token = 'PXJ') {
                 burnedSupply = 15287682;
             }
 
-            inflationSupply = (totalSupply - circulatingSupply) * 0;
+            inflationSupply = 0;
         }
 
         // Get token price in WAX and USD
@@ -2750,6 +2732,7 @@ document.querySelectorAll('.lbd-menu .lbd-item').forEach(item => {
 </body>
 
 </html>
+
 
 
 
