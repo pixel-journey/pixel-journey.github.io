@@ -2293,10 +2293,10 @@ async function fetchTokenSupplyData(token = 'PXJ') {
             } catch (error) {
                 console.error('Error fetching top holders:', error);
                 // Fallback values
-                circulatingSupply = 1900000000;
-                const projectAccounts = 1193000000;
+                circulatingSupply = 2710000000;
+                const projectAccounts = 1433000000;
                 distributedSupply = circulatingSupply - projectAccounts;
-                burnedSupply = 6815783; // Example from the data provided
+                burnedSupply = 80607864; // Example from the data provided
             }
 
             // Get locked PXJ from leaderboard total
@@ -2352,14 +2352,13 @@ async function fetchTokenSupplyData(token = 'PXJ') {
             } catch (error) {
                 console.error('Error fetching WPIXAL data:', error);
                 // Fallback values
-                circulatingSupply = 8242;
+                circulatingSupply = 7442;
                 distributedSupply = 10000;
                 lockedSupply = 0;
-                burnedSupply = 1758;
+                burnedSupply = 2558;
             }
 
-            // Calculate next season inflation (5% of unminted supply)
-            inflationSupply = (totalSupply - circulatingSupply) * 0.05;
+            inflationSupply = (totalSupply - circulatingSupply) * 0;
 
         } else if (token === 'KING') {
             tokenContract = 'alpha.waxfun';
@@ -2401,19 +2400,18 @@ async function fetchTokenSupplyData(token = 'PXJ') {
 
                 // Calculate distributed supply
                 distributedSupply = circulatingSupply - projectAccounts;
-                lockedSupply = 0; // No locked supply concept for KING
+                lockedSupply = 223629917; 
 
             } catch (error) {
                 console.error('Error fetching KING data:', error);
                 // Fallback values
                 circulatingSupply = 1000000000;
                 distributedSupply = 1000000000;
-                lockedSupply = 270000000;
-                burnedSupply = 5000000;
+                lockedSupply = 223629917;
+                burnedSupply = 15287682;
             }
 
-            // Calculate next season inflation (8% of unminted supply)
-            inflationSupply = (totalSupply - circulatingSupply) * 0.08;
+            inflationSupply = (totalSupply - circulatingSupply) * 0;
         }
 
         // Get token price in WAX and USD
@@ -2752,5 +2750,6 @@ document.querySelectorAll('.lbd-menu .lbd-item').forEach(item => {
 </body>
 
 </html>
+
 
 
