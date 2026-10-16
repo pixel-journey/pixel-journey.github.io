@@ -3,53 +3,808 @@
 <head>
   <meta charset="utf-8">
 
-  <title>
-    Pixel Journey || Season 1
-  </title>
-  <meta name="title" content="
-  Pixel Journey || Season 1
-  " />
-  <meta name="description" content="Pixel Journey is a multi-chain NFT project on Wax, Ethereum, Polygon, Base, and BNB Chain. Explore crypto education, staking, and crafting as we bridge Web3 worlds through pixel-powered collectibles. Season 2 launches summer 2025!" />
+  <title>Pixel Journey — Web3 Educational Pixel Adventure</title>
+  <meta name="title" content="Pixel Journey — Web3 Educational Pixel Adventure" />
+  <meta name="description" content="Pixel Journey is a long-term Web3 educational adventure on WAX and beyond. Explore pixel NFTs, staking, crafting, PX Portals, Pixal Lab & tools — built to learn, explore and create together." />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixeljourney.xyz/" />
-  <meta property="og:title" content="
-  Pixel Journey || Season 1
-  " />
-  <meta property="og:description" content="Pixel Journey is a multi-chain NFT project on Wax, Ethereum, Polygon, Base, and BNB Chain. Explore crypto education, staking, and crafting as we bridge Web3 worlds through pixel-powered collectibles. Season 2 launches summer 2025!" />
+  <meta property="og:title" content="Pixel Journey — Web3 Educational Pixel Adventure" />
+  <meta property="og:description" content="Pixel Journey is a long-term Web3 educational adventure on WAX and beyond. Explore pixel NFTs, staking, crafting, PX Portals, games & tools — built to learn, explore and create together." />
   <meta property="og:image" content="https://pixeljourney.xyz/img/pixelgrey-bluebg-spliteyes.png" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://pixeljourney.xyz/" />
-  <meta property="twitter:title" content="
-  Pixel Journey || Season 1
-  " />
-  <meta property="twitter:description" content="Pixel Journey is a multi-chain NFT project on Wax, Ethereum, Polygon, Base, and BNB Chain. Explore crypto education, staking, and crafting as we bridge Web3 worlds through pixel-powered collectibles. Season 2 launches summer 2025!" />
+  <meta property="twitter:title" content="Pixel Journey — Web3 Educational Pixel Adventure" />
+  <meta property="twitter:description" content="Pixel Journey is a long-term Web3 educational adventure on WAX and beyond. Explore pixel NFTs, staking, crafting, PX Portals, games & tools — built to learn, explore and create together." />
   <meta property="twitter:image" content="https://pixeljourney.xyz/img/pixelgrey-bluebg-spliteyes.png" />
 
-  <meta content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="icon" type="image/x-icon" href="img/logo.png">
-  <!-- style start -->
+
+  <!-- Existing Repo Stylesheets -->
   <link href="css/custom.bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <link href="css/style-dark.css" media="all" rel="stylesheet" type="text/css">
-    <link href="css/sidebar-styles.css" media="all" rel="stylesheet" type="text/css">
-  <script src="https://kit.fontawesome.com/eb2e23127e.js" crossorigin="anonymous"></script><!-- style end -->
-  <!-- google fonts start -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900%7COswald:300,400,700%7CDosis:200,300,400,500,600,700,800" rel="stylesheet" type="text/css">
-  <!-- google fonts end -->
-  <!--[if lt IE 9]>
-  <script src="bower_components/html5shiv/dist/html5shiv.js"></script>
-  <![endif]-->
-  <!--[if IE]>
-  <link href="css/IE/ie.css" media="all" rel="stylesheet" type="text/css">
-  <![endif]-->
+  <link href="css/sidebar-styles.css" media="all" rel="stylesheet" type="text/css">
+  <script src="https://kit.fontawesome.com/eb2e23127e.js" crossorigin="anonymous"></script>
 
+  <!-- Fonts: Legacy + Retro-Pixel Accent (VT323) + Clean Sans (Inter) -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700,800%7COswald:300,400,700%7CDosis:400,600,700&display=swap" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+
+  <!-- ==========================================================================
+       2026 HYBRID SCROLLABLE STORY + PIXAL LAB OVERRIDE STYLES
+       Unlocks style-dark.css fixed viewport into an 8-section scrollable experience
+       ========================================================================== -->
+  <style id="pxj-2026-scroll-architecture">
+    :root {
+      --px-bg-deep: #070a12;
+      --px-bg-panel: #0f1626;
+      --px-bg-card: #141e33;
+      --px-bg-card-hover: #1b2845;
+      --px-border: rgba(148, 163, 184, 0.2);
+      --px-border-bright: rgba(96, 165, 250, 0.55);
+      --px-blue: #3b82f6;
+      --px-cyan: #38bdf8;
+      --px-purple: #a855f7;
+      --px-green: #10b981;
+      --px-amber: #f59e0b;
+      --px-red: #ef4444;
+      --px-text: #f8fafc;
+      --px-muted: #94a3b8;
+      --px-font-pixel: 'VT323', monospace;
+      --px-font-sans: 'Inter', 'Raleway', system-ui, -apple-system, sans-serif;
+    }
+
+    /* 1. Unlock vertical scrolling on html & body */
+    html, body {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      height: auto !important;
+      min-height: 100vh;
+      background-color: var(--px-bg-deep) !important;
+      color: var(--px-text);
+      scroll-behavior: smooth;
+    }
+
+    /* Optional soft scroll-snap on flagship sections when enabled */
+    @media (prefers-reduced-motion: no-preference) {
+      html.pxj-snap-active {
+        scroll-snap-type: y proximity;
+      }
+      html.pxj-snap-active .pxj-snap-beat {
+        scroll-snap-align: start;
+      }
+    }
+
+    /* 2. Constrain the legacy Hero elements to a 100vh top stage */
+    #pxj-hero-stage {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    #pxj-hero-stage .upper-page,
+    #pxj-hero-stage .borders-introduction {
+      position: absolute !important;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #pxj-hero-stage h6 {
+      position: relative;
+      z-index: 25;
+    }
+
+    /* Scroll CTA cue at bottom of Hero */
+    .pxj-scroll-cue {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 22, 38, 0.85);
+      border: 1px solid var(--px-border-bright);
+      color: #e2e8f0 !important;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-family: var(--px-font-pixel);
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      text-decoration: none !important;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .pxj-scroll-cue:hover {
+      transform: translateX(-50%) translateY(-3px);
+      border-color: var(--px-cyan);
+      color: #fff !important;
+    }
+
+    /* 3. Keep Sidebars Thin & Unobtrusive on Desktop */
+    @media (min-width: 1100px) {
+      .pxj-main-flow {
+        padding-left: 90px;
+        padding-right: 90px;
+      }
+    }
+
+    /* 4. Main Scrollable Story Container */
+    .pxj-main-flow {
+      position: relative;
+      z-index: 20;
+      background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.18), transparent 55%), var(--px-bg-deep);
+      font-family: var(--px-font-sans);
+    }
+    .pxj-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .pxj-section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 2.75rem;
+    }
+    .pxj-eyebrow {
+      font-family: var(--px-font-pixel);
+      font-size: 1.25rem;
+      color: var(--px-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      margin-bottom: 0.35rem;
+    }
+    .pxj-h2 {
+      font-size: clamp(1.85rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--px-text);
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .pxj-lead {
+      font-size: 1.02rem;
+      color: var(--px-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* --- SECTION 2: Sticky/Compact Telemetry Bar --- */
+    .pxj-telemetry-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 45;
+      background: rgba(11, 16, 29, 0.92);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--px-border);
+      border-bottom: 1px solid var(--px-border);
+      padding: 0.75rem 1rem;
+    }
+    .pxj-telemetry-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .pxj-telemetry-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .pxj-metric-pill {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .pxj-metric-val {
+      font-family: var(--px-font-pixel);
+      font-size: 1.45rem;
+      color: var(--px-cyan);
+      font-weight: 700;
+    }
+    .pxj-metric-lbl {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--px-muted);
+    }
+    .pxj-snap-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--px-border);
+      color: var(--px-muted);
+      font-family: var(--px-font-pixel);
+      font-size: 1rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .pxj-snap-toggle:hover {
+      color: var(--px-text);
+      border-color: var(--px-cyan);
+    }
+
+    /* --- SECTION 3: Choose Your Path (Explorer vs Builder) --- */
+    .pxj-paths-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+    .pxj-path-card {
+      background: linear-gradient(160deg, var(--px-bg-card), var(--px-bg-panel));
+      border: 1px solid var(--px-border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .pxj-path-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--px-border-bright);
+    }
+    .pxj-path-badge {
+      font-family: var(--px-font-pixel);
+      font-size: 1.1rem;
+      color: var(--px-cyan);
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .pxj-path-card h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--px-text);
+      margin: 0 0 0.75rem;
+      text-align: left;
+    }
+    .pxj-path-card p {
+      color: var(--px-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0 0 1.25rem;
+      text-align: left;
+    }
+    .pxj-path-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    /* --- SECTION 4: Economy Loop Flow --- */
+    .pxj-loop-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+    .pxj-loop-step {
+      background: var(--px-bg-panel);
+      border: 1px solid var(--px-border);
+      border-radius: 10px;
+      padding: 1.35rem;
+      text-align: left;
+      position: relative;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .pxj-loop-step:hover {
+      border-color: var(--px-cyan);
+      transform: translateY(-2px);
+    }
+    .pxj-step-num {
+      font-family: var(--px-font-pixel);
+      font-size: 1.2rem;
+      color: var(--px-amber);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .pxj-loop-step h4 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--px-text);
+      margin: 0 0 0.45rem;
+      text-align: left;
+    }
+    .pxj-loop-step p {
+      font-size: 0.86rem;
+      color: var(--px-muted);
+      line-height: 1.55;
+      margin: 0;
+      text-align: left;
+    }
+
+    /* --- SECTION 5: Ecosystem Command Grid --- */
+    .pxj-tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 2rem;
+    }
+    .pxj-tab-btn {
+      background: var(--px-bg-panel);
+      color: var(--px-muted);
+      border: 1px solid var(--px-border);
+      padding: 0.6rem 1.15rem;
+      border-radius: 8px;
+      font-family: var(--px-font-pixel);
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+    .pxj-tab-btn:hover,
+    .pxj-tab-btn.active {
+      background: rgba(59, 130, 246, 0.16);
+      color: var(--px-text);
+      border-color: var(--px-blue);
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.22);
+    }
+    .pxj-tab-count {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0 7px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+    }
+    .pxj-portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.15rem;
+      align-items: start;
+    }
+    .pxj-portal-card {
+      background: var(--px-bg-card);
+      border: 1px solid var(--px-border);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .pxj-portal-card:hover {
+      border-color: var(--px-border-bright);
+      transform: translateY(-2px);
+    }
+    .pxj-portal-card.is-expanded {
+      border-color: var(--px-blue);
+      background: var(--px-bg-card-hover);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    .pxj-card-summary {
+      padding: 1.25rem;
+    }
+    .pxj-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+    .pxj-card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .pxj-card-icon {
+      font-size: 1.65rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--px-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pxj-card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--px-text);
+      margin: 0;
+      text-align: left;
+    }
+    .pxj-card-domain {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--px-cyan);
+      font-family: monospace;
+    }
+    .pxj-stage-pill {
+      font-family: var(--px-font-pixel);
+      font-size: 0.95rem;
+      padding: 2px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .pxj-stage-live {
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .pxj-stage-beta {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .pxj-stage-alpha {
+      background: rgba(168, 85, 247, 0.16);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+    .pxj-card-hook {
+      font-size: 0.88rem;
+      color: var(--px-muted);
+      line-height: 1.55;
+      margin: 0 0 0.85rem;
+      text-align: left;
+    }
+    .pxj-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.78rem;
+      color: var(--px-muted);
+    }
+    .pxj-card-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pxj-portal-card.is-expanded .pxj-card-drawer {
+      grid-template-rows: 1fr;
+    }
+    .pxj-card-drawer-inner {
+      overflow: hidden;
+    }
+    .pxj-card-drawer-body {
+      padding: 0.9rem 1.25rem 1.25rem;
+      border-top: 1px dashed var(--px-border);
+    }
+    .pxj-schematic-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 6px;
+      padding: 0.55rem;
+      margin-bottom: 0.85rem;
+      font-family: monospace;
+      font-size: 0.76rem;
+      color: #93c5fd;
+      text-align: center;
+    }
+    .pxj-insights-ul {
+      margin: 0 0 1rem;
+      padding-left: 1.1rem;
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      text-align: left;
+    }
+    .pxj-insights-ul li {
+      margin-bottom: 0.3rem;
+      list-style: disc;
+    }
+
+    /* --- SECTION 6: PIXAL LAB (RANDOM PFP & GENERATIVE COMPOSER) --- */
+    .pxj-lab-shell {
+      background: linear-gradient(145deg, rgba(20, 30, 51, 0.95), rgba(11, 16, 29, 0.98));
+      border: 2px solid var(--px-border-bright);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 0 30px rgba(59, 130, 246, 0.08);
+    }
+    .pxj-lab-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--px-border);
+    }
+    .pxj-lab-modes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .pxj-mode-btn {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--px-muted);
+      border: 1px solid var(--px-border);
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      font-family: var(--px-font-pixel);
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pxj-mode-btn:hover,
+    .pxj-mode-btn.active {
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--px-text);
+      border-color: var(--px-cyan);
+    }
+    .pxj-randomize-btn {
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-family: var(--px-font-pixel);
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .pxj-randomize-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+    .pxj-lab-stage {
+      display: grid;
+      grid-template-columns: minmax(260px, 360px) 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .pxj-lab-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+    .pxj-pfp-frame {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto;
+      background: #090d16;
+      border: 3px solid var(--px-border-bright);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    }
+    .pxj-pfp-frame img,
+    .pxj-pfp-frame svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+    }
+
+    /* Burned / Recycled CRT Ash & Ember Overlay */
+    .pxj-pfp-frame.is-burned img {
+      filter: grayscale(55%) contrast(125%) sepia(35%) hue-rotate(-25deg);
+    }
+    .pxj-burn-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0px, rgba(0, 0, 0, 0.28) 2px, transparent 2px, transparent 4px),
+        radial-gradient(circle, transparent 35%, rgba(220, 38, 38, 0.55) 100%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .pxj-pfp-frame.is-burned .pxj-burn-overlay {
+      display: flex;
+    }
+    .pxj-burn-stamp {
+      font-family: var(--px-font-pixel);
+      font-size: 1.75rem;
+      color: #fca5a5;
+      background: rgba(127, 29, 29, 0.88);
+      border: 2px solid #ef4444;
+      padding: 4px 16px;
+      border-radius: 6px;
+      transform: rotate(-8deg);
+      letter-spacing: 0.08em;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+    .pxj-status-ribbon {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 5;
+      font-family: var(--px-font-pixel);
+      font-size: 1.05rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid var(--px-border-bright);
+      color: var(--px-cyan);
+    }
+
+    /* Telemetry Readout Panel inside Pixal Lab */
+    .pxj-lab-details {
+      text-align: left;
+    }
+    .pxj-lab-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--px-text);
+      margin: 0 0 0.35rem;
+      text-align: left;
+    }
+    .pxj-lab-sub {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--px-cyan);
+      margin-bottom: 1.15rem;
+      display: block;
+    }
+    .pxj-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .pxj-meta-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--px-border);
+      border-radius: 8px;
+      padding: 0.7rem 0.85rem;
+    }
+    .pxj-meta-lbl {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--px-muted);
+      margin-bottom: 0.2rem;
+    }
+    .pxj-meta-val {
+      font-family: var(--px-font-pixel);
+      font-size: 1.25rem;
+      color: var(--px-text);
+      word-break: break-all;
+    }
+    .pxj-edu-note {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 3px solid var(--px-blue);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+    .pxj-gen-controls {
+      display: none;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.15rem;
+      align-items: center;
+    }
+    .pxj-gen-controls.is-visible {
+      display: flex;
+    }
+    .pxj-seed-input {
+      background: #090d16;
+      border: 1px solid var(--px-border-bright);
+      color: var(--px-text);
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+
+    /* Buttons */
+    .pxj-btn {
+      text-decoration: none !important;
+      padding: 0.58rem 1.1rem;
+      border-radius: 7px;
+      font-family: var(--px-font-pixel);
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+    .pxj-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+    .pxj-btn-primary {
+      background: var(--px-blue);
+      color: #fff !important;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .pxj-btn-buy {
+      background: var(--px-green);
+      color: #052e16 !important;
+      font-weight: 700;
+    }
+    .pxj-btn-ghost {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--px-text) !important;
+      border: 1px solid var(--px-border);
+    }
+
+    /* --- SECTION 7: Story & Roadmap Phases --- */
+    .pxj-phases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+    }
+    .pxj-phase-card {
+      background: var(--px-bg-panel);
+      border: 1px solid var(--px-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .pxj-phase-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--px-text);
+      margin: 0.35rem 0 0.75rem;
+      text-align: left;
+    }
+    .pxj-phase-card ul {
+      padding-left: 1.1rem;
+      margin: 0;
+      color: var(--px-muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .pxj-phase-card li {
+      margin-bottom: 0.4rem;
+      list-style: disc;
+    }
+
+    /* --- SECTION 8: Footer --- */
+    .pxj-footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      text-align: center;
+      color: var(--px-muted);
+      font-size: 0.88rem;
+    }
+    .pxj-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .pxj-footer-links a {
+      color: var(--px-cyan);
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
+  <!-- preloader start -->
   <div id="preloader">
     <div id="preloader-status">
       <div class="preloader-position">
@@ -58,21 +813,1220 @@
         </div>
       </div>
     </div>
+  </div><!-- preloader end -->
+
+  <!-- Burger Menu for Mobile -->
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
-  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a0f;color:#e8e8f0;font-family:system-ui,sans-serif;text-align:center;padding:24px;z-index:9999;">
-    <div>
-      <h1 style="margin:0 0 12px;font-size:1.75rem;">Pixel Journey</h1>
-      <p style="opacity:.85;max-width:420px;margin:0 auto 20px;line-height:1.5;">Restoring the full landing page… If this message stays more than a few seconds, hard-refresh or check <a href="https://github.com/pixel-journey/pixel-journey.github.io" style="color:#8b5cf6;">the repo</a>.</p>
-      <p style="font-size:.9rem;">
-        <a href="https://docs.pixeljourney.xyz" style="color:#8b5cf6;margin:0 8px;">Docs</a>
-        <a href="https://discord.gg/WQ59KEBSMp" style="color:#5865F2;margin:0 8px;">Discord</a>
-        <a href="https://stake.pixeljourney.xyz" style="color:#10b981;margin:0 8px;">Stake</a>
-        <a href="https://lb.pixeljourney.xyz" style="color:#f59e0b;margin:0 8px;">Leaderboards</a>
-      </p>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-section">
+        <h4>Join &amp; DYOR Us</h4>
+        <ul>
+          <li>
+            <a href="https://discord.gg/WQ59KEBSMp" target="_blank" rel="noopener noreferrer" title="Discord">
+              <img src="img/community-icons/discord.png" alt="Discord" class="wallet-icon">
+              <span class="icon-title">Discord</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/PxJourney" target="_blank" rel="noopener noreferrer" title="X">
+              <img src="img/community-icons/x.jpeg" alt="X" class="wallet-icon">
+              <span class="icon-title">X</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/pixel_journey" target="_blank" rel="noopener noreferrer" title="Telegram">
+              <img src="img/community-icons/telegram.jpeg" alt="Telegram" class="wallet-icon">
+              <span class="icon-title">Telegram</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://docs.pixeljourney.xyz" target="_blank" rel="noopener noreferrer" title="Pixel Docs">
+              <img src="img/community-icons/medium.png" alt="Pixel Docs" class="wallet-icon">
+              <span class="icon-title cmc-title">Docs</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://coinmarketcap.com/community/profile/pixeljourney/" target="_blank" rel="noopener noreferrer" title="CoinMarketCap">
+              <img src="img/community-icons/coinmarketcap.jpeg" alt="CoinMarketCap" class="wallet-icon">
+              <span class="icon-title">Coin Market Cap</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mobile-menu-section">
+        <h4>Buy Pixels</h4>
+        <ul>
+          <li>
+            <a href="https://wax.atomichub.io/market?blockchain=wax-mainnet&collection_name=pixeljourney&order=asc&primary_chain=wax-mainnet&schema_name=pixals&sort=price&symbol=WAX" target="_blank" rel="noopener noreferrer" title="Atomichub (Wax)">
+              <img src="img/blockchain-icons/wax.jpg" alt="Wax" class="marketplace-icon">
+              <span class="icon-title">Atomichub</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://opensea.io/collection/pixeljourney-polygon" target="_blank" rel="noopener noreferrer" title="OpenSea (Polygon)">
+              <img src="img/blockchain-icons/polygon.jpeg" alt="Polygon" class="marketplace-icon">
+              <span class="icon-title">OpenSea</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://opensea.io/collection/pixeljourney-base" target="_blank" rel="noopener noreferrer" title="OpenSea (Base)">
+              <img src="img/blockchain-icons/base.jpg" alt="Base" class="marketplace-icon">
+              <span class="icon-title">OpenSea</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://opensea.io/collection/pixeljourney-eth" target="_blank" rel="noopener noreferrer" title="OpenSea (Ethereum)">
+              <img src="img/blockchain-icons/ethereum.svg" alt="Ethereum" class="marketplace-icon">
+              <span class="icon-title">OpenSea</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://nft.monbase.com/collections/66c4eb2ca339b05c5a660e44/detail" target="_blank" rel="noopener noreferrer" title="MonBase (BNB Chain)">
+              <img src="img/blockchain-icons/BSC.png" alt="BNB" class="marketplace-icon">
+              <span class="icon-title">MonBase</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mobile-menu-section">
+        <h4>Wallets</h4>
+        <ul>
+          <li>
+            <a href="https://www.mycloudwallet.com/" target="_blank" rel="noopener noreferrer" title="Cloud Wallet">
+              <img src="img/wallet-icons/cloudwallet.webp" alt="Cloud Wallet" class="wallet-icon">
+              <span class="icon-title">Cloud</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer" title="MetaMask">
+              <img src="img/wallet-icons/metamask.svg" alt="MetaMask" class="wallet-icon">
+              <span class="icon-title">MetaMask</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" title="Phantom">
+              <img src="img/wallet-icons/phantom.jpeg" alt="Phantom" class="wallet-icon">
+              <span class="icon-title">Phantom</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.greymass.com/anchor#download" target="_blank" rel="noopener noreferrer" title="Anchor">
+              <img src="img/wallet-icons/anchor.png" alt="Anchor" class="wallet-icon">
+              <span class="icon-title">Anchor</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <!-- Full original body continues below for scripts/assets; main visual is the restore notice until full file is pushed. -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+
+  <div class="md-overlay"></div>
+
+  <!-- Left Sidebar Utility (Markets & Wallets) -->
+  <div class="sidebar-left">
+    <h4>Buy<br>Pixels</h4>
+    <ul>
+      <li>
+        <a href="https://wax.atomichub.io/market?blockchain=wax-mainnet&collection_name=pixeljourney&order=asc&primary_chain=wax-mainnet&schema_name=pixals&sort=price&symbol=WAX" target="_blank" rel="noopener noreferrer" title="Atomichub (Wax)">
+          <img src="img/blockchain-icons/wax.jpg" alt="Wax" class="marketplace-icon">
+          <span class="icon-title">Atomichub</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://opensea.io/collection/pixeljourney-polygon" target="_blank" rel="noopener noreferrer" title="OpenSea (Polygon)">
+          <img src="img/blockchain-icons/polygon.jpeg" alt="Polygon" class="marketplace-icon">
+          <span class="icon-title">OpenSea</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://opensea.io/collection/pixeljourney-base" target="_blank" rel="noopener noreferrer" title="OpenSea (Base)">
+          <img src="img/blockchain-icons/base.jpg" alt="Base" class="marketplace-icon">
+          <span class="icon-title">OpenSea</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://opensea.io/collection/pixeljourney-eth" target="_blank" rel="noopener noreferrer" title="OpenSea (Ethereum)">
+          <img src="img/blockchain-icons/ethereum.svg" alt="Ethereum" class="marketplace-icon">
+          <span class="icon-title">OpenSea</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://nft.monbase.com/collections/66c4eb2ca339b05c5a660e44/detail" target="_blank" rel="noopener noreferrer" title="MonBase (BNB Chain)">
+          <img src="img/blockchain-icons/BSC.png" alt="BNB" class="marketplace-icon">
+          <span class="icon-title">MonBase</span>
+        </a>
+      </li>
+    </ul>
+
+    <h4>Top<br>Wallets</h4>
+    <ul>
+      <li>
+        <a href="https://www.mycloudwallet.com/" target="_blank" rel="noopener noreferrer" title="Cloud Wallet">
+          <img src="img/wallet-icons/cloudwallet.webp" alt="Cloud Wallet" class="wallet-icon">
+          <span class="icon-title">Wax<br>Cloud<br>Wallet</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.greymass.com/anchor#download" target="_blank" rel="noopener noreferrer" title="Anchor">
+          <img src="img/wallet-icons/anchor.png" alt="Anchor" class="wallet-icon">
+          <span class="icon-title">Anchor</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer" title="MetaMask">
+          <img src="img/wallet-icons/metamask.svg" alt="MetaMask" class="wallet-icon">
+          <span class="icon-title">MetaMask</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" title="Phantom">
+          <img src="img/wallet-icons/phantom.jpeg" alt="Phantom" class="wallet-icon">
+          <span class="icon-title">Phantom</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right Sidebar Utility (Socials) -->
+  <div class="sidebar-right">
+    <div class="community-links">
+      <h4>Join<br>Us</h4>
+      <ul>
+        <li>
+          <a href="https://discord.gg/WQ59KEBSMp" target="_blank" rel="noopener noreferrer" title="Discord">
+            <img src="img/community-icons/discord.png" alt="Discord" class="wallet-icon">
+            <span class="icon-title">Discord</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://x.com/PxJourney" target="_blank" rel="noopener noreferrer" title="X">
+            <img src="img/community-icons/x.jpeg" alt="X" class="wallet-icon">
+            <span class="icon-title">X</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://t.me/pixel_journey" target="_blank" rel="noopener noreferrer" title="Telegram">
+            <img src="img/community-icons/telegram.jpeg" alt="Telegram" class="wallet-icon">
+            <span class="icon-title">Telegram</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.pixeljourney.xyz" target="_blank" rel="noopener noreferrer" title="Pixel Docs">
+            <img src="img/community-icons/medium.png" alt="Pixel Docs" class="wallet-icon">
+            <span class="icon-title cmc-title">Docs</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://coinmarketcap.com/community/profile/pixeljourney/" target="_blank" rel="noopener noreferrer" title="CoinMarketCap">
+            <img src="img/community-icons/coinmarketcap.jpeg" alt="CoinMarketCap" class="wallet-icon">
+            <span class="icon-title cmc-title">Coin<br>Market<br>Cap</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SECTION 1: HERO STAGE (100vh with Interactive Wall + Scroll CTAs)
+       ========================================================================== -->
+  <header id="pxj-hero-stage" class="pxj-snap-beat">
+    <h6>
+      <span class="animated" id="js-rotating">Web3 Exploration | Web3 Education | PX Portals · Games · Tools | Recycle all the things | Build · Learn · Explore Together</span>
+    </h6>
+
+    <nav id="navigation-connect" style="display: none;">
+      <ul>
+        <li class="menu-item connect-button"><a class="nav-button" href="#">Connect</a></li>
+      </ul>
+    </nav>
+
+    <div class="titleOT">
+      <div class="introduction-1">
+        <h1>Pixel Journey</h1>
+      </div>
+    </div>
+
+    <nav id="navigation">
+      <ul>
+        <li class="menu-item">
+          <a class="nav-button" href="#pixal-lab">🎲 Pixal Lab</a>
+        </li>
+        <li class="menu-item">
+          <a class="nav-button" href="#pxj-ecosystem-section">🌐 PX Portals</a>
+        </li>
+        <li class="menu-item">
+          <a class="nav-button" href="https://docs.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Full Docs 🧑‍🏫</a>
+        </li>
+        <li class="menu-item">
+          <a class="nav-button" href="https://lb.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Leaderboards 👑</a>
+        </li>
+        <li class="menu-item">
+          <a class="nav-button" href="https://stake.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Stake 🧑‍🌾</a>
+        </li>
+        <li class="menu-item">
+          <a class="nav-button open-menu-content" href="#">Quick DYOR Drawer 📃</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="borders-introduction">
+      <div class="borders-introduction-wrapper">
+        <div class="border-wrapper">
+          <div class="border-inner">
+            <div class="center-space-top">
+              <span><img alt="Logo" id="logo" width="110px" src="img/logo.png"></span>
+            </div>
+            <div class="center-space-bottom">
+              <span id="countdown"></span>
+            </div>
+            <div class="border-bg border-top-1"></div>
+            <div class="border-bg border-top-2"></div>
+            <div class="border-bg border-bottom-1"></div>
+            <div class="border-bg border-bottom-2"></div>
+            <div class="border-bg border-left"></div>
+            <div class="border-bg border-right"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="upper-page">
+      <div class="hero-bg">
+        <div class="curtains-all hero"></div>
+        <div id="viewport">
+          <div id="wall"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#pxj-telemetry" class="pxj-scroll-cue">
+      ▼ Scroll the Pixel Journey · Explore Portals &amp; Pixal Lab
+    </a>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN SCROLLABLE STORY (Sections 2 – 8)
+       ========================================================================== -->
+  <main id="pxj-scroll-story" class="pxj-main-flow">
+
+    <!-- SECTION 2: STICKY TELEMETRY BAR -->
+    <div id="pxj-telemetry" class="pxj-telemetry-wrap">
+      <div class="pxj-telemetry-inner">
+        <div class="pxj-telemetry-metrics" aria-label="On-Chain Pixel Journey Telemetry">
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">1,050+</span>
+            <span class="pxj-metric-lbl">Days Building</span>
+          </div>
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">10,000</span>
+            <span class="pxj-metric-lbl">Genesis Pixals</span>
+          </div>
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">1,550+</span>
+            <span class="pxj-metric-lbl">Recycled 🔥</span>
+          </div>
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">$35k+</span>
+            <span class="pxj-metric-lbl">$PXJ Distributed</span>
+          </div>
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">5+ Chains</span>
+            <span class="pxj-metric-lbl">WAX · EVM · SOL</span>
+          </div>
+          <div class="pxj-metric-pill">
+            <span class="pxj-metric-val">14+</span>
+            <span class="pxj-metric-lbl">PX Portals</span>
+          </div>
+        </div>
+        <button type="button" id="pxj-snap-btn" class="pxj-snap-toggle" title="Toggle soft section snapping">
+          🧲 Soft Snap: OFF
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 3: CHOOSE YOUR PATH (EXPLORER VS BUILDER) -->
+    <section id="pxj-choose-path" class="pxj-section pxj-snap-beat">
+      <div class="pxj-section-header">
+        <span class="pxj-eyebrow">// 01 · INSTANT PATH SPLIT</span>
+        <h2 class="pxj-h2">Choose Your Pixel Journey Track</h2>
+        <p class="pxj-lead">
+          Whether you are taking your very first self-custodial steps in Web3 or shipping production code across WAX and EVM, start directly on your track.
+        </p>
+      </div>
+
+      <div class="pxj-paths-grid">
+        <article class="pxj-path-card">
+          <div>
+            <span class="pxj-path-badge">🧑‍🚀 TRACK A · EXPLORERS &amp; COLLECTORS</span>
+            <h3>Learn Web3 Hands-On &amp; Collect</h3>
+            <p>
+              Master self-custody wallets, complete the Famous 5-Minute Pixel Quest, collect your first Pixal PFP, recycle for Ingredient Packs, and earn daily $PXJ rewards.
+            </p>
+          </div>
+          <div class="pxj-path-links">
+            <a href="https://docs.pixeljourney.xyz/new-here-start-your-pixel-journey-here/the-famous-5-minute-pixel-quest" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-primary">5-Min Pixel Quest ↗</a>
+            <a href="https://docs.pixeljourney.xyz/new-here-start-your-pixel-journey-here/first-wallet-quest" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-ghost">First Wallet Quest 🛡️</a>
+            <a href="#pixal-lab" class="pxj-btn pxj-btn-ghost">Inspect Pixals 🎲</a>
+          </div>
+        </article>
+
+        <article class="pxj-path-card">
+          <div>
+            <span class="pxj-path-badge">💻 TRACK B · BUILDERS, ARTISTS &amp; DEVS</span>
+            <h3>Build With PxPackages &amp; Co-Create</h3>
+            <p>
+              Explore our open-source <strong>PX Perfection Standard</strong>, modular <code>PxUI</code> / <code>PxVault</code> packages, 170+ PxDev Code Quests, or launch a collaborative artist drop (~33% artist share).
+            </p>
+          </div>
+          <div class="pxj-path-links">
+            <a href="https://github.com/pixel-journey" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-primary">GitHub Org ↗</a>
+            <a href="https://docs.pixeljourney.xyz/journey-use-cases/for-developers" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-ghost">Developer Hub 🛠️</a>
+            <a href="https://docs.pixeljourney.xyz/journey-use-cases/for-artists" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-ghost">Artist Drops 🎨</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ECONOMY FLOW -->
+    <section id="pxj-economy-loop" class="pxj-section">
+      <div class="pxj-section-header">
+        <span class="pxj-eyebrow">// 02 · ON-CHAIN MECHANICS</span>
+        <h2 class="pxj-h2">How the Pixel Economy Flows</h2>
+        <p class="pxj-lead">
+          Every asset in Season 1 has multiple verifiable paths—teaching real DeFi, NFT blending, fractional liquidity, and DAO governance by doing.
+        </p>
+      </div>
+
+      <div class="pxj-loop-track">
+        <div class="pxj-loop-step">
+          <span class="pxj-step-num">STEP 01 · IDENTITY</span>
+          <h4>Genesis Pixal PFPs</h4>
+          <p>10,000 minted on WAX. Hold as your digital identity, trade on PxMarket, or swap fractionally via <strong>$WPIXAL</strong> (R-WAX).</p>
+        </div>
+        <div class="pxj-loop-step">
+          <span class="pxj-step-num">STEP 02 · STAKING</span>
+          <h4>Earn Daily $PXJ</h4>
+          <p>Stake Pixals, WaxRocks, or Alcor/TacoSwap LP positions at <code>stake.pixeljourney.xyz</code> to earn from sustainable $PXJ pools.</p>
+        </div>
+        <div class="pxj-loop-step">
+          <span class="pxj-step-num">STEP 03 · RECYCLING</span>
+          <h4>Burn for Packs 🔥</h4>
+          <p>Over 1,550 Pixals have been recycled (burned) to release <strong>Pixel Ingredient Packs</strong> at <code>pixelpack.pixeljourney.xyz</code>.</p>
+        </div>
+        <div class="pxj-loop-step">
+          <span class="pxj-step-num">STEP 04 · CRAFTING</span>
+          <h4>Ingredients &amp; Pebbles</h4>
+          <p>Unpack ingredients and refine them via blending contracts into upgraded collectibles, Pixel Pets, and upcoming <strong>Wax Pebbles</strong>.</p>
+        </div>
+        <div class="pxj-loop-step">
+          <span class="pxj-step-num">STEP 05 · GOVERNANCE</span>
+          <h4>WaxRocks Council 🪨</h4>
+          <p>WaxRocks &amp; leaderboard standings grant voting weight over 25% of creator market fees and ecosystem reward boosts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ECOSYSTEM COMMAND GRID -->
+    <section id="pxj-ecosystem-section" class="pxj-section pxj-snap-beat">
+      <div class="pxj-section-header">
+        <span class="pxj-eyebrow">// 03 · STAGE HONESTY DIRECTORY</span>
+        <h2 class="pxj-h2">🌌 The Pixel Journey Ecosystem Grid</h2>
+        <p class="pxj-lead">
+          Filter across our <strong>Live Production Portals</strong>, <strong>Public Beta dApps</strong>, and <strong>Alpha PxLabs</strong>. Click any card to inspect its flow schematic and launch links.
+        </p>
+      </div>
+
+      <div class="pxj-tabs-bar" role="tablist" aria-label="Filter PX Portals by Stage">
+        <button class="pxj-tab-btn active" type="button" role="tab" aria-selected="true" data-stage="all">
+          🌐 All Portals <span class="pxj-tab-count" id="pxj-count-all">14</span>
+        </button>
+        <button class="pxj-tab-btn" type="button" role="tab" aria-selected="false" data-stage="live">
+          🟢 Live / Production <span class="pxj-tab-count" id="pxj-count-live">6</span>
+        </button>
+        <button class="pxj-tab-btn" type="button" role="tab" aria-selected="false" data-stage="beta">
+          🟡 Beta Testing <span class="pxj-tab-count" id="pxj-count-beta">4</span>
+        </button>
+        <button class="pxj-tab-btn" type="button" role="tab" aria-selected="false" data-stage="alpha">
+          🟣 Alpha / PxLabs <span class="pxj-tab-count" id="pxj-count-alpha">4</span>
+        </button>
+      </div>
+
+      <div class="pxj-portal-grid" id="pxj-ecosystem-grid"></div>
+    </section>
+
+    <!-- SECTION 6: PIXAL LAB (INTERACTIVE ON-CHAIN & GENERATIVE CENTERPIECE) -->
+    <section id="pixal-lab" class="pxj-section pxj-snap-beat">
+      <div class="pxj-section-header">
+        <span class="pxj-eyebrow">// 04 · LIVE WAX TELEMETRY + S2 GENERATIVE PREVIEW</span>
+        <h2 class="pxj-h2">🧪 The Pixal Lab</h2>
+        <p class="pxj-lead">
+          Pull live random Pixals straight from the WAX blockchain—inspect real owners, active AtomicMarket listings, or the CRT burn state of recycled Pixals—or test our client-side SVG composer for upcoming Season 2 Animal PX Characters.
+        </p>
+      </div>
+
+      <div class="pxj-lab-shell">
+        <div class="pxj-lab-controls">
+          <div class="pxj-lab-modes" role="tablist" aria-label="Pixal Lab Mode">
+            <button type="button" class="pxj-mode-btn active" data-lab-mode="onchain">
+              🎲 Mode A: On-Chain Random
+            </button>
+            <button type="button" class="pxj-mode-btn" data-lab-mode="listed">
+              🏷️ Mode B: Listed Only
+            </button>
+            <button type="button" class="pxj-mode-btn" data-lab-mode="burned">
+              🔥 Mode C: Recycled / Burned
+            </button>
+            <button type="button" class="pxj-mode-btn" data-lab-mode="generative">
+              🐻 Mode D: S2 Animal Preview (SVG)
+            </button>
+          </div>
+
+          <button type="button" id="pxj-lab-randomize" class="pxj-randomize-btn">
+            🎲 Roll Random Pixal
+          </button>
+        </div>
+
+        <div class="pxj-lab-stage">
+          <!-- Left: PFP Viewport + CRT Burn Overlay -->
+          <div class="pxj-pfp-frame" id="pxj-lab-frame">
+            <span class="pxj-status-ribbon" id="pxj-lab-ribbon">ON-CHAIN · WAX</span>
+            <div id="pxj-lab-media-Mount" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+              <img id="pxj-lab-img" src="img/pixelgrey-greenbg-ruby-pet-rock.png" alt="Pixal Lab Preview">
+            </div>
+            <div class="pxj-burn-overlay" aria-hidden="true">
+              <span class="pxj-burn-stamp">RECYCLED 🔥</span>
+            </div>
+          </div>
+
+          <!-- Right: Live On-Chain Telemetry & CTAs -->
+          <div class="pxj-lab-details">
+            <h3 class="pxj-lab-title" id="pxj-lab-name">Pixal #00421</h3>
+            <span class="pxj-lab-sub" id="pxj-lab-sub">Collection: pixeljourney · Schema: pixals</span>
+
+            <!-- Mode D Seed & Species Controls (Hidden in Modes A/B/C) -->
+            <div class="pxj-gen-controls" id="pxj-gen-controls">
+              <label for="pxj-seed-input" style="font-size:0.8rem;color:var(--px-muted);">Seed:</label>
+              <input type="text" id="pxj-seed-input" class="pxj-seed-input" value="PXJ-2026-BEAR" aria-label="Deterministic Seed">
+              <select id="pxj-species-select" class="pxj-seed-input" aria-label="Select Animal Species">
+                <option value="bear">🐻 PX Bear</option>
+                <option value="duck">🦆 PX Duck</option>
+                <option value="bull">🐂 PX Bull</option>
+                <option value="bee">🐝 PX Bee</option>
+                <option value="cat">🐱 PX Cat</option>
+              </select>
+            </div>
+
+            <div class="pxj-meta-grid">
+              <div class="pxj-meta-box">
+                <span class="pxj-meta-lbl">Mint / ID</span>
+                <span class="pxj-meta-val" id="pxj-meta-mint">#421</span>
+              </div>
+              <div class="pxj-meta-box">
+                <span class="pxj-meta-lbl">Current Owner</span>
+                <span class="pxj-meta-val" id="pxj-meta-owner">pxj.wam</span>
+              </div>
+              <div class="pxj-meta-box">
+                <span class="pxj-meta-lbl">Market State</span>
+                <span class="pxj-meta-val" id="pxj-meta-price">Vaulted / Held</span>
+              </div>
+              <div class="pxj-meta-box">
+                <span class="pxj-meta-lbl">Asset Status</span>
+                <span class="pxj-meta-val" id="pxj-meta-status">Active NFT</span>
+              </div>
+            </div>
+
+            <div class="pxj-edu-note" id="pxj-lab-edu">
+              💡 <strong>On-Chain Truth:</strong> No wallet connection is needed to inspect WAX assets. Every Pixal can be staked for daily $PXJ, traded on PxMarket, or recycled into an Ingredient Pack.
+            </div>
+
+            <div class="pxj-path-links" id="pxj-lab-actions">
+              <a href="https://wax.atomichub.io/market?collection_name=pixeljourney&schema_name=pixals" id="pxj-cta-buy" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-buy" style="display:none;">
+                Buy Listed Pixal ↗
+              </a>
+              <a href="https://wax.atomichub.io/explorer/collection/wax-mainnet/pixeljourney" id="pxj-cta-explorer" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-primary">
+                View on AtomicHub ↗
+              </a>
+              <a href="https://market.pixeljourney.xyz" id="pxj-cta-pxmarket" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-ghost">
+                Open PxMarket 🏪
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: STORY & HONEST ROADMAP -->
+    <section id="pxj-roadmap-story" class="pxj-section">
+      <div class="pxj-section-header">
+        <span class="pxj-eyebrow">// 05 · MILESTONES OVER HYPE</span>
+        <h2 class="pxj-h2">The Pixel Itinerary: Phases 1 – 3+</h2>
+        <p class="pxj-lead">
+          Now past 1,050+ days of continuous production, we finish grounding Season 1 on WAX while rolling out modular multi-chain PX Portals, animal-themed PX Characters, and Wax Pebbles.
+        </p>
+      </div>
+
+      <div class="pxj-phases-grid">
+        <div class="pxj-phase-card">
+          <span class="pxj-stage-pill pxj-stage-live">PHASE 1 · COMPLETE</span>
+          <h4>WAX Genesis &amp; Foundation</h4>
+          <ul>
+            <li>10,000 Genesis Pixal PFPs minted on WAX.</li>
+            <li>Sustainable $PXJ tokenomics (10% NYE remaining unminted supply model) &amp; Alcor/TacoSwap LPs.</li>
+            <li>1,550+ Pixals recycled into Ingredient Packs.</li>
+            <li>$WPIXAL fractional liquidity via R-WAX &amp; multi-chain bridges across ETH, Polygon, Base &amp; BNB.</li>
+          </ul>
+        </div>
+
+        <div class="pxj-phase-card">
+          <span class="pxj-stage-pill pxj-stage-beta">PHASE 2 · ACTIVE EXPANSION</span>
+          <h4>Rock Council &amp; Modular Rebuild</h4>
+          <ul>
+            <li><strong>WaxRocks Council:</strong> Monthly governance over 25% of creator market fees, LP boosts, and community rewards.</li>
+            <li><strong>PxPackages Architecture:</strong> Unified <code>PxUI</code>, <code>PxVault</code>, and <code>pixel-journey-standards</code> across 14+ portals.</li>
+            <li><strong>Wax Pebbles:</strong> Crafting path toward future Wax Rocks (while Wax Rocks on PixelPads function as both Rock &amp; PFP).</li>
+          </ul>
+        </div>
+
+        <div class="pxj-phase-card">
+          <span class="pxj-stage-pill pxj-stage-alpha">PHASE 3 · IN TESTING</span>
+          <h4>PX Characters, Games &amp; PxLearn</h4>
+          <ul>
+            <li>Lineup of animal-themed <strong>PX Characters</strong> (bears, ducks, bulls, cats, dogs, beavers, bees, sheep) with mini-games.</li>
+            <li>Third-party contract connectors so games &amp; portals are never locked to a single blockchain.</li>
+            <li><strong>PxLearn Academy</strong> &amp; <strong>170+ PxDev Code Quests</strong> for interactive builder onboarding.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: FOOTER -->
+    <footer class="pxj-footer">
+      <img src="img/logo.png" alt="Pixel Journey Logo" width="72" style="margin-bottom:0.75rem;">
+      <div><strong>Pixel Journey</strong> — Built to Learn, Explore &amp; Create Together 💙🧩</div>
+      <div class="pxj-footer-links">
+        <a href="https://docs.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">GitBook Docs</a>
+        <a href="https://stake.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Staking</a>
+        <a href="https://market.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">PxMarket</a>
+        <a href="https://lb.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Leaderboards</a>
+        <a href="https://pixelpack.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">Unpacker</a>
+        <a href="https://github.com/pixel-journey" target="_blank" rel="noopener noreferrer">GitHub Org</a>
+        <a href="https://discord.gg/WQ59KEBSMp" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://x.com/PxJourney" target="_blank" rel="noopener noreferrer">𝕏 (@PxJourney)</a>
+      </div>
+      <div>
+        <a href="https://x.com/HenrikPiga" target="_blank" rel="noopener noreferrer" style="color:var(--px-muted);">
+          Pixel Journey by Piga &copy; 2023–2026 All Rights Reserved.
+        </a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ==========================================================================
+       OPTIONAL SLIDE-OVER "QUICK DYOR & KNOWLEDGE BANK" DRAWER (.panel-right)
+       Preserved for power users who click "Quick DYOR Drawer 📃" in the Hero
+       ========================================================================== -->
+  <div id="overlay"></div>
+  <div class="panel-left">
+    <div class="bar-hidden">
+      <div class="center-container">
+        <div class="center-block">
+          <div class="main-navigation main-navigation-button-close">
+            <i class="fa fa-close fa-closer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-left-overlay"></div>
+    <div class="panel-left-bg panel-left-bg-image"></div>
+  </div>
+
+  <div class="panel-right">
+    <div class="lower-page">
+      <div class="center-container">
+        <div class="center-block">
+          <div class="lower-content">
+            <div class="container sections">
+              <div class="bar-hidden-mobile">
+                <div class="main-navigation main-navigation-mobile main-navigation-button-close">
+                  <i class="fa fa-close fa-closer"></i>
+                </div>
+              </div>
+
+              <div class="row alt">
+                <h4>Quick Reference Drawer</h4>
+                <h2>The Pixel Knowledge Bank<span class="get-behind">The Pixel Knowledge Bank</span></h2>
+                <h3>Curated Guides / Links / Onboarding</h3>
+              </div>
+
+              <div class="row">
+                <div class="dividerOT-about-bottom"></div>
+              </div>
+
+              <div class="row">
+                <div class="knowledgebank-wrapper">
+                  <div class="knowledgebank-accordion">
+                    <ul>
+                      <li>
+                        <span>Pixel Journey Documentation</span>
+                        <ul>
+                          <li><a href="https://docs.pixeljourney.xyz/introduction/pixel-journey-begins" target="_blank" rel="noopener noreferrer">📃 Pixel Journey Begins</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/introduction/roadmap" target="_blank" rel="noopener noreferrer">📃 Roadmap</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/introduction/season-1-starting-from-wax" target="_blank" rel="noopener noreferrer">📃 Season 1: Starting from WAX</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/introduction/season-1-starting-from-wax/recycling-and-crafting" target="_blank" rel="noopener noreferrer">📃 Recycling &amp; Crafting</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/fundamentals/pixelpacks-and-ingredients" target="_blank" rel="noopener noreferrer">📃 PixelPacks &amp; Ingredients</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/fundamentals/pxj-token-and-staking" target="_blank" rel="noopener noreferrer">📃 PXJ Token &amp; Staking</a></li>
+                          <li><a href="https://docs.pixeljourney.xyz/fundamentals/pixel-journey-multichain-expansion" target="_blank" rel="noopener noreferrer">📃 Multi-Chain Expansion</a></li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span>Beginning on WAX &amp; Multi-Chain</span>
+                        <ul style="display: none;">
+                          <li><a href="https://docs.pixeljourney.xyz/fundamentals/getting-set-up-on-wax" target="_blank" rel="noopener noreferrer">📃 Getting set up on WAX (Pixel Docs)</a></li>
+                          <li><a href="https://www.youtube.com/watch?v=D2KRmfNEIM8" target="_blank" rel="noopener noreferrer">📺 Getting Started with Cloud Wallet</a></li>
+                          <li><a href="https://www.youtube.com/watch?v=99IsjN6x1Bc" target="_blank" rel="noopener noreferrer">📺 Getting Started with Anchor Wallet</a></li>
+                          <li><a href="https://support.metamask.io/hc/en-us/articles/360015489531-Getting-started-with-MetaMask" target="_blank" rel="noopener noreferrer">📃 Getting Started with MetaMask</a></li>
+                          <li><a href="https://help.phantom.app/hc/en-us/articles/8071074929043-How-to-create-a-new-wallet" target="_blank" rel="noopener noreferrer">📃 Getting Started with Phantom</a></li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span>Marketplaces, DeFi &amp; Partners</span>
+                        <ul style="display: none;">
+                          <li><a href="https://market.pixeljourney.xyz" target="_blank" rel="noopener noreferrer">🏪 PxMarket Portal</a></li>
+                          <li><a href="https://wax.atomichub.io/blog/how-to-get-started-on-atomichub" target="_blank" rel="noopener noreferrer">📃 How to AtomicHub</a></li>
+                          <li><a href="https://nfthive.io/faq" target="_blank" rel="noopener noreferrer">📃 How to NFTHive</a></li>
+                          <li><a href="https://kettleman.gitbook.io/pocket-people" target="_blank" rel="noopener noreferrer">🧑 Pocket People</a></li>
+                          <li><a href="https://www.wuffi.io/" target="_blank" rel="noopener noreferrer">🐕 WUFFI</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Legacy Scripts -->
+  <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+  <script src="js/mootools.js" type="text/javascript"></script>
+  <script src="js/plugins.js" type="text/javascript"></script>
+  <script src="js/sidebar.js" type="text/javascript"></script>
+  <script src="js/pixels.js" type="text/javascript"></script>
+
+  <!-- ==========================================================================
+       2026 INTERACTIVE ENGINE: ECOSYSTEM GRID + PIXAL LAB (MODES A, B, C, D)
+       ========================================================================== -->
+  <script type="text/javascript">
+    (function () {
+      /* --- 1. Soft Scroll-Snap Toggle --- */
+      const snapBtn = document.getElementById("pxj-snap-btn");
+      if (snapBtn) {
+        snapBtn.addEventListener("click", function () {
+          const isSnap = document.documentElement.classList.toggle("pxj-snap-active");
+          snapBtn.textContent = isSnap ? "🧲 Soft Snap: ON" : "🧲 Soft Snap: OFF";
+        });
+      }
+
+      /* --- 2. Ecosystem Command Grid Data & Renderer --- */
+      const PXJ_PORTALS = [
+        {
+          id: "px-hub", name: "Pixel Journey Hub", domain: "pixeljourney.xyz",
+          url: "https://pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🌌", stage: "live", stageLabel: "Live • Production", chain: "Multi-Chain • Flagship",
+          hook: "Scrollable story, Pixal Lab, and live ecosystem command center.",
+          schematic: "[ Explorer ] ──► [ 5-Min Quest ] ──► [ 12-Step Journey ]",
+          insights: [
+            "Connects collectors to WAX, Ethereum, Polygon, Base, BNB, and Solana paths.",
+            "Hosts the live Pixal Lab and stage-filtered portal directory."
+          ]
+        },
+        {
+          id: "px-docs", name: "Full Docs & Knowledge Base", domain: "docs.pixeljourney.xyz",
+          url: "https://docs.pixeljourney.xyz", docsUrl: "https://github.com/pixel-journey/gitbook-docs",
+          icon: "🧑‍🏫", stage: "live", stageLabel: "Live • Production", chain: "WAX • EVM • Solana",
+          hook: "Living Web3 encyclopedia covering self-custody wallets, tokenomics, and lore.",
+          schematic: "[ First Wallet ] + [ WAX 101 ] + [ Tokenomics & Lore ]",
+          insights: [
+            "Home of the Famous 5-Minute Pixel Quest & 12-Step Progression Path.",
+            "Synced with our open-source gitbook-docs repository."
+          ]
+        },
+        {
+          id: "px-staking", name: "PXJ Staking Portal", domain: "stake.pixeljourney.xyz",
+          url: "https://stake.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz/fundamentals/pxj-token-and-staking",
+          icon: "🧑‍🌾", stage: "live", stageLabel: "Live • Production", chain: "WAX • $PXJ Economy",
+          hook: "Stake Pixals, WaxRocks, and collectibles to earn daily $PXJ rewards.",
+          schematic: "[ Stake NFTs / LPs ] ──► [ Daily $PXJ Pool Distribution ]",
+          insights: [
+            "Over $35,000+ in PXJ rewards distributed to active participants.",
+            "Backed by the sustainable New Year's Eve 10% remaining supply mint model."
+          ]
+        },
+        {
+          id: "px-leaderboards", name: "Collector Leaderboards", domain: "lb.pixeljourney.xyz",
+          url: "https://lb.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "👑", stage: "live", stageLabel: "Live • Production", chain: "WAX • On-Chain Telemetry",
+          hook: "Track seasonal collector ranks, $KING of Pixals standings, and council weight.",
+          schematic: "[ Holdings + Blends ] ──► [ Rank Points ] ──► [ Council Perks ]",
+          insights: [
+            "Real-time indexing of Pixal PFPs, WaxRocks, and ingredient collections.",
+            "Highlights top community supporters and governance participants."
+          ]
+        },
+        {
+          id: "px-market", name: "PxMarket Portal", domain: "market.pixeljourney.xyz",
+          url: "https://market.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🏪", stage: "live", stageLabel: "Live • Production", chain: "WAX • AtomicAssets • R-WAX",
+          hook: "Dedicated Pixel Journey NFT marketplace with $WPIXAL fractional liquidity.",
+          schematic: "[ Pixal NFT ] ◄──► [ PxMarket / R-WAX ] ◄──► [ $WPIXAL ]",
+          insights: [
+            "Trade Pixal PFPs, WaxRocks, Ingredient Packs, and Collab Crafts.",
+            "Supports instant fractional liquidity via $WPIXAL integration."
+          ]
+        },
+        {
+          id: "px-pixelpack", name: "PixelPack Unpacker", domain: "pixelpack.pixeljourney.xyz",
+          url: "https://pixelpack.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz/fundamentals/pixelpacks-and-ingredients",
+          icon: "♻️", stage: "live", stageLabel: "Live • Production", chain: "WAX • AtomicAssets",
+          hook: "Unbox Pixel Ingredient Packs from recycled Pixals to fuel the crafting loop.",
+          schematic: "[ Recycle Pixal ] ──► [ Ingredient Pack ] ──► [ Pixel Ingredients ]",
+          insights: [
+            "Over 1,550+ Pixals recycled into Ingredient Packs.",
+            "Reveals tiered Pixel Ingredients used in seasonal blends."
+          ]
+        },
+        {
+          id: "px-crafting-hub", name: "PX Crafting & Wax Pebbles", domain: "nfthive.io / craft.pxj (Beta)",
+          url: "https://nfthive.io/crafts?collection=pixeljourney", docsUrl: "https://docs.pixeljourney.xyz/introduction/season-1-starting-from-wax/recycling-and-crafting",
+          icon: "👾", stage: "beta", stageLabel: "Beta • Public Testing", chain: "WAX • Blending Contracts",
+          hook: "Refine Pixel Ingredients, forge upgrades, and prepare Wax Pebbles toward Wax Rocks.",
+          schematic: "[ Ingredients / Wax Pebbles ] ──► [ Blend ] ──► [ Upgraded Asset ]",
+          insights: [
+            "Powers active Season 1 ingredient refinement and Mirror Crafts.",
+            "Preparing Wax Pebbles as a crafting path toward future Wax Rocks."
+          ]
+        },
+        {
+          id: "px-rock-council", name: "WaxRocks Council & DAO Hub", domain: "lb.pixeljourney.xyz (Beta)",
+          url: "https://lb.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🪨", stage: "beta", stageLabel: "Beta • Public Testing", chain: "WAX • dao.pxj Governance",
+          hook: "Governance portal directing the 25% creator market fee share and community boosts.",
+          schematic: "[ WaxRocks + $PXJ Weight ] ──► [ Monthly Council Votes ]",
+          insights: [
+            "Steers LP boosts, community airdrops, contest prizes, and partner collabs.",
+            "Laying the governance rails for the full multi-chain PixelDAO."
+          ]
+        },
+        {
+          id: "px-multichain-bridge", name: "Multi-Chain Portal & Bridges", domain: "docs.pixeljourney.xyz (Beta)",
+          url: "https://docs.pixeljourney.xyz/fundamentals/pixel-journey-multichain-expansion", docsUrl: "https://docs.pixeljourney.xyz/fundamentals/pixel-journey-multichain-expansion",
+          icon: "🌉", stage: "beta", stageLabel: "Beta • Public Testing", chain: "WAX • ETH • Polygon • Base • BNB",
+          hook: "Cross-chain collection routing and third-party contract integration across 5+ chains.",
+          schematic: "[ WAX Foundation ] ◄──► [ Modular Contracts ] ◄──► [ EVM / Solana ]",
+          insights: [
+            "Connects WAX collectibles with OpenSea (ETH, Polygon, Base) and MonBase (BNB).",
+            "Third-party contract connectors prevent single-chain lock-in."
+          ]
+        },
+        {
+          id: "px-packages-ui", name: "PxPackages & Design System", domain: "github.com/pixel-journey (Beta)",
+          url: "https://github.com/pixel-journey", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🧩", stage: "beta", stageLabel: "Beta • Dev Architecture", chain: "TypeScript • PxUI • PxVault",
+          hook: "Shared modular frontend packages, retro-pixel UI tokens, and offline state vault.",
+          schematic: "[ PxUI + PxVault + Standards ] ──► [ 14+ Unified Portals ]",
+          insights: [
+            "Unifies UI components, wallet sessions, and achievement badges across portals.",
+            "Built to the open-source PX Perfection Standard."
+          ]
+        },
+        {
+          id: "px-characters-games", name: "PX Games & Animal Characters", domain: "PxLabs Alpha Sandbox",
+          url: "https://discord.gg/WQ59KEBSMp", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🐻", stage: "alpha", stageLabel: "Alpha • PxLabs", chain: "Multi-Chain • Social RPG & Mini-Games",
+          hook: "Upcoming lineup of animal-themed PX Characters with dedicated mini-games and perks.",
+          schematic: "[ PX Characters ] ──► [ Mini-Games & Quests ] ──► [ Crossover Perks ]",
+          insights: [
+            "Features bears, ducks, cows/bulls, cats, dogs, beavers, bees, sheep, and more.",
+            "Try the generative SVG preview right below in Mode D of the Pixal Lab!"
+          ]
+        },
+        {
+          id: "px-learn-portal", name: "PxLearn Interactive Portal", domain: "learn.pixeljourney.xyz (Alpha)",
+          url: "https://docs.pixeljourney.xyz", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🎓", stage: "alpha", stageLabel: "Alpha • PxLabs", chain: "Multi-Chain • Verifiable Badges",
+          hook: "Gamified Web3 educational portal turning GitBook guides into interactive quests.",
+          schematic: "[ Interactive Guide ] ──► [ On-Chain Action ] ──► [ Explorer Badge ]",
+          insights: [
+            "Tracks beginner-to-builder progression with offline-resilient PxVault storage.",
+            "Integrates the 5-Minute Pixel Quest directly in-app."
+          ]
+        },
+        {
+          id: "px-tools-wallet", name: "PX Tools: PxWallet & PxHot", domain: "PxLabs Alpha Sandbox",
+          url: "https://github.com/pixel-journey", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "🛠️", stage: "alpha", stageLabel: "Alpha • PxLabs", chain: "WAX • EVM • Resource & Feed Tools",
+          hook: "Companion Web3 utilities for wallet resource hygiene, RAM sweeping, and live feeds.",
+          schematic: "[ Self-Custody Wallet ] ──► [ Resource Check + Live Chain Pulse ]",
+          insights: [
+            "Helps users monitor WAX RAM/CPU/NET and manage permissions safely.",
+            "Surfaces real-time ecosystem crafts and market activity."
+          ]
+        },
+        {
+          id: "px-dev-vault", name: "PxDev Examples Vault", domain: "PxLabs Developer Portal",
+          url: "https://github.com/pixel-journey", docsUrl: "https://docs.pixeljourney.xyz",
+          icon: "💻", stage: "alpha", stageLabel: "Alpha • 170+ Quests", chain: "Antelope C++ • TypeScript • EVM",
+          hook: "170+ production code quests teaching smart contracts, dApp UIs, and Web3 security.",
+          schematic: "[ Code Quest ] ──► [ Testnet Build ] ──► [ Production Standard ]",
+          insights: [
+            "Distills 1,050+ days of Pixel Journey engineering into hands-on developer quests.",
+            "Request preview access via the Pixel Journey Discord."
+          ]
+        }
+      ];
+
+      const gridEl = document.getElementById("pxj-ecosystem-grid");
+      const tabBtns = document.querySelectorAll(".pxj-tab-btn");
+
+      function renderEcosystem(stageFilter) {
+        if (!gridEl) return;
+        const list = PXJ_PORTALS.filter(function (p) {
+          return stageFilter === "all" || p.stage === stageFilter;
+        });
+
+        gridEl.innerHTML = list.map(function (p) {
+          const pillClass =
+            p.stage === "live" ? "pxj-stage-live" :
+            p.stage === "beta" ? "pxj-stage-beta" : "pxj-stage-alpha";
+
+          return (
+            '<article class="pxj-portal-card" tabindex="0" role="button" aria-expanded="false">' +
+              '<div class="pxj-card-summary">' +
+                '<div class="pxj-card-header">' +
+                  '<div class="pxj-card-title-group">' +
+                    '<div class="pxj-card-icon" aria-hidden="true">' + p.icon + '</div>' +
+                    '<div>' +
+                      '<h4 class="pxj-card-name">' + p.name + '</h4>' +
+                      '<span class="pxj-card-domain">' + p.domain + '</span>' +
+                    '</div>' +
+                  '</div>' +
+                  '<span class="pxj-stage-pill ' + pillClass + '">' + p.stageLabel + '</span>' +
+                '</div>' +
+                '<p class="pxj-card-hook">' + p.hook + '</p>' +
+                '<div class="pxj-card-meta">' +
+                  '<span>⛓️ ' + p.chain + '</span>' +
+                  '<span class="pxj-card-toggle-label" style="color:var(--px-cyan);font-weight:600;">Explore ▾</span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="pxj-card-drawer">' +
+                '<div class="pxj-card-drawer-inner">' +
+                  '<div class="pxj-card-drawer-body">' +
+                    '<div class="pxj-schematic-box">' + p.schematic + '</div>' +
+                    '<ul class="pxj-insights-ul">' +
+                      p.insights.map(function (i) { return "<li>" + i + "</li>"; }).join("") +
+                    '</ul>' +
+                    '<div class="pxj-path-links">' +
+                      '<a href="' + p.url + '" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-primary" onclick="event.stopPropagation()">Launch Portal ↗</a>' +
+                      '<a href="' + p.docsUrl + '" target="_blank" rel="noopener noreferrer" class="pxj-btn pxj-btn-ghost" onclick="event.stopPropagation()">Read Docs 📖</a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+
+        gridEl.querySelectorAll(".pxj-portal-card").forEach(function (card) {
+          function toggle() {
+            const exp = card.classList.toggle("is-expanded");
+            card.setAttribute("aria-expanded", String(exp));
+            const lbl = card.querySelector(".pxj-card-toggle-label");
+            if (lbl) lbl.textContent = exp ? "Close ▴" : "Explore ▾";
+          }
+          card.addEventListener("click", toggle);
+          card.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggle();
+            }
+          });
+        });
+      }
+
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          tabBtns.forEach(function (b) {
+            b.classList.remove("active");
+            b.setAttribute("aria-selected", "false");
+          });
+          btn.classList.add("active");
+          btn.setAttribute("aria-selected", "true");
+          renderEcosystem(btn.getAttribute("data-stage"));
+        });
+      });
+      renderEcosystem("all");
+
+      /* ========================================================================
+         3. PIXAL LAB ENGINE (Modes A, B, C: WAX AtomicAssets/Market + Mode D: SVG)
+         ======================================================================== */
+      const AA_ENDPOINTS = [
+        "https://wax.api.atomicassets.io",
+        "https://aa.dapplica.io",
+        "https://wax-aa.eu.eosamsterdam.net"
+      ];
+      const IPFS_GATEWAYS = [
+        "https://wax.atomichub-ipfs.com/ipfs/",
+        "https://ipfs.io/ipfs/"
+      ];
+      const FALLBACK_PIXALS = [
+        {
+          asset_id: "1099884721042",
+          name: "Pixal #421",
+          mint: "421 / 10,000",
+          owner: "pixeljourney",
+          price: "Vaulted / Held",
+          status: "Active On-Chain NFT",
+          burned: false,
+          img: "img/pixelgrey-greenbg-ruby-pet-rock.png"
+        },
+        {
+          asset_id: "1099884729901",
+          name: "Pixal #1088",
+          mint: "1088 / 10,000",
+          owner: "BURNED (Recycled)",
+          price: "Recycled for Pack",
+          status: "Burned 🔥",
+          burned: true,
+          img: "img/pixelgrey-bluebg-spliteyes.png"
+        }
+      ];
+
+      let currentLabMode = "onchain";
+      const frameEl = document.getElementById("pxj-lab-frame");
+      const mediaMount = document.getElementById("pxj-lab-media-Mount");
+      const ribbonEl = document.getElementById("pxj-lab-ribbon");
+      const nameEl = document.getElementById("pxj-lab-name");
+      const subEl = document.getElementById("pxj-lab-sub");
+      const mintEl = document.getElementById("pxj-meta-mint");
+      const ownerEl = document.getElementById("pxj-meta-owner");
+      const priceEl = document.getElementById("pxj-meta-price");
+      const statusEl = document.getElementById("pxj-meta-status");
+      const eduEl = document.getElementById("pxj-lab-edu");
+      const ctaBuy = document.getElementById("pxj-cta-buy");
+      const ctaExplorer = document.getElementById("pxj-cta-explorer");
+      const genControls = document.getElementById("pxj-gen-controls");
+      const seedInput = document.getElementById("pxj-seed-input");
+      const speciesSelect = document.getElementById("pxj-species-select");
+
+      async function fetchWithFailover(path) {
+        for (let i = 0; i < AA_ENDPOINTS.length; i++) {
+          try {
+            const res = await fetch(AA_ENDPOINTS[i] + path, { headers: { "Accept": "application/json" } });
+            if (res.ok) {
+              const json = await res.json();
+              if (json && json.success) return json.data;
+            }
+          } catch (err) {
+            /* try next endpoint */
+          }
+        }
+        return null;
+      }
+
+      function resolveIpfs(hashOrUrl) {
+        if (!hashOrUrl) return "img/pixelgrey-greenbg-ruby-pet-rock.png";
+        if (hashOrUrl.startsWith("http") || hashOrUrl.startsWith("img/")) return hashOrUrl;
+        const clean = hashOrUrl.replace(/^ipfs:\/\//, "");
+        return IPFS_GATEWAYS[0] + clean;
+      }
+
+      /* Deterministic Hash for Mode D Generative Animal SVG */
+      function hashSeed(str) {
+        let h = 2166136261 >>> 0;
+        for (let i = 0; i < str.length; i++) {
+          h ^= str.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return h >>> 0;
+      }
+
+      function renderGenerativeAnimalSVG(seedStr, species) {
+        const h = hashSeed(seedStr + ":" + species);
+        const bgPalettes = ["#0f172a", "#1e1b4b", "#064e3b", "#3b0764", "#451a03", "#111827"];
+        const furPalettes = {
+          bear: ["#92400e", "#78350f", "#b45309", "#d97706"],
+          duck: ["#facc15", "#eab308", "#34d399", "#38bdf8"],
+          bull: ["#475569", "#dc2626", "#7c2d12", "#1e293b"],
+          bee:  ["#fbbf24", "#f59e0b", "#fde047", "#eab308"],
+          cat:  ["#a855f7", "#f472b6", "#fb923c", "#94a3b8"]
+        };
+        const eyeColors = ["#38bdf8", "#4ade80", "#f43f5e", "#facc15", "#c084fc"];
+        const visorTrait = ["Pixel Shades", "Laser Visor", "Explorer Eyes", "Ruby Gaze", "Gold Monocle"][h % 5];
+        const auraTrait = ["Neon Grid", "Starlight", "Emerald Pulse", "Solar Flare", "Void CRT"][(h >> 3) % 5];
+
+        const bg = bgPalettes[h % bgPalettes.length];
+        const list = furPalettes[species] || furPalettes.bear;
+        const bodyColor = list[(h >> 4) % list.length];
+        const eyeColor = eyeColors[(h >> 7) % eyeColors.length];
+
+        /* 16x16 Crisp Pixel-Art SVG Canvas */
+        const svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">' +
+            '<rect width="16" height="16" fill="' + bg + '"/>' +
+            /* Subtle Pixel Grid Accent */
+            '<rect x="1" y="1" width="1" height="1" fill="#ffffff" fill-opacity="0.25"/>' +
+            '<rect x="14" y="2" width="1" height="1" fill="' + eyeColor + '" fill-opacity="0.45"/>' +
+            '<rect x="2" y="13" width="1" height="1" fill="' + eyeColor + '" fill-opacity="0.35"/>' +
+            /* Ears / Horns by Species */
+            (species === "bull"
+              ? '<rect x="2" y="3" width="2" height="2" fill="#fef08a"/><rect x="12" y="3" width="2" height="2" fill="#fef08a"/>'
+              : species === "bee"
+              ? '<rect x="5" y="1" width="1" height="3" fill="#e2e8f0"/><rect x="10" y="1" width="1" height="3" fill="#e2e8f0"/>'
+              : '<rect x="3" y="3" width="3" height="3" fill="' + bodyColor + '"/><rect x="10" y="3" width="3" height="3" fill="' + bodyColor + '"/>') +
+            /* Head & Torso */
+            '<rect x="4" y="4" width="8" height="8" fill="' + bodyColor + '"/>' +
+            '<rect x="3" y="12" width="10" height="4" fill="' + bodyColor + '"/>' +
+            /* Bee Stripes if Bee */
+            (species === "bee"
+              ? '<rect x="4" y="10" width="8" height="1" fill="#111827"/><rect x="3" y="13" width="10" height="1" fill="#111827"/>'
+              : '') +
+            /* Eyes */
+            '<rect x="5" y="6" width="2" height="2" fill="' + eyeColor + '"/>' +
+            '<rect x="9" y="6" width="2" height="2" fill="' + eyeColor + '"/>' +
+            '<rect x="6" y="6" width="1" height="1" fill="#ffffff"/>' +
+            '<rect x="10" y="6" width="1" height="1" fill="#ffffff"/>' +
+            /* Snout / Beak */
+            (species === "duck"
+              ? '<rect x="6" y="8" width="4" height="2" fill="#f97316"/>'
+              : '<rect x="6" y="8" width="4" height="3" fill="#1e293b"/><rect x="7" y="8" width="2" height="1" fill="#f8fafc"/>') +
+          '</svg>';
+
+        frameEl.classList.remove("is-burned");
+        ribbonEl.textContent = "PREVIEW · NOT ON-CHAIN YET";
+        mediaMount.innerHTML = svg;
+        nameEl.textContent = "S2 Preview · PX " + species.toUpperCase() + " #" + (h % 9999);
+        subEl.textContent = "Mode D: Client-Side Deterministic SVG Layer Composer";
+        mintEl.textContent = "Unminted Preview";
+        ownerEl.textContent = "Seed: " + seedStr.slice(0, 12);
+        priceEl.textContent = "Eye: " + visorTrait;
+        statusEl.textContent = "Aura: " + auraTrait;
+        eduEl.innerHTML =
+          "🧪 <strong>Stage Honesty:</strong> This is a live client-side SVG layer preview for our upcoming Season 2 animal-themed <strong>PX Characters</strong> (bears, ducks, bulls, bees, cats). It is not minted on-chain yet.";
+        ctaBuy.style.display = "none";
+        ctaExplorer.href = "https://discord.gg/WQ59KEBSMp";
+        ctaExplorer.textContent = "Join Alpha Playtests in Discord 💬";
+      }
+
+      async function loadPixalLab() {
+        if (currentLabMode === "generative") {
+          genControls.classList.add("is-visible");
+          renderGenerativeAnimalSVG(seedInput.value || "PXJ-2026", speciesSelect.value || "bear");
+          return;
+        }
+        genControls.classList.remove("is-visible");
+        ctaExplorer.textContent = "View on AtomicHub ↗";
+        ribbonEl.textContent = "QUERYING WAX MAINNET...";
+
+        /* MODE B: LISTED ONLY (AtomicMarket v2 Sales) */
+        if (currentLabMode === "listed") {
+          const sales = await fetchWithFailover(
+            "/atomicmarket/v2/sales?state=1&collection_name=pixeljourney&schema_name=pixals&limit=35&order=asc&sort=price"
+          );
+          if (sales && sales.length > 0) {
+            const sale = sales[Math.floor(Math.random() * sales.length)];
+            const asset = (sale.assets && sale.assets[0]) || {};
+            const data = asset.data || {};
+            const rawPrice = sale.listing_price ? Number(sale.listing_price) / Math.pow(10, (sale.price && sale.price.token_precision) || 8) : null;
+            const priceFormatted = rawPrice ? rawPrice.toFixed(1) + " WAX" : "Listed on Market";
+
+            frameEl.classList.remove("is-burned");
+            ribbonEl.textContent = "LISTED ON WAX · SALE #" + sale.sale_id;
+            mediaMount.innerHTML = '<img id="pxj-lab-img" src="' + resolveIpfs(data.img) + '" alt="' + (data.name || "Pixal") + '">';
+            nameEl.textContent = data.name || ("Pixal #" + (asset.template_mint || asset.asset_id));
+            subEl.textContent = "Asset ID: " + asset.asset_id + " · Sale ID: " + sale.sale_id;
+            mintEl.textContent = "#" + (asset.template_mint || "—") + " / 10,000";
+            ownerEl.textContent = sale.seller || "Listed Seller";
+            priceEl.textContent = priceFormatted;
+            statusEl.textContent = "Listed for Sale 🟢";
+            eduEl.innerHTML =
+              "🏷️ <strong>Live Market Listing:</strong> Pulled directly from WAX AtomicMarket. Clicking Buy opens the verified sale page where you can connect your self-custody wallet.";
+            ctaBuy.style.display = "inline-flex";
+            ctaBuy.href = "https://wax.atomichub.io/market/sale/wax-mainnet/" + sale.sale_id;
+            ctaBuy.textContent = "Buy for " + priceFormatted + " ↗";
+            ctaExplorer.href = "https://wax.atomichub.io/explorer/asset/wax-mainnet/" + asset.asset_id;
+            return;
+          }
+        }
+
+        /* MODE A (On-Chain Random) & MODE C (Burned / Recycled) */
+        const isBurnedMode = currentLabMode === "burned";
+        const randomPage = isBurnedMode
+          ? Math.floor(Math.random() * 1400) + 1
+          : Math.floor(Math.random() * 8000) + 1;
+        const burnedParam = isBurnedMode ? "&burned=true" : "&burned=false";
+
+        const assets = await fetchWithFailover(
+          "/atomicassets/v1/assets?collection_name=pixeljourney&schema_name=pixals" + burnedParam + "&page=" + randomPage + "&limit=1&order=asc&sort=asset_id"
+        );
+
+        const asset = (assets && assets[0]) || (isBurnedMode ? FALLBACK_PIXALS[1] : FALLBACK_PIXALS[0]);
+        const data = asset.data || asset;
+        const isBurned = Boolean(asset.burned_by_account || asset.burned);
+
+        frameEl.classList.toggle("is-burned", isBurned);
+        ribbonEl.textContent = isBurned ? "ON-CHAIN · RECYCLED 🔥" : "ON-CHAIN · WAX MAINNET";
+        mediaMount.innerHTML = '<img id="pxj-lab-img" src="' + resolveIpfs(data.img || asset.img) + '" alt="Pixal PFP">';
+        nameEl.textContent = data.name || asset.name || ("Pixal #" + (asset.template_mint || asset.asset_id));
+        subEl.textContent = "Asset ID: " + asset.asset_id + " · Schema: pixals";
+        mintEl.textContent = "#" + (asset.template_mint || asset.mint || "421");
+        ownerEl.textContent = isBurned ? ("Burned by " + (asset.burned_by_account || "Recycler")) : (asset.owner || "Vaulted");
+        priceEl.textContent = isBurned ? "Not Tradable (Burned)" : "Held in Wallet";
+        statusEl.textContent = isBurned ? "Recycled for Pack 🔥" : "Active On-Chain NFT";
+        eduEl.innerHTML = isBurned
+          ? "🔥 <strong>Why is this Pixal Burned?</strong> Over 1,550 Pixals have been recycled by holders to release <strong>Pixel Ingredient Packs</strong>, reducing total supply while fueling Season 1 crafting."
+          : "💡 <strong>On-Chain Truth:</strong> Queried live from the WAX blockchain. This Pixal is held in a self-custody wallet and can be staked at <code>stake.pixeljourney.xyz</code>.";
+        ctaBuy.style.display = "none";
+        ctaExplorer.href = "https://wax.atomichub.io/explorer/asset/wax-mainnet/" + asset.asset_id;
+      }
+
+      document.querySelectorAll(".pxj-mode-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".pxj-mode-btn").forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          currentLabMode = btn.getAttribute("data-lab-mode");
+          loadPixalLab();
+        });
+      });
+
+      const randBtn = document.getElementById("pxj-lab-randomize");
+      if (randBtn) {
+        randBtn.addEventListener("click", function () {
+          if (currentLabMode === "generative" && seedInput) {
+            const animals = ["bear", "duck", "bull", "bee", "cat"];
+            speciesSelect.value = animals[Math.floor(Math.random() * animals.length)];
+            seedInput.value = "PXJ-" + Math.floor(1000 + Math.random() * 9000);
+          }
+          loadPixalLab();
+        });
+      }
+      if (seedInput) seedInput.addEventListener("input", loadPixalLab);
+      if (speciesSelect) speciesSelect.addEventListener("change", loadPixalLab);
+
+      /* Initial Pixal Lab load */
+      loadPixalLab();
+    })();
+  </script>
 </body>
 </html>
