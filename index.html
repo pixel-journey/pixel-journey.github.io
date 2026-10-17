@@ -102,10 +102,18 @@
     }
 
     /* --------------------------------------------------------------------------
-       2. UNIFIED LEFT & RIGHT SIDEBARS (Identical Glass Transparency & Synced Fade-In)
+       2. UNIFIED LEFT & RIGHT SIDEBARS (Full Desktop Height, Glass & Synced Fade-In)
        -------------------------------------------------------------------------- */
     .sidebar-left,
     .sidebar-right {
+      position: fixed !important;
+      top: 50% !important;
+      height: auto !important;
+      max-height: 94vh !important;
+      overflow-y: auto !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+      padding: 16px 10px !important;
       background: rgba(8, 11, 18, 0.72) !important;
       backdrop-filter: blur(12px) !important;
       -webkit-backdrop-filter: blur(12px) !important;
@@ -121,6 +129,21 @@
         background-color 0.3s ease,
         border-color 0.3s ease !important;
       z-index: 90 !important;
+    }
+
+    .sidebar-left::-webkit-scrollbar,
+    .sidebar-right::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* Remove any 50% / half-height caps inherited from sidebar-styles.css */
+    .sidebar-left ul,
+    .sidebar-right ul,
+    .sidebar-right .community-links {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      margin-bottom: 10px !important;
     }
 
     .sidebar-left {
@@ -2298,7 +2321,8 @@
         "https://aa.dapplica.io",
         "https://wax-aa.eu.eosamsterdam.net"
       ];
-      const IPFS_HOST = "https://wax.atomichub-ipfs.com/ipfs/";
+      const ATOMICHUB_RESIZER = "https://resizer.atomichub.io/images/v1/preview?ipfs=";
+      const FALLBACK_PIXAL_IMG = "img/pixelgrey-greenbg-ruby-pet-rock.png";
 
       let activeMode = "onchain";
       const viewportEl = document.getElementById("pxj-lab-viewport");
@@ -2330,10 +2354,21 @@
         return null;
       }
 
+      /* Uses AtomicHub Resizer: https://resizer.atomichub.io/images/v1/preview?ipfs=<CID>&size=370&output=webp */
       function formatImgUrl(raw) {
-        if (!raw) return "img/pixelgrey-greenbg-ruby-pet-rock.png";
-        if (raw.indexOf("http") === 0 || raw.indexOf("img/") === 0) return raw;
-        return IPFS_HOST + raw.replace(/^ipfs:\/\//, "");
+        if (!raw) return FALLBACK_PIXAL_IMG;
+        const str = String(raw).trim();
+        if (str.indexOf("img/") === 0) return str;
+
+        let cid = str;
+        if (str.indexOf("/ipfs/") !== -1) {
+          cid = str.split("/ipfs/")[1].split(/[?#]/)[0];
+        } else if (str.indexOf("ipfs://") === 0) {
+          cid = str.replace(/^ipfs:\/\//, "").split(/[?#]/)[0];
+        } else if (str.indexOf("http") === 0) {
+          return str;
+        }
+        return ATOMICHUB_RESIZER + encodeURIComponent(cid) + "&size=370&output=webp";
       }
 
       function fnvHash(str) {
@@ -2426,7 +2461,7 @@
 
             viewportEl.classList.remove("is-burned", "is-loading");
             badgeEl.textContent = "LISTED ON MARKET · #" + sale.sale_id;
-            mediaEl.innerHTML = '<img src="' + formatImgUrl(data.img) + '" alt="Listed Pixal">';
+            mediaEl.innerHTML = '<img src="' + formatImgUrl(data.img) + '" alt="Listed Pixal" onerror="this.onerror=null;this.src=\'' + FALLBACK_PIXAL_IMG + '\';">';
             titleEl.textContent = data.name || ("Pixal #" + (asset.template_mint || asset.asset_id));
             subtitleEl.textContent = "ASSET ID: " + asset.asset_id + " // SALE ID: " + sale.sale_id;
             mintEl.textContent = "#" + (asset.template_mint || "—") + " / 10,000";
@@ -2459,7 +2494,7 @@
           burned_by_account: wantBurned ? "pixeljourney" : null,
           data: {
             name: wantBurned ? "Pixal #1088" : "Pixal #421",
-            img: wantBurned ? "img/pixelgrey-bluebg-spliteyes.png" : "img/pixelgrey-greenbg-ruby-pet-rock.png"
+            img: wantBurned ? "QmR7SL8RUFvjLEh16ueRK9cXLxhr8FiBJxFqzdQQotsGw1" : "img/pixelgrey-greenbg-ruby-pet-rock.png"
           }
         };
 
@@ -2469,7 +2504,7 @@
         viewportEl.classList.remove("is-loading");
         viewportEl.classList.toggle("is-burned", isBurned);
         badgeEl.textContent = isBurned ? "ON-CHAIN · RECYCLED 🔥" : "ON-CHAIN · WAX MAINNET";
-        mediaEl.innerHTML = '<img src="' + formatImgUrl(data.img) + '" alt="Pixal PFP">';
+        mediaEl.innerHTML = '<img src="' + formatImgUrl(data.img) + '" alt="Pixal PFP" onerror="this.onerror=null;this.src=\'' + FALLBACK_PIXAL_IMG + '\';">';
         titleEl.textContent = data.name || ("Pixal #" + (asset.template_mint || asset.asset_id));
         subtitleEl.textContent = "ASSET ID: " + asset.asset_id + " // SCHEMA: pixals";
         mintEl.textContent = "#" + (asset.template_mint || "421") + " / 10,000";
